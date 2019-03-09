@@ -290,7 +290,6 @@ public class ObjectBuilderFactory
 		
 		CommandManager manager = new CommandManager();
 		
-		manager.Register("test", new CommandTesting(KittyRole.Dev, KittyRating.Safe));
 		manager.Register("work", new CommandDoWork(KittyRole.Dev, KittyRating.Safe));
 		manager.Register("shutdown", new CommandShutdown(KittyRole.Dev, KittyRating.Safe));
 		manager.Register("stats", new CommandStats(KittyRole.Dev, KittyRating.Safe));
