@@ -325,6 +325,7 @@ public class ObjectBuilderFactory
 		manager.Register("rpend", new CommandRPEnd(KittyRole.General, KittyRating.Safe));
 		manager.Register(new String[] {"tony", "stark", "dontfeelgood", "dontfeelsogood"}, new CommandStark(KittyRole.General, KittyRating.Safe));
 		manager.Register("blur", new CommandBlurry(KittyRole.General, KittyRating.Safe));
+		manager.Register(new String [] {"eightball", "8ball"}, new CommandEightBall(KittyRole.General, KittyRating.Safe));
 		
 		return manager;
 	}
