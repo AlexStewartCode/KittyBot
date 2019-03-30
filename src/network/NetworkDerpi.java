@@ -2,6 +2,7 @@ package network;
 
 import com.google.gson.Gson;
 import core.*;
+import dataStructures.GenericImage;
 import offline.*;
 import utils.*;
 
