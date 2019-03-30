@@ -20,7 +20,7 @@ import utils.LogFilter;
 public class Localizer
 {
 	// Filename
-	public final static String filename = "phrases.config"; 
+	public final static String filename = "localization.config"; 
 	public final static String functionName = "Localizer.Stub";
 	
 	// Local translation
@@ -122,11 +122,11 @@ public class Localizer
 		}
 		catch(InvalidFileFormatException e) 
 		{
-			Error("File issue with format during read");
+			Error("File issue with format during localization file read");
 		}
 		catch(IOException e)
 		{
-			Error("IO exception during read");
+			Error("IO exception during localization file read");
 		}
 	}
 	
@@ -155,11 +155,11 @@ public class Localizer
 		}
 		catch(InvalidFileFormatException e)
 		{
-			Error("File issue with format during write");
+			Error("File issue with format during localization file write");
 		}
 		catch(IOException e)
 		{
-			Error("IO exception during write");
+			Error("IO exception during localization file write");
 		}
 	}
 
