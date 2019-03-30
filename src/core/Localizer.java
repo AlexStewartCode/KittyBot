@@ -2,6 +2,7 @@ package core;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,10 +22,9 @@ public class Localizer
 	// Filename
 	public final static String filename = "phrases.config"; 
 	public final static String functionName = "Localizer.Stub";
-	public final static String section = "phrases";
 	
 	// Local translation
-	private static HashMap<String, String> translated = new HashMap<String, String>();
+	private static HashMap<String, LocPair> translated = new HashMap<String, LocPair>();
 	
 	// Logging
 	private static void Log(String str) { System.out.println("[Log] " + str); }
@@ -68,10 +68,23 @@ public class Localizer
 		return items;
 	}
 	
-	// Do processing on each path in the scraped directory here, assuming it's .java
-	public static void StripForContents(Path path, ArrayList<String> strings)
+	public static class LocPair
 	{
-		if(path.getFileName().toString().contains(".java"))
+		public String file;
+		public String phrase;
+		
+		public LocPair(String f, String p)
+		{
+			this.file = f;
+			this.phrase = p;
+		}
+	}
+	
+	// Do processing on each path in the scraped directory here, assuming it's .java
+	public static void StripForContents(Path path, ArrayList<LocPair> strings)
+	{
+		String filename = path.getFileName().toString();
+		if(filename.contains(".java"))
 		{
 			String contents = ReadContent(path);
 			String[] split = contents.split(functionName);
@@ -91,7 +104,8 @@ public class Localizer
 						{
 							String toLocalize = split[i].substring(2, loc - 1);
 							
-							strings.add(toLocalize);
+							strings.add(new LocPair(filename.substring(0, filename.lastIndexOf('.')), toLocalize));
+							
 							Log("Found stubbed phrase in " + path + " : " + toLocalize);
 						}
 						catch(IndexOutOfBoundsException e)
@@ -110,7 +124,7 @@ public class Localizer
 	{
 		if(translated.containsKey(input))
 		{
-			String value = translated.get(input);
+			String value = translated.get(input).phrase;
 			if(value.trim().length() > 0)
 				return value;
 		}
@@ -136,7 +150,7 @@ public class Localizer
 				for(String s : sec.keySet())
 				{
 					if(!translated.containsKey(s))
-						translated.put(s, sec.get(s, String.class));
+						translated.put(s, new LocPair(sec.getName(), sec.get(s, String.class)));
 				}
 			}
 		}
@@ -157,14 +171,20 @@ public class Localizer
 		Log("Attempting to write updated localization file");
 		try
 		{	
+			PrintWriter pw = new PrintWriter(filename);
+			pw.close();
+			
 			File file = new File(filename);
 			file.createNewFile();
-
+			
 			Wini ini = new Wini(file);
 
 			for(String s : translated.keySet())
-				ini.put(section, s, translated.get(s));
-			
+			{
+				LocPair toWrite = translated.get(s);
+				ini.put(toWrite.file, s, toWrite.phrase);
+			}
+				
 			ini.store();
 		}
 		catch(InvalidFileFormatException e)
@@ -181,15 +201,15 @@ public class Localizer
 	// This stubs out phrases to be localized.
 	public static void ScrapeAll()
 	{
-		ArrayList<String> localizeList = new ArrayList<String>();
+		ArrayList<LocPair> localizeList = new ArrayList<LocPair>();
 		AcquireAllFiles(".\\src").forEach((path) -> StripForContents(path, localizeList));
 		
-		for(String toStub : localizeList)
+		for(LocPair toStub : localizeList)
 		{
-			if(!translated.containsKey(toStub))
+			if(!translated.containsKey(toStub.phrase))
 			{
-				translated.put(toStub, "");
-				Log(" Found new stubbed phrase '" + toStub + "'");
+				translated.put(toStub.phrase, new LocPair(toStub.file, ""));
+				Log("Found new stubbed phrase '" + toStub.phrase + "' in " + toStub.file);
 			}
 		}
 	}

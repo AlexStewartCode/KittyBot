@@ -14,6 +14,7 @@ import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.guild.*;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import offline.*;
+import core.Localizer;
 import utils.GlobalLog;
 import net.dv8tion.jda.core.*;
 
@@ -26,15 +27,23 @@ public class Main extends ListenerAdapter
 	private static CommandManager commandManager;
 	private static DatabaseManager databaseManager; 
 	private static Stats stats;
+	private static RPManager rpManager;
 	
 	// Main test location
 	public static void main(String[] args) throws InterruptedException, LoginException, Exception
 	{
+		// Facotry startup.
 		databaseManager = ObjectBuilderFactory.ConstructDatabaseManager();
 		commandManager = ObjectBuilderFactory.ConstructCommandManager();
-		ObjectBuilderFactory.ConstructRPManager();
+		rpManager = ObjectBuilderFactory.ConstructRPManager();
 		stats = ObjectBuilderFactory.ConstructStats(commandManager);
 		
+		// Localizer startup - Potentially integrate with the factory.
+		Localizer.UpdateLocFromDisk();
+		Localizer.ScrapeAll();
+		Localizer.SaveLocToDisk();
+		
+		// Bot startup
 		kitty = new JDABuilder(AccountType.BOT).setToken(Ref.TestToken).buildBlocking();
 		kitty.getPresence().setGame(Game.playing("with a new build"));
 		kitty.addEventListener(new Main());
