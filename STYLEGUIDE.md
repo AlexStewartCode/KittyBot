@@ -41,7 +41,7 @@ public class MyClass
 }
 ```
 
-#### Ternary Operator (the ?:)
+#### Ternary Operator (`?:`)
 Don't.
 
 #### <more to come>
