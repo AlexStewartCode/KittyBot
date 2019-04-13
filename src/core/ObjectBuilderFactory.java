@@ -300,6 +300,7 @@ public class ObjectBuilderFactory
 		manager.Register("givebeans", new CommandGiveBeans(KittyRole.Mod, KittyRating.Safe));
 		manager.Register("rpg", new CommandRPG(KittyRole.Mod, KittyRating.Safe));
 
+		manager.Register("teey", new CommandTeey(KittyRole.General, KittyRating.Safe));
 		manager.Register(new String[]{"perish", "thenperish"}, new CommandPerish(KittyRole.General, KittyRating.Safe));
 		manager.Register("yeet", new CommandYeet(KittyRole.General, KittyRating.Safe));
 		manager.Register("ping", new CommandPing(KittyRole.General, KittyRating.Safe));
