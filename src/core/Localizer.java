@@ -30,6 +30,7 @@ public class Localizer
 	private static void Warn(String str) { GlobalLog.Warn(LogFilter.Strings, str); }
 	private static void Error(String str) { GlobalLog.Error(LogFilter.Strings, str); }
 	
+	
 	// Structure used for holding a pair of strings and any other info we need 
 	// about localized information that is being looked up.
 	private static class LocInfo
@@ -42,8 +43,8 @@ public class Localizer
 			this.file = f;
 			this.phrase = p;
 		}
-	}	
-
+	}
+	
 	// Do processing on each path in the scraped directory here, assuming it's .java
 	public static void StripForContents(Path path, ArrayList<LocInfo> strings)
 	{
@@ -122,6 +123,7 @@ public class Localizer
 		try
 		{
 			String fileContents = ReadFileAsString(filename, Charset.defaultCharset());
+			
 			if(fileContents == null)
 			{
 				File file = new File(filename);
@@ -143,6 +145,7 @@ public class Localizer
 	public static void SaveLocToDisk()
 	{
 		Log("Attempting to write updated localization file");
+		
 		try
 		{	
 			PrintWriter pw = new PrintWriter(filename);
