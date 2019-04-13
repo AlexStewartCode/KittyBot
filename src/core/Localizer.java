@@ -8,11 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
-import org.ini4j.InvalidFileFormatException;
-import org.ini4j.Profile.Section;
-import org.ini4j.Wini;
-import org.sqlite.SQLiteConfig.Encoding;
 import dataStructures.SectionedKeyValueStore;
 import utils.FileUtils;
 import utils.GlobalLog;
@@ -136,10 +131,6 @@ public class Localizer
 			{
 				stringStore = new SectionedKeyValueStore(fileContents);
 			}
-		}
-		catch(InvalidFileFormatException e) 
-		{
-			Error("File issue with format during localization file read");
 		}
 		catch(IOException e)
 		{
