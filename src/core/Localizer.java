@@ -3,13 +3,12 @@ package core;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
-import org.ini4j.InvalidFileFormatException;
-import org.ini4j.Profile.Section;
-import org.ini4j.Wini;
-
+import dataStructures.SectionedKeyValueStore;
 import utils.FileUtils;
 import utils.GlobalLog;
 import utils.LogFilter;
@@ -23,13 +22,14 @@ public class Localizer
 	public final static String filename = "localization.config"; 
 	public final static String functionName = "Localizer.Stub";
 	
-	// Local translation
-	private static HashMap<String, LocInfo> translated = new HashMap<String, LocInfo>();
+	// Local translation storage
+	private static SectionedKeyValueStore stringStore; 
 	
 	// Logging
 	private static void Log(String str) { GlobalLog.Log(LogFilter.Strings, str); }
 	private static void Warn(String str) { GlobalLog.Warn(LogFilter.Strings, str); }
 	private static void Error(String str) { GlobalLog.Error(LogFilter.Strings, str); }
+	
 	
 	// Structure used for holding a pair of strings and any other info we need 
 	// about localized information that is being looked up.
@@ -43,8 +43,8 @@ public class Localizer
 			this.file = f;
 			this.phrase = p;
 		}
-	}	
-
+	}
+	
 	// Do processing on each path in the scraped directory here, assuming it's .java
 	public static void StripForContents(Path path, ArrayList<LocInfo> strings)
 	{
@@ -84,45 +84,55 @@ public class Localizer
 	}
 	
 	// Nothing for now, but in the future will return a parsed and localized version of
-	// the string in question if one can be found.
+	// the string in question if one can be found. If the localized string is empty, 
+	// returns a the key instead which is the default phrase.
 	public static String Stub(String input)
 	{
-		if(translated.containsKey(input))
-		{
-			String value = translated.get(input).phrase;
-			if(value.trim().length() > 0)
-				return value;
-		}
+		if(stringStore == null)
+			return input;
 		
-		return input;
+		String value = stringStore.GetKey(input);
+		if(value == null || value.length() < 1)
+			return input;
+		
+		return value;
 	}
 	
+	// Reads a file to string, adapted from https://stackoverflow.com/a/326440/5383198
+	static String ReadFileAsString(String path, Charset encoding)
+	{
+		try
+		{
+			byte[] encoded = Files.readAllBytes(Paths.get(path));
+			return new String(encoded, encoding);
+		}
+		catch (IOException e)
+		{
+			Warn("No file found to read from!");
+		}
+		
+		return null;
+	}
+
 	// Update localization from the disk on file. Creates the file if it doesn't exist.
 	// This file is internally formatted as an ini file.
 	public static void UpdateLocFromDisk()
 	{
 		Log("Attempting to read localization file");
+		
 		try
 		{
-			File file = new File(filename);
-			file.createNewFile();
+			String fileContents = ReadFileAsString(filename, Charset.defaultCharset());
 			
-			Wini ini = new Wini(file);
-			
-			for(String str : ini.keySet())
+			if(fileContents == null)
 			{
-				// Store everything in all .ini sections
-				Section sec = ini.get(str);
-				for(String s : sec.keySet())
-				{
-					if(!translated.containsKey(s))
-						translated.put(s, new LocInfo(sec.getName(), sec.get(s, String.class)));
-				}
+				File file = new File(filename);
+				file.createNewFile();
 			}
-		}
-		catch(InvalidFileFormatException e) 
-		{
-			Error("File issue with format during localization file read");
+			else
+			{
+				stringStore = new SectionedKeyValueStore(fileContents);
+			}
 		}
 		catch(IOException e)
 		{
@@ -135,27 +145,12 @@ public class Localizer
 	public static void SaveLocToDisk()
 	{
 		Log("Attempting to write updated localization file");
+		
 		try
 		{	
 			PrintWriter pw = new PrintWriter(filename);
+			pw.println(stringStore.toString());
 			pw.close();
-			
-			File file = new File(filename);
-			file.createNewFile();
-			
-			Wini ini = new Wini(file);
-
-			for(String s : translated.keySet())
-			{
-				LocInfo toWrite = translated.get(s);
-				ini.put(toWrite.file, s, toWrite.phrase);
-			}
-				
-			ini.store();
-		}
-		catch(InvalidFileFormatException e)
-		{
-			Error("File issue with format during localization file write");
 		}
 		catch(IOException e)
 		{
@@ -171,12 +166,6 @@ public class Localizer
 		FileUtils.AcquireAllFiles(".\\src").forEach((path) -> StripForContents(path, localizeList));
 		
 		for(LocInfo toStub : localizeList)
-		{
-			if(!translated.containsKey(toStub.phrase))
-			{
-				translated.put(toStub.phrase, new LocInfo(toStub.file, ""));
-				Log("Found new stubbed phrase '" + toStub.phrase + "' in " + toStub.file);
-			}
-		}
+			stringStore.AddKeyValue(toStub.file, toStub.phrase, toStub.phrase);
 	}
 }
