@@ -123,16 +123,15 @@ public class Localizer
 		try
 		{
 			String fileContents = ReadFileAsString(filename, Charset.defaultCharset());
+			System.out.println("File contents: " + fileContents);
 			
 			if(fileContents == null)
 			{
 				File file = new File(filename);
 				file.createNewFile();
 			}
-			else
-			{
-				stringStore = new SectionedKeyValueStore(fileContents);
-			}
+			
+			stringStore = new SectionedKeyValueStore(fileContents);
 		}
 		catch(IOException e)
 		{

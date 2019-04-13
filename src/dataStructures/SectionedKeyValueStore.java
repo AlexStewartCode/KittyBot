@@ -109,6 +109,9 @@ public class SectionedKeyValueStore
 	// account of some characters having specific regex meanings.
 	private void Parse(String input)
 	{
+		if(input == null)
+			return;
+		
 		String[] sections = input.split("\\" + SectionStart);
 
 		for(int sec = 0; sec < sections.length; ++sec)
