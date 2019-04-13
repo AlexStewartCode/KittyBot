@@ -1,8 +1,9 @@
-KittyBot Style Guide
+# KittyBot Style Guide
+
+This document represents the reasonable defaults and expectations for this project, and provides some rationale for the style restrictions! There can always be exceptions to the rules, but they may need justifying.
+
+Code Formatting
 ---
-
-
-# Formatting
 
 #### Indenting
 Tabs are used so that individual developers can configure their own indent width settings that won't be enforced on others working on the project. 
@@ -51,7 +52,8 @@ Favor a broad to narrow naming scheme to promote autocomplete grouping. For exam
 Don't.
 
 
-# Architecture 
+Architecture 
+---
 
 #### Commands
 All commands get spawned on their own threads, and should be implemented in a thread-safe way. Commands all derive from the Command.java class, and use the custom types defined in KittyBot. In order to make any later changes easier and decouple the command logic from core and routing, no JDA structures should be directly exposed in commands, and instead everything needed should be added to the kitty structures that add space to the system. Commands should override the `HelpText` and `Run` functions. Commands are registered in the ObjectBuilderFactory, and the command registration structure can be used for sub-commands as needed. See the RPG for an example.
