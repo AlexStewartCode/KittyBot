@@ -17,7 +17,7 @@ public class CommandPollVote extends Command
 		{
 			if(guild.hasVoted.contains(user.uniqueID))
 			{
-				res.Call(Localizer.Stub("You already voted"));
+				res.Call(Localizer.Stub("You already voted!"));
 				return;
 			}
 			try 
@@ -41,6 +41,7 @@ public class CommandPollVote extends Command
 				return;
 			}
 		}
+		
 		res.Call(Localizer.Stub("There is no poll running!"));
 	}
 }
