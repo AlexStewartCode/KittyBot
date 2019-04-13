@@ -17,6 +17,12 @@ public class CommandColiru extends Command
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
+		if(input.args.trim().length() < 1)
+		{
+			res.Call(Localizer.Stub("Please provide some c++ code to attempt to compile!"));
+			return;
+		}
+		
 		res.Call(compiler.compileCPlus(input.args));
 	}
 

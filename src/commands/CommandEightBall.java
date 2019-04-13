@@ -40,6 +40,9 @@ public class CommandEightBall extends Command
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
+		if(input.args.trim().length() < 1)
+			res.Call(Localizer.Stub("Hmm? You'll need to ask a question!"));
+		
 		res.Call(answers[(int) (Math.random()*answers.length)]);
 	}
 }

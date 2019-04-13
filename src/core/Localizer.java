@@ -92,7 +92,7 @@ public class Localizer
 			return input;
 		
 		String value = stringStore.GetKey(input);
-		if(value == null || value.length() < 1)
+		if(value == null || value.trim().length() < 1)
 			return input;
 		
 		return value;

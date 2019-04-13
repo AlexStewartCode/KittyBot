@@ -312,7 +312,7 @@ public class ObjectBuilderFactory
 		manager.Register("results", new CommandPollResults(KittyRole.General, KittyRating.Safe));
 		manager.Register("showpoll", new CommandPollShow(KittyRole.General, KittyRating.Safe));
 		manager.Register("wolfram", new CommandWolfram(KittyRole.General, KittyRating.Safe));
-		manager.Register(new String[] {"c++", "g++", "cplus",}, new CommandColiru(KittyRole.General, KittyRating.Safe));
+		manager.Register(new String[] {"c++", "g++", "cplus","cpp"}, new CommandColiru(KittyRole.General, KittyRating.Safe));
 		manager.Register(new String[] {"java", "jdoodle" }, new CommandJDoodle(KittyRole.General, KittyRating.Safe));
 		manager.Register("beans", new CommandBeansShow(KittyRole.General, KittyRating.Safe));
 		manager.Register("role", new CommandRole(KittyRole.General, KittyRating.Safe));
