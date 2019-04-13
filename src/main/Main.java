@@ -1,7 +1,6 @@
 package main;
 
 import javax.security.auth.login.LoginException;
-
 import core.*;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
@@ -18,8 +17,10 @@ import core.Localizer;
 import utils.GlobalLog;
 import net.dv8tion.jda.core.*;
 
-// NOTE(wisp): http://www.slf4j.org/ - this JDA logging tool has been disabled by specifying NOP implementation.
-// NOTE(wisp): Application entry point!
+// http://www.slf4j.org/ - this JDA logging tool has been disabled by specifying NOP implementation.
+// This is the application entry point, and bot startup location!
+
+@SuppressWarnings("unused")
 public class Main extends ListenerAdapter
 {
 	// Variables and stuff
@@ -37,12 +38,11 @@ public class Main extends ListenerAdapter
 		Localizer.ScrapeAll();
 		Localizer.SaveLocToDisk();
 		
-		// Facotry startup.
+		// Factory startup
 		databaseManager = ObjectBuilderFactory.ConstructDatabaseManager();
 		commandManager = ObjectBuilderFactory.ConstructCommandManager();
 		rpManager = ObjectBuilderFactory.ConstructRPManager();
 		stats = ObjectBuilderFactory.ConstructStats(commandManager);
-		
 		
 		// Bot startup
 		kitty = new JDABuilder(AccountType.BOT).setToken(Ref.TestToken).buildBlocking();
@@ -56,8 +56,6 @@ public class Main extends ListenerAdapter
 		// Tweak the event as necessary
 		if(!PreProcessSetup(event))
 			return;
-		
-		GlobalLog.Log("Parseable message recieved!");
 		
 		// Factory objects
 		KittyUser user = ObjectBuilderFactory.ExtractUser(event);
@@ -75,7 +73,7 @@ public class Main extends ListenerAdapter
 		// Track beans!
 		user.ChangeBeans(1);
 		
-		//RP logging system
+		// RP logging system
 		RPManager.instance.addLine(channel, user, input);
 		
 		// Issue the command
@@ -141,6 +139,7 @@ public class Main extends ListenerAdapter
 	{
 		databaseManager.Upkeep();
 		RPManager.Upkeep(kitty);
+		
 		return true;
 	}
 }
