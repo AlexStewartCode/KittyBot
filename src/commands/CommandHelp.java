@@ -25,7 +25,7 @@ public class CommandHelp extends Command
 		
 		if(help == null)
 		{
-			help = Localizer.Stub("You can get help with a specific command by typing `!help command`!\nYou can also look at <https://www.rinsnowmew.com/bot/info/#commands>\nGeneral Commands: `boop, roll, choose, help, info, vote, results, showpoll, wolfram, cplus, java, beans, role, bet, yeet`");
+			help = Localizer.Stub("You can get help with a specific command by typing `!help command`!\nGeneral Commands: `boop, roll, choose, help, info, vote, results, showpoll, wolfram, cplus, java, beans, role, bet, yeet`");
 		}
 		else
 		{
