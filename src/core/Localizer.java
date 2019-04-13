@@ -88,13 +88,18 @@ public class Localizer
 	}
 	
 	// Nothing for now, but in the future will return a parsed and localized version of
-	// the string in question if one can be found.
+	// the string in question if one can be found. If the localized string is empty, 
+	// returns a the key instead which is the default phrase.
 	public static String Stub(String input)
 	{
 		if(stringStore == null)
 			return input;
 		
-		return stringStore.GetKey(input);
+		String value = stringStore.GetKey(input);
+		if(value.length() < 1)
+			return input;
+		
+		return value;
 	}
 	
 	// Reads a file to string, adapted from https://stackoverflow.com/a/326440/5383198

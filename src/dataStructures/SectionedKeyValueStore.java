@@ -12,11 +12,12 @@ import java.util.function.Consumer;
 //
 // [ExampleSection]
 // Key=Value
-//  Valid Ridiculous Key&\n\t_.:;foo   =Some Value
-// Key=
+//  Valid Ridiculous Key&\n\t_.:;foo  =  \tValid Ridiculous Value*&%$()^.[]{}@
+// EmptyValue=
 //
-// Note that the sections are NOT designed to allow for duplicate keys across them. This is a restriction
-// of the structure, but can be changed later potentially.
+// Note that the sections are NOT designed to allow for duplicate keys across them. 
+// This is a restriction of the structure, but can be changed later potentially. 
+// The only value not allowed in a key or value is the KeyValueSplit.
 public class SectionedKeyValueStore
 {
 	// Variables
@@ -37,31 +38,6 @@ public class SectionedKeyValueStore
 		sectionKeyValue = new HashMap<String, HashMap<String, String>>();
 		keyValue = new HashMap<String, String>();
 		Parse(input);
-	}
-	
-	// Adds a KeyValue pair to the specified section if it's not already there.
-	// Also creates the section if it's not already present.
-	public void AddKeyValue(String sectionName, String key, String value)
-	{
-		AddSection(sectionName);
-		sectionKeyValue.get(sectionName).putIfAbsent(key, value);
-		keyValue.putIfAbsent(key, value);
-	}
-	
-	// Returns a HashMap of Keys to Values for a given section
-	@SuppressWarnings("unchecked")
-	public HashMap<String, String> GetSection(String sectionName)
-	{
-		return (HashMap<String, String>) sectionKeyValue.get(sectionName).clone();
-	}
-
-	// Look up a global key
-	public String GetKey(String key)
-	{
-		if(keyValue.containsKey(key))
-			return keyValue.get(key);
-		
-		return null;
 	}
 	
 	// Calls back on each item in the entire structure. Provides section, then a pair of the keyString and valueString.
@@ -94,37 +70,38 @@ public class SectionedKeyValueStore
 		}
 	}
 	
-	// Stores the internal hashmap as a string then reutrns it. 
-	// Places 1 newline between the sections.
+	// Parses the internal hashmap as a string then reutrns it, featuring sections. 
+	// Iterates over all key/value pairs in the section and print them. Does not print 
+	// the value of a given key if it is the same as the key.
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	public String toString()
 	{
 		String out = "";
 		
+		// Iterates over the sections and 
 		Iterator it = sectionKeyValue.entrySet().iterator();
 		while (it.hasNext())
 		{
 			Map.Entry pair = (Map.Entry)it.next();
-			out += ("" + SectionStart + pair.getKey() + SectionEnd + "\n");
+			out += ("" + SectionStart + pair.getKey() + SectionEnd + KeyValueLineSeparator);
 			
 			Iterator internal = ((HashMap<String, String>)pair.getValue()).entrySet().iterator();
-			
 			while(internal.hasNext())
 			{
 				Map.Entry internalPair = (Map.Entry)internal.next();
-				out += (internalPair.getKey() + KeyValueSplit + internalPair.getValue()) + KeyValueLineSeparator;
+				String key = (String)internalPair.getKey();
+				String value = (String)internalPair.getValue();
+				
+				if(key == value)
+					out += (key + KeyValueSplit) + KeyValueLineSeparator;
+				else
+					out += (key + KeyValueSplit + value) + KeyValueLineSeparator;
 			}
 			
-			out += "\n";
+			out += KeyValueLineSeparator;
 		}
 		
 		return out;
-	}
-	
-	// Adds a given section to the hashmap if it's not already present
-	private void AddSection(String sectionName)
-	{
-		sectionKeyValue.putIfAbsent(sectionName, new HashMap<String, String>());
 	}
 	
 	// Parses out the string passed in into the sectionkeyValue HashMap. 
@@ -178,5 +155,36 @@ public class SectionedKeyValueStore
 		
 		for(int i = 0; i < toPrint.length; ++i)
 			System.out.println(toPrint[i]);
+	}
+	
+	// Adds a KeyValue pair to the specified section if it's not already there.
+	// Also creates the section if it's not already present.
+	public void AddKeyValue(String sectionName, String key, String value)
+	{
+		AddSection(sectionName);
+		sectionKeyValue.get(sectionName).putIfAbsent(key, value);
+		keyValue.putIfAbsent(key, value);
+	}
+	
+	// Adds a given section to the hashmap if it's not already present
+	public void AddSection(String sectionName)
+	{
+		sectionKeyValue.putIfAbsent(sectionName, new HashMap<String, String>());
+	}
+	
+	// Returns a HashMap of Keys to Values for a given section
+	@SuppressWarnings("unchecked")
+	public HashMap<String, String> GetSection(String sectionName)
+	{
+		return (HashMap<String, String>) sectionKeyValue.get(sectionName).clone();
+	}
+
+	// Look up a global key
+	public String GetKey(String key)
+	{
+		if(keyValue.containsKey(key))
+			return keyValue.get(key);
+		
+		return null;
 	}
 }
