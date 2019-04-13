@@ -15,27 +15,27 @@ import dataStructures.UserInput;
 import utils.ImageOverlayBuilder;
 import utils.ImageUtils;
 
-public class CommandYeet extends Command
+public class CommandTeey extends Command
 {
 	// Required constructor
-	public CommandYeet(KittyRole level, KittyRating rating) { super(level, rating); }
+	public CommandTeey(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	private static Long num = 0l;
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("Yeet yourself or yeet a friend with @!"); }
+	public String HelpText() { return Localizer.Stub("Teey yourself back into existance, or teey a friend with @!"); }
 	
 	// Called when the command is run!
 	@Override 
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String name = null;
-		File yeetFile = null;
-		File yeeteeFile = null;
+		File teeyFile = null;
+		File teeyeeFile = null;
 		
 		synchronized(num)
 		{
-			name = "yeet_" + num + ".gif";
+			name = "teey_" + num + ".gif";
 			++num;
 		}
 		
@@ -52,20 +52,20 @@ public class CommandYeet extends Command
 			if(yeeteeFilename == null)
 				return;
 			
-			yeeteeFile = new File(yeeteeFilename);
-			ImageOverlayBuilder builder = new ImageOverlayBuilder("assets/yeet/frames/", "yeet ", 24, 18);
-			builder.Overlay(ImageIO.read(yeeteeFile), name);
+			teeyeeFile = new File(yeeteeFilename);
+			ImageOverlayBuilder builder = new ImageOverlayBuilder("assets/teey/frames/", "teey ", 24, 18);
+			builder.Overlay(ImageIO.read(teeyeeFile), name);
 		} 
 		catch (IOException e) 
 		{
 			e.printStackTrace();
 		}
 		
-		yeetFile = new File (name);
-		res.CallFile(yeetFile, "gif");
+		teeyFile = new File (name);
+		res.CallFile(teeyFile, "gif");
 
 		// Thread cleanup...
-		ImageUtils.BlockingFileDelete(yeetFile);
-		ImageUtils.BlockingFileDelete(yeeteeFile);
+		ImageUtils.BlockingFileDelete(teeyFile);
+		ImageUtils.BlockingFileDelete(teeyeeFile);
 	}
 }
