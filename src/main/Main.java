@@ -32,16 +32,17 @@ public class Main extends ListenerAdapter
 	// Main test location
 	public static void main(String[] args) throws InterruptedException, LoginException, Exception
 	{
+		// Localizer startup - Potentially integrate with the factory. Needs to happen first tho.
+		Localizer.UpdateLocFromDisk();
+		Localizer.ScrapeAll();
+		Localizer.SaveLocToDisk();
+		
 		// Facotry startup.
 		databaseManager = ObjectBuilderFactory.ConstructDatabaseManager();
 		commandManager = ObjectBuilderFactory.ConstructCommandManager();
 		rpManager = ObjectBuilderFactory.ConstructRPManager();
 		stats = ObjectBuilderFactory.ConstructStats(commandManager);
 		
-		// Localizer startup - Potentially integrate with the factory.
-		Localizer.UpdateLocFromDisk();
-		Localizer.ScrapeAll();
-		Localizer.SaveLocToDisk();
 		
 		// Bot startup
 		kitty = new JDABuilder(AccountType.BOT).setToken(Ref.TestToken).buildBlocking();
