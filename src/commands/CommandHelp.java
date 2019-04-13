@@ -9,8 +9,7 @@ import dataStructures.KittyUser;
 import dataStructures.Response;
 import dataStructures.UserInput;
 
-// TODO: Convert this to a per-command help string! This lets us do all sorts of neat stuff,
-// mostly tho it lets us construct this on the fly or by hand for a specific command!
+// Either allows for specifically looking up commands or gets a list of general commands to try out!
 public class CommandHelp extends Command
 {
 	public CommandHelp(KittyRole level, KittyRating rating) { super(level, rating); }
