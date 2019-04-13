@@ -19,7 +19,7 @@ public class CommandTweet extends Command
 		try {
 			res.Call(tweet.tweet(input.args));
 		} catch (Exception e) {
-			res.Call(Localizer.Stub("FUCKED UP HARD"));
+			res.Call(Localizer.Stub("Tweet command failed!"));
 		}
 	}
 }
