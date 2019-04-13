@@ -21,14 +21,15 @@ import javax.imageio.stream.ImageOutputStream;
 
 // A class that overlays an image based on a series of frames that will be converted into a gif.
 // The class targets a pixel with max Green value and no red or blue that's fully opaque (0, 255, 0)
-// and then places the center of the overlay image on the specified location.
-public class ImageOverlayHelper 
+// and then places the center of the overlay image on the specified location. Must be 32-bit PNGs with RGBA format.
+public class ImageOverlayBuilder 
 {
 	// Lets get some trash established for the yeet
 	public static final boolean VERBOSE = false;
 	public static final int NONE = -1;
 	public static final int PIXEL_BYTE_LENGTH = 4; // 32-bit PNG, RGBA
-	public static final int FPS = 18;              // This doesn't quite line up, multiples of 10 are as specific as it gets.
+	public static final int DEFAULT_FPS = 18;
+	public static final String FRAME_FILE_EXTENSION = ".png";
 	public static final String LOG_HEADER = "[Overlay] ";
 	
 	// Logging intermediate functions
@@ -41,13 +42,21 @@ public class ImageOverlayHelper
 	private final String basePath; // The folder location of the files
 	private final String baseName; // This is the consistent part of the filename of each frame, for example "image "
 	private final int frameCount;  // The number of frames in the image
+	private final int fps;         // This doesn't quite line up, multiples of 10 are as specific as it gets.
 	
-	// Constructor
-	public ImageOverlayHelper(String basePath, String baseName, int frameCount)
+	// Required minimal constructor
+	public ImageOverlayBuilder(String basePath, String baseName, int frameCount)
+	{
+		this(basePath, baseName, frameCount, DEFAULT_FPS);
+	}
+	
+	// Constructor with framerate specification
+	public ImageOverlayBuilder(String basePath, String baseName, int frameCount, int fps)
 	{
 		this.basePath = basePath;
 		this.baseName = baseName;
 		this.frameCount = frameCount;
+		this.fps = fps;
 	}
 	
 	// Performs a per-frame overlay, catches IO errors as a note.)
@@ -69,13 +78,13 @@ public class ImageOverlayHelper
 	}
 	
 	// Processing the image frames to construct a gif. Relies on (0,255,0) pixel for image center specification.
-	public void ProcessOverlay(BufferedImage overlay, String outfileName) throws IOException
+	private void ProcessOverlay(BufferedImage overlay, String outfileName) throws IOException
 	{
 		BufferedImage[] frames = new BufferedImage[frameCount];
 
 		for(int i = 0; i < frameCount; ++i)
 		{
-			BufferedImage out = CombineImages(basePath + baseName + i + ".png", overlay);
+			BufferedImage out = CombineImages(basePath + baseName + i + FRAME_FILE_EXTENSION , overlay);
 			
 			if(out != null)
 				frames[i] = out;
@@ -85,7 +94,7 @@ public class ImageOverlayHelper
 		
 		Verbose("Processed " + frameCount + " frames, writing...");
 		ImageOutputStream output = new FileImageOutputStream(new File(outfileName));
-		GifSequenceWriter writer = new GifSequenceWriter(output, frames[0].getType(), FPS, true);
+		GifSequenceWriter writer = new GifSequenceWriter(output, frames[0].getType(), fps, true);
 				
 		for(int i = 0; i < frameCount; ++i) 
 			writer.writeToSequence(frames[i]);
@@ -97,7 +106,7 @@ public class ImageOverlayHelper
 	// Performs an overlay at a pixel location. We're making some assumptions here, mostly that there is going
 	// to be an RGBA-32-bit encoded PNG image read in for our parsing purposes. We then look for a 0, 255, 0
 	// green pixel on the base frame to apply the overlay buffer to, centered.
-	public static BufferedImage CombineImages(String pathBase, BufferedImage overlay) throws IOException
+	private BufferedImage CombineImages(String pathBase, BufferedImage overlay) throws IOException
 	{
 		// Acquire images
 		BufferedImage imageBase = null;
@@ -187,7 +196,7 @@ public class ImageOverlayHelper
 	// This work is licensed under the Creative Commons Attribution 3.0 Unported License. 
 	// To view a copy of this license visit http://creativecommons.org/licenses/by/3.0/
 	// NOTE: ^ This is Elliot's original license
-	public static class GifSequenceWriter 
+	private static class GifSequenceWriter 
 	{
 		protected ImageWriter gifWriter;
 		protected ImageWriteParam imageWriteParam;
