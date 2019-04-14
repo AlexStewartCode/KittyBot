@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import dataStructures.SectionedKeyValueStore;
+import dataStructures.TaggedPairStore;
 import utils.FileUtils;
 import utils.GlobalLog;
 import utils.LogFilter;
@@ -25,7 +25,7 @@ public abstract class LocBase
 	public final String functionName; // Example: "Localizer.Stub";
 	
 	// Local translation storage
-	private SectionedKeyValueStore stringStore; 
+	protected TaggedPairStore stringStore; 
 	
 	// Logging
 	private void Log(String str) { GlobalLog.Log(LogFilter.Strings, str); }
@@ -139,7 +139,7 @@ public abstract class LocBase
 				file.createNewFile();
 			}
 			
-			stringStore = new SectionedKeyValueStore(fileContents);
+			stringStore = new TaggedPairStore(fileContents);
 		}
 		catch(IOException e)
 		{

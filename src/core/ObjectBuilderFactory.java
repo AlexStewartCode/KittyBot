@@ -13,7 +13,7 @@ import utils.LogFilter;
 // NOTE(wisp): Isolated factory to assist with storage and caching if needed.
 // This also minimizes the number of places JDA interacts with our codebase.
 // As it stands, if the object name begins with Kitty, it's constructed here.
-// TODO: Make all methods ID based instead of event based  
+// TODO: Make all methods ID based instead of event based 
 public class ObjectBuilderFactory 
 {
 	// Key: guild string id, Value: guild information
@@ -34,9 +34,17 @@ public class ObjectBuilderFactory
 	// RPManger for tracking RP system
 	private static RPManager rpManager; 
 	
-	// Lazy initialization style for 
+	// Localization classes - these are singletons, but should be initialized before almost all other 
+	// things so their inclusion in the factory is to ensure they're started at the correct time.
+	@SuppressWarnings("unused") private static Localizer locStrings;
+	@SuppressWarnings("unused") private static LocCommands locCommands;
+	
+	// Lazy initialization multithreaded mutex stuff to prevent explosions.
+	// TODO: Investigate using 'synchronized' instead potentially
 	private static boolean hasInitialized;
 	private static Semaphore initMutex = new Semaphore(1);
+	
+	// This is it, this is how the lazy init starts!
 	private static void LazyInit()
 	{
 		if(hasInitialized)
@@ -47,26 +55,31 @@ public class ObjectBuilderFactory
 			initMutex.acquire();
 			try
 			{
-				// Initialization here. This is where we could read from something external.
+				// structure initialization 
+				// Construct necessary data structures.
 				guildCache = new HashMap<String, KittyGuild>();
 				userCache = new HashMap<String, KittyUser>();
 				channelCache = new HashMap<String, KittyChannel>();
 				database = null;
 				stats = null;
+				
+				// Start by reading from things that are external. Because
+				// we require these things to be resolved before the rest of the application,
+				// we place them here.
+				locStrings = new Localizer();
+				locCommands = new LocCommands();
 			}
 			finally
 			{
 				initMutex.release();
+				hasInitialized = true;
 			}
 		}
 		catch(InterruptedException ie)
 		{
 			GlobalLog.Error(LogFilter.Core, "Issue during object builder lazy initialization."
-					+ " The factory was not initialized, "
-					+ "and kitty will not be able to continue functionally.");
+				+ " The factory was not initialized, and kitty will not be able to continue functionally.");
 		}
-
-		hasInitialized = true;
 	}
 	
 	// Explicitly locks: guildCache

@@ -1,8 +1,12 @@
 package core;
 
+import java.util.ArrayList;
 import utils.GlobalLog;
 import utils.LogFilter;
+import dataStructures.Pair;
 
+// Performs the same localization for the strings associated with command names as 
+// is performed with general strings in the application
 public class LocCommands extends LocBase
 {
 	public static final String fileName = "locCommands.config";
@@ -33,5 +37,13 @@ public class LocCommands extends LocBase
 	public static String Stub(String toStub)
 	{
 		return instance.GetKey(toStub);
+	}
+	
+	// Gets all of the un-translated defaults in the commands list.
+	public static ArrayList<String> GetUnlocalizedCommands()
+	{
+		ArrayList<String> raw = new ArrayList<>();
+		instance.stringStore.ForEach((pair) -> raw.add((String)((Pair<?, ?>)pair).First ));
+		return raw;
 	}
 }
