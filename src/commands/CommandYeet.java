@@ -23,7 +23,7 @@ public class CommandYeet extends Command
 	private static Long num = 0l;
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("Yeet yourself or yeet a friend with @!"); }
+	public String HelpText() { return Localizer.Stub("YeetInfo"); }
 	
 	// Called when the command is run!
 	@Override 

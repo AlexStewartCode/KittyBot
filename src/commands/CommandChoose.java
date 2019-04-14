@@ -14,7 +14,7 @@ public class CommandChoose extends Command
 	public CommandChoose(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("With an input of x,y,z where x y and z are all choices, kitty will choose one"); }
+	public String HelpText() { return Localizer.Stub("ChooseInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
@@ -22,10 +22,10 @@ public class CommandChoose extends Command
 		String [] choices = input.args.split(",");
 		if(choices.length == 1)
 		{
-			res.Call("I can't choose from *one* thing!");
+			res.Call(Localizer.Stub("ChooseOne"));
 			return;
 		}
 		
-		res.Call(String.format(Localizer.Stub("I chooooooose %s!"), (choices[(int) (Math.random()*choices.length)]).toString()));
+		res.Call(String.format(Localizer.Stub("ChooseChoice"), (choices[(int) (Math.random()*choices.length)]).toString()));
 	}
 }
