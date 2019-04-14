@@ -15,13 +15,13 @@ public class CommandWolfram extends Command
 	public CommandWolfram(KittyRole level, KittyRating rating) { super(level, rating);}
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("Will query wolframalpha with your question and give a full image output of the answer"); }
+	public String HelpText() { return Localizer.Stub("WolframInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.args == null || input.args.trim().length() == 0)
-			res.Call(Localizer.Stub("You need to provide some arguments!"));
+			res.Call(Localizer.Stub("WolframNoArgs"));
 		
 		try 
 		{
@@ -31,7 +31,7 @@ public class CommandWolfram extends Command
 		} 
 		catch (IOException e) 
 		{
-			res.Call(Localizer.Stub("Something went wrong!"));
+			res.Call(Localizer.Stub("WolframError"));
 		}
 	}
 }

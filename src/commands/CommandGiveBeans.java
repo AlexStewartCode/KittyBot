@@ -9,7 +9,7 @@ public class CommandGiveBeans extends Command
 	public CommandGiveBeans (KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("Gives beans to the mentioned users!"); }
+	public String HelpText() { return Localizer.Stub("GiveBeansInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
@@ -20,20 +20,20 @@ public class CommandGiveBeans extends Command
 		}
 		catch (NumberFormatException e)
 		{
-			res.Call(Localizer.Stub("That's not a valid number!"));
+			res.Call(Localizer.Stub("GiveBeansInvalid"));
 			return;
 		}
 		
 		if(input.mentions == null)
 		{
-			res.Call(Localizer.Stub("You didn't mention anyone!"));
+			res.Call(Localizer.Stub("GiveBeansNoneMentioned"));
 			return;
 		}
 		
 		for(int i = 0; i < input.mentions.length; i++)
 		{
 			input.mentions[i].ChangeBeans(beans);
-			res.Call(String.format(Localizer.Stub("Gave %s %s beans!"), input.mentions[i].name, "" + beans));
+			res.Call(String.format(Localizer.Stub("GiveBeansSuccess"), input.mentions[i].name, "" + beans));
 		}
 	}
 }

@@ -23,7 +23,7 @@ public class CommandPerish  extends Command
 	public CommandPerish(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("Adds a red, 'a n g e r y' overlay to your icon or the icon of a friend you mentioned"); };
+	public String HelpText() { return Localizer.Stub("PerishInfo"); };
 	
 	private static Long num = 0l;
 	

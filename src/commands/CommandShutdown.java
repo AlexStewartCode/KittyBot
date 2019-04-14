@@ -20,7 +20,7 @@ public class CommandShutdown extends Command
 	public CommandShutdown(KittyRole level, KittyRating rating) { super(level, rating); }
 
 	@Override
-	public String HelpText() { return Localizer.Stub("Stops kitty. `-s` or `safe` as an argument attempts to sync off the database before shutdown."); }
+	public String HelpText() { return Localizer.Stub("ShutdownInfo"); }
 	
 	// Called when the command is run!
 	@Override 

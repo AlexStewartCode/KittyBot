@@ -23,7 +23,7 @@ public class CommandRPG extends Command
 	}
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("Admin+ command only right now - experimental text RPG! Format is !rpg <rpg command>"); };
+	public String HelpText() { return Localizer.Stub("RPGInfo"); };
 	
 	
 	@Override
@@ -45,7 +45,7 @@ public class CommandRPG extends Command
 		
 		if(result == null)
 		{
-			res.Call(Localizer.Stub("Invalid RPG Command!"));
+			res.Call(Localizer.Stub("RPGInvalid"));
 			return;
 		}
 		

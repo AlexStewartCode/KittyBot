@@ -15,11 +15,11 @@ public class CommandInfo extends Command
 	public CommandInfo(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("Provides some extra info about KittyBot"); }
+	public String HelpText() { return Localizer.Stub("InfoInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		res.Call(Localizer.Stub("I'm a Java application written with JDA! Check out my repo at <https://github.com/AlexStewartCode/KittyBot>"));
+		res.Call(Localizer.Stub("InfoResponse"));
 	}
 }

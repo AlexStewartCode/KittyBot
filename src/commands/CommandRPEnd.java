@@ -14,7 +14,7 @@ public class CommandRPEnd extends Command
 	public CommandRPEnd (KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("Ends RP in channel"); }
+	public String HelpText() { return Localizer.Stub("RPEndInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
@@ -33,11 +33,11 @@ public class CommandRPEnd extends Command
 		if(sending != null)
 		{
 			res.CallFile(sending, "txt");
-			res.Call(Localizer.Stub("Here's your file!"));
+			res.Call(Localizer.Stub("RPEndFileOut"));
 		}
 		else
 		{
-			res.Call(Localizer.Stub("You can't end this RP!"));
+			res.Call(Localizer.Stub("RPEndError"));
 		}
 	}
 }

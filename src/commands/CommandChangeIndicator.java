@@ -9,7 +9,7 @@ public class CommandChangeIndicator extends Command
 	public CommandChangeIndicator(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("Changes the command indicator to any single character. By default, it's '!'. If more than one character is provided, the first one is used!"); }
+	public String HelpText() { return Localizer.Stub("ChangeIndicatorInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
@@ -17,11 +17,11 @@ public class CommandChangeIndicator extends Command
 		String arg = input.args.trim();
 		if(arg.length() == 0)
 		{
-			res.Call("Please specify a letter or symbol to use!");
+			res.Call(Localizer.Stub("ChangeIndicatorError"));
 			return;
 		}
 		
 		guild.SetCommandIndicator(arg.substring(0, 1));
-		res.Call(String.format(Localizer.Stub("Indicator changed to `%s`"), guild.GetCommandIndicator()));
+		res.Call(String.format(Localizer.Stub("ChangeIndicatorChanged"), guild.GetCommandIndicator()));
 	}
 }

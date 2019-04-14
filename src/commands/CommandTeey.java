@@ -23,7 +23,7 @@ public class CommandTeey extends Command
 	private static Long num = 0l;
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("Teey yourself back into existance, or teey a friend with @!"); }
+	public String HelpText() { return Localizer.Stub("TeeyInfo"); }
 	
 	// Called when the command is run!
 	@Override 

@@ -9,11 +9,11 @@ public class CommandBeansShow extends Command
 	public CommandBeansShow(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("Displays how many beans you have"); };
+	public String HelpText() { return Localizer.Stub("BeansShowInfo"); };
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		res.Call(String.format(Localizer.Stub("You have %s beans!"), user.GetBeans()));
+		res.Call(String.format(Localizer.Stub("BeansShowDisplay"), user.GetBeans()));
 	}
 }

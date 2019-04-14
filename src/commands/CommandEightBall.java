@@ -8,40 +8,40 @@ public class CommandEightBall extends Command
 {
 	String [] answers = 
 	{ 
-			  Localizer.Stub("It is certain.") 
-			, Localizer.Stub("It is decidedly so.")
-			, Localizer.Stub("Without a doubt.")
-			, Localizer.Stub("Yes - definitely.")
-			, Localizer.Stub("You may rely on it.")
-			, Localizer.Stub("As I see it, yes.")
-			, Localizer.Stub("Most likely.")
-			, Localizer.Stub("Outlook good.")
-			, Localizer.Stub("Yes.")
-			, Localizer.Stub("Signs point to yes.")
+			  Localizer.Stub("EightBallYes1") 
+			, Localizer.Stub("EightBallYes2")
+			, Localizer.Stub("EightBallYes3")
+			, Localizer.Stub("EightBallYes4")
+			, Localizer.Stub("EightBallYes5")
+			, Localizer.Stub("EightBallYes6")
+			, Localizer.Stub("EightBallYes7")
+			, Localizer.Stub("EightBallYes8")
+			, Localizer.Stub("EightBallYes9")
+			, Localizer.Stub("EightBallYes10")
 			
-			, Localizer.Stub("Reply hazy, try again.")
-			, Localizer.Stub("Ask again later.")
-			, Localizer.Stub("Better not tell you now.")
-			, Localizer.Stub("Cannot predict now.")
-			, Localizer.Stub("Concentrate and ask again.")
+			, Localizer.Stub("EightBallMaybe1")
+			, Localizer.Stub("EightBallMaybe2")
+			, Localizer.Stub("EightBallMaybe3")
+			, Localizer.Stub("EightBallMaybe4")
+			, Localizer.Stub("EightBallMaybe5")
 			
-			, Localizer.Stub("Don't count on it.")
-			, Localizer.Stub("My reply is no.")
-			, Localizer.Stub("My sources say no.")
-			, Localizer.Stub("Outlook not so good.")
-			, Localizer.Stub("Very doubtful.")
+			, Localizer.Stub("EightBallNo1")
+			, Localizer.Stub("EightBallNo2")
+			, Localizer.Stub("EightBallNo3")
+			, Localizer.Stub("EightBallNo4")
+			, Localizer.Stub("EightBallNo5")
 	};
 	
 	public CommandEightBall(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("Answers a yes or no question! Warning: Kitty can not actually tell the future, she claims no responsibility for any lion mauling, lack of lottery wins, or felony charges."); }
+	public String HelpText() { return Localizer.Stub("EightBallInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.args.trim().length() < 1)
-			res.Call(Localizer.Stub("Hmm? You'll need to ask a question!"));
+			res.Call(Localizer.Stub("EightBallError"));
 		
 		res.Call(answers[(int) (Math.random()*answers.length)]);
 	}

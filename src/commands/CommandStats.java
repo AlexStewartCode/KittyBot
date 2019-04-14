@@ -17,7 +17,7 @@ public class CommandStats extends Command
 	public CommandStats(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("Displays the actively running KittyBot application information"); }
+	public String HelpText() { return Localizer.Stub("StatsInfo"); }
 	
 	// Called when the command is run!
 	@Override 
