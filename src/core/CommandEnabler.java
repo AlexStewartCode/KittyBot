@@ -31,6 +31,7 @@ public class CommandEnabler
 	
 	public CommandEnabler()
 	{
+		GlobalLog.Log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
 		enabledMap = new HashMap<>();
 		keyList = new ArrayList<>();
 		
@@ -45,18 +46,22 @@ public class CommandEnabler
 		File f = new File(filename);
 		if(f.isFile() && f.canRead())
 		{
-			String content = FileUtils.ReadContent(f);
+			String content = FileUtils.ReadContent(f).trim();
 			String[] lines = content.split("" + pairSeparator);
 			
 			for(int i = 0; i < lines.length; ++i)
 			{
 				String[] pair = lines[i].split(pairSplit);
+				
+				if(pair.length < 2)
+					continue;
+				
 				String key = pair[0].trim();
-				String value = pair[0].trim().toLowerCase();
+				String value = pair[1].trim().toLowerCase();
 				
 				keyList.add(key);
-				
-				if(value == enabled)
+
+				if(value.equalsIgnoreCase(enabled))
 					enabledMap.putIfAbsent(key, true);
 				else
 					enabledMap.putIfAbsent(key, false);
@@ -71,7 +76,14 @@ public class CommandEnabler
 		ArrayList<String> unloc = LocCommands.GetUnlocalizedCommands();
 		
 		for(int i = 0; i < unloc.size(); ++i)
-			enabledMap.putIfAbsent(unloc.get(i), defaultEnabledState);
+		{
+			String command = unloc.get(i);
+			if(enabledMap.putIfAbsent(command, defaultEnabledState) == null)
+			{
+				GlobalLog.Log(LogFilter.Strings, "Identified new toggleable raw command: " + command);
+				keyList.add(command);
+			}
+		}
 	}
 	
 	// Write out enabled/disabled file info.
@@ -101,6 +113,7 @@ public class CommandEnabler
 		}
 	}
 	
+	// Looks up a key to see if it's enabled or not
 	public boolean IsEnabled(String key)
 	{
 		if(enabledMap.containsKey(key))
