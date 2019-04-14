@@ -21,8 +21,8 @@ public class CommandEnabler
 	public static final String filename = "commands.config";
 	public static final String pairSplit = "=";
 	public static final char pairSeparator = '\n';
-	public static final String enabled = "on";
-	public static final String disabled = "off";
+	public static final String enabled = "1";
+	public static final String disabled = "0";
 	public static final boolean defaultEnabledState = true;
 	
 	// Local variables
