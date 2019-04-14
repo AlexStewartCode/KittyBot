@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 public class FileUtils
 {
 	// Reads all lines from a file as a string
+	public static String ReadContent(File file) { return ReadContent(file.toPath()); }
 	public static String ReadContent(Path filePath)
 	{
 		StringBuilder contentBuilder = new StringBuilder();

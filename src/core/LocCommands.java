@@ -34,9 +34,10 @@ public class LocCommands extends LocBase
 		}
 	}
 
-	public static String Stub(String toStub)
+	// Returns a pair, the raw key and the stub key
+	public static Pair<String, String> Stub(String toStub)
 	{
-		return instance.GetKey(toStub);
+		return new Pair<String, String>(toStub, instance.GetKey(toStub));
 	}
 	
 	// Gets all of the un-translated defaults in the commands list.

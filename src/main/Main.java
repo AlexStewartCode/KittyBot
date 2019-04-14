@@ -25,6 +25,7 @@ public class Main extends ListenerAdapter
 	// Variables and stuff
 	private static JDA kitty;
 	private static CommandManager commandManager;
+	private static CommandEnabler commandEnabler;
 	private static DatabaseManager databaseManager; 
 	private static Stats stats;
 	private static RPManager rpManager;
@@ -34,7 +35,8 @@ public class Main extends ListenerAdapter
 	{
 		// Factory startup. The ordering is intentional.
 		databaseManager = ObjectBuilderFactory.ConstructDatabaseManager();
-		commandManager = ObjectBuilderFactory.ConstructCommandManager();
+		commandEnabler = ObjectBuilderFactory.ConstructCommandEnabler();
+		commandManager = ObjectBuilderFactory.ConstructCommandManager(commandEnabler);
 		rpManager = ObjectBuilderFactory.ConstructRPManager();
 		stats = ObjectBuilderFactory.ConstructStats(commandManager);
 		

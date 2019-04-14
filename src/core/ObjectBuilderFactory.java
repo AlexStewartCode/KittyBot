@@ -39,6 +39,9 @@ public class ObjectBuilderFactory
 	@SuppressWarnings("unused") private static LocStrings locStrings;
 	@SuppressWarnings("unused") private static LocCommands locCommands;
 	
+	// Handles if we can or can't use specific commands, parsing a config file based on loc data to do so.
+	private static CommandEnabler commandEnabler;
+						
 	// Lazy initialization multithreaded mutex stuff to prevent explosions.
 	// TODO: Investigate using 'synchronized' instead potentially
 	private static boolean hasInitialized;
@@ -289,15 +292,26 @@ public class ObjectBuilderFactory
 		user.avatarID = member.getUser().getAvatarUrl();
 	}
 	
-	// Default construction of the command manager.
-	// TODO(wisp): We want to be able to keep all this data 
-	// stored off in a file at some point, so we can reflect it onto the 
-	// project and build it per-guild. That's for later now tho.
-	public static CommandManager ConstructCommandManager()
+	// Constructs a CommandEnabler if it doesn't exist, and gets the existing one if it does. 
+	public static CommandEnabler ConstructCommandEnabler()
+	{
+		LazyInit();
+
+		if(commandEnabler == null)
+			commandEnabler = new CommandEnabler();
+		
+		return commandEnabler;
+	}
+	
+	// Default construction of the command manager. In order to remotely resolve command enabling
+	// and disabling, what we do is construct the commands with a localized pair that is checked against
+	// the CommandEnabler object passed in. In theory, we could have multiple CommandManagers, tho we can
+	// only have one CommandEnabler.
+	public static CommandManager ConstructCommandManager(CommandEnabler commandEnabler)
 	{
 		LazyInit();
 		
-		CommandManager manager = new CommandManager();
+		CommandManager manager = new CommandManager(commandEnabler);
 		
 		manager.Register(LocCommands.Stub("work"), new CommandDoWork(KittyRole.Dev, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("shutdown"), new CommandShutdown(KittyRole.Dev, KittyRating.Safe));
@@ -341,7 +355,7 @@ public class ObjectBuilderFactory
 		return manager;
 	}
 	
-	// NOTE(wisp): Default database manager construction. It can be constructed 
+	// Default database manager construction. It can be constructed 
 	// in different ways, and so we construct it outside of the constructor for 
 	// the factory  since it doesn't have to be present / can be elsewhere. 
 	// Effectively we cache the database here.
