@@ -10,7 +10,7 @@ public class CommandPollResults extends Command
 	public CommandPollResults(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("PollResultsInfo"); }
+	public String HelpText() { return LocStrings.Stub("PollResultsInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
@@ -28,7 +28,7 @@ public class CommandPollResults extends Command
 		
 		for(int i = 0; i < votes.size(); i++)
 		{
-			results += String.format(Localizer.Stub("PollResultsResponse"), votes.get(i).votes, votes.get(i).choice, (int)(((double)votes.get(i).votes) / ((double)totalVotes) * 100));
+			results += String.format(LocStrings.Stub("PollResultsResponse"), votes.get(i).votes, votes.get(i).choice, (int)(((double)votes.get(i).votes) / ((double)totalVotes) * 100));
 		}
 		
 		res.Call(results);

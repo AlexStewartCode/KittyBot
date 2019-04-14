@@ -1,7 +1,7 @@
 package commands;
 
 import core.Command;
-import core.Localizer;
+import core.LocStrings;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
 import dataStructures.KittyRating;
@@ -15,7 +15,7 @@ public class CommandRating extends Command
 	public CommandRating(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("RatingInfo"); }
+	public String HelpText() { return LocStrings.Stub("RatingInfo"); }
 	
 	// Called when the command is run!
 	@Override 
@@ -55,11 +55,11 @@ public class CommandRating extends Command
 		}
 		
 		if(newRating != null)
-			res.Call(Localizer.Stub("RatingChanged") + " " + newRating);
+			res.Call(LocStrings.Stub("RatingChanged") + " " + newRating);
 		else
-			res.Call(Localizer.Stub("RatingInvalid") + " `" + input.args + "`");
+			res.Call(LocStrings.Stub("RatingInvalid") + " `" + input.args + "`");
 		
 		if(newRating.equals("Filtered")) 
-			res.Call(Localizer.Stub("RatingWarning"));
+			res.Call(LocStrings.Stub("RatingWarning"));
 	}
 }

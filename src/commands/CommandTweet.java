@@ -1,7 +1,7 @@
 package commands;
 
 import core.Command;
-import core.Localizer;
+import core.LocStrings;
 import dataStructures.*;
 import network.NetworkTwitter;
 
@@ -11,7 +11,7 @@ public class CommandTweet extends Command
 	public CommandTweet(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("TweetInfo"); }
+	public String HelpText() { return LocStrings.Stub("TweetInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
@@ -20,7 +20,7 @@ public class CommandTweet extends Command
 		try {
 			res.Call(tweet.tweet(input.args));
 		} catch (Exception e) {
-			res.Call(Localizer.Stub("TweetError"));
+			res.Call(LocStrings.Stub("TweetError"));
 		}
 	}
 }

@@ -16,7 +16,7 @@ public class CommandRoll extends Command
 	public CommandRoll(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("RollInfo"); } 
+	public String HelpText() { return LocStrings.Stub("RollInfo"); } 
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
@@ -27,7 +27,7 @@ public class CommandRoll extends Command
 		}
 		catch(Exception e)
 		{
-			res.Call(Localizer.Stub("RollError"));
+			res.Call(LocStrings.Stub("RollError"));
 		}
 	}
 	

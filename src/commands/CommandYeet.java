@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import core.Command;
-import core.Localizer;
+import core.LocStrings;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
 import dataStructures.KittyRating;
@@ -23,7 +23,7 @@ public class CommandYeet extends Command
 	private static Long num = 0l;
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("YeetInfo"); }
+	public String HelpText() { return LocStrings.Stub("YeetInfo"); }
 	
 	// Called when the command is run!
 	@Override 

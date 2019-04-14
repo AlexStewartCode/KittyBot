@@ -1,7 +1,7 @@
 package commands;
 
 import core.Command;
-import core.Localizer;
+import core.LocStrings;
 import dataStructures.*;
 
 public class CommandRole extends Command
@@ -9,20 +9,20 @@ public class CommandRole extends Command
 	public CommandRole (KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("RoleInfo"); }
+	public String HelpText() { return LocStrings.Stub("RoleInfo"); }
 	
 	@Override 
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.args.isEmpty())
 		{
-			res.Call(Localizer.Stub("RoleStandardResponse") + " " + user.GetRole().name() + "!");
+			res.Call(LocStrings.Stub("RoleStandardResponse") + " " + user.GetRole().name() + "!");
 			return;
 		}
 		
 		if(user.GetRole().getValue() < KittyRole.Admin.getValue())
 		{
-			res.Call(String.format(Localizer.Stub("RoleError"), KittyRole.Admin.toString()));
+			res.Call(String.format(LocStrings.Stub("RoleError"), KittyRole.Admin.toString()));
 			return;
 		}
 		
@@ -46,7 +46,7 @@ public class CommandRole extends Command
 				break; 
 				
 			default:
-				res.Call(Localizer.Stub("RoleNeededRole"));
+				res.Call(LocStrings.Stub("RoleNeededRole"));
 				return;
 		}
 		String users = "";
@@ -56,6 +56,6 @@ public class CommandRole extends Command
 			users += input.mentions[i].name + " ";
 		}
 		
-		res.Call(String.format(Localizer.Stub("RoleChanged"), users, newRole.name()));
+		res.Call(String.format(LocStrings.Stub("RoleChanged"), users, newRole.name()));
 	}
 }

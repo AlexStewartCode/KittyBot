@@ -14,7 +14,7 @@ public class CommandPollManage extends Command
 	public CommandPollManage(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("PollMangeInfo"); }
+	public String HelpText() { return LocStrings.Stub("PollManageInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
