@@ -286,44 +286,44 @@ public class ObjectBuilderFactory
 		
 		CommandManager manager = new CommandManager();
 		
-		manager.Register("work", new CommandDoWork(KittyRole.Dev, KittyRating.Safe));
-		manager.Register("shutdown", new CommandShutdown(KittyRole.Dev, KittyRating.Safe));
-		manager.Register("stats", new CommandStats(KittyRole.Dev, KittyRating.Safe));
-		manager.Register("invite", new CommandInvite(KittyRole.Dev, KittyRating.Safe));
-		manager.Register("buildHelp", new CommandHelpBuilder(KittyRole.Dev, KittyRating.Safe));
-		manager.Register("tweet", new CommandTweet(KittyRole.Dev, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("work"), new CommandDoWork(KittyRole.Dev, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("shutdown"), new CommandShutdown(KittyRole.Dev, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("stats"), new CommandStats(KittyRole.Dev, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("invite"), new CommandInvite(KittyRole.Dev, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("buildHelp"), new CommandHelpBuilder(KittyRole.Dev, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("tweet"), new CommandTweet(KittyRole.Dev, KittyRating.Safe));
 		
-		manager.Register("rating", new CommandRating(KittyRole.Admin, KittyRating.Safe));
-		manager.Register("indicator", new CommandChangeIndicator(KittyRole.Admin, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("rating"), new CommandRating(KittyRole.Admin, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("indicator"), new CommandChangeIndicator(KittyRole.Admin, KittyRating.Safe));
 		
-		manager.Register("poll", new CommandPollManage(KittyRole.Mod, KittyRating.Safe));
-		manager.Register("givebeans", new CommandGiveBeans(KittyRole.Mod, KittyRating.Safe));
-		manager.Register("rpg", new CommandRPG(KittyRole.Mod, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("poll"), new CommandPollManage(KittyRole.Mod, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("givebeans"), new CommandGiveBeans(KittyRole.Mod, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("rpg"), new CommandRPG(KittyRole.Mod, KittyRating.Safe));
 
-		manager.Register("teey", new CommandTeey(KittyRole.General, KittyRating.Safe));
-		manager.Register(new String[]{"perish", "thenperish"}, new CommandPerish(KittyRole.General, KittyRating.Safe));
-		manager.Register("yeet", new CommandYeet(KittyRole.General, KittyRating.Safe));
-		manager.Register("ping", new CommandPing(KittyRole.General, KittyRating.Safe));
-		manager.Register("boop", new CommandBoop(KittyRole.General, KittyRating.Safe));
-		manager.Register("roll", new CommandRoll(KittyRole.General, KittyRating.Safe));
-		manager.Register("choose", new CommandChoose(KittyRole.General, KittyRating.Safe));
-		manager.Register("help", new CommandHelp(KittyRole.General, KittyRating.Safe));
-		manager.Register(new String[] {"info", "about"}, new CommandInfo(KittyRole.General, KittyRating.Safe));
-		manager.Register("vote", new CommandPollVote(KittyRole.General, KittyRating.Safe));
-		manager.Register("results", new CommandPollResults(KittyRole.General, KittyRating.Safe));
-		manager.Register("showpoll", new CommandPollShow(KittyRole.General, KittyRating.Safe));
-		manager.Register("wolfram", new CommandWolfram(KittyRole.General, KittyRating.Safe));
-		manager.Register(new String[] {"c++", "g++", "cplus","cpp"}, new CommandColiru(KittyRole.General, KittyRating.Safe));
-		manager.Register(new String[] {"java", "jdoodle" }, new CommandJDoodle(KittyRole.General, KittyRating.Safe));
-		manager.Register("beans", new CommandBeansShow(KittyRole.General, KittyRating.Safe));
-		manager.Register("role", new CommandRole(KittyRole.General, KittyRating.Safe));
-		manager.Register("bet", new CommandBetBeans(KittyRole.General, KittyRating.Safe));
-		manager.Register("map", new CommandMap(KittyRole.General, KittyRating.Safe));
-		manager.Register("rpstart", new CommandRPStart(KittyRole.General, KittyRating.Safe));
-		manager.Register("rpend", new CommandRPEnd(KittyRole.General, KittyRating.Safe));
-		manager.Register(new String[] {"tony", "stark", "dontfeelgood", "dontfeelsogood"}, new CommandStark(KittyRole.General, KittyRating.Safe));
-		manager.Register("blur", new CommandBlurry(KittyRole.General, KittyRating.Safe));
-		manager.Register(new String [] {"eightball", "8ball"}, new CommandEightBall(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("teey"), new CommandTeey(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("perish, thenperish"), new CommandPerish(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("yeet"), new CommandYeet(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("ping"), new CommandPing(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("boop"), new CommandBoop(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("roll"), new CommandRoll(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("choose"), new CommandChoose(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("help"), new CommandHelp(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("info, about"), new CommandInfo(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("vote"), new CommandPollVote(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("results"), new CommandPollResults(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("showpoll"), new CommandPollShow(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("wolfram"), new CommandWolfram(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("c++, g++, cplus, cpp"), new CommandColiru(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("java, jdoodle"), new CommandJDoodle(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("beans"), new CommandBeansShow(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("role"), new CommandRole(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("bet"), new CommandBetBeans(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("map"), new CommandMap(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("rpstart"), new CommandRPStart(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("rpend"), new CommandRPEnd(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("tony, stark, dontfeelgood, dontfeelsogood"), new CommandStark(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("blur"), new CommandBlurry(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("eightball, 8ball"), new CommandEightBall(KittyRole.General, KittyRating.Safe));
 		
 		return manager;
 	}

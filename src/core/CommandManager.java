@@ -29,9 +29,16 @@ public class CommandManager
 	
 	// Allows the command manager to keep track of a command.
 	public void Register(String key, Command command)
-	{		
+	{	
 		if(key == null)
-			return; 
+			return;
+		
+		if(key.contains(","))
+		{
+			String[] keys = key.split(",");
+			Register(keys, command);
+			return;
+		}
 		
 		key = key.toLowerCase();
 		command.registeredNames.add(key);
@@ -51,7 +58,7 @@ public class CommandManager
 	public void Register(String[] keys, Command command)
 	{
 		for(int i = 0; i < keys.length; ++i)
-			Register(keys[i], command);
+			Register(keys[i].trim(), command);
 	}
 	
 	// Calls the command but on a whole new thread!

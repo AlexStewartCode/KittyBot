@@ -3,17 +3,14 @@ package core;
 import utils.GlobalLog;
 import utils.LogFilter;
 
-// A quick-and-dirty localization tool that scrapes the project for calls to itself, then
-// generates/updates a file externally (phrases.config) with all the stub values as keys that 
-// can then be localized.
-public class Localizer extends LocBase
+public class LocCommands extends LocBase
 {
-	public static final String fileName = "localization.config";
-	public static final String function = "Localizer.Stub";
+	public static final String fileName = "locCommands.config";
+	public static final String function = "LocCommands.Stub";
 	
-	private static Localizer instance;
+	private static LocCommands instance;
 	
-	public Localizer()
+	public LocCommands() 
 	{
 		super(fileName, function);
 		

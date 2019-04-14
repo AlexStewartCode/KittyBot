@@ -29,14 +29,16 @@ public class Main extends ListenerAdapter
 	private static DatabaseManager databaseManager; 
 	private static Stats stats;
 	private static RPManager rpManager;
+	private static Localizer locStrings;
+	private static LocCommands locCommands;
 	
 	// Main test location
 	public static void main(String[] args) throws InterruptedException, LoginException, Exception
 	{
 		// Localizer startup - Potentially integrate with the factory. Needs to happen first tho.
-		Localizer.UpdateLocFromDisk();
-		Localizer.ScrapeAll();
-		Localizer.SaveLocToDisk();
+		locStrings = new Localizer();
+		locCommands = new LocCommands();
+		
 		
 		// Factory startup
 		databaseManager = ObjectBuilderFactory.ConstructDatabaseManager();
