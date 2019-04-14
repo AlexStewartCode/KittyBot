@@ -2,7 +2,7 @@ package commands;
 
 import core.Command;
 import core.DatabaseManager;
-import core.Localizer;
+import core.LocStrings;
 import core.Stats;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
@@ -20,7 +20,7 @@ public class CommandShutdown extends Command
 	public CommandShutdown(KittyRole level, KittyRating rating) { super(level, rating); }
 
 	@Override
-	public String HelpText() { return Localizer.Stub("ShutdownInfo"); }
+	public String HelpText() { return LocStrings.Stub("ShutdownInfo"); }
 	
 	// Called when the command is run!
 	@Override 

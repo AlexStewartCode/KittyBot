@@ -8,7 +8,7 @@ public class CommandPollVote extends Command
 	public CommandPollVote(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("PollVoteInfo"); }
+	public String HelpText() { return LocStrings.Stub("PollVoteInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
@@ -17,7 +17,7 @@ public class CommandPollVote extends Command
 		{
 			if(guild.hasVoted.contains(user.uniqueID))
 			{
-				res.Call(Localizer.Stub("PollVoteAlreadyVoted"));
+				res.Call(LocStrings.Stub("PollVoteAlreadyVoted"));
 				return;
 			}
 			try 
@@ -25,23 +25,23 @@ public class CommandPollVote extends Command
 				int voteNum = Integer.parseInt(input.args)-1;
 				if(voteNum >= guild.choices.size() || voteNum < 0)
 				{
-					res.Call(String.format(Localizer.Stub("PollVoteNotValidVote"), voteNum));
+					res.Call(String.format(LocStrings.Stub("PollVoteNotValidVote"), voteNum));
 					return;
 				}
 				
 				KittyPoll polled = guild.choices.get(voteNum);
 				polled.votes++;
 				guild.hasVoted.add(user.uniqueID);
-				res.Call(Localizer.Stub("PollVoteSuccess") + " `" + polled.choice + "`!");
+				res.Call(LocStrings.Stub("PollVoteSuccess") + " `" + polled.choice + "`!");
 				return;
 			}
 			catch (NumberFormatException e)
 			{
-				res.Call(Localizer.Stub("PollVoteNotValidNumber"));
+				res.Call(LocStrings.Stub("PollVoteNotValidNumber"));
 				return;
 			}
 		}
 		
-		res.Call(Localizer.Stub("PollVoteNoPoll"));
+		res.Call(LocStrings.Stub("PollVoteNoPoll"));
 	}
 }

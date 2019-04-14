@@ -6,14 +6,14 @@ import utils.LogFilter;
 // A quick-and-dirty localization tool that scrapes the project for calls to itself, then
 // generates/updates a file externally (phrases.config) with all the stub values as keys that 
 // can then be localized.
-public class Localizer extends LocBase
+public class LocStrings extends LocBase
 {
-	public static final String fileName = "localization.config";
-	public static final String function = "Localizer.Stub";
+	public static final String fileName = "locStrings.config";
+	public static final String function = "LocStrings.Stub";
 	
-	private static Localizer instance;
+	private static LocStrings instance;
 	
-	public Localizer()
+	public LocStrings()
 	{
 		super(fileName, function);
 		

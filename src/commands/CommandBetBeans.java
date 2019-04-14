@@ -3,7 +3,7 @@ package commands;
 import java.util.Random;
 
 import core.Command;
-import core.Localizer;
+import core.LocStrings;
 import dataStructures.*;
 
 public class CommandBetBeans extends Command
@@ -11,7 +11,7 @@ public class CommandBetBeans extends Command
 	public CommandBetBeans(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("BetBeansInfo"); }
+	public String HelpText() { return LocStrings.Stub("BetBeansInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
@@ -24,19 +24,19 @@ public class CommandBetBeans extends Command
 			bet = Integer.parseInt(input.args);
 			if(bet < 50)
 			{
-				res.Call(Localizer.Stub("BetBeansLowBet"));
+				res.Call(LocStrings.Stub("BetBeansLowBet"));
 				return;
 			}
 		}
 		catch (NumberFormatException e)
 		{
-			res.Call(Localizer.Stub("BetBeansNotValid"));
+			res.Call(LocStrings.Stub("BetBeansNotValid"));
 			return;
 		}
 		
 		if(user.GetBeans() < bet)
 		{
-			res.Call(Localizer.Stub("BetBeansNotEnough"));
+			res.Call(LocStrings.Stub("BetBeansNotEnough"));
 			return;
 		}
 		
@@ -51,12 +51,12 @@ public class CommandBetBeans extends Command
 		
 		if(win == 0)
 			{
-				res.Call(Localizer.Stub("BetBeansLose"));
+				res.Call(LocStrings.Stub("BetBeansLose"));
 				return;
 			}
 		
 		user.ChangeBeans(bet*win);
-		res.Call(String.format(Localizer.Stub("BetBeansWin"), "" + (bet*win)));
+		res.Call(String.format(LocStrings.Stub("BetBeansWin"), "" + (bet*win)));
 	}
 	
 	private int getWinning(int [] slots)

@@ -1,47 +1,47 @@
 package commands;
 
 import core.Command;
-import core.Localizer;
+import core.LocStrings;
 import dataStructures.*;
 
 public class CommandEightBall extends Command
 {
 	String [] answers = 
 	{ 
-			  Localizer.Stub("EightBallYes1") 
-			, Localizer.Stub("EightBallYes2")
-			, Localizer.Stub("EightBallYes3")
-			, Localizer.Stub("EightBallYes4")
-			, Localizer.Stub("EightBallYes5")
-			, Localizer.Stub("EightBallYes6")
-			, Localizer.Stub("EightBallYes7")
-			, Localizer.Stub("EightBallYes8")
-			, Localizer.Stub("EightBallYes9")
-			, Localizer.Stub("EightBallYes10")
+			  LocStrings.Stub("EightBallYes1") 
+			, LocStrings.Stub("EightBallYes2")
+			, LocStrings.Stub("EightBallYes3")
+			, LocStrings.Stub("EightBallYes4")
+			, LocStrings.Stub("EightBallYes5")
+			, LocStrings.Stub("EightBallYes6")
+			, LocStrings.Stub("EightBallYes7")
+			, LocStrings.Stub("EightBallYes8")
+			, LocStrings.Stub("EightBallYes9")
+			, LocStrings.Stub("EightBallYes10")
 			
-			, Localizer.Stub("EightBallMaybe1")
-			, Localizer.Stub("EightBallMaybe2")
-			, Localizer.Stub("EightBallMaybe3")
-			, Localizer.Stub("EightBallMaybe4")
-			, Localizer.Stub("EightBallMaybe5")
+			, LocStrings.Stub("EightBallMaybe1")
+			, LocStrings.Stub("EightBallMaybe2")
+			, LocStrings.Stub("EightBallMaybe3")
+			, LocStrings.Stub("EightBallMaybe4")
+			, LocStrings.Stub("EightBallMaybe5")
 			
-			, Localizer.Stub("EightBallNo1")
-			, Localizer.Stub("EightBallNo2")
-			, Localizer.Stub("EightBallNo3")
-			, Localizer.Stub("EightBallNo4")
-			, Localizer.Stub("EightBallNo5")
+			, LocStrings.Stub("EightBallNo1")
+			, LocStrings.Stub("EightBallNo2")
+			, LocStrings.Stub("EightBallNo3")
+			, LocStrings.Stub("EightBallNo4")
+			, LocStrings.Stub("EightBallNo5")
 	};
 	
 	public CommandEightBall(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("EightBallInfo"); }
+	public String HelpText() { return LocStrings.Stub("EightBallInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.args.trim().length() < 1)
-			res.Call(Localizer.Stub("EightBallError"));
+			res.Call(LocStrings.Stub("EightBallError"));
 		
 		res.Call(answers[(int) (Math.random()*answers.length)]);
 	}

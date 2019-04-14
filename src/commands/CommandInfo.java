@@ -1,7 +1,7 @@
 package commands;
 
 import core.Command;
-import core.Localizer;
+import core.LocStrings;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
 import dataStructures.KittyRating;
@@ -15,11 +15,11 @@ public class CommandInfo extends Command
 	public CommandInfo(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return Localizer.Stub("InfoInfo"); }
+	public String HelpText() { return LocStrings.Stub("InfoInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		res.Call(Localizer.Stub("InfoResponse"));
+		res.Call(LocStrings.Stub("InfoResponse"));
 	}
 }

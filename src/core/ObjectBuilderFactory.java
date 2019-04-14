@@ -36,7 +36,7 @@ public class ObjectBuilderFactory
 	
 	// Localization classes - these are singletons, but should be initialized before almost all other 
 	// things so their inclusion in the factory is to ensure they're started at the correct time.
-	@SuppressWarnings("unused") private static Localizer locStrings;
+	@SuppressWarnings("unused") private static LocStrings locStrings;
 	@SuppressWarnings("unused") private static LocCommands locCommands;
 	
 	// Lazy initialization multithreaded mutex stuff to prevent explosions.
@@ -66,7 +66,7 @@ public class ObjectBuilderFactory
 				// Start by reading from things that are external. Because
 				// we require these things to be resolved before the rest of the application,
 				// we place them here.
-				locStrings = new Localizer();
+				locStrings = new LocStrings();
 				locCommands = new LocCommands();
 			}
 			finally

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import core.Command;
-import core.Localizer;
+import core.LocStrings;
 import core.Stats;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
@@ -26,7 +26,7 @@ public class CommandHelpBuilder extends Command {
 	}
 
 	@Override
-	public String HelpText() { return Localizer.Stub("HelpBuilderInfo"); }
+	public String HelpText() { return LocStrings.Stub("HelpBuilderInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
