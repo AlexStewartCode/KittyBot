@@ -3,6 +3,7 @@ package commands;
 import java.util.ArrayList;
 
 import core.Command;
+import core.LocStrings;
 import core.RPManager;
 import dataStructures.*;
 
@@ -11,7 +12,7 @@ public class CommandRPStart extends Command
 	public CommandRPStart (KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return "Starts an rp, add people to it by mentioning them!"; }
+	public String HelpText() { return LocStrings.Stub("RPStartInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
