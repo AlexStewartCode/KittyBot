@@ -20,15 +20,20 @@ public class CommandAllowedGuildRole extends Command
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		String role = input.args.split(" ")[0];
-		if(guild.allowedRole.contains(role))
+		String [] roles = input.args.split(",");
+		String role;
+		for(int i = 0; i < roles.length; i++)
 		{
-			res.Call(LocStrings.Stub("AllowedGuildRoleDuplicate"));
-		}
-		else
-		{
-			guild.allowedRole.add(role);
-			res.Call(String.format(LocStrings.Stub("AllowedGuildRoleSuccess"), role));
+			role = roles[i].trim();
+			if(guild.allowedRole.contains(role))
+			{
+				res.Call(LocStrings.Stub("AllowedGuildRoleDuplicate"));
+			}
+			else
+			{
+				guild.allowedRole.add(role);
+				res.Call(String.format(LocStrings.Stub("AllowedGuildRoleSuccess"), role));
+			}
 		}
 	}
 }
