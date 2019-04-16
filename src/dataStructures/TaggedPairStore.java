@@ -99,13 +99,13 @@ public class TaggedPairStore
 				if(key.endsWith("\\r"))
 				{
 					if(!key.endsWith("\\r\\r"))
-						key.substring(0, key.length() - 2);
+						key = key.substring(0, key.length() - 2);
 				}
 				
 				if(value.endsWith("\\r"))
 				{
 					if(!value.endsWith("\\r\\r"))
-						value.substring(0, value.length() - 2);
+						value = value.substring(0, value.length() - 2);
 				}
 				
 				if(key == value)
