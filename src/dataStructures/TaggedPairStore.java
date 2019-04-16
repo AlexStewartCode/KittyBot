@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 //
 // [ExampleSection]
 // Key=Value
-//  Valid Ridiculous Key&\n\t_.:;foo  =  \tValid Ridiculous Value*&%$()^.[]{}@
+//  Valid Ridiculous Key&\n\t_.:;foo =  \tValid Ridiculous Value*&%$()^.[]{}@
 // EmptyValue=
 //
 // Note that the sections are NOT designed to allow for duplicate keys across them. 
