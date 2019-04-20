@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import commands.*;
+import core.lua.PluginManager;
 import dataStructures.*;
 import net.dv8tion.jda.core.entities.Emote;
 import net.dv8tion.jda.core.entities.Member;
@@ -37,6 +38,9 @@ public class ObjectBuilderFactory
 	
 	// RPManger for tracking RP system
 	private static RPManager rpManager; 
+	
+	// Plugin manager
+	private static PluginManager pluginManager;
 	
 	// Localization classes - these are singletons, but should be initialized before almost all other 
 	// things so their inclusion in the factory is to ensure they're started at the correct time.
@@ -406,6 +410,16 @@ public class ObjectBuilderFactory
 			rpManager = new RPManager();
 		
 		return rpManager;
+	}
+	
+	public static PluginManager ConstructPluginManager()
+	{
+		LazyInit();
+		
+		if(pluginManager == null)
+			pluginManager = new PluginManager("./plugins/");
+		
+		return pluginManager;
 	}
 	
 	public static Integer GetGuildCount()
