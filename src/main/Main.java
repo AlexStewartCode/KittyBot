@@ -36,6 +36,7 @@ public class Main extends ListenerAdapter
 	public static void main(String[] args) throws InterruptedException, LoginException, Exception
 	{
 		// Factory startup. The ordering is intentional.
+		GlobalLog.initialize();
 		databaseManager = ObjectBuilderFactory.ConstructDatabaseManager();
 		commandEnabler = ObjectBuilderFactory.ConstructCommandEnabler();
 		commandManager = ObjectBuilderFactory.ConstructCommandManager(commandEnabler);

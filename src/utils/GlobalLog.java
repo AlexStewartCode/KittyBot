@@ -1,15 +1,28 @@
 package utils;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+
 public class GlobalLog 
 {
 	private static final String log = "Log";
 	private static final String warn = "Warning";
 	private static final String error = "ERROR";
 	private static final String fatal = "FATAL";
+	private static PrintWriter outputLog;
+	
+	public static void initialize() throws FileNotFoundException, UnsupportedEncodingException
+	{
+		outputLog =  new PrintWriter("OutputLog.txt", "UTF-8");
+	}
 	
 	private static void Write(String status, LogFilter filter, String body)
 	{
-		System.out.println("[" + status + "] " + "[" + filter.name() + "] " + body);
+		String logLine = "[" + status + "] " + "[" + filter.name() + "] " + body; 
+		outputLog.write(logLine + "\n");
+		outputLog.flush();
+		System.out.println(logLine);
 	}
 	
 	public static void Log(String msg) { Write(log, LogFilter.Debug, msg); } 
