@@ -226,8 +226,3 @@
 [Log] [Core] Command registered under key blur
 [Log] [Core] Command registered under key eightball
 [Log] [Core] Command registered under key 8ball
-[Log] [Plugin] Created new PluginLoader lua environment
-[Log] [Database] CreateGeyKey: key-392895005024452620
-[Log] [Database] CreateGeyKey: key-392895005024452620147407528874082304
-[Log] [Database] CreateSetKey: Key-392895005024452620 value-!
-[Log] [Database] CreateSetKey: Key-392895005024452620147407528874082304 value-273,4

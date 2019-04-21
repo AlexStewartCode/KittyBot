@@ -36,11 +36,9 @@ public class Plugin
 			contents = contentBuilder.toString();
 			
 			globals = JsePlatform.standardGlobals();
-
+			
 			globals.load(contents).call();
 			func_plugin = globals.get("plugin");
-			
-			String output = null;
 		}
 		catch (IOException e)
 		{
