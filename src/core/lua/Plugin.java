@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaValue;
+import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
 // To promote flexibility, plugins are lua file with predefined callbacks.
@@ -47,11 +48,11 @@ public class Plugin
 		}
 	}
 	
-	public String Run(String args)
+	public String Run(String args, PluginUser user)
 	{
 		try
 		{
-			LuaValue res = func_plugin.call(LuaValue.valueOf(args));
+			LuaValue res = func_plugin.call(LuaValue.valueOf(args), user.AsLua());
 			
 			if(!res.isnil())
 				return res.toString();
