@@ -76,14 +76,18 @@ public class Main extends ListenerAdapter
 		// RP logging system
 		RPManager.instance.addLine(channel, user, input);
 		
-		// Run plugins right before invoking the commands but after all other setup
-		String output = pluginManager.CallAll(input.message);
+		// 
 		
-		// Spin up the command if no plugins ran. Otherwise, send a response.
-		if(output == null)
-			commandManager.InvokeOnNewThread(guild, channel, user, input, response);
-		else
-			response.Call(output);
+		
+		// Attempt to spin up a command. If the command doesn't exist.
+		// Run plugins right before invoking the commands but after all other setup.
+		if(commandManager.InvokeOnNewThread(guild, channel, user, input, response) == false)
+		{
+			String pluginOutput = pluginManager.RunAll(input.message);
+			
+			if(pluginOutput != null)
+				response.Call(pluginOutput);
+		}
 		
 		// Run any upkeep we need to
 		PerCommandUpkeep();
