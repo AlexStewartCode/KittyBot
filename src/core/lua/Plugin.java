@@ -35,11 +35,9 @@ public class Plugin
 			contents = contentBuilder.toString();
 			
 			globals = JsePlatform.standardGlobals();
-
+			
 			globals.load(contents).call();
 			func_plugin = globals.get("plugin");
-			
-			String output = null;
 		}
 		catch (IOException e)
 		{
@@ -47,11 +45,11 @@ public class Plugin
 		}
 	}
 	
-	public String Run(String args)
+	public String Run(String args, PluginUser user)
 	{
 		try
 		{
-			LuaValue res = func_plugin.call(LuaValue.valueOf(args));
+			LuaValue res = func_plugin.call(LuaValue.valueOf(args), user.AsLua());
 			
 			if(!res.isnil())
 				return res.toString();

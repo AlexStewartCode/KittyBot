@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import dataStructures.KittyUser;
+
 // Reads in, handles, and manipulates plugins. Plugins are loaded in the order they appear in the folder.
 public class PluginManager
 {
@@ -37,12 +39,12 @@ public class PluginManager
 	
 	// Runs all plugins, returning when it gets a non-nill result.
 	// Otherwise, returns null.
-	public String RunAll(String input)
+	public String RunAll(String input, KittyUser user)
 	{
 		for(int i = 0; i < plugins.size(); ++i)
 		{
 			Plugin plugin = plugins.get(i);
-			String out = plugin.Run(input);
+			String out = plugin.Run(input, new PluginUser(user));
 			
 			if(out != null)
 			{
