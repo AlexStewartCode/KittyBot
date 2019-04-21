@@ -19,7 +19,7 @@ public class GlobalLog
 	{
 		DateFormat dF = new SimpleDateFormat("yyyy_MM_dd_HH-mm");
 		Date today = new Date(); 
-		outputLog =  new PrintWriter((dF.format(today) + "Log.txt"), "UTF-8");
+		outputLog =  new PrintWriter((dF.format(today) + ".log"), "UTF-8");
 	}
 	
 	private static void Write(String status, LogFilter filter, String body)
