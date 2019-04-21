@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaValue;
-import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
 // To promote flexibility, plugins are lua file with predefined callbacks.
