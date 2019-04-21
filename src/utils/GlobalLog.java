@@ -3,6 +3,9 @@ package utils;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GlobalLog 
 {
@@ -14,7 +17,9 @@ public class GlobalLog
 	
 	public static void initialize() throws FileNotFoundException, UnsupportedEncodingException
 	{
-		outputLog =  new PrintWriter("OutputLog.txt", "UTF-8");
+		DateFormat dF = new SimpleDateFormat("yyyy_MM_dd_HH-mm");
+		Date today = new Date(); 
+		outputLog =  new PrintWriter((dF.format(today) + "Log.txt"), "UTF-8");
 	}
 	
 	private static void Write(String status, LogFilter filter, String body)
