@@ -1,11 +1,9 @@
-package core;
+package utils;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.function.Consumer;
@@ -13,19 +11,23 @@ import java.util.stream.Stream;
 
 import dataStructures.MonitoredFile;
 
+// NOTE: Consider shifting internal behavior to https://docs.oracle.com/javase/tutorial/essential/io/notification.html
+// for external stability and support
 public class DirectoryMonitor
 {
-	private void Log(String s) { System.out.println("[Log] " + s); }
-	private void Warn(String s) { System.out.println("[Warn] " + s); }
-	private void Error(String s) { System.out.println("[ERROR] " + s); }
+	// Logging
+	private void Log(String s) { GlobalLog.Log(LogFilter.Util, s); }
+	private void Warn(String s) { GlobalLog.Warn(LogFilter.Util, s); }
+	private void Error(String s) { GlobalLog.Error(LogFilter.Util, s); }
 	
+	// Variables
 	private String directory; 
 	private ArrayList<MonitoredFile> last;
 	
 	// Constructs a new file monitor and logs initialization
 	public DirectoryMonitor(String directory)
 	{
-		Log("Reading initial file set in: " + directory.toString());
+		Log("Reading directory files for montioring in: " + directory.toString());
 		
 		this.directory = directory;
 		this.last = Scrape();
@@ -44,7 +46,7 @@ public class DirectoryMonitor
 		}
 		else
 		{
-			Error("File does not exist.");
+			Error("File looking for doesn't exist for directory monitor at path: " + path);
 			return null;
 		}
 	}
@@ -146,7 +148,7 @@ public class DirectoryMonitor
 		Collections.sort(last);
 		
 		if(last.size() == 0)
-			Warn("There's nothing at all in a FileMonitor's target folder!");
+			Warn("There's nothing at all in a FileMonitor's target folder! Folder: " + directory);
 	}
 	
 	// Prints out an arraylist of items from a directory by path
