@@ -375,6 +375,7 @@ public class ObjectBuilderFactory
 		manager.Register(LocCommands.Stub("tony, stark, dontfeelgood, dontfeelsogood"), new CommandStark(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("blur"), new CommandBlurry(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("eightball, 8ball"), new CommandEightBall(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("sponsor, sponsors, patreon"), new CommandSponsors(KittyRole.General, KittyRating.Safe));
 		
 		return manager;
 	}
