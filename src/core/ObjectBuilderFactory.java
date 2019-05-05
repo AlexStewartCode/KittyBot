@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import commands.*;
+import core.benchmark.BenchmarkManager;
 import core.lua.PluginManager;
 import dataStructures.*;
 import net.dv8tion.jda.core.entities.Emote;
@@ -41,6 +42,9 @@ public class ObjectBuilderFactory
 	
 	// Plugin manager
 	private static PluginManager pluginManager;
+	
+	// Userbenchmark csv manager instance
+	private static BenchmarkManager benchmarkManager;
 	
 	// Localization classes - these are singletons, but should be initialized before almost all other 
 	// things so their inclusion in the factory is to ensure they're started at the correct time.
@@ -92,6 +96,10 @@ public class ObjectBuilderFactory
 				+ " The factory was not initialized, and kitty will not be able to continue functionally.");
 		}
 	}
+	
+	  ////////////////////////
+	 // Extraction Methods //
+	////////////////////////
 	
 	// Explicitly locks: guildCache
 	public static KittyGuild ExtractGuild(GuildMessageReceivedEvent event)
@@ -311,16 +319,9 @@ public class ObjectBuilderFactory
 		user.avatarID = member.getUser().getAvatarUrl();
 	}
 	
-	// Constructs a CommandEnabler if it doesn't exist, and gets the existing one if it does. 
-	public static CommandEnabler ConstructCommandEnabler()
-	{
-		LazyInit();
-
-		if(commandEnabler == null)
-			commandEnabler = new CommandEnabler();
-		
-		return commandEnabler;
-	}
+	  //////////////////////////
+	 // Construction Methods //
+	//////////////////////////
 	
 	// Default construction of the command manager. In order to remotely resolve command enabling
 	// and disabling, what we do is construct the commands with a localized pair that is checked against
@@ -378,7 +379,20 @@ public class ObjectBuilderFactory
 		manager.Register(LocCommands.Stub("catch"), new CommandCatch(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("guildrolelist"), new CommandGuildRoleList(KittyRole.General, KittyRating.Safe));
 		
+		manager.Register(LocCommands.Stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
+		
 		return manager;
+	}
+	
+	// Constructs a CommandEnabler if it doesn't exist, and gets the existing one if it does. 
+	public static CommandEnabler ConstructCommandEnabler()
+	{
+		LazyInit();
+
+		if(commandEnabler == null)
+			commandEnabler = new CommandEnabler();
+		
+		return commandEnabler;
 	}
 	
 	// Default database manager construction. It can be constructed 
@@ -425,6 +439,21 @@ public class ObjectBuilderFactory
 		return pluginManager;
 	}
 	
+	public static BenchmarkManager ConstructBenchmarkManager()
+	{
+		LazyInit();
+		
+		if(benchmarkManager == null)
+			benchmarkManager = new BenchmarkManager();
+		
+		return benchmarkManager;
+	}
+	
+	  /////////////////////
+	 // Utility Methods //
+	/////////////////////
+	
+	// Returns number of cached guilds (does not equal total users in the database, only what's in memory)
 	public static Integer GetGuildCount()
 	{ 	synchronized(guildCache)
 		{
@@ -432,6 +461,7 @@ public class ObjectBuilderFactory
 		}
 	}
 	
+	// Returns number of cached users (does not equal total users in the database, only what's in memory)
 	public static Integer GetUserCount()
 	{ 	synchronized(userCache)
 		{

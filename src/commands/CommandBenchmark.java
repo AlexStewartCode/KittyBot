@@ -10,12 +10,12 @@ import dataStructures.KittyUser;
 import dataStructures.Response;
 import dataStructures.UserInput;
 
-public class CommandUserBenchmark extends Command
+public class CommandBenchmark extends Command
 {
-	public CommandUserBenchmark(KittyRole level, KittyRating rating) { super(level, rating); }
+	public CommandBenchmark(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("UserBenchmarkInfo"); }
+	public String HelpText() { return LocStrings.Stub("BenchmarkInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)

@@ -2,6 +2,7 @@ package main;
 
 import javax.security.auth.login.LoginException;
 import core.*;
+import core.benchmark.BenchmarkManager;
 import core.lua.PluginManager;
 import core.lua.PluginUser;
 import dataStructures.KittyChannel;
@@ -32,6 +33,7 @@ public class Main extends ListenerAdapter
 	private static Stats stats;
 	private static RPManager rpManager;
 	private static PluginManager pluginManager;
+	private static BenchmarkManager benchmarkManager; 
 	
 	// Main test location
 	public static void main(String[] args) throws InterruptedException, LoginException, Exception
@@ -44,6 +46,7 @@ public class Main extends ListenerAdapter
 		stats = ObjectBuilderFactory.ConstructStats(commandManager);
 		rpManager = ObjectBuilderFactory.ConstructRPManager();
 		pluginManager = ObjectBuilderFactory.ConstructPluginManager();
+		benchmarkManager = ObjectBuilderFactory.ConstructBenchmarkManager();
 		
 		// Bot startup
 		kitty = new JDABuilder(AccountType.BOT).setToken(Ref.TestToken).buildBlocking();
