@@ -2,6 +2,7 @@ package core.rpg;
 
 import java.util.Scanner;
 
+// This is for testing only, and generally doesn't run unless it's specified.
 public class RPGMain
 {
 	private static RPGFramework framework;

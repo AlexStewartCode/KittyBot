@@ -2,6 +2,7 @@ package commands;
 
 import core.Command;
 import core.LocStrings;
+import core.benchmark.BenchmarkFramework;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
 import dataStructures.KittyRating;
@@ -12,7 +13,15 @@ import dataStructures.UserInput;
 
 public class CommandBenchmark extends Command
 {
-	public CommandBenchmark(KittyRole level, KittyRating rating) { super(level, rating); }
+	// Variables
+	private BenchmarkFramework framework;
+	
+	// Constructor
+	public CommandBenchmark(KittyRole level, KittyRating rating)
+	{ 
+		super(level, rating);
+		framework = new BenchmarkFramework();
+	}
 	
 	@Override
 	public String HelpText() { return LocStrings.Stub("BenchmarkInfo"); }
@@ -20,24 +29,25 @@ public class CommandBenchmark extends Command
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		String [] info = input.args.split(" ");
-		
-		switch(info[1].toLowerCase())
+		if(input.args == null || input.args.length() == 0)
 		{
-			case "cpu":
-			break;
-			
-			case "gpu":
-			break;
-			
-			case "ram":
-			break;
-			
-			case "USB":
-			break;
-			
-			default:
-			break;
+			String output = HelpText();
+			res.Call(output);
+			return;
 		}
+		
+		String result = null;
+		synchronized(framework)
+		{
+			result = framework.Run(input.args.trim());
+		}
+		
+		if(result == null)
+		{
+			res.Call(LocStrings.Stub("BenchmarkInvalid"));
+			return;
+		}
+		
+		res.Call(result);
 	}
 }

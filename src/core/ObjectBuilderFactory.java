@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Semaphore;
-
 import commands.*;
-import core.benchmark.BenchmarkManager;
 import core.lua.PluginManager;
 import dataStructures.*;
 import net.dv8tion.jda.core.entities.Emote;
@@ -42,10 +40,7 @@ public class ObjectBuilderFactory
 	
 	// Plugin manager
 	private static PluginManager pluginManager;
-	
-	// Userbenchmark csv manager instance
-	private static BenchmarkManager benchmarkManager;
-	
+
 	// Localization classes - these are singletons, but should be initialized before almost all other 
 	// things so their inclusion in the factory is to ensure they're started at the correct time.
 	@SuppressWarnings("unused") private static LocStrings locStrings;
@@ -438,17 +433,7 @@ public class ObjectBuilderFactory
 		
 		return pluginManager;
 	}
-	
-	public static BenchmarkManager ConstructBenchmarkManager()
-	{
-		LazyInit();
-		
-		if(benchmarkManager == null)
-			benchmarkManager = new BenchmarkManager();
-		
-		return benchmarkManager;
-	}
-	
+
 	  /////////////////////
 	 // Utility Methods //
 	/////////////////////
