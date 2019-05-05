@@ -17,6 +17,8 @@ public class BenchmarkFramework
 		this.benchmarkCommand = new HashMap<String, BenchmarkCommand>();
 		
 		RegisterCommand("find", new BenchmarkCommandFind());
+		RegisterCommand("compare", new BenchmarkCommandCompare());
+		RegisterCommand("info", new BenchmarkCommandInfo());
 	}
 	
 	// Runs a command if possible.

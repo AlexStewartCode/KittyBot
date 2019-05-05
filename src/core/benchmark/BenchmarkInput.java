@@ -1,5 +1,7 @@
 package core.benchmark;
 
+import utils.StringUtils;
+
 // Lifted from an early iteration of RPGInput
 public class BenchmarkInput
 {
@@ -17,7 +19,7 @@ public class BenchmarkInput
 			return;
 		
 		raw = raw.trim();
-		int whitespacePos = FindFirstWhitespace(raw);
+		int whitespacePos = StringUtils.FindFirstWhitespace(raw);
 		
 		if(whitespacePos == -1)
 		{
@@ -29,16 +31,6 @@ public class BenchmarkInput
 		value = raw.substring(whitespacePos).trim();
 	}
 	
-	// Finds first whitespace in the string
-	private int FindFirstWhitespace(String str)
-	{
-		for (int i = 0; i < str.length(); ++i) 
-		{
-			if (Character.isWhitespace(str.charAt(i)))
-				return i;
-		}
-	
-		return -1;
-	}
+
 }
 

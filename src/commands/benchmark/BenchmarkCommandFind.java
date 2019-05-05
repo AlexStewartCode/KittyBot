@@ -6,7 +6,8 @@ import core.benchmark.*;
 
 public class BenchmarkCommandFind extends BenchmarkCommand 
 {
-	final char lineDelimiter = '\n';
+	private final char lineDelimiter = '\n';
+	private final int listMax = 30;
 	
 	public String OnRun(BenchmarkManager manager, BenchmarkInput input)
 	{
@@ -19,7 +20,6 @@ public class BenchmarkCommandFind extends BenchmarkCommand
 		{
 			output += "```" + lineDelimiter;
 			int max = entries.size();
-			final int listMax = 30;
 			
 			boolean fencepost = true;
 			for(int i = 0; i < entries.size() && i < listMax; ++i)
@@ -33,7 +33,7 @@ public class BenchmarkCommandFind extends BenchmarkCommand
 			}
 			
 			if(max > listMax)
-				output += "\n\nPlus " + (max - listMax) + " more items...";
+				output += lineDelimiter + lineDelimiter + "Plus " + (max - listMax) + " more items...";
 			
 			output += "```";
 		}

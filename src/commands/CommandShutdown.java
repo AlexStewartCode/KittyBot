@@ -54,7 +54,7 @@ public class CommandShutdown extends Command
 		}
 		else
 		{
-			res.CallImmediate(LocStrings.Stub("ShutdownUnsafe"));// "`Shutting down and immediately and abandoning all threads without sync.`");
+			res.CallImmediate(LocStrings.Stub("ShutdownUnsafe"));// "``");
 			GlobalLog.Warn(LogFilter.Command, LocStrings.Lookup("ShutdownSafe"));
 			System.exit(0);
 		}
