@@ -61,7 +61,7 @@ public class Response
 		}
 		else
 		{
-			event.getChannel().sendMessage(toRespondWith);
+			event.getChannel().sendMessage(toRespondWith).complete();
 		}
 	}
 	

@@ -41,16 +41,21 @@ public class CommandShutdown extends Command
 				break;
 		}
 		
+		
+		
 		if(isSafe)
 		{
 			// Force upkeep, this works so long as upkeep is on the main thread.
+			res.CallImmediate(LocStrings.Stub("ShutdownSafe"));
 			DatabaseManager.instance.Upkeep(); 
-			GlobalLog.Error(LogFilter.Command, "Forced shutdown, database synced before abandoning threads.");
+			GlobalLog.Warn(LogFilter.Command, LocStrings.Lookup("ShutdownSafe"));
+			
 			System.exit(0);
 		}
 		else
 		{
-			GlobalLog.Error(LogFilter.Command, "Forced immediate shutdown, threads abandoned without sync.");
+			res.CallImmediate(LocStrings.Stub("ShutdownUnsafe"));// "`Shutting down and immediately and abandoning all threads without sync.`");
+			GlobalLog.Warn(LogFilter.Command, LocStrings.Lookup("ShutdownSafe"));
 			System.exit(0);
 		}
 	}
