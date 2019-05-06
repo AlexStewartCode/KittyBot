@@ -41,6 +41,8 @@ public class BenchmarkManager
 	// Rebuilds the files being monitored
 	public void RebuildLookup()
 	{
+		long start = Instant.now().toEpochMilli();
+		
 		synchronized(raw)
 		{
 			raw.clear();
@@ -67,6 +69,9 @@ public class BenchmarkManager
 				BenchmarkLog.Warn("No " + extension + " files where found in " + directory);
 			}
 		}
+		
+		long end = Instant.now().toEpochMilli();
+		BenchmarkLog.Log("Rebuilt data in " + (end - start) + "ms");
 	}
 	
 	// Re-evaluates and re-orders the input list based on the Levenshtein distance of the
