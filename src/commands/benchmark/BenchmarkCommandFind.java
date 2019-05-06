@@ -6,10 +6,10 @@ import core.benchmark.*;
 
 public class BenchmarkCommandFind extends BenchmarkCommand 
 {
-	private final char lineDelimiter = '\n';
+	private final String lineDelimiter = "\n";
 	private final int listMax = 30;
 	
-	public String OnRun(BenchmarkManager manager, BenchmarkInput input)
+	public BenchmarkFormattable OnRun(BenchmarkManager manager, BenchmarkInput input)
 	{
 		String output = "";
 		String searchString = input.value.trim();
@@ -42,6 +42,6 @@ public class BenchmarkCommandFind extends BenchmarkCommand
 			output = "Couldn't find any models matching the search `" + searchString + "`!";
 		}
 		
-		return output;
+		return new BenchmarkFormattable(output);
 	}
 }

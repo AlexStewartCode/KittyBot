@@ -22,7 +22,7 @@ public class BenchmarkFramework
 	}
 	
 	// Runs a command if possible.
-	public String Run(String args)
+	public BenchmarkFormattable Run(String args)
 	{
 		BenchmarkInput input = new BenchmarkInput(args);
 		return ExecuteCommand(input.key, input);
@@ -39,7 +39,7 @@ public class BenchmarkFramework
 	}
 	
 	// Executes a command with the specified name, and provides it with some extra input data.
-	private String ExecuteCommand(String name, BenchmarkInput input)
+	private BenchmarkFormattable ExecuteCommand(String name, BenchmarkInput input)
 	{
 		BenchmarkCommand command = benchmarkCommand.get(name.toLowerCase());
 		

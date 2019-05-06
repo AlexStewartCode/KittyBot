@@ -2,8 +2,10 @@ package core.benchmark;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import dataStructures.Pair;
 import utils.FileUtils;
 import utils.directoryMonitor.DirectoryMonitor;
 import utils.directoryMonitor.MonitoredFile;
@@ -65,6 +67,78 @@ public class BenchmarkManager
 				BenchmarkLog.Warn("No " + extension + " files where found in " + directory);
 			}
 		}
+	}
+	
+	// Re-evaluates and re-orders the input list based on the Levenshtein distance of the
+	// original search and the contents of the provided list of benchmark entries.
+	public List<BenchmarkEntry> EvaluateLevenshteinDistance(List<BenchmarkEntry> entries, String search)
+	{
+		// Populate cost list with heuristic results
+		List<Pair<BenchmarkEntry, Integer>> cost = new ArrayList<Pair<BenchmarkEntry, Integer>>();
+		int bestSoFar = Integer.MAX_VALUE;
+		for(int i = 0; i < entries.size(); ++i)
+		{
+			BenchmarkEntry entry = entries.get(i);
+			String entryString = entry.brand + " " + entry.model;
+			
+			int heuristic = LevenshteinHeuristic(entryString, search, bestSoFar);
+			if(heuristic < bestSoFar)
+				bestSoFar = heuristic;
+			
+			cost.add(new Pair<BenchmarkEntry, Integer>(entry, heuristic));
+		}
+		
+		// Sort list 
+		Collections.sort(cost, (i1, i2) -> i1.Second.compareTo(i2.Second));
+		
+		// Build new output list
+		List<BenchmarkEntry> sortedEntries = new ArrayList<BenchmarkEntry>();
+		for(int i = 0; i < cost.size(); ++i)
+			sortedEntries.add(cost.get(i).First);
+		
+		return sortedEntries;
+	}
+	
+	// Finds the minimum integer in an array of ints and returns it.
+	private int min(int[] arr)
+	{
+		int min = Integer.MAX_VALUE;
+		for(int i = 0; i < arr.length; ++i)
+		{
+			if(arr[i] < min)
+				min = arr[i];
+		}
+		
+		return min;
+	}
+		
+	// Returns cost based on distance of characters from string. This is a kinda sloppy way
+	// to do it, but because I keep tabs on the best result so far, it could be much worse. 
+	// Still chucks a lot - a non-recursive result w/ memoization would be best but this will do.
+	private int LevenshteinHeuristic(String str1, String str2, int bestSoFar)
+	{
+		int cost;
+		
+		if(str1.length() <= 0) 
+			return str2.length();
+		
+		if(str2.length() <= 0)
+			return str1.length();
+		
+		if(str1.charAt(0) == str2.charAt(0))
+			cost = 0;
+		else 
+			cost = 1;
+		
+		int distance = Math.abs(str1.length() - str2.length());
+		if(distance > bestSoFar)
+			return distance;
+		
+		int s1 = LevenshteinHeuristic(str1.substring(1), str2, bestSoFar) + 1;
+		int s2 = LevenshteinHeuristic(str1, str2.substring(1), bestSoFar) + 1;
+		int s3 = LevenshteinHeuristic(str1.substring(1), str2.substring(1), bestSoFar) + cost;
+		
+		return min(new int[] {s1, s2, s3 });
 	}
 	
 	// Search for a substring in the model name

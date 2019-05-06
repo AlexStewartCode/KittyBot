@@ -4,19 +4,20 @@ import java.util.List;
 
 import core.benchmark.BenchmarkCommand;
 import core.benchmark.BenchmarkEntry;
+import core.benchmark.BenchmarkFormattable;
 import core.benchmark.BenchmarkInput;
 import core.benchmark.BenchmarkManager;
 
 public class BenchmarkCommandCompare extends BenchmarkCommand 
 {
-	public String OnRun(BenchmarkManager manager, BenchmarkInput input)
+	public BenchmarkFormattable OnRun(BenchmarkManager manager, BenchmarkInput input)
 	{
 		final String lineDelimiter = "\n";
 		String output = "";
 		String[] inputSplit = input.value.trim().split("\\s+");
 
 		if(inputSplit.length < 2)
-			return "You must to specify 2 models to compare!";
+			return new BenchmarkFormattable("You must to specify 2 models to compare!");
 		
 		for(int i = 0; i < inputSplit.length; ++i)
 		{
@@ -38,6 +39,6 @@ public class BenchmarkCommandCompare extends BenchmarkCommand
 			output += "----------";
 		}
 
-		return output;
+		return new BenchmarkFormattable(output);
 	}
 }

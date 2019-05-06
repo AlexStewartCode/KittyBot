@@ -2,6 +2,7 @@ package commands;
 
 import core.Command;
 import core.LocStrings;
+import core.benchmark.BenchmarkFormattable;
 import core.benchmark.BenchmarkFramework;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
@@ -36,18 +37,18 @@ public class CommandBenchmark extends Command
 			return;
 		}
 		
-		String result = null;
+		BenchmarkFormattable commandOutput = null;
 		synchronized(framework)
 		{
-			result = framework.Run(input.args.trim());
+			commandOutput = framework.Run(input.args.trim());
 		}
 		
-		if(result == null)
+		if(commandOutput == null)
 		{
 			res.Call(LocStrings.Stub("BenchmarkInvalid"));
 			return;
 		}
 		
-		res.Call(result);
+		commandOutput.Call(res);
 	}
 }
