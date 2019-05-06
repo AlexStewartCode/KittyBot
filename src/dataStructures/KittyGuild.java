@@ -7,25 +7,29 @@ import utils.AdminControl;
 // Context for a given guild for kittybot. Primarily designed to hold guild-specific settings.
 public class KittyGuild extends DatabaseTrackedObject
 {
-	public String uniqueID;
+	// Variables
+	public final String uniqueID;
 	public KittyRating contentRating;
 	public KittyUser guildOwner;
 	public boolean polling;
 	public String poll; 
 	public ArrayList<String> hasVoted = new ArrayList<String>();
-	public ArrayList<String> allowedRole = new ArrayList<String>();
 	public ArrayList<String> emoji = new ArrayList<String>();
 	public ArrayList <KittyPoll> choices = new ArrayList<KittyPoll>();
 	public AdminControl control;
 	
+	// Database synced info
+	public final KittyGuildRoleList roleList;
 	private String commandIndicator;
 	
 	// Default content for a guild
 	public KittyGuild(String uniqueID, AdminControl adminControl, ArrayList <String> emoji)
 	{
 		super(uniqueID);
-		control = adminControl;
 		this.uniqueID = uniqueID;
+		roleList = new KittyGuildRoleList(uniqueID);
+		
+		control = adminControl;
 		this.contentRating = KittyRating.Safe; 
 		this.polling = false;
 		this.emoji = emoji;
@@ -36,6 +40,8 @@ public class KittyGuild extends DatabaseTrackedObject
 	public KittyGuild(String commandIndicator, KittyRating contentRating, KittyUser guildOwner, String uniqueID)
 	{
 		super(uniqueID);
+		this.uniqueID = uniqueID;
+		roleList = new KittyGuildRoleList(uniqueID);
 		
 		SetCommandIndicator(commandIndicator);
 		this.contentRating = contentRating;
@@ -64,7 +70,7 @@ public class KittyGuild extends DatabaseTrackedObject
 		poll = null;
 		return "Poll ended!";
 	}
-
+	
 	@Override
 	public String Serialize() 
 	{
