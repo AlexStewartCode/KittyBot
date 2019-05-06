@@ -7,8 +7,8 @@ import java.util.List;
 
 import dataStructures.Pair;
 import utils.FileUtils;
-import utils.directoryMonitor.DirectoryMonitor;
-import utils.directoryMonitor.MonitoredFile;
+import utils.io.DirectoryMonitor;
+import utils.io.MonitoredFile;
 
 // All things considered, this doesn't need to be particularly efficient since anything
 // less than 10ms of search time won't be noticable to an end user really, not for

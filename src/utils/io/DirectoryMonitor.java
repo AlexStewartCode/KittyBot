@@ -1,4 +1,4 @@
-package utils.directoryMonitor;
+package utils.io;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+import utils.FileUtils;
 import utils.GlobalLog;
 import utils.LogFilter;
 
@@ -17,11 +18,6 @@ import utils.LogFilter;
 // for external stability and support
 public class DirectoryMonitor
 {
-	// Logging
-	private void Log(String s) { GlobalLog.Log(LogFilter.Util, s); }
-	private void Warn(String s) { GlobalLog.Warn(LogFilter.Util, s); }
-	private void Error(String s) { GlobalLog.Error(LogFilter.Util, s); }
-	
 	// Variables
 	private String directory; 
 	private ArrayList<MonitoredFile> last;
@@ -29,28 +25,12 @@ public class DirectoryMonitor
 	// Constructs a new file monitor and logs initialization
 	public DirectoryMonitor(String directory)
 	{
-		Log("Reading directory files for montioring in: " + directory.toString());
+		IOLog.Log("Reading directory files for montioring in: " + directory.toString());
 		
 		this.directory = directory;
 		this.last = Scrape();
 		
 		Print(last);
-	}
-	
-	// Check when a file was last modified by path
-	private Long LastModified(Path path)
-	{
-		File file = new File(path.toString());
-		
-		if(file.exists())
-		{
-			return file.lastModified();
-		}
-		else
-		{
-			Error("File looking for doesn't exist for directory monitor at path: " + path);
-			return null;
-		}
 	}
 	
 	// Scrape the target directory for all files and store them as custom objects in the list
@@ -64,13 +44,13 @@ public class DirectoryMonitor
 			{
 				paths.filter(Files::isRegularFile).forEach((path)->
 				{ 
-					files.add(new MonitoredFile(path, LastModified(path)));
+					files.add(new MonitoredFile(path, FileUtils.LastModified(path)));
 				});
 			}
 		}
 		catch(Exception e)
 		{
-			Error(e.getMessage());
+			IOLog.Error(e.getMessage());
 		}
 		
 		return files;
@@ -150,7 +130,7 @@ public class DirectoryMonitor
 		Collections.sort(last);
 		
 		if(last.size() == 0)
-			Warn("There's nothing at all in a FileMonitor's target folder! Folder: " + directory);
+			IOLog.Warn("There's nothing at all in a FileMonitor's target folder! Folder: " + directory);
 	}
 	
 	// Returns the current list of files the monitor is tracking in the directory.
@@ -163,6 +143,6 @@ public class DirectoryMonitor
 	private void Print(ArrayList<MonitoredFile> toPrint)
 	{
 		for(int i = 0; i < toPrint.size(); ++i)
-			Log(toPrint.get(i).path.toString());
+			IOLog.Log(toPrint.get(i).path.toString());
 	}
 }

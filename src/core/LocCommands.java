@@ -3,6 +3,7 @@ package core;
 import java.util.ArrayList;
 import utils.GlobalLog;
 import utils.LogFilter;
+import utils.io.FileMonitor;
 import dataStructures.Pair;
 
 // Performs the same localization for the strings associated with command names as 
@@ -27,6 +28,8 @@ public class LocCommands extends LocBase
 			UpdateLocFromDisk();
 			ScrapeAll();
 			SaveLocToDisk();
+			
+			fileMonitor = new FileMonitor(filename);
 		}
 		else
 		{
@@ -46,5 +49,10 @@ public class LocCommands extends LocBase
 		ArrayList<String> raw = new ArrayList<>();
 		instance.stringStore.ForEach((pair) -> raw.add((String)((Pair<?, ?>)pair).First ));
 		return raw;
+	}
+	
+	public static void Upkeep()
+	{
+		instance.Update();
 	}
 }
