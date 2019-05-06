@@ -174,7 +174,10 @@ public class BenchmarkManager
 	private void OnRescan(MonitoredFile file)
 	{
 		// For now, all we need is to note that something was adjusted. 
-		if(file.path.endsWith(extension))
+		if(file.path.toString().contains(extension))
+		{
+			BenchmarkLog.Log("File status changed: " + file.path);
 			needsUpdate = true;
+		}
 	}
 }

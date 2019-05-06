@@ -27,7 +27,15 @@ public class BenchmarkFramework
 		BenchmarkInput input = new BenchmarkInput(args);
 		return ExecuteCommand(input.key, input);
 	}
-
+	
+	public void Update()
+	{
+		synchronized(benchmarkManager)
+		{
+			benchmarkManager.Update();
+		}
+	}
+	
 	// Registers a command
 	private void RegisterCommand(String commandName, BenchmarkCommand command)
 	{

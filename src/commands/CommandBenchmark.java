@@ -30,6 +30,8 @@ public class CommandBenchmark extends Command
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
+		framework.Update();
+		
 		if(input.args == null || input.args.length() == 0)
 		{
 			String output = HelpText();
