@@ -35,6 +35,12 @@ public class LocStrings extends LocBase
 
 	public static String Stub(String toStub)
 	{
-		return instance.GetKey(toStub);
+		return Lookup(toStub);
+	}
+	
+	// Won't be picked up when scraping
+	public static String Lookup(String stubbedPreviously)
+	{
+		return instance.GetKey(stubbedPreviously);
 	}
 }

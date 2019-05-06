@@ -1,4 +1,4 @@
-package utils;
+package utils.directoryMonitor;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -6,10 +6,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-import dataStructures.MonitoredFile;
+import utils.GlobalLog;
+import utils.LogFilter;
 
 // NOTE: Consider shifting internal behavior to https://docs.oracle.com/javase/tutorial/essential/io/notification.html
 // for external stability and support
@@ -149,6 +151,12 @@ public class DirectoryMonitor
 		
 		if(last.size() == 0)
 			Warn("There's nothing at all in a FileMonitor's target folder! Folder: " + directory);
+	}
+	
+	// Returns the current list of files the monitor is tracking in the directory.
+	public List<MonitoredFile> GetCurrentFiles()
+	{
+		return last;
 	}
 	
 	// Prints out an arraylist of items from a directory by path

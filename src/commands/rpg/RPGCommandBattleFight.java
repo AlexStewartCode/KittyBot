@@ -6,7 +6,6 @@ import core.rpg.RPGState;
 
 public class RPGCommandBattleFight extends RPGCommand
 {
-
 	@Override
 	public String OnRun(RPGState state, RPGInput input)
 	{

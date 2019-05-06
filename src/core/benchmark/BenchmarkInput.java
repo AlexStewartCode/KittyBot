@@ -1,14 +1,15 @@
-package core.rpg;
+package core.benchmark;
 
 import utils.StringUtils;
 
-public class RPGInput
+// Lifted from an early iteration of RPGInput
+public class BenchmarkInput
 {
 	public String raw;
 	public String key;
 	public String value;
 	
-	public RPGInput(String raw)
+	public BenchmarkInput(String raw)
 	{
 		this.raw = raw;
 		this.key = "";
@@ -29,4 +30,7 @@ public class RPGInput
 		key = raw.substring(0, whitespacePos).trim();
 		value = raw.substring(whitespacePos).trim();
 	}
+	
+
 }
+

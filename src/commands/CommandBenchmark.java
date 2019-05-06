@@ -2,7 +2,8 @@ package commands;
 
 import core.Command;
 import core.LocStrings;
-import core.rpg.RPGFramework;
+import core.benchmark.BenchmarkFormattable;
+import core.benchmark.BenchmarkFramework;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
 import dataStructures.KittyRating;
@@ -11,24 +12,26 @@ import dataStructures.KittyUser;
 import dataStructures.Response;
 import dataStructures.UserInput;
 
-
-public class CommandRPG extends Command
+public class CommandBenchmark extends Command
 {
-	private RPGFramework framework;
+	// Variables
+	private BenchmarkFramework framework;
 	
-	public CommandRPG(KittyRole role, KittyRating rating) 
+	// Constructor
+	public CommandBenchmark(KittyRole level, KittyRating rating)
 	{ 
-		super(role, rating);
-		framework = new RPGFramework();
+		super(level, rating);
+		framework = new BenchmarkFramework();
 	}
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("RPGInfo"); };
-	
+	public String HelpText() { return LocStrings.Stub("BenchmarkInfo"); }
 	
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
+		framework.Update();
+		
 		if(input.args == null || input.args.length() == 0)
 		{
 			String output = HelpText();
@@ -36,18 +39,18 @@ public class CommandRPG extends Command
 			return;
 		}
 		
-		String result = null;
+		BenchmarkFormattable commandOutput = null;
 		synchronized(framework)
 		{
-			result = framework.Run(user.uniqueID, input.args.trim());
+			commandOutput = framework.Run(input.args.trim());
 		}
 		
-		if(result == null)
+		if(commandOutput == null)
 		{
-			res.Call(LocStrings.Stub("RPGInvalid"));
+			res.Call(LocStrings.Stub("BenchmarkInvalid"));
 			return;
 		}
 		
-		res.Call(result);
+		commandOutput.Call(res);
 	}
 }

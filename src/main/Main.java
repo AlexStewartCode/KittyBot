@@ -2,6 +2,7 @@ package main;
 
 import javax.security.auth.login.LoginException;
 import core.*;
+import core.benchmark.BenchmarkManager;
 import core.lua.PluginManager;
 import core.lua.PluginUser;
 import dataStructures.KittyChannel;
