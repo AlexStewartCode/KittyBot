@@ -32,6 +32,7 @@ public class KittyTrackedLong extends DatabaseTrackedObject
 	{
 		tracked += toAdd;
 		MarkDirty();
+		System.out.println("DIRTY");
 		return tracked;
 	}
 	
@@ -39,6 +40,7 @@ public class KittyTrackedLong extends DatabaseTrackedObject
 	{
 		tracked -= toSubtract;
 		MarkDirty();
+		System.out.println("DIRTY");
 		return tracked;
 	}
 
