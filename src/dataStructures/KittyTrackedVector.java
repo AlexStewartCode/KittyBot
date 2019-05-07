@@ -5,20 +5,24 @@ import java.util.Vector;
 import core.DatabaseTrackedObject;
 
 // Acts as a proxy of sorts for the allowedRole arraylist, keeping it tracked for a specific guild.
-public class KittyGuildRoleList extends DatabaseTrackedObject
+@SuppressWarnings("unused") 
+public class KittyTrackedVector extends DatabaseTrackedObject
 {
 	// Variables
 	private Vector<String> allowedRole = new Vector<String>();
+	private final String databaseID; // in-database ID of this value
+	
 	private final static String delimiter = "\n";
 	private final static String split = "\\n";
-	private final static String differentiator = "roles";
+	private final static String differentiator = "vector-";
 	
-	// Constructor - provide it with the guild ID
-	public KittyGuildRoleList(String identifier)
+	// Constructor - provide it with a unique ID as the second
+	public KittyTrackedVector(String readableName, String UniqueID)
 	{
-		super(identifier + differentiator);
+		super(differentiator + readableName + UniqueID);
+		databaseID = differentiator + readableName + UniqueID;
 	}
-
+	
 	// Mirrored behavior
 	public boolean contains(String role)
 	{
@@ -73,9 +77,15 @@ public class KittyGuildRoleList extends DatabaseTrackedObject
 	@Override
 	public void DeSerialzie(String string)
 	{
-		String[] rolesSplit = string.split(split);
-		
-		for(int i = 0; i < rolesSplit.length; ++i)
-			allowedRole.add(rolesSplit[i]);
+		if(string != null)
+		{
+			if(string.length() >= 0)
+			{
+				String[] rolesSplit = string.split(split);
+				
+				for(int i = 0; i < rolesSplit.length; ++i)
+					allowedRole.add(rolesSplit[i]);
+			}
+		}
 	}
 }

@@ -19,7 +19,12 @@ public class KittyGuild extends DatabaseTrackedObject
 	public AdminControl control;
 	
 	// Database synced info
-	public final KittyGuildRoleList roleList;
+	private final String roleListName = "guildRoles";
+	public final KittyTrackedVector roleList;
+	
+	private final String beansName = "guildBeans";
+	public final KittyTrackedLong beans;
+	
 	private String commandIndicator;
 	
 	// Default content for a guild
@@ -27,7 +32,8 @@ public class KittyGuild extends DatabaseTrackedObject
 	{
 		super(uniqueID);
 		this.uniqueID = uniqueID;
-		roleList = new KittyGuildRoleList(uniqueID);
+		roleList = new KittyTrackedVector(roleListName, uniqueID);
+		beans = new KittyTrackedLong(beansName, uniqueID);
 		
 		control = adminControl;
 		this.contentRating = KittyRating.Safe; 
@@ -41,7 +47,8 @@ public class KittyGuild extends DatabaseTrackedObject
 	{
 		super(uniqueID);
 		this.uniqueID = uniqueID;
-		roleList = new KittyGuildRoleList(uniqueID);
+		roleList = new KittyTrackedVector(roleListName, uniqueID);
+		beans = new KittyTrackedLong(beansName, uniqueID);
 		
 		SetCommandIndicator(commandIndicator);
 		this.contentRating = contentRating;
