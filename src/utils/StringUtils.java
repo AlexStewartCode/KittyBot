@@ -26,4 +26,15 @@ public class StringUtils
 		return str;
 	}
 	
+	// Finds first whitespace in the string
+	public static int FindFirstWhitespace(String str)
+	{
+		for (int i = 0; i < str.length(); ++i) 
+		{
+			if (Character.isWhitespace(str.charAt(i)))
+				return i;
+		}
+	
+		return -1;
+	}
 }

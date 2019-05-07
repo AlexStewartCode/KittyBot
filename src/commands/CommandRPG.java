@@ -32,7 +32,6 @@ public class CommandRPG extends Command
 		if(input.args == null || input.args.length() == 0)
 		{
 			String output = HelpText();
-			System.out.println("Out: |" + output + "|");
 			res.Call(output);
 			return;
 		}

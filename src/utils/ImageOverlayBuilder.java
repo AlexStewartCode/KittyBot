@@ -6,6 +6,7 @@ import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import javax.imageio.IIOException;
@@ -80,24 +81,32 @@ public class ImageOverlayBuilder
 	// Processing the image frames to construct a gif. Relies on (0,255,0) pixel for image center specification.
 	private void ProcessOverlay(BufferedImage overlay, String outfileName) throws IOException
 	{
-		BufferedImage[] frames = new BufferedImage[frameCount];
-
+		ArrayList<BufferedImage> frames = new ArrayList<BufferedImage>(frameCount);
+		//BufferedImage[] frames = new BufferedImage[frameCount];
+		
 		for(int i = 0; i < frameCount; ++i)
 		{
 			BufferedImage out = CombineImages(basePath + baseName + i + FRAME_FILE_EXTENSION , overlay);
 			
 			if(out != null)
-				frames[i] = out;
+				frames.add(out);// = out;
 			else
-				Error("There was an issue with overlaying frame " + i);
+				Warn("Skipping frame " + i + " of base " + basePath + baseName);
 		}
 		
-		Verbose("Processed " + frameCount + " frames, writing...");
+		if(frames.isEmpty())
+		{
+			Error("No frames were found at all, so the gif could not be made!");
+			return;
+		}
+		
+		Verbose("Processed " + frameCount + " frames, found " + frames.size() + " valid, writing...");
 		ImageOutputStream output = new FileImageOutputStream(new File(outfileName));
-		GifSequenceWriter writer = new GifSequenceWriter(output, frames[0].getType(), fps, true);
-				
-		for(int i = 0; i < frameCount; ++i) 
-			writer.writeToSequence(frames[i]);
+		GifSequenceWriter writer = new GifSequenceWriter(output, frames.get(0).getType(), fps, true);
+		
+		Iterator<BufferedImage> buffIter = frames.iterator();
+		while(buffIter.hasNext())
+			writer.writeToSequence(buffIter.next());
 		
 		writer.close();
 		output.close();
@@ -112,7 +121,11 @@ public class ImageOverlayBuilder
 		BufferedImage imageBase = null;
 		BufferedImage imageOverlay = overlay;
 		
-		imageBase = ImageIO.read(new File(pathBase));		
+		File potentialImage = new File(pathBase);
+		if(!potentialImage.exists())
+			return null;
+		
+		imageBase = ImageIO.read(potentialImage);		
 		
 		// Grab data we know won't change. As a side note, I discovered you can get specific pixels a bit
 		// differently later, but it was too late, I wrote the pixel specific code already.

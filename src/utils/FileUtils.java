@@ -41,7 +41,6 @@ public class FileUtils
 		if(!tmpDir.exists())
 			return new ArrayList<Path>();
 		
-		
 		try
 		{
 			Files.find(Paths.get(startingDir), 999, (path, attributes) -> attributes.isRegularFile()).forEach(items::add);
@@ -52,5 +51,21 @@ public class FileUtils
 		}
 		
 		return items;
+	}
+	
+	// Check when a file was last modified by path
+	public static Long LastModified(Path path)
+	{
+		File file = new File(path.toString());
+		
+		if(file.exists())
+		{
+			return file.lastModified();
+		}
+		else
+		{
+			GlobalLog.Error(LogFilter.Util, "File doesn't exist at path: " + path);
+			return null;
+		}
 	}
 }

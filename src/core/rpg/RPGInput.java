@@ -1,5 +1,7 @@
 package core.rpg;
 
+import utils.StringUtils;
+
 public class RPGInput
 {
 	public String raw;
@@ -16,7 +18,7 @@ public class RPGInput
 			return;
 		
 		raw = raw.trim();
-		int whitespacePos = FindFirstWhitespace(raw);
+		int whitespacePos = StringUtils.FindFirstWhitespace(raw);
 		
 		if(whitespacePos == -1)
 		{
@@ -26,17 +28,5 @@ public class RPGInput
 		
 		key = raw.substring(0, whitespacePos).trim();
 		value = raw.substring(whitespacePos).trim();
-	}
-	
-	// Finds first whitespace in the string
-	private int FindFirstWhitespace(String str)
-	{
-		for (int i = 0; i < str.length(); ++i) 
-		{
-			if (Character.isWhitespace(str.charAt(i)))
-				return i;
-		}
-	
-		return -1;
 	}
 }

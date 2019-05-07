@@ -2,6 +2,7 @@ package main;
 
 import javax.security.auth.login.LoginException;
 import core.*;
+import core.benchmark.BenchmarkManager;
 import core.lua.PluginManager;
 import core.lua.PluginUser;
 import dataStructures.KittyChannel;
@@ -77,6 +78,9 @@ public class Main extends ListenerAdapter
 		// RP logging system
 		RPManager.instance.addLine(channel, user, input);
 		
+		// Run any pre-emptive upkeep we need to
+		PerCommandUpkeepPre();
+		
 		// Attempt to spin up a command. If the command doesn't exist.
 		// Run plugins right before invoking the commands but after all other setup.
 		if(commandManager.InvokeOnNewThread(guild, channel, user, input, response) == false)
@@ -87,8 +91,8 @@ public class Main extends ListenerAdapter
 				response.Call(pluginOutput);
 		}
 		
-		// Run any upkeep we need to
-		PerCommandUpkeep();
+		// Run any upkeep in post we need to
+		PerCommandUpkeepPost();
 	}
 
 	// This is run on the JDA GuildMessageReceivedEvent before anything else happens.
@@ -142,11 +146,26 @@ public class Main extends ListenerAdapter
 	}
 	
 	// This is for stuff that we need to do on a regular basis, but don't 
-	// necessarily want running at all points in time.
-	private static boolean PerCommandUpkeep()
+	// necessarily want running at all points in time. 
+	// Happens just after the command / plugin runs.
+	private static boolean PerCommandUpkeepPost()
 	{
+		// Upkeep database
 		databaseManager.Upkeep();
+		
+		// Update command-specific
 		RPManager.Upkeep(kitty);
+		
+		return true;
+	}
+	
+	// Only called once per command. Good for lazily updating.
+	// Happens just before the command / plugin runs.
+	private static boolean PerCommandUpkeepPre()
+	{
+		// Upkeep localization system's file monitoring
+		LocStrings.Upkeep();
+		LocCommands.Upkeep();
 		
 		return true;
 	}

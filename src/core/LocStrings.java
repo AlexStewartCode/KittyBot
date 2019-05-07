@@ -2,6 +2,7 @@ package core;
 
 import utils.GlobalLog;
 import utils.LogFilter;
+import utils.io.FileMonitor;
 
 // A quick-and-dirty localization tool that scrapes the project for calls to itself, then
 // generates/updates a file externally (phrases.config) with all the stub values as keys that 
@@ -26,6 +27,8 @@ public class LocStrings extends LocBase
 			UpdateLocFromDisk();
 			ScrapeAll();
 			SaveLocToDisk();
+			
+			fileMonitor = new FileMonitor(filename);
 		}
 		else
 		{
@@ -35,6 +38,17 @@ public class LocStrings extends LocBase
 
 	public static String Stub(String toStub)
 	{
-		return instance.GetKey(toStub);
+		return Lookup(toStub);
+	}
+	
+	// Won't be picked up when scraping
+	public static String Lookup(String stubbedPreviously)
+	{
+		return instance.GetKey(stubbedPreviously);
+	}
+	
+	public static void Upkeep()
+	{
+		instance.Update();
 	}
 }

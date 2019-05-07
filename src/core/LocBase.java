@@ -12,6 +12,8 @@ import dataStructures.TaggedPairStore;
 import utils.FileUtils;
 import utils.GlobalLog;
 import utils.LogFilter;
+import utils.io.FileMonitor;
+import utils.io.MonitoredFile;
 
 // A quick-and-dirty localization tool that scrapes the project for calls to itself, then
 // generates/updates a file externally with all the stub values as keys that are localized.
@@ -32,11 +34,30 @@ public abstract class LocBase
 	private void Warn(String str) { GlobalLog.Warn(LogFilter.Strings, str); }
 	private void Error(String str) { GlobalLog.Error(LogFilter.Strings, str); }
 	
+	// File monitoring
+	protected FileMonitor fileMonitor;
+	
 	// Ok... so this is an array because if it's not an array, the parser will parse the string 
 	public LocBase(String filename, String functionName)
 	{
 		this.filename = filename;
 		this.functionName = functionName;
+	}
+	
+	// Checks the file specified for updates
+	public void Update()
+	{
+		synchronized(stringStore)
+		{
+			fileMonitor.Update(this::OnFileChange);
+		}
+	}
+	
+	// When the file is changed
+	protected void OnFileChange(MonitoredFile file)
+	{
+		Log("Loc file was modified at path " + file.path);
+		UpdateLocFromDisk();
 	}
 	
 	// Structure used for holding a pair of strings and any other info we need 
