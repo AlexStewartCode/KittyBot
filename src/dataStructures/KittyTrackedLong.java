@@ -1,5 +1,6 @@
 package dataStructures;
 
+import core.DatabaseManager;
 import core.DatabaseTrackedObject;
 import utils.GlobalLog;
 import utils.LogFilter;
@@ -12,6 +13,7 @@ import utils.LogFilter;
 // public SomeConstructor(...)
 // {
 //     myValue = new KittyTrackedLong("friendlyName", this.UniqueID);
+//     DatabaseManager.instance.Register(myValue);
 // }
 //
 public class KittyTrackedLong extends DatabaseTrackedObject 
@@ -32,7 +34,6 @@ public class KittyTrackedLong extends DatabaseTrackedObject
 	{
 		tracked += toAdd;
 		MarkDirty();
-		System.out.println("DIRTY");
 		return tracked;
 	}
 	
@@ -40,7 +41,6 @@ public class KittyTrackedLong extends DatabaseTrackedObject
 	{
 		tracked -= toSubtract;
 		MarkDirty();
-		System.out.println("DIRTY");
 		return tracked;
 	}
 
@@ -74,7 +74,7 @@ public class KittyTrackedLong extends DatabaseTrackedObject
 			catch(Exception e)
 			{
 				tracked = 0;
-				GlobalLog.Error(LogFilter.Core, "Failed to deserialize long with database ID " + databaseID);
+				GlobalLog.Error(LogFilter.Core, "Falling back to default of 0 due to failure to deserialize long with database ID " + databaseID);
 			}
 		}
 		else
