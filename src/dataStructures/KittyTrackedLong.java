@@ -4,14 +4,14 @@ import core.DatabaseTrackedObject;
 import utils.GlobalLog;
 import utils.LogFilter;
 
-// An automatically tracked database value!
+// An automatically tracked long!
 // Usage example: 
 // 
 // KittyTrackedLong score;
 //
 // public SomeConstructor(...)
 // {
-//     myValue = new KittyTrackedLong("guildscore", this.UniqueID);
+//     myValue = new KittyTrackedLong("friendlyName", this.UniqueID);
 // }
 //
 public class KittyTrackedLong extends DatabaseTrackedObject 
