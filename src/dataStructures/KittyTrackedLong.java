@@ -1,6 +1,5 @@
 package dataStructures;
 
-import core.DatabaseManager;
 import core.DatabaseTrackedObject;
 import utils.GlobalLog;
 import utils.LogFilter;
