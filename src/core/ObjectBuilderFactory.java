@@ -374,6 +374,7 @@ public class ObjectBuilderFactory
 		manager.Register(LocCommands.Stub("catch"), new CommandCatch(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("guildrolelist"), new CommandGuildRoleList(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("bethistory"), new CommandBetHistory(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("crouton"), new CommandCrouton(KittyRole.General, KittyRating.Safe));
 		
 		manager.Register(LocCommands.Stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
 		
