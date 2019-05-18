@@ -14,6 +14,7 @@ public class KittyEmbed
 	public String bodyImageURL = null;
 	public String imageURL = null;
 
+
 	public KittyEmbed()
 	{ 
 	}
