@@ -90,7 +90,10 @@ public class Main extends ListenerAdapter
 			List<String> pluginOutput = pluginManager.RunAll(input.message, user);
 			
 			if(pluginOutput != null && pluginOutput.size() > 0)
-				response.Call(pluginOutput.get(0));
+			{
+				for(int i = 0; i < pluginOutput.size(); ++i)
+					response.Call(pluginOutput.get(i));
+			}
 		}
 		
 		// Run any upkeep in post we need to

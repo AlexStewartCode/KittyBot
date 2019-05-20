@@ -50,36 +50,40 @@ public class Plugin
 	
 	public List<String> Run(String args, PluginUser user)
 	{
-		List<String> outputs = new Vector<String>();
-		
 		try
 		{
+			List<String> outputs = new Vector<String>();
+			
 			LuaValue res = func_plugin.call(LuaValue.valueOf(args), user.AsLua());
 			
 			if(!res.isnil())
 			{
 				if(res.istable())
 				{
-					while(true)
+					LuaValue key = LuaValue.NIL;
+					while (true)
 					{
-						LuaValue key = LuaValue.NIL;
-						while (true)
-						{
-							Varargs n = res.next(key);
-							key = n.arg1();
-							if (key.isnil())
-								break;
-							
-							LuaValue value = n.arg(2);
-							outputs.add(value.toString());
-						}
+						Varargs n = res.next(key);
+						key = n.arg1();
+						if (key.isnil())
+							break;
+						
+						LuaValue value = n.arg(2);
+						outputs.add(value.toString());
 					}
 				}
 				else
 				{
+					System.out.println("Loc2.5 " + res.toString());
 					outputs.add(res.toString());
 				}
 			}
+			
+			if(outputs.size() <= 0)
+				return null;
+			
+			return outputs;
+			
 		}
 		catch(Exception e)
 		{

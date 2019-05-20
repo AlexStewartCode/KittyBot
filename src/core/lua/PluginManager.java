@@ -49,7 +49,7 @@ public class PluginManager
 		{
 			Plugin plugin = plugins.get(i);
 			List<String> out = plugin.Run(input, new PluginUser(user));
-			
+
 			if(out != null)
 			{
 				PluginLog.Log("Executed plugin at " + plugin.filepath);
