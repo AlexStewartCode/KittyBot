@@ -18,6 +18,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import offline.*;
 import utils.GlobalLog;
 import net.dv8tion.jda.core.*;
+import java.util.*;
 
 // http://www.slf4j.org/ - this JDA logging tool has been disabled by specifying NOP implementation.
 // This is the application entry point, and bot startup location!
@@ -86,10 +87,10 @@ public class Main extends ListenerAdapter
 		// Run plugins right before invoking the commands but after all other setup.
 		if(commandManager.InvokeOnNewThread(guild, channel, user, input, response) == false)
 		{
-			String pluginOutput = pluginManager.RunAll(input.message, user);
+			List<String> pluginOutput = pluginManager.RunAll(input.message, user);
 			
-			if(pluginOutput != null)
-				response.Call(pluginOutput);
+			if(pluginOutput != null && pluginOutput.size() > 0)
+				response.Call(pluginOutput.get(0));
 		}
 		
 		// Run any upkeep in post we need to
