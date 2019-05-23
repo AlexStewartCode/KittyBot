@@ -68,6 +68,17 @@ public class Superintendent
 		return true;
 	}
 	
+	// Only called once per command. Good for lazily updating.
+	// Happens just before the command / plugin runs.
+	public static boolean PerCommandUpkeepPre()
+	{
+		// Upkeep localization system's file monitoring
+		LocStrings.Upkeep();
+		LocCommands.Upkeep();
+		
+		return true;
+	}
+	
 	// This is for stuff that we need to do on a regular basis, but don't 
 	// necessarily want running at all points in time. 
 	// Happens just after the command / plugin runs.
@@ -78,17 +89,6 @@ public class Superintendent
 		
 		// Update command-specific
 		RPManager.Upkeep(bot);
-		
-		return true;
-	}
-	
-	// Only called once per command. Good for lazily updating.
-	// Happens just before the command / plugin runs.
-	public static boolean PerCommandUpkeepPre()
-	{
-		// Upkeep localization system's file monitoring
-		LocStrings.Upkeep();
-		LocCommands.Upkeep();
 		
 		return true;
 	}

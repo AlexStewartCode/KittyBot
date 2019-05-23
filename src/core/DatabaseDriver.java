@@ -28,14 +28,22 @@ public class DatabaseDriver
 		driver = null;
 	}
 	
+	// Makes sure a table exists with the specified name.
+	// The keyName specifies the key column label, and the valueName specifies the value column label.
+	public void EnsureTableExists(String tableName, String keyName, String valueName)
+	{
+		// Require a global table if it doesn't exist already
+		driver.ExecuteStatement("CREATE TABLE IF NOT EXISTS " + tableName + " (" + keyName + " text PRIMARY KEY, " + valueName + " text);", null);
+	}
+	
 	// Set up and create a table in the database
 	public boolean Connect()
 	{
 		driver = new JDBCDriverSQLite();
 		driver.Connect();
 	
-		// Require a global table if it doesn't exist already
-		driver.ExecuteStatement("CREATE TABLE IF NOT EXISTS " + globalTableName + " (" + globalKeyName + " text PRIMARY KEY, " + globalValueName + " text);", null);
+		// Verify tables we want to use exist
+		EnsureTableExists(globalTableName, globalKeyName, globalValueName); // General table. Do not remove.
 		
 		return true;
 	}
