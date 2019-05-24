@@ -336,6 +336,7 @@ public class ObjectBuilderFactory
 		manager.Register(LocCommands.Stub("buildHelp"), new CommandHelpBuilder(KittyRole.Dev, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("tweet"), new CommandTweet(KittyRole.Dev, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("dbflush"), new CommandDBFlush(KittyRole.Dev, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("dbstats"), new CommandDBStats(KittyRole.Dev, KittyRating.Safe));
 		
 		// Admin
 		manager.Register(LocCommands.Stub("rating"), new CommandRating(KittyRole.Admin, KittyRating.Safe));

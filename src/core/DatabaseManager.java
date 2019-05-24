@@ -1,5 +1,6 @@
 package core;
 
+import java.util.Date;
 import java.util.Vector;
 import utils.GlobalLog;
 import utils.LogFilter;
@@ -12,6 +13,7 @@ public class DatabaseManager
 	// Private internal variables
 	private Vector<DatabaseTrackedObject> trackedObjects;
 	private DatabaseDriver driver;
+	private Date lastUpkeep;
 	
 	public DatabaseManager()
 	{
@@ -27,6 +29,7 @@ public class DatabaseManager
 			return;
 		}
 		
+		lastUpkeep = new Date();
 		trackedObjects = new Vector<DatabaseTrackedObject>();
 		driver = new DatabaseDriver();
 		
@@ -57,6 +60,8 @@ public class DatabaseManager
 				}
 			}
 			
+			lastUpkeep = new Date();
+			
 			return numUpdated;
 		}
 	}
@@ -84,5 +89,15 @@ public class DatabaseManager
 		{
 			driver.CreateSetKey(key, value);
 		}
+	}
+	
+	public Date GetLastUpkeep()
+	{
+		return lastUpkeep;
+	}
+	
+	public int GetTrackedObjectsSize()
+	{
+		return trackedObjects.size();
 	}
 }

@@ -13,7 +13,7 @@ import dataStructures.KittyUser;
 import dataStructures.Response;
 import dataStructures.UserInput;
 
-public class CommandCrouton  extends Command
+public class CommandCrouton extends Command
 {
 	public CommandCrouton(KittyRole level, KittyRating rating) { super(level, rating); }
 	
