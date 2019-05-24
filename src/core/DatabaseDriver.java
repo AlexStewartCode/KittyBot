@@ -40,7 +40,10 @@ public class DatabaseDriver
 	public boolean Connect()
 	{
 		driver = new JDBCDriverSQLite();
-		driver.Connect();
+		if(driver.Connect() == false)
+		{
+			return false;
+		}
 	
 		// Verify tables we want to use exist
 		EnsureTableExists(globalTableName, globalKeyName, globalValueName); // General table. Do not remove.
