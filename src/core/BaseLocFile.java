@@ -17,7 +17,7 @@ import utils.io.MonitoredFile;
 
 // A quick-and-dirty localization tool that scrapes the project for calls to itself, then
 // generates/updates a file externally with all the stub values as keys that are localized.
-public abstract class LocBase
+public abstract class BaseLocFile
 {
 	// Pre-defined values 
 	public static final String KittySourceDirectory = "./src";
@@ -38,7 +38,7 @@ public abstract class LocBase
 	protected FileMonitor fileMonitor;
 	
 	// Ok... so this is an array because if it's not an array, the parser will parse the string 
-	public LocBase(String filename, String functionName)
+	public BaseLocFile(String filename, String functionName)
 	{
 		this.filename = filename;
 		this.functionName = functionName;

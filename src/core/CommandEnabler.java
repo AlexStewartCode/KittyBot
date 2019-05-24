@@ -15,10 +15,11 @@ import utils.LogFilter;
 // commands that are being looked up will behave slightly differently so trimming
 // rules for this file are different than the localization ones - this is more 
 // aggresive with whitespace removal.
-public class CommandEnabler
+public class CommandEnabler extends BaseKeyValueFile
 {
 	// Config/const variables
-	public static final String header = "[CommandEnabler]"; // For consistency in files
+	public static final String headerStart = "[";
+	public static final String headerEnd = "]";
 	public static final String filename = "commands.config";
 	public static final String pairSplit = "=";
 	public static final char pairSeparator = '\n';
@@ -29,13 +30,17 @@ public class CommandEnabler
 	// Local variables
 	private HashMap<String, Boolean> enabledMap; // Quick lookup
 	private ArrayList<String> keyList; // Tracking ordering for later
+	private final String header;
 	
 	public CommandEnabler()
 	{
+		// Create/Init variables
 		GlobalLog.Log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
 		enabledMap = new HashMap<>();
 		keyList = new ArrayList<>();
+		header = headerStart + this.getClass().getSimpleName() + headerEnd;
 		
+		// Startup
 		ReadIn();
 		GetTrackedCommands();
 		WriteOut();

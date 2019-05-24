@@ -11,6 +11,15 @@ import java.util.stream.Stream;
 
 public class FileUtils
 {
+	public static void CreateDirectoryIfDoesntExist(String directoryName)
+	{
+		File directory = new File(directoryName);
+		
+		if (! directory.exists()){
+			directory.mkdir();
+		}
+	}
+	
 	// Reads all lines from a file as a string
 	public static String ReadContent(File file) { return ReadContent(file.toPath()); }
 	public static String ReadContent(Path filePath)

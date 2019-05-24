@@ -9,6 +9,7 @@ import java.util.Date;
 
 public class GlobalLog 
 {
+	private static final String directory = "logs/";
 	private static final String log = "Log";
 	private static final String warn = "Warning";
 	private static final String error = "ERROR";
@@ -19,7 +20,10 @@ public class GlobalLog
 	{
 		DateFormat dF = new SimpleDateFormat("yyyy_MM_dd_HH-mm");
 		Date today = new Date(); 
-		outputLog =  new PrintWriter((dF.format(today) + ".log"), "UTF-8");
+		
+		FileUtils.CreateDirectoryIfDoesntExist(directory);
+		outputLog = new PrintWriter(directory + (dF.format(today) + ".log"), "UTF-8");
+		GlobalLog.Log(LogFilter.Util, "Finished initializing logging system");
 	}
 	
 	private static void Write(String status, LogFilter filter, String body)
