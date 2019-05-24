@@ -1,5 +1,7 @@
 package main;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import core.DatabaseManager;
 import core.LocCommands;
 import core.LocStrings;
@@ -79,13 +81,20 @@ public class Superintendent
 		return true;
 	}
 	
+	private static final Integer delayTimerReset = 5;
+	private static AtomicInteger delayTimerCurrent = new AtomicInteger(delayTimerReset);
+	
 	// This is for stuff that we need to do on a regular basis, but don't 
 	// necessarily want running at all points in time. 
 	// Happens just after the command / plugin runs.
 	public static boolean PerCommandUpkeepPost(JDA bot, DatabaseManager databaseManager)
 	{
-		// Upkeep database
-		databaseManager.Upkeep();
+		// Upkeep database lazily on occasion
+		if(delayTimerCurrent.decrementAndGet() < 0)
+		{
+			databaseManager.Upkeep();
+			delayTimerCurrent.set(delayTimerReset);
+		}
 		
 		// Update command-specific
 		RPManager.Upkeep(bot);
