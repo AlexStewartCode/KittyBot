@@ -39,10 +39,12 @@ public class DatabaseManager
 	
 	// Thumbs through registered objects and syncs them with the database. 
 	// Consider moving this operation to a separate thread.
-	public void Upkeep()
+	public int Upkeep()
 	{
 		synchronized(trackedObjects)
 		{
+			int numUpdated = 0;
+			
 			for(int i = 0 ; i < trackedObjects.size(); ++i)
 			{
 				DatabaseTrackedObject dto = trackedObjects.get(i);
@@ -51,8 +53,11 @@ public class DatabaseManager
 				{
 					SetRemoteValue(dto.identifier, dto.Serialize());
 					dto.Resolve();
+					++numUpdated;
 				}
 			}
+			
+			return numUpdated;
 		}
 	}
 	
