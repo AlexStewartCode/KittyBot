@@ -1,4 +1,4 @@
-package utils;
+package utils.io;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +8,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Stream;
+
+import utils.GlobalLog;
+import utils.LogFilter;
 
 public class FileUtils
 {

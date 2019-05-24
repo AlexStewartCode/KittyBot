@@ -7,6 +7,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import utils.io.FileUtils;
+
 public class GlobalLog 
 {
 	private static final String directory = "logs/";

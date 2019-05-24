@@ -9,10 +9,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import dataStructures.TaggedPairStore;
-import utils.FileUtils;
 import utils.GlobalLog;
 import utils.LogFilter;
 import utils.io.FileMonitor;
+import utils.io.FileUtils;
 import utils.io.MonitoredFile;
 
 // A quick-and-dirty localization tool that scrapes the project for calls to itself, then
@@ -37,7 +37,7 @@ public abstract class BaseLocFile
 	// File monitoring
 	protected FileMonitor fileMonitor;
 	
-	// Ok... so this is an array because if it's not an array, the parser will parse the string 
+	// Constructor 
 	public BaseLocFile(String filename, String functionName)
 	{
 		this.filename = filename;
