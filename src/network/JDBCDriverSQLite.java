@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import jdk.nashorn.internal.runtime.logging.DebugLogger;
 import utils.GlobalLog;
 import utils.LogFilter;
 
@@ -119,6 +121,7 @@ public class JDBCDriverSQLite extends JDBCDriver
 			if(args != null && args.length > 0)
 			{
 				PreparedStatement statement = connection.prepareStatement(command);
+				GlobalLog.Log("COMMAND" + command);
 				
 				for(int i = 0; i < args.length; ++i)
 					statement.setString(i + 1, args[i]);

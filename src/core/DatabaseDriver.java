@@ -87,7 +87,8 @@ public class DatabaseDriver
 	private void UpdateKey(String key, String value)
 	{
 		String command = "UPDATE " + globalTableName + " SET " + globalValueName + " = ? WHERE " + globalKeyName + " = ?;";
-		driver.ExecuteStatement(command, new String[] { key, value });
+		boolean status = driver.ExecuteStatement(command, new String[] { key, value });
+		GlobalLog.Log(LogFilter.Database, "UpdateKey status: " + status);
 	}
 	
 	// Protoype updating for seeing if a key exists
@@ -111,7 +112,8 @@ public class DatabaseDriver
 	private void CreateKey(String key, String value)
 	{
 		String command = "INSERT INTO " + globalTableName + " (GlobalKey, GlobalValue) VALUES (?, ?);";
-		driver.ExecuteStatement(command, new String[] { key, value });
+		boolean status = driver.ExecuteStatement(command, new String[] { key, value });
+		GlobalLog.Log(LogFilter.Database, "CreateKey status: " + status);
 	}
 	
 	// Transforms a result into a string if possible.
