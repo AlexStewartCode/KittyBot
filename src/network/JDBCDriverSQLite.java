@@ -7,8 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import jdk.nashorn.internal.runtime.logging.DebugLogger;
 import utils.GlobalLog;
 import utils.LogFilter;
 

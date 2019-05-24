@@ -18,6 +18,7 @@ import utils.LogFilter;
 public class CommandEnabler
 {
 	// Config/const variables
+	public static final String header = "[CommandEnabler]"; // For consistency in files
 	public static final String filename = "commands.config";
 	public static final String pairSplit = "=";
 	public static final char pairSeparator = '\n';
@@ -51,6 +52,9 @@ public class CommandEnabler
 			
 			for(int i = 0; i < lines.length; ++i)
 			{
+				if(lines[i].contains(header))
+					continue;
+				
 				String[] pair = lines[i].split(pairSplit);
 				
 				if(pair.length < 2)
@@ -92,6 +96,7 @@ public class CommandEnabler
 		try
 		{
 			String outString = "";
+			outString += header + pairSeparator;
 			for(int i = 0; i < keyList.size(); ++i)
 			{
 				String key = keyList.get(i);
