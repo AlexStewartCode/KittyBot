@@ -18,8 +18,8 @@ public enum KittyRole
 		return value;
 	}
 	
-    public static Optional<KittyRole> valueOf(int value) 
-    {
-        return Arrays.stream(values()).filter(role -> role.value == value).findFirst();
-    }
+	public static Optional<KittyRole> valueOf(int value) 
+	{
+		return Arrays.stream(values()).filter(role -> role.value == value).findFirst();
+	}
 }

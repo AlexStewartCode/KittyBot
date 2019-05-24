@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public enum JDBCStatementType
 {
-	Insert (0), Update(1), Select(2);
+	Insert (0), Update(1), Select(2), Create(4);
 	
 	private final int value;
 	private JDBCStatementType(int value) 
