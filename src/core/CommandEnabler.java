@@ -64,7 +64,8 @@ public class CommandEnabler extends BaseKeyValueFile
 		
 		for(int i = 0; i < unloc.size(); ++i)
 		{
-			String command = unloc.get(i);
+			String command = unloc.get(i).toLowerCase();
+			
 			if(enabledMap.putIfAbsent(command, defaultEnabledState) == null)
 			{
 				GlobalLog.Log(LogFilter.Strings, "Identified new toggleable raw command: " + command);
