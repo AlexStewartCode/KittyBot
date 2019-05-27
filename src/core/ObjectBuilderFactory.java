@@ -348,6 +348,8 @@ public class ObjectBuilderFactory
 		manager.Register(LocCommands.Stub("poll"), new CommandPollManage(KittyRole.Mod, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("givebeans"), new CommandGiveBeans(KittyRole.Mod, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("rpg"), new CommandRPG(KittyRole.Mod, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("rafflestart"), new CommandRaffleStart(KittyRole.Mod, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("rafflespin"), new CommandRaffleSpin(KittyRole.Mod, KittyRating.Safe));
 
 		// General
 		manager.Register(LocCommands.Stub("fetch"), new CommandFetch(KittyRole.General, KittyRating.Safe));
@@ -382,6 +384,7 @@ public class ObjectBuilderFactory
 		manager.Register(LocCommands.Stub("bethistory"), new CommandBetHistory(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("crouton"), new CommandCrouton(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("rafflejoin"), new CommandRaffleJoin(KittyRole.General, KittyRating.Safe));
 		
 		return manager;
 	}
