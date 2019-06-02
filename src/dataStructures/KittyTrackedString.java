@@ -1,0 +1,58 @@
+package dataStructures;
+
+import core.DatabaseTrackedObject;
+import utils.GlobalLog;
+import utils.LogFilter;
+
+public class KittyTrackedString extends DatabaseTrackedObject
+{
+	private String trackedString;    // Tracked value
+	private final static String differentiator = "string-";
+	
+	// Constructor with unique id and readable name
+	public KittyTrackedString(String readableName, String UniqueID)
+	{
+		super(differentiator + readableName + UniqueID);
+	}
+
+	// Sets the value of the string and marks it as dirty
+	public void set(String newValue)
+	{
+		synchronized(trackedString)
+		{
+			trackedString = newValue;
+			MarkDirty();
+		}
+	}
+	
+	// Returns string. The string is copied because it is immutable. 
+	public String get()
+	{
+		synchronized(trackedString)
+		{
+			return trackedString;
+		}
+	}
+	
+	@Override
+	public String Serialize() 
+	{
+		return trackedString;
+	}
+
+	@Override
+	public void DeSerialzie(String string)
+	{
+		if(string != null && !string.isEmpty())
+		{
+			trackedString = string;
+		}
+		else
+		{
+			GlobalLog.Log(LogFilter.Database, "String had null or empty value with identifier: " + identifier); 
+			string = "";
+			MarkDirty();
+		}
+	}
+
+}

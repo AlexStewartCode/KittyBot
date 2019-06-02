@@ -5,13 +5,10 @@ import java.util.Vector;
 
 import core.DatabaseTrackedObject;
 
-// Acts as a proxy of sorts for the allowedRole arraylist, keeping it tracked for a specific guild.
-@SuppressWarnings("unused") 
 public class KittyTrackedVector extends DatabaseTrackedObject
 {
 	// Variables
 	private Vector<String> allowedRole = new Vector<String>();
-	private final String databaseID; // in-database ID of this value
 	
 	private final static String delimiter = "\n";
 	private final static String split = "\\n";
@@ -21,7 +18,6 @@ public class KittyTrackedVector extends DatabaseTrackedObject
 	public KittyTrackedVector(String readableName, String UniqueID)
 	{
 		super(differentiator + readableName + UniqueID);
-		databaseID = differentiator + readableName + UniqueID;
 	}
 	
 	
