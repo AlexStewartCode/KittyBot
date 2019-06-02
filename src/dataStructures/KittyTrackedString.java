@@ -6,8 +6,8 @@ import utils.LogFilter;
 
 public class KittyTrackedString extends DatabaseTrackedObject
 {
-	private String trackedString; // Tracked value
-	private final static String differentiator = "string-";
+	private String trackedString;                           // This is the string tracked in the database
+	private final static String differentiator = "string-"; // Lends a very slightly human-readable label to the database key
 	
 	// Constructor with unique id and readable name
 	public KittyTrackedString(String readableName, String UniqueID)

@@ -35,7 +35,7 @@ public class DatabaseManager
 		
 		if(driver.Connect() == false)
 		{
-			GlobalLog.Error("Database failed to connect. Currently, without the DB, this bot can not run.");
+			GlobalLog.Error("A database failed to connect. Currently, without the DB, this bot can not run.");
 			System.exit(1);
 		}
 	}
