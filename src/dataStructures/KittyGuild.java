@@ -1,8 +1,6 @@
 package dataStructures;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
 
 import core.DatabaseManager;
 import core.DatabaseTrackedObject;
@@ -23,7 +21,8 @@ public class KittyGuild extends DatabaseTrackedObject
 	public ArrayList<String> emoji = new ArrayList<String>();
 	public ArrayList <KittyPoll> choices = new ArrayList<KittyPoll>();
 	public AdminControl control;
-	public HashMap <KittyUser, Boolean> raffleUsers = new HashMap<KittyUser, Boolean>();
+	public ArrayList <KittyUser> raffleUsersUnchosen = new ArrayList<KittyUser>();
+	public ArrayList <KittyUser> raffleUsersChosen = new ArrayList<KittyUser>();
 	
 	// Database synced info
 	private final String roleListName = "guildRoles";
@@ -111,6 +110,8 @@ public class KittyGuild extends DatabaseTrackedObject
 		{
 			raffleCost = 0;
 			raffling = false;
+			raffleUsersChosen.removeAll(raffleUsersChosen);
+			raffleUsersUnchosen.removeAll(raffleUsersUnchosen);
 			return true;
 		}
 		return false;
@@ -118,10 +119,10 @@ public class KittyGuild extends DatabaseTrackedObject
 	
 	public boolean joinRaffle(KittyUser user)
 	{
-		if(!raffleUsers.containsKey(user) && user.GetBeans() > raffleCost && raffling)
+		if(!raffleUsersChosen.contains(user) && !raffleUsersUnchosen.contains(user) && user.GetBeans() > raffleCost && raffling)
 		{
 			user.ChangeBeans(raffleCost);
-			raffleUsers.put(user, true);
+			raffleUsersUnchosen.add(user);
 			return true;
 		}
 		return false; 
@@ -129,18 +130,12 @@ public class KittyGuild extends DatabaseTrackedObject
 	
 	public KittyUser chooseRaffleWinner()
 	{
-		if(!raffleUsers.isEmpty())
+		if(!raffleUsersUnchosen.isEmpty())
 		{
-			KittyUser chosen = (KittyUser) raffleUsers.keySet().toArray()[new Random().nextInt(raffleUsers.keySet().toArray().length)];
-			for(int i = 0; i < 10; i ++)
-			{
-				if(raffleUsers.get(chosen))
-				{
-					raffleUsers.replace(chosen, false);
-					return chosen;
-				}
-			}
-			
+			KittyUser chosen = raffleUsersUnchosen.get((int) (Math.random() * raffleUsersUnchosen.size()));
+			raffleUsersUnchosen.remove(chosen);
+			raffleUsersChosen.add(chosen);
+			return chosen;
 		}
 		return null;
 	}
