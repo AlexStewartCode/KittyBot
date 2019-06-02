@@ -6,7 +6,7 @@ import utils.LogFilter;
 
 public class KittyTrackedString extends DatabaseTrackedObject
 {
-	private String trackedString;    // Tracked value
+	private String trackedString; // Tracked value
 	private final static String differentiator = "string-";
 	
 	// Constructor with unique id and readable name

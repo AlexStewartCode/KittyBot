@@ -8,7 +8,7 @@ import core.DatabaseTrackedObject;
 public class KittyTrackedVector extends DatabaseTrackedObject
 {
 	// Variables
-	private Vector<String> allowedRole = new Vector<String>();
+	private Vector<String> trackedVector = new Vector<String>();
 	
 	private final static String delimiter = "\n";
 	private final static String split = "\\n";
@@ -24,7 +24,7 @@ public class KittyTrackedVector extends DatabaseTrackedObject
 	// See if the string is contined in the vector, regardless of case.
 	public boolean containsIgnoreCase(String str)
 	{
-		Iterator<String> value = allowedRole.iterator();
+		Iterator<String> value = trackedVector.iterator();
 		
 		while (value.hasNext())
 		{
@@ -38,33 +38,33 @@ public class KittyTrackedVector extends DatabaseTrackedObject
 	// Mirrored behavior
 	public boolean contains(String str)
 	{
-		return allowedRole.contains(str);
+		return trackedVector.contains(str);
 	}
 	
 	public void add(String str)
 	{
-		allowedRole.add(str);
+		trackedVector.add(str);
 		this.MarkDirty();
 	}
 	
 	public boolean isEmpty()
 	{
-		return allowedRole.isEmpty();
+		return trackedVector.isEmpty();
 	}
 	
 	public int size()
 	{
-		return allowedRole.size();
+		return trackedVector.size();
 	}
 	
 	public String get(int index)
 	{
-		return allowedRole.get(index);
+		return trackedVector.get(index);
 	}
 	
 	public void remove(String str)
 	{
-		allowedRole.remove(str);
+		trackedVector.remove(str);
 		this.MarkDirty();
 	}
 	
@@ -74,12 +74,12 @@ public class KittyTrackedVector extends DatabaseTrackedObject
 	{
 		String toSerialize = "";
 		
-		for(int i = 0; i < allowedRole.size(); ++i)
+		for(int i = 0; i < trackedVector.size(); ++i)
 		{
 			if(i != 0)
 				toSerialize += delimiter;
 			
-			toSerialize += allowedRole.get(i);
+			toSerialize += trackedVector.get(i);
 		}
 		
 		return toSerialize; 
@@ -96,7 +96,7 @@ public class KittyTrackedVector extends DatabaseTrackedObject
 				String[] rolesSplit = string.split(split);
 				
 				for(int i = 0; i < rolesSplit.length; ++i)
-					allowedRole.add(rolesSplit[i]);
+					trackedVector.add(rolesSplit[i]);
 			}
 		}
 	}
