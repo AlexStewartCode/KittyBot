@@ -33,9 +33,9 @@ public class CommandDBStats extends Command
 	{
 		KittyEmbed embed = new KittyEmbed();
 		embed.title = "Database Info";
-		embed.descriptionText = "**Tracked Items:** " + DatabaseManager.instance.GetTrackedObjectsSize();
+		embed.descriptionText = "**Tracked Items:** " + DatabaseManager.instance.getTrackedObjectsSize();
 		embed.descriptionText += "\n";
-		embed.descriptionText += "**Last Upkeep:** " + dateFormat.format(DatabaseManager.instance.GetLastUpkeep()) + " UTC-7"; 
+		embed.descriptionText += "**Last Upkeep:** " + dateFormat.format(DatabaseManager.instance.getLastUpkeep()) + " UTC-7"; 
 		embed.color = new Color(7*16, 8*16, 9*16);
 		
 		res.CallEmbed(embed);

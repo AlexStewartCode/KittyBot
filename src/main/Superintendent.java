@@ -92,7 +92,7 @@ public class Superintendent
 		// Upkeep database lazily on occasion
 		if(delayTimerCurrent.decrementAndGet() < 0)
 		{
-			databaseManager.Upkeep();
+			databaseManager.upkeep();
 			delayTimerCurrent.set(delayTimerReset);
 		}
 		
