@@ -47,7 +47,7 @@ public class CommandShutdown extends Command
 		{
 			// Force upkeep, this works so long as upkeep is on the main thread.
 			res.CallImmediate(LocStrings.Stub("ShutdownSafe"));
-			DatabaseManager.instance.Upkeep(); 
+			DatabaseManager.instance.upkeep(); 
 			GlobalLog.Warn(LogFilter.Command, LocStrings.Lookup("ShutdownSafe"));
 			
 			System.exit(0);

@@ -35,8 +35,8 @@ public class KittyGuild extends DatabaseTrackedObject
 	
 	private void RegisterTrackedObjects()
 	{
-		DatabaseManager.instance.Register(roleList);
-		DatabaseManager.instance.Register(beans);
+		DatabaseManager.instance.globalRegister(roleList);
+		DatabaseManager.instance.globalRegister(beans);
 	}
 	
 	// Default content for a guild

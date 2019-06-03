@@ -56,7 +56,7 @@ public class CommandBoop extends Command
 	{ 
 		super(level, rating);
 		boopTracker = new BoopTracker();
-		DatabaseManager.instance.Register(boopTracker);
+		DatabaseManager.instance.globalRegister(boopTracker);
 	}
 
 	@Override
