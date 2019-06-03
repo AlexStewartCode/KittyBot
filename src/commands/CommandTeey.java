@@ -23,11 +23,11 @@ public class CommandTeey extends Command
 	private static Long num = 0l;
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("TeeyInfo"); }
+	public String getHelpText() { return LocStrings.Stub("TeeyInfo"); }
 	
 	// Called when the command is run!
 	@Override 
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String name = null;
 		File teeyFile = null;

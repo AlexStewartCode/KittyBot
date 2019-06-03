@@ -15,10 +15,10 @@ public class CommandFetch extends Command
 	public CommandFetch(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("FetchInfo"); }
+	public String getHelpText() { return LocStrings.Stub("FetchInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String emote = input.args.split(" ")[0];
 		if(emote.startsWith("<") && emote.endsWith(">"))

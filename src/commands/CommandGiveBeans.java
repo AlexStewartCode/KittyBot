@@ -9,10 +9,10 @@ public class CommandGiveBeans extends Command
 	public CommandGiveBeans (KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("GiveBeansInfo"); }
+	public String getHelpText() { return LocStrings.Stub("GiveBeansInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		int beans = 0;
 		try {

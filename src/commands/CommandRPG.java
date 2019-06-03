@@ -23,15 +23,15 @@ public class CommandRPG extends Command
 	}
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("RPGInfo"); };
+	public String getHelpText() { return LocStrings.Stub("RPGInfo"); };
 	
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.args == null || input.args.length() == 0)
 		{
-			String output = HelpText();
+			String output = getHelpText();
 			res.Call(output);
 			return;
 		}

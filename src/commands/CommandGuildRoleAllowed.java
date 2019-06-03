@@ -15,10 +15,10 @@ public class CommandGuildRoleAllowed extends Command
 	public CommandGuildRoleAllowed(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("GuildRoleAllowedInfo"); }
+	public String getHelpText() { return LocStrings.Stub("GuildRoleAllowedInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String [] roles = input.args.split(",");
 		String role;

@@ -8,10 +8,10 @@ public class CommandPollVote extends Command
 	public CommandPollVote(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("PollVoteInfo"); }
+	public String getHelpText() { return LocStrings.Stub("PollVoteInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(guild.polling)
 		{

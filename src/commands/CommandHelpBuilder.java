@@ -26,10 +26,10 @@ public class CommandHelpBuilder extends Command {
 	}
 
 	@Override
-	public String HelpText() { return LocStrings.Stub("HelpBuilderInfo"); }
+	public String getHelpText() { return LocStrings.Stub("HelpBuilderInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		// Holds command groups
 		HashMap<KittyRole, ArrayList<Command>> commandsByRole = new HashMap<KittyRole, ArrayList<Command>>();
@@ -121,7 +121,7 @@ public class CommandHelpBuilder extends Command {
 					accumulated += leadStart + keys.get(j) + leadEnd;
 				}
 				
-				accumulated += leadFollow + commands.get(i).HelpText() + lineDelimiter;;
+				accumulated += leadFollow + commands.get(i).getHelpText() + lineDelimiter;;
 			}
 						
 			accumulated += sectionEnd;

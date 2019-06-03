@@ -15,10 +15,10 @@ public class CommandWolfram extends Command
 	public CommandWolfram(KittyRole level, KittyRating rating) { super(level, rating);}
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("WolframInfo"); }
+	public String getHelpText() { return LocStrings.Stub("WolframInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.args == null || input.args.trim().length() == 0)
 			res.Call(LocStrings.Stub("WolframNoArgs"));

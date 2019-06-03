@@ -19,10 +19,10 @@ public class CommandDBFlush extends Command
 	public CommandDBFlush(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("DBFlushInfo"); }
+	public String getHelpText() { return LocStrings.Stub("DBFlushInfo"); }
 
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		int numUpdated = DatabaseManager.instance.upkeep();
 

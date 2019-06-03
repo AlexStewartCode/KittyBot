@@ -15,11 +15,11 @@ public class CommandDoWork extends Command
 	public CommandDoWork(KittyRole level, KittyRating rating) { super(level, rating); }
 
 	@Override
-	public String HelpText() { return LocStrings.Stub("DoWorkInfo"); }
+	public String getHelpText() { return LocStrings.Stub("DoWorkInfo"); }
 	
 	// Called when the command is run!
 	@Override 
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		@SuppressWarnings("unused")
 		long thispieceofshit = 0; 

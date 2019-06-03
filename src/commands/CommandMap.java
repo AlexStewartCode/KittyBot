@@ -23,10 +23,10 @@ public class CommandMap extends Command
 	public CommandMap(KittyRole roleLevel, KittyRating contentRating) { super(roleLevel, contentRating); }
 	
 	@Override
-	public String HelpText() { return String.format(LocStrings.Stub("MapInfo"), "" + MaxWidth, "" + MaxHeight); }
+	public String getHelpText() { return String.format(LocStrings.Stub("MapInfo"), "" + MaxWidth, "" + MaxHeight); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res) 
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res) 
 	{
 		// Variables
 		int width = 35;

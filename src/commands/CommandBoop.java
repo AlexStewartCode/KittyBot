@@ -60,11 +60,11 @@ public class CommandBoop extends Command
 	}
 
 	@Override
-	public String HelpText() { return LocStrings.Stub("BoopInfo"); }
+	public String getHelpText() { return LocStrings.Stub("BoopInfo"); }
 	
 	// Called when the command is run!
 	@Override 
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.mentions == null)
 		{

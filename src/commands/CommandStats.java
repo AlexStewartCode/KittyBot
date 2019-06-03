@@ -17,11 +17,11 @@ public class CommandStats extends Command
 	public CommandStats(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("StatsInfo"); }
+	public String getHelpText() { return LocStrings.Stub("StatsInfo"); }
 	
 	// Called when the command is run!
 	@Override 
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String out = "```\n";
 		Stats stats = Stats.instance;

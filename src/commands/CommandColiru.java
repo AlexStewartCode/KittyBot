@@ -12,10 +12,10 @@ public class CommandColiru extends Command
 	public CommandColiru(KittyRole level, KittyRating rating) { super(level, rating);}
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("ColiruInfo"); }
+	public String getHelpText() { return LocStrings.Stub("ColiruInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.args.trim().length() < 1)
 		{

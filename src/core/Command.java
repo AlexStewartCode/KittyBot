@@ -59,7 +59,7 @@ public abstract class Command
 		if(!CanCall(guild, channel, user))
 			return;
 		
-		OnRun(guild, channel, user, input, res);
+		onRun(guild, channel, user, input, res);
 	}
 	
 	public ArrayList<String> RegisteredNames()
@@ -79,12 +79,12 @@ public abstract class Command
 	
 	// OVERRIDE ME! (This is not required but advised!)
 	// Returns if the command succeeded or not.
-	public String HelpText() 
+	public String getHelpText() 
 	{
 		return "No help text has been added yet for " + this.getClass().getSimpleName() + "!";
 	}
 	
 	// OVERRIDE ME! (This is required)
 	// Returns if the command succeeded or not.
-	public abstract void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res);
+	public abstract void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res);
 }

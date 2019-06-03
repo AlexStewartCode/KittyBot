@@ -15,10 +15,10 @@ public class CommandHelp extends Command
 	public CommandHelp(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("HelpInfo"); }
+	public String getHelpText() { return LocStrings.Stub("HelpInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{ 
 		String help = Stats.instance.GetHelpText(input.args);
 		

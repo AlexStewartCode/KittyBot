@@ -35,10 +35,10 @@ public class CommandEightBall extends Command
 	public CommandEightBall(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("EightBallInfo"); }
+	public String getHelpText() { return LocStrings.Stub("EightBallInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.args.trim().length() < 1)
 			res.Call(LocStrings.Stub("EightBallError"));

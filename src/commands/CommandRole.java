@@ -9,10 +9,10 @@ public class CommandRole extends Command
 	public CommandRole (KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("RoleInfo"); }
+	public String getHelpText() { return LocStrings.Stub("RoleInfo"); }
 	
 	@Override 
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.args.isEmpty())
 		{

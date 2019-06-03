@@ -9,10 +9,10 @@ public class CommandChangeIndicator extends Command
 	public CommandChangeIndicator(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("ChangeIndicatorInfo"); }
+	public String getHelpText() { return LocStrings.Stub("ChangeIndicatorInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String arg = input.args.trim();
 		if(arg.length() == 0)

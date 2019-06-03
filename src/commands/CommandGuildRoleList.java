@@ -12,7 +12,7 @@ public class CommandGuildRoleList extends Command
 	public CommandGuildRoleList(KittyRole level, KittyRating rating) { super(level, rating);}
 
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res) 
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res) 
 	{
 		String roles = ""; 
 		if(guild.roleList.isEmpty())

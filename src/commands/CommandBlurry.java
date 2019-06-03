@@ -17,12 +17,12 @@ public class CommandBlurry extends Command
 	public CommandBlurry(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("BlurryInfo"); };
+	public String getHelpText() { return LocStrings.Stub("BlurryInfo"); };
 	
 	private static Long num = 0l;
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String name = null;
 		String filename = null;

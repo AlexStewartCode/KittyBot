@@ -23,11 +23,11 @@ public class CommandYeet extends Command
 	private static Long num = 0l;
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("YeetInfo"); }
+	public String getHelpText() { return LocStrings.Stub("YeetInfo"); }
 	
 	// Called when the command is run!
 	@Override 
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String name = null;
 		File yeetFile = null;

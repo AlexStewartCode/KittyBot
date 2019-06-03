@@ -14,10 +14,10 @@ public class CommandRPEnd extends Command
 	public CommandRPEnd (KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("RPEndInfo"); }
+	public String getHelpText() { return LocStrings.Stub("RPEndInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		File sending = null;
 		

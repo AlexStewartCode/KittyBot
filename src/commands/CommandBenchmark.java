@@ -25,16 +25,16 @@ public class CommandBenchmark extends Command
 	}
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("BenchmarkInfo"); }
+	public String getHelpText() { return LocStrings.Stub("BenchmarkInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		framework.Update();
 		
 		if(input.args == null || input.args.length() == 0)
 		{
-			String output = HelpText();
+			String output = getHelpText();
 			res.Call(output);
 			return;
 		}

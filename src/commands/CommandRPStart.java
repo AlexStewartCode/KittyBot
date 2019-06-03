@@ -12,10 +12,10 @@ public class CommandRPStart extends Command
 	public CommandRPStart (KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("RPStartInfo"); }
+	public String getHelpText() { return LocStrings.Stub("RPStartInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		ArrayList <KittyUser> users = new ArrayList<KittyUser>(); 
 		users.add(user);

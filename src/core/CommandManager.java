@@ -116,7 +116,7 @@ public class CommandManager
 		Command command = commands.get(lookup);
 		
 		if(command != null)
-			return command.HelpText();
+			return command.getHelpText();
 		
 		return null;
 	}

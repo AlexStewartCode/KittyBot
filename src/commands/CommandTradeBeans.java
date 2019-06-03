@@ -15,10 +15,10 @@ public class CommandTradeBeans extends Command
 	public CommandTradeBeans(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("TradeBeansInfo"); }
+	public String getHelpText() { return LocStrings.Stub("TradeBeansInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.mentions == null)
 		{

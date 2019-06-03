@@ -14,10 +14,10 @@ public class CommandChoose extends Command
 	public CommandChoose(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("ChooseInfo"); }
+	public String getHelpText() { return LocStrings.Stub("ChooseInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String [] choices = input.args.split(",");
 		if(choices.length == 1)

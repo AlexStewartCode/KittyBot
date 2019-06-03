@@ -15,10 +15,10 @@ public class CommandRaffleJoin extends Command
 	public CommandRaffleJoin(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("RaffleJoinInfo"); }
+	public String getHelpText() { return LocStrings.Stub("RaffleJoinInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(guild.joinRaffle(user))
 		{

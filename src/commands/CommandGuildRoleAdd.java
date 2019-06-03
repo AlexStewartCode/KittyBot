@@ -15,10 +15,10 @@ public class CommandGuildRoleAdd extends Command
 	public CommandGuildRoleAdd(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("GuildRoleAddInfo"); };
+	public String getHelpText() { return LocStrings.Stub("GuildRoleAddInfo"); };
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String role = input.args.split(" ")[0];
 		if(guild.roleList.contains(role))

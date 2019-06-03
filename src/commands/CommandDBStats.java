@@ -26,10 +26,10 @@ public class CommandDBStats extends Command
 	}
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("DBStatsInfo"); }
+	public String getHelpText() { return LocStrings.Stub("DBStatsInfo"); }
 
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		KittyEmbed embed = new KittyEmbed();
 		embed.title = "Database Info";

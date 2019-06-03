@@ -17,12 +17,12 @@ public class CommandStark extends Command
 	public CommandStark(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("StarkInfo"); };
+	public String getHelpText() { return LocStrings.Stub("StarkInfo"); };
 	
 	private static Long num = 0l;
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String name = null;
 		String filename = null;
