@@ -1,25 +1,31 @@
 package main;
 
+import java.util.List;
+
 import javax.security.auth.login.LoginException;
-import core.*;
-import core.benchmark.BenchmarkManager;
+
+import core.CharacterManager;
+import core.CommandEnabler;
+import core.CommandManager;
+import core.DatabaseManager;
+import core.ObjectBuilderFactory;
+import core.RPManager;
+import core.Stats;
 import core.lua.PluginManager;
-import core.lua.PluginUser;
 import dataStructures.KittyChannel;
 import dataStructures.KittyCore;
 import dataStructures.KittyGuild;
-import dataStructures.KittyRole;
 import dataStructures.KittyUser;
 import dataStructures.Response;
 import dataStructures.UserInput;
 import net.dv8tion.jda.core.AccountType;
-import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.events.message.guild.*;
+import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import offline.*;
+import offline.Ref;
 import utils.GlobalLog;
-import net.dv8tion.jda.core.*;
-import java.util.*;
 
 // http://www.slf4j.org/ - this JDA logging tool has been disabled by specifying NOP implementation.
 // This is the application entry point, and bot startup location!
@@ -35,6 +41,7 @@ public class Main extends ListenerAdapter
 	private static Stats stats;
 	private static RPManager rpManager;
 	private static PluginManager pluginManager;
+	private static CharacterManager charManager; 
 	
 	// Initialization and setup
 	public static void main(String[] args) throws InterruptedException, LoginException, Exception
@@ -45,6 +52,7 @@ public class Main extends ListenerAdapter
 		commandEnabler = ObjectBuilderFactory.ConstructCommandEnabler();
 		commandManager = ObjectBuilderFactory.ConstructCommandManager(commandEnabler);
 		stats = ObjectBuilderFactory.ConstructStats(commandManager);
+		charManager = new CharacterManager();
 		rpManager = ObjectBuilderFactory.ConstructRPManager();
 		pluginManager = ObjectBuilderFactory.ConstructPluginManager();
 		
