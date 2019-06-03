@@ -4,12 +4,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Semaphore;
+
+import javax.security.auth.login.LoginException;
+
 import commands.*;
 import core.lua.PluginManager;
 import dataStructures.*;
+import main.Main;
+import net.dv8tion.jda.core.AccountType;
+import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Emote;
+import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import offline.Ref;
 import utils.AdminControl;
 import utils.GlobalLog;
 import utils.LogFilter;
@@ -53,6 +64,7 @@ public class ObjectBuilderFactory
 	// TODO: Investigate using 'synchronized' instead potentially
 	private static boolean hasInitialized;
 	private static Semaphore initMutex = new Semaphore(1);
+	private static JDA kitty;
 	
 	// This is it, this is how the lazy init starts!
 	private static void LazyInit()
@@ -264,6 +276,7 @@ public class ObjectBuilderFactory
 		return user;
 	}
 	
+	// TODO: Cleanup
 	public static KittyUser ExtractUserByJDAUser(String guildID, String name, String userID, String avatarID, String discordID)
 	{
 		LazyInit();
@@ -293,7 +306,9 @@ public class ObjectBuilderFactory
 		return user; 
 	}
 	
-	public static KittyUser getCachedUser(String guildID, String userID)
+	// There is some redundant lookup occurring. If the user isn't cached yet, then we construct them and cache them.
+	// The assumption is made that the user does, in fact, exist.
+	public static KittyUser getKittyUser(String guildID, String userID)
 	{
 		String uid = guildID + userID;
 		KittyUser user = null;
@@ -301,6 +316,17 @@ public class ObjectBuilderFactory
 		{
 			user = userCache.get(uid);
 		}
+		
+		if(user == null)
+		{
+			Guild jdaGuild = kitty.getGuildById(guildID);
+			Member jdaMember = jdaGuild.getMemberById(userID);
+			User jdaUser = jdaMember.getUser();
+			
+			user = ExtractUserByJDAUser(guildID, jdaMember.getNickname(), jdaUser.getId(), jdaUser.getAvatarUrl(), jdaUser.getId());
+			updateUser(user, jdaMember);
+		}
+		
 		return user; 
 	}
 	
@@ -317,6 +343,17 @@ public class ObjectBuilderFactory
 	  //////////////////////////
 	 // Construction Methods //
 	//////////////////////////
+	
+	public static KittyCore ConstructKittyCore() throws LoginException, InterruptedException
+	{
+		LazyInit();
+		
+		kitty = new JDABuilder(AccountType.BOT).setToken(Ref.TestToken).buildBlocking();
+		kitty.getPresence().setGame(Game.playing("with digital yarn"));
+		kitty.addEventListener(new Main());
+		
+		return new KittyCore(kitty);
+	}
 	
 	// Default construction of the command manager. In order to remotely resolve command enabling
 	// and disabling, what we do is construct the commands with a localized pair that is checked against
@@ -386,6 +423,7 @@ public class ObjectBuilderFactory
 		manager.Register(LocCommands.Stub("crouton"), new CommandCrouton(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("rafflejoin"), new CommandRaffleJoin(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("leaderboard"), new CommandLeaderboard(KittyRole.General, KittyRating.Safe));
 		
 		return manager;
 	}
