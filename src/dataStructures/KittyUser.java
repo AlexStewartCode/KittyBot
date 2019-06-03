@@ -70,17 +70,18 @@ public class KittyUser extends DatabaseTrackedObject
 		try
 		{
 			String[] strings = string.split(",");
-			beans = Integer.parseInt(strings[0]);
-			if(strings.length > 1)
-			{
-				role = KittyRole.valueOf(Integer.parseInt(strings[1])).get();
-			}
-			else
+			if(strings.length < 2)
 			{
 				GlobalLog.Log(LogFilter.Database, "Upgrading user " + name + " to include 'role' in DB");
+				
 				// Mark ourselves dirty to re-write the role information stored in the user.
 				// Just uses defaults from earlier again.
 				MarkDirty();
+			}
+			else
+			{
+				beans = Integer.parseInt(strings[0]);
+				role = KittyRole.valueOf(Integer.parseInt(strings[1])).get();
 			}
 		}
 		catch (NumberFormatException e)
