@@ -14,7 +14,7 @@ public class CommandRPEnd extends Command
 	public CommandRPEnd (KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("RPEndInfo"); }
+	public String getHelpText() { return LocStrings.stub("RPEndInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
@@ -33,11 +33,11 @@ public class CommandRPEnd extends Command
 		if(sending != null)
 		{
 			res.CallFile(sending, "txt");
-			res.Call(LocStrings.Stub("RPEndFileOut"));
+			res.Call(LocStrings.stub("RPEndFileOut"));
 		}
 		else
 		{
-			res.Call(LocStrings.Stub("RPEndError"));
+			res.Call(LocStrings.stub("RPEndError"));
 		}
 	}
 }

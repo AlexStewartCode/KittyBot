@@ -12,14 +12,14 @@ public class CommandJDoodle extends Command
 	public CommandJDoodle(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("JDoodleInfo"); }
+	public String getHelpText() { return LocStrings.stub("JDoodleInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.args.trim().length() < 1)
 		{
-			res.Call(LocStrings.Stub("JDoodleError"));
+			res.Call(LocStrings.stub("JDoodleError"));
 			return;
 		}
 		

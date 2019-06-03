@@ -15,18 +15,18 @@ public class CommandRaffleSpin extends Command
 	public CommandRaffleSpin(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("RaffleSpinInfo"); }
+	public String getHelpText() { return LocStrings.stub("RaffleSpinInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		try
 		{
-			res.Call(String.format(LocStrings.Stub("RaffleSpinSuccess"), guild.chooseRaffleWinner().name));
+			res.Call(String.format(LocStrings.stub("RaffleSpinSuccess"), guild.chooseRaffleWinner().name));
 		}
 		catch(Exception e)
 		{
-			res.Call(LocStrings.Stub("RaffleSpinFailure"));
+			res.Call(LocStrings.stub("RaffleSpinFailure"));
 		}
 	}
 }

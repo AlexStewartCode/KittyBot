@@ -337,63 +337,63 @@ public class ObjectBuilderFactory
 		CommandManager manager = new CommandManager(commandEnabler);
 		
 		// Dev
-		manager.Register(LocCommands.Stub("work"), new CommandDoWork(KittyRole.Dev, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("shutdown"), new CommandShutdown(KittyRole.Dev, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("stats"), new CommandStats(KittyRole.Dev, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("invite"), new CommandInvite(KittyRole.Dev, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("buildHelp"), new CommandHelpBuilder(KittyRole.Dev, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("tweet"), new CommandTweet(KittyRole.Dev, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("dbflush"), new CommandDBFlush(KittyRole.Dev, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("dbstats"), new CommandDBStats(KittyRole.Dev, KittyRating.Safe));
+		manager.Register(LocCommands.stub("work"), new CommandDoWork(KittyRole.Dev, KittyRating.Safe));
+		manager.Register(LocCommands.stub("shutdown"), new CommandShutdown(KittyRole.Dev, KittyRating.Safe));
+		manager.Register(LocCommands.stub("stats"), new CommandStats(KittyRole.Dev, KittyRating.Safe));
+		manager.Register(LocCommands.stub("invite"), new CommandInvite(KittyRole.Dev, KittyRating.Safe));
+		manager.Register(LocCommands.stub("buildHelp"), new CommandHelpBuilder(KittyRole.Dev, KittyRating.Safe));
+		manager.Register(LocCommands.stub("tweet"), new CommandTweet(KittyRole.Dev, KittyRating.Safe));
+		manager.Register(LocCommands.stub("dbflush"), new CommandDBFlush(KittyRole.Dev, KittyRating.Safe));
+		manager.Register(LocCommands.stub("dbstats"), new CommandDBStats(KittyRole.Dev, KittyRating.Safe));
 		
 		// Admin
-		manager.Register(LocCommands.Stub("rating"), new CommandRating(KittyRole.Admin, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("indicator"), new CommandChangeIndicator(KittyRole.Admin, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("guildroleallowed"), new CommandGuildRoleAllowed(KittyRole.Admin, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("guildrolenotallowed"), new CommandGuildRoleNotAllowed(KittyRole.Admin, KittyRating.Safe));
+		manager.Register(LocCommands.stub("rating"), new CommandRating(KittyRole.Admin, KittyRating.Safe));
+		manager.Register(LocCommands.stub("indicator"), new CommandChangeIndicator(KittyRole.Admin, KittyRating.Safe));
+		manager.Register(LocCommands.stub("guildroleallowed"), new CommandGuildRoleAllowed(KittyRole.Admin, KittyRating.Safe));
+		manager.Register(LocCommands.stub("guildrolenotallowed"), new CommandGuildRoleNotAllowed(KittyRole.Admin, KittyRating.Safe));
 		
 		// Mod
-		manager.Register(LocCommands.Stub("poll"), new CommandPollManage(KittyRole.Mod, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("givebeans"), new CommandGiveBeans(KittyRole.Mod, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("rpg"), new CommandRPG(KittyRole.Mod, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("rafflestart"), new CommandRaffleStart(KittyRole.Mod, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("rafflespin"), new CommandRaffleSpin(KittyRole.Mod, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("raffleend"), new CommandRaffleEnd(KittyRole.Mod, KittyRating.Safe));
+		manager.Register(LocCommands.stub("poll"), new CommandPollManage(KittyRole.Mod, KittyRating.Safe));
+		manager.Register(LocCommands.stub("givebeans"), new CommandGiveBeans(KittyRole.Mod, KittyRating.Safe));
+		manager.Register(LocCommands.stub("rpg"), new CommandRPG(KittyRole.Mod, KittyRating.Safe));
+		manager.Register(LocCommands.stub("rafflestart"), new CommandRaffleStart(KittyRole.Mod, KittyRating.Safe));
+		manager.Register(LocCommands.stub("rafflespin"), new CommandRaffleSpin(KittyRole.Mod, KittyRating.Safe));
+		manager.Register(LocCommands.stub("raffleend"), new CommandRaffleEnd(KittyRole.Mod, KittyRating.Safe));
 
 		// General
-		manager.Register(LocCommands.Stub("fetch"), new CommandFetch(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("guildroleadd"), new CommandGuildRoleAdd(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("guildroleremove"), new CommandGuildRoleRemove(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("teey"), new CommandTeey(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("perish, thenperish"), new CommandPerish(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("yeet"), new CommandYeet(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("ping"), new CommandPing(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("boop"), new CommandBoop(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("roll"), new CommandRoll(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("choose"), new CommandChoose(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("help"), new CommandHelp(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("info, about"), new CommandInfo(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("vote"), new CommandPollVote(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("results"), new CommandPollResults(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("showpoll"), new CommandPollShow(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("wolfram"), new CommandWolfram(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("c++, g++, cplus, cpp"), new CommandColiru(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("java, jdoodle"), new CommandJDoodle(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("beans"), new CommandBeansShow(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("role"), new CommandRole(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("bet"), new CommandBetBeans(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("map"), new CommandMap(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("rpstart"), new CommandRPStart(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("rpend"), new CommandRPEnd(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("tony, stark, dontfeelgood, dontfeelsogood"), new CommandStark(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("blur"), new CommandBlurry(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("eightball, 8ball"), new CommandEightBall(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("catch"), new CommandCatch(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("guildrolelist"), new CommandGuildRoleList(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("bethistory"), new CommandBetHistory(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("crouton"), new CommandCrouton(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
-		manager.Register(LocCommands.Stub("rafflejoin"), new CommandRaffleJoin(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("fetch"), new CommandFetch(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("guildroleadd"), new CommandGuildRoleAdd(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("guildroleremove"), new CommandGuildRoleRemove(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("teey"), new CommandTeey(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("perish, thenperish"), new CommandPerish(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("yeet"), new CommandYeet(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("ping"), new CommandPing(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("boop"), new CommandBoop(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("roll"), new CommandRoll(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("choose"), new CommandChoose(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("help"), new CommandHelp(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("info, about"), new CommandInfo(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("vote"), new CommandPollVote(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("results"), new CommandPollResults(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("showpoll"), new CommandPollShow(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("wolfram"), new CommandWolfram(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("c++, g++, cplus, cpp"), new CommandColiru(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("java, jdoodle"), new CommandJDoodle(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("beans"), new CommandBeansShow(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("role"), new CommandRole(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("bet"), new CommandBetBeans(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("map"), new CommandMap(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("rpstart"), new CommandRPStart(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("rpend"), new CommandRPEnd(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("tony, stark, dontfeelgood, dontfeelsogood"), new CommandStark(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("blur"), new CommandBlurry(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("eightball, 8ball"), new CommandEightBall(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("catch"), new CommandCatch(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("guildrolelist"), new CommandGuildRoleList(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("bethistory"), new CommandBetHistory(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("crouton"), new CommandCrouton(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.stub("rafflejoin"), new CommandRaffleJoin(KittyRole.General, KittyRating.Safe));
 		
 		return manager;
 	}

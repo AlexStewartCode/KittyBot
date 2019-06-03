@@ -15,18 +15,18 @@ public class CommandRaffleEnd extends Command
 	public CommandRaffleEnd(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("RaffleEndInfo"); }
+	public String getHelpText() { return LocStrings.stub("RaffleEndInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(guild.endRaffle())
 		{
-			res.Call(LocStrings.Stub("RaffleEndSuccess"));
+			res.Call(LocStrings.stub("RaffleEndSuccess"));
 		}
 		else
 		{
-			res.Call(LocStrings.Stub("RaffleEndFailure"));
+			res.Call(LocStrings.stub("RaffleEndFailure"));
 		}
 	}
 }

@@ -11,7 +11,7 @@ public class CommandBetBeans extends Command
 	public CommandBetBeans(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("BetBeansInfo"); }
+	public String getHelpText() { return LocStrings.stub("BetBeansInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
@@ -24,19 +24,19 @@ public class CommandBetBeans extends Command
 			bet = Integer.parseInt(input.args);
 			if(bet < 50)
 			{
-				res.Call(LocStrings.Stub("BetBeansLowBet"));
+				res.Call(LocStrings.stub("BetBeansLowBet"));
 				return;
 			}
 		}
 		catch (NumberFormatException e)
 		{
-			res.Call(LocStrings.Stub("BetBeansNotValid"));
+			res.Call(LocStrings.stub("BetBeansNotValid"));
 			return;
 		}
 		
 		if(user.GetBeans() < bet)
 		{
-			res.Call(LocStrings.Stub("BetBeansNotEnough"));
+			res.Call(LocStrings.stub("BetBeansNotEnough"));
 			return;
 		}
 		
@@ -51,14 +51,14 @@ public class CommandBetBeans extends Command
 		
 		if(win == 0)
 			{
-				res.Call(LocStrings.Stub("BetBeansLose"));
+				res.Call(LocStrings.stub("BetBeansLose"));
 				guild.beans.Add(bet);
 				return;
 			}
 		
 		user.ChangeBeans(bet*win);
 		guild.beans.Subtract(bet*win);
-		res.Call(String.format(LocStrings.Stub("BetBeansWin"), "" + (bet*win)));
+		res.Call(String.format(LocStrings.stub("BetBeansWin"), "" + (bet*win)));
 	}
 	
 	private int getWinning(int [] slots)

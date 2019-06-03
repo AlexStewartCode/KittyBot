@@ -17,7 +17,7 @@ public class CommandStats extends Command
 	public CommandStats(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("StatsInfo"); }
+	public String getHelpText() { return LocStrings.stub("StatsInfo"); }
 	
 	// Called when the command is run!
 	@Override 

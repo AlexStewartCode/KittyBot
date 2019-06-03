@@ -18,7 +18,7 @@ public class CommandCrouton extends Command
 	public CommandCrouton(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("CroutonInfo"); };
+	public String getHelpText() { return LocStrings.stub("CroutonInfo"); };
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)

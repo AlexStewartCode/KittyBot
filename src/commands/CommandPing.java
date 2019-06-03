@@ -15,12 +15,12 @@ public class CommandPing extends Command
 	public CommandPing(KittyRole level, KittyRating rating) { super(level, rating); }
 
 	@Override
-	public String getHelpText() { return LocStrings.Stub("PingInfo"); }
+	public String getHelpText() { return LocStrings.stub("PingInfo"); }
 	
 	// Called when the command is run!
 	@Override 
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		res.Call(LocStrings.Stub("PingResponse"));
+		res.Call(LocStrings.stub("PingResponse"));
 	}
 }

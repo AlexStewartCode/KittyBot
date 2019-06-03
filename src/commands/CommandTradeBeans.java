@@ -15,14 +15,14 @@ public class CommandTradeBeans extends Command
 	public CommandTradeBeans(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("TradeBeansInfo"); }
+	public String getHelpText() { return LocStrings.stub("TradeBeansInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.mentions == null)
 		{
-			res.Call(LocStrings.Stub("TradeBeansNoTargetError"));
+			res.Call(LocStrings.stub("TradeBeansNoTargetError"));
 			return;
 		}
 		
@@ -32,25 +32,25 @@ public class CommandTradeBeans extends Command
 		}
 		catch (NumberFormatException e)
 		{
-			res.Call(LocStrings.Stub("TradeBeansIntParseError"));
+			res.Call(LocStrings.stub("TradeBeansIntParseError"));
 			return;
 		}
 		
 		if(user.GetBeans() < beans)
 		{
-			res.Call(LocStrings.Stub("TradeBeansNotEnoughError"));
+			res.Call(LocStrings.stub("TradeBeansNotEnoughError"));
 			return;
 		}
 		
 		if(beans < 0)
 		{
-			res.Call(String.format(LocStrings.Stub("TradeBeansStealingBeans"), user.name));
+			res.Call(String.format(LocStrings.stub("TradeBeansStealingBeans"), user.name));
 			user.ChangeBeans(-10);
 			return; 
 		}
 		
 		input.mentions[0].ChangeBeans(beans);
 		user.ChangeBeans(-beans);
-		res.Call(String.format(LocStrings.Stub("TradeBeansSuccess"), user.name, input.mentions[0].name, beans));
+		res.Call(String.format(LocStrings.stub("TradeBeansSuccess"), user.name, input.mentions[0].name, beans));
 	}
 }

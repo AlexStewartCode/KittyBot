@@ -15,7 +15,7 @@ public class CommandGuildRoleAllowed extends Command
 	public CommandGuildRoleAllowed(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("GuildRoleAllowedInfo"); }
+	public String getHelpText() { return LocStrings.stub("GuildRoleAllowedInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
@@ -27,12 +27,12 @@ public class CommandGuildRoleAllowed extends Command
 			role = roles[i].trim();
 			if(guild.roleList.contains(role))
 			{
-				res.Call(LocStrings.Stub("GuildRoleAllowedDuplicate"));
+				res.Call(LocStrings.stub("GuildRoleAllowedDuplicate"));
 			}
 			else
 			{
 				guild.roleList.add(role);
-				res.Call(String.format(LocStrings.Stub("GuildRoleAllowedSuccess"), role));
+				res.Call(String.format(LocStrings.stub("GuildRoleAllowedSuccess"), role));
 			}
 		}
 	}

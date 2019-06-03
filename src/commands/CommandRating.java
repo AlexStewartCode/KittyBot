@@ -15,7 +15,7 @@ public class CommandRating extends Command
 	public CommandRating(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("RatingInfo"); }
+	public String getHelpText() { return LocStrings.stub("RatingInfo"); }
 	
 	// Called when the command is run!
 	@Override 
@@ -55,11 +55,11 @@ public class CommandRating extends Command
 		}
 		
 		if(newRating != null)
-			res.Call(LocStrings.Stub("RatingChanged") + " " + newRating);
+			res.Call(LocStrings.stub("RatingChanged") + " " + newRating);
 		else
-			res.Call(LocStrings.Stub("RatingInvalid") + " `" + input.args + "`");
+			res.Call(LocStrings.stub("RatingInvalid") + " `" + input.args + "`");
 		
 		if(newRating.equals("Filtered")) 
-			res.Call(LocStrings.Stub("RatingWarning"));
+			res.Call(LocStrings.stub("RatingWarning"));
 	}
 }

@@ -12,7 +12,7 @@ public class CommandRPStart extends Command
 	public CommandRPStart (KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("RPStartInfo"); }
+	public String getHelpText() { return LocStrings.stub("RPStartInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)

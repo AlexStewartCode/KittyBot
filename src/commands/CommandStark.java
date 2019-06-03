@@ -17,7 +17,7 @@ public class CommandStark extends Command
 	public CommandStark(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("StarkInfo"); };
+	public String getHelpText() { return LocStrings.stub("StarkInfo"); };
 	
 	private static Long num = 0l;
 	

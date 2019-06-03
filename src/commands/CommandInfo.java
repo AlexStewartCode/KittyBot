@@ -15,11 +15,11 @@ public class CommandInfo extends Command
 	public CommandInfo(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("InfoInfo"); }
+	public String getHelpText() { return LocStrings.stub("InfoInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		res.Call(LocStrings.Stub("InfoResponse"));
+		res.Call(LocStrings.stub("InfoResponse"));
 	}
 }

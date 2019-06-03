@@ -17,7 +17,7 @@ public class CommandBlurry extends Command
 	public CommandBlurry(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("BlurryInfo"); };
+	public String getHelpText() { return LocStrings.stub("BlurryInfo"); };
 	
 	private static Long num = 0l;
 	

@@ -15,7 +15,7 @@ public class CommandRaffleStart extends Command
 	public CommandRaffleStart(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("RaffleStartInfo"); }
+	public String getHelpText() { return LocStrings.stub("RaffleStartInfo"); }
 	
 	public int beanCost;
 	
@@ -33,11 +33,11 @@ public class CommandRaffleStart extends Command
 		
 		if(guild.startRaffle(beanCost))
 		{
-			res.Call(String.format(LocStrings.Stub("RaffleStartSuccess"), beanCost));
+			res.Call(String.format(LocStrings.stub("RaffleStartSuccess"), beanCost));
 		}
 		else
 		{
-			res.Call(LocStrings.Stub("RaffleStartFailure"));
+			res.Call(LocStrings.stub("RaffleStartFailure"));
 		}
 	}
 }

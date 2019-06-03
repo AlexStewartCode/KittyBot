@@ -11,7 +11,7 @@ import dataStructures.Pair;
 public class LocCommands extends BaseLocFile
 {
 	public static final String fileName = "locCommands.config";
-	public static final String function = "LocCommands.Stub";
+	public static final String function = "LocCommands.stub";
 	
 	private static LocCommands instance;
 	
@@ -38,7 +38,7 @@ public class LocCommands extends BaseLocFile
 	}
 
 	// Returns a pair, the raw key and the stub key
-	public static Pair<String, String> Stub(String toStub)
+	public static Pair<String, String> stub(String toStub)
 	{
 		return new Pair<String, String>(toStub, instance.GetKey(toStub));
 	}

@@ -23,7 +23,7 @@ public class CommandRPG extends Command
 	}
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("RPGInfo"); };
+	public String getHelpText() { return LocStrings.stub("RPGInfo"); };
 	
 	
 	@Override
@@ -44,7 +44,7 @@ public class CommandRPG extends Command
 		
 		if(result == null)
 		{
-			res.Call(LocStrings.Stub("RPGInvalid"));
+			res.Call(LocStrings.stub("RPGInvalid"));
 			return;
 		}
 		

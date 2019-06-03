@@ -15,13 +15,13 @@ public class CommandWolfram extends Command
 	public CommandWolfram(KittyRole level, KittyRating rating) { super(level, rating);}
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("WolframInfo"); }
+	public String getHelpText() { return LocStrings.stub("WolframInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.args == null || input.args.trim().length() == 0)
-			res.Call(LocStrings.Stub("WolframNoArgs"));
+			res.Call(LocStrings.stub("WolframNoArgs"));
 		
 		try 
 		{
@@ -31,7 +31,7 @@ public class CommandWolfram extends Command
 		} 
 		catch (IOException e) 
 		{
-			res.Call(LocStrings.Stub("WolframError"));
+			res.Call(LocStrings.stub("WolframError"));
 		}
 	}
 }

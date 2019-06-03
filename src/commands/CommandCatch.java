@@ -23,7 +23,7 @@ public class CommandCatch extends Command
 	private static Long num = 0l;
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("CatchInfo"); }
+	public String getHelpText() { return LocStrings.stub("CatchInfo"); }
 	
 	// Called when the command is run!
 	@Override 

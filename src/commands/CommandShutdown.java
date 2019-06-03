@@ -20,7 +20,7 @@ public class CommandShutdown extends Command
 	public CommandShutdown(KittyRole level, KittyRating rating) { super(level, rating); }
 
 	@Override
-	public String getHelpText() { return LocStrings.Stub("ShutdownInfo"); }
+	public String getHelpText() { return LocStrings.stub("ShutdownInfo"); }
 	
 	// Called when the command is run!
 	@Override 
@@ -46,7 +46,7 @@ public class CommandShutdown extends Command
 		if(isSafe)
 		{
 			// Force upkeep, this works so long as upkeep is on the main thread.
-			res.CallImmediate(LocStrings.Stub("ShutdownSafe"));
+			res.CallImmediate(LocStrings.stub("ShutdownSafe"));
 			DatabaseManager.instance.upkeep(); 
 			GlobalLog.Warn(LogFilter.Command, LocStrings.Lookup("ShutdownSafe"));
 			
@@ -54,7 +54,7 @@ public class CommandShutdown extends Command
 		}
 		else
 		{
-			res.CallImmediate(LocStrings.Stub("ShutdownUnsafe"));// "``");
+			res.CallImmediate(LocStrings.stub("ShutdownUnsafe"));// "``");
 			GlobalLog.Warn(LogFilter.Command, LocStrings.Lookup("ShutdownSafe"));
 			System.exit(0);
 		}

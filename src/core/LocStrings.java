@@ -10,7 +10,7 @@ import utils.io.FileMonitor;
 public class LocStrings extends BaseLocFile
 {
 	public static final String fileName = "locStrings.config";
-	public static final String function = "LocStrings.Stub";
+	public static final String function = "LocStrings.stub";
 	
 	private static LocStrings instance;
 	
@@ -36,7 +36,7 @@ public class LocStrings extends BaseLocFile
 		}
 	}
 
-	public static String Stub(String toStub)
+	public static String stub(String toStub)
 	{
 		return Lookup(toStub);
 	}

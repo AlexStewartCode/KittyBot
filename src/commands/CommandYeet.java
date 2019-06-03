@@ -23,7 +23,7 @@ public class CommandYeet extends Command
 	private static Long num = 0l;
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("YeetInfo"); }
+	public String getHelpText() { return LocStrings.stub("YeetInfo"); }
 	
 	// Called when the command is run!
 	@Override 

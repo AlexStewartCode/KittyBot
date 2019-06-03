@@ -25,7 +25,7 @@ public class CommandBenchmark extends Command
 	}
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("BenchmarkInfo"); }
+	public String getHelpText() { return LocStrings.stub("BenchmarkInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
@@ -47,7 +47,7 @@ public class CommandBenchmark extends Command
 		
 		if(commandOutput == null)
 		{
-			res.Call(LocStrings.Stub("BenchmarkInvalid"));
+			res.Call(LocStrings.stub("BenchmarkInvalid"));
 			return;
 		}
 		

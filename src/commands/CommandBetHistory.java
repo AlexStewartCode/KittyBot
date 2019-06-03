@@ -15,11 +15,11 @@ public class CommandBetHistory extends Command
 	public CommandBetHistory(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("BetHistoryInfo"); }
+	public String getHelpText() { return LocStrings.stub("BetHistoryInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		res.Call(String.format(LocStrings.Stub("BetHistoryOutput"), guild.beans.Get()));
+		res.Call(String.format(LocStrings.stub("BetHistoryOutput"), guild.beans.Get()));
 	}
 }

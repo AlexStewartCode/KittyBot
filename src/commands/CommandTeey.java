@@ -23,7 +23,7 @@ public class CommandTeey extends Command
 	private static Long num = 0l;
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("TeeyInfo"); }
+	public String getHelpText() { return LocStrings.stub("TeeyInfo"); }
 	
 	// Called when the command is run!
 	@Override 

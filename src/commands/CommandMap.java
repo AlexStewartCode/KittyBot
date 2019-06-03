@@ -23,7 +23,7 @@ public class CommandMap extends Command
 	public CommandMap(KittyRole roleLevel, KittyRating contentRating) { super(roleLevel, contentRating); }
 	
 	@Override
-	public String getHelpText() { return String.format(LocStrings.Stub("MapInfo"), "" + MaxWidth, "" + MaxHeight); }
+	public String getHelpText() { return String.format(LocStrings.stub("MapInfo"), "" + MaxWidth, "" + MaxHeight); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res) 
@@ -60,7 +60,7 @@ public class CommandMap extends Command
 		}
 		catch(NumberFormatException e) 
 		{
-			res.Call(LocStrings.Stub("MapInvalid"));
+			res.Call(LocStrings.stub("MapInvalid"));
 			return;
 		} 
 		
@@ -76,10 +76,10 @@ public class CommandMap extends Command
 		}
 		
 		// Response header creation
-		header += LocStrings.Stub("MapVersion") + "\n";
-		header += LocStrings.Stub("MapSeed") + ": `" + seed + "`, ";
-		header += LocStrings.Stub("MapWidth") + "`"+ width +"`, ";
-		header += LocStrings.Stub("MapHeight") + ": `"+ height + "`\n";
+		header += LocStrings.stub("MapVersion") + "\n";
+		header += LocStrings.stub("MapSeed") + ": `" + seed + "`, ";
+		header += LocStrings.stub("MapWidth") + "`"+ width +"`, ";
+		header += LocStrings.stub("MapHeight") + ": `"+ height + "`\n";
 		
 		// Response body creation
 		body += "```\n";

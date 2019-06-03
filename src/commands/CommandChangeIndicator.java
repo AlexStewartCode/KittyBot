@@ -9,7 +9,7 @@ public class CommandChangeIndicator extends Command
 	public CommandChangeIndicator(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("ChangeIndicatorInfo"); }
+	public String getHelpText() { return LocStrings.stub("ChangeIndicatorInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
@@ -17,7 +17,7 @@ public class CommandChangeIndicator extends Command
 		String arg = input.args.trim();
 		if(arg.length() == 0)
 		{
-			res.Call(LocStrings.Stub("ChangeIndicatorError"));
+			res.Call(LocStrings.stub("ChangeIndicatorError"));
 			return;
 		}
 		
@@ -29,6 +29,6 @@ public class CommandChangeIndicator extends Command
 		}
 		
 		guild.SetCommandIndicator(indicator);
-		res.Call(String.format(LocStrings.Stub("ChangeIndicatorChanged"), guild.GetCommandIndicator()));
+		res.Call(String.format(LocStrings.stub("ChangeIndicatorChanged"), guild.GetCommandIndicator()));
 	}
 }

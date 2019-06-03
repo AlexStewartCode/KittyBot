@@ -10,7 +10,7 @@ public class CommandInvite extends Command
 	public CommandInvite(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("InviteInfo"); }
+	public String getHelpText() { return LocStrings.stub("InviteInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)

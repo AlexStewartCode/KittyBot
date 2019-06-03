@@ -26,7 +26,7 @@ public class CommandHelpBuilder extends Command {
 	}
 
 	@Override
-	public String getHelpText() { return LocStrings.Stub("HelpBuilderInfo"); }
+	public String getHelpText() { return LocStrings.stub("HelpBuilderInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)

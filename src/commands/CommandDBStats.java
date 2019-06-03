@@ -26,7 +26,7 @@ public class CommandDBStats extends Command
 	}
 	
 	@Override
-	public String getHelpText() { return LocStrings.Stub("DBStatsInfo"); }
+	public String getHelpText() { return LocStrings.stub("DBStatsInfo"); }
 
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
