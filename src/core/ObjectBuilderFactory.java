@@ -48,7 +48,7 @@ public class ObjectBuilderFactory
 	
 	// Handles if we can or can't use specific commands, parsing a config file based on loc data to do so.
 	private static CommandEnabler commandEnabler;
-						
+	
 	// Lazy initialization multithreaded mutex stuff to prevent explosions.
 	// TODO: Investigate using 'synchronized' instead potentially
 	private static boolean hasInitialized;
@@ -97,7 +97,7 @@ public class ObjectBuilderFactory
 	////////////////////////
 	
 	// Explicitly locks: guildCache
-	public static KittyGuild ExtractGuild(GuildMessageReceivedEvent event)
+	public static KittyGuild extractGuild(GuildMessageReceivedEvent event)
 	{
 		LazyInit();
 		
@@ -117,6 +117,7 @@ public class ObjectBuilderFactory
 			emoteFix += ":" + emote.substring(emote.indexOf("(")+1, emote.length()-1) + ">";
 			emotesString.add(emoteFix);
 		}
+		
 		// once we're lazily initialized, we can synchronize w/ the 
 		// guildCache object now instead of having to use a mutex.
 		KittyGuild guild = null;
@@ -140,7 +141,7 @@ public class ObjectBuilderFactory
 	}
 	
 	// Explicitly locks: guildCache
-	public static KittyRole ExtractRole(GuildMessageReceivedEvent event)
+	public static KittyRole extractRole(GuildMessageReceivedEvent event)
 	{
 		LazyInit();
 
@@ -167,7 +168,7 @@ public class ObjectBuilderFactory
 	
 	// Explicitly locks: guildCache
 	// Extracts the content rating information it can from the provided event.
-	public static KittyRating ExtractContentRating(GuildMessageReceivedEvent event)
+	public static KittyRating extractContentRating(GuildMessageReceivedEvent event)
 	{
 		LazyInit();
 
@@ -185,7 +186,7 @@ public class ObjectBuilderFactory
 	}
 	
 	// Implicitly locks guild cache by calling ExtractGuild
-	public static KittyChannel ExtractChannel(GuildMessageReceivedEvent event)
+	public static KittyChannel extractChannel(GuildMessageReceivedEvent event)
 	{
 		LazyInit();
 		
@@ -213,7 +214,7 @@ public class ObjectBuilderFactory
 	}
 	
 	// Implicitly locks guild cache by calling ExtractRole and ExtractGuild
-	public static KittyUser ExtractUser(GuildMessageReceivedEvent event)
+	public static KittyUser extractUser(GuildMessageReceivedEvent event)
 	{
 		LazyInit();
 		
@@ -229,8 +230,8 @@ public class ObjectBuilderFactory
 			}
 			else
 			{
-				KittyRole role = ExtractRole(event);
-				KittyGuild guild = ExtractGuild(event);
+				KittyRole role = extractRole(event);
+				KittyGuild guild = extractGuild(event);
 				
 				String name;
 				if(event.getMember().getNickname() == null)
@@ -254,17 +255,17 @@ public class ObjectBuilderFactory
 		{
 			mentioned = event.getMessage().getMentionedMembers().get(i);
 			if(mentioned.getNickname() != null)
-				ExtractUserByJDAUser(event.getGuild().getId(), mentioned.getNickname(), 
+				extractUserByJDAUser(event.getGuild().getId(), mentioned.getNickname(), 
 					mentioned.getUser().getId(), mentioned.getUser().getAvatarUrl(), mentioned.getUser().getId());
 			else
-				ExtractUserByJDAUser(event.getGuild().getId(), mentioned.getUser().getName(), 
+				extractUserByJDAUser(event.getGuild().getId(), mentioned.getUser().getName(), 
 						mentioned.getUser().getId(), mentioned.getUser().getAvatarUrl(), mentioned.getUser().getId());
 		}
 		
 		return user;
 	}
 	
-	public static KittyUser ExtractUserByJDAUser(String guildID, String name, String userID, String avatarID, String discordID)
+	public static KittyUser extractUserByJDAUser(String guildID, String name, String userID, String avatarID, String discordID)
 	{
 		LazyInit();
 		
@@ -277,6 +278,7 @@ public class ObjectBuilderFactory
 			{
 				if(name != null)
 					cachedUser.name = name;
+				
 				cachedUser.avatarID = avatarID;
 				user = cachedUser;
 			}
@@ -301,18 +303,24 @@ public class ObjectBuilderFactory
 		{
 			user = userCache.get(uid);
 		}
+		
 		return user; 
 	}
 	
 	public static void updateUser(KittyUser user,  Member member)
 	{
 		if(member.getNickname() == null)
+		{
 			user.name = member.getUser().getName();
+		}
 		else
+		{
 			user.name = member.getNickname();
+		}
 		
 		user.avatarID = member.getUser().getAvatarUrl();
 	}
+	
 	
 	  //////////////////////////
 	 // Construction Methods //
@@ -322,7 +330,7 @@ public class ObjectBuilderFactory
 	// and disabling, what we do is construct the commands with a localized pair that is checked against
 	// the CommandEnabler object passed in. In theory, we could have multiple CommandManagers, tho we can
 	// only have one CommandEnabler.
-	public static CommandManager ConstructCommandManager(CommandEnabler commandEnabler)
+	public static CommandManager constructCommandManager(CommandEnabler commandEnabler)
 	{
 		LazyInit();
 		
@@ -391,7 +399,7 @@ public class ObjectBuilderFactory
 	}
 	
 	// Constructs a CommandEnabler if it doesn't exist, and gets the existing one if it does. 
-	public static CommandEnabler ConstructCommandEnabler()
+	public static CommandEnabler constructCommandEnabler()
 	{
 		LazyInit();
 
@@ -405,7 +413,7 @@ public class ObjectBuilderFactory
 	// in different ways, and so we construct it outside of the constructor for 
 	// the factory  since it doesn't have to be present / can be elsewhere. 
 	// Effectively we cache the database here.
-	public static DatabaseManager ConstructDatabaseManager()
+	public static DatabaseManager constructDatabaseManager()
 	{
 		LazyInit();
 		
@@ -415,7 +423,7 @@ public class ObjectBuilderFactory
 		return database;
 	}
 	
-	public static Stats ConstructStats(CommandManager manager)
+	public static Stats constructStats(CommandManager manager)
 	{
 		LazyInit();
 		
@@ -425,7 +433,7 @@ public class ObjectBuilderFactory
 		return stats;
 	}
 	
-	public static RPManager ConstructRPManager()
+	public static RPManager constructRPManager()
 	{
 		LazyInit();
 		
@@ -435,7 +443,7 @@ public class ObjectBuilderFactory
 		return rpManager;
 	}
 	
-	public static PluginManager ConstructPluginManager()
+	public static PluginManager constructPluginManager()
 	{
 		LazyInit();
 		
@@ -444,13 +452,14 @@ public class ObjectBuilderFactory
 		
 		return pluginManager;
 	}
-
+	
+	
 	  /////////////////////
 	 // Utility Methods //
 	/////////////////////
 	
 	// Returns number of cached guilds (does not equal total users in the database, only what's in memory)
-	public static Integer GetGuildCount()
+	public static Integer getGuildCount()
 	{ 	synchronized(guildCache)
 		{
 			return guildCache.size();
@@ -458,7 +467,7 @@ public class ObjectBuilderFactory
 	}
 	
 	// Returns number of cached users (does not equal total users in the database, only what's in memory)
-	public static Integer GetUserCount()
+	public static Integer getUserCount()
 	{ 	synchronized(userCache)
 		{
 			return userCache.size();

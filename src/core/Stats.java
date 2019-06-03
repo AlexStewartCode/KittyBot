@@ -107,12 +107,12 @@ public class Stats
 	
 	public int GetGuildCount()
 	{
-		return ObjectBuilderFactory.GetGuildCount();
+		return ObjectBuilderFactory.getGuildCount();
 	}
 	
 	public int GetUserCount()
 	{
-		return ObjectBuilderFactory.GetUserCount();
+		return ObjectBuilderFactory.getUserCount();
 	}
 	
 	public ArrayList<Command> GetAllCommands()

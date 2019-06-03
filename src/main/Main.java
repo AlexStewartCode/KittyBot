@@ -40,12 +40,12 @@ public class Main extends ListenerAdapter
 	{
 		// Factory startup. The ordering is intentional.
 		GlobalLog.initialize();
-		databaseManager = ObjectBuilderFactory.ConstructDatabaseManager();
-		commandEnabler = ObjectBuilderFactory.ConstructCommandEnabler();
-		commandManager = ObjectBuilderFactory.ConstructCommandManager(commandEnabler);
-		stats = ObjectBuilderFactory.ConstructStats(commandManager);
-		rpManager = ObjectBuilderFactory.ConstructRPManager();
-		pluginManager = ObjectBuilderFactory.ConstructPluginManager();
+		databaseManager = ObjectBuilderFactory.constructDatabaseManager();
+		commandEnabler = ObjectBuilderFactory.constructCommandEnabler();
+		commandManager = ObjectBuilderFactory.constructCommandManager(commandEnabler);
+		stats = ObjectBuilderFactory.constructStats(commandManager);
+		rpManager = ObjectBuilderFactory.constructRPManager();
+		pluginManager = ObjectBuilderFactory.constructPluginManager();
 		
 		// Bot startup
 		kitty = new JDABuilder(AccountType.BOT).setToken(Ref.TestToken).buildBlocking();
@@ -62,9 +62,9 @@ public class Main extends ListenerAdapter
 			return;
 		
 		// Factory objects
-		KittyUser user = ObjectBuilderFactory.ExtractUser(event);
-		KittyGuild guild = ObjectBuilderFactory.ExtractGuild(event);
-		KittyChannel channel = ObjectBuilderFactory.ExtractChannel(event);
+		KittyUser user = ObjectBuilderFactory.extractUser(event);
+		KittyGuild guild = ObjectBuilderFactory.extractGuild(event);
+		KittyChannel channel = ObjectBuilderFactory.extractChannel(event);
 		
 		// Specialized uncached objects
 		Response response = new Response(event, kitty);
