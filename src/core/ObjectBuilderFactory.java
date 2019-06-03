@@ -131,7 +131,7 @@ public class ObjectBuilderFactory
 			{
 				// Construct a new guild with defaults
 				guild = new KittyGuild(uid, new AdminControl(event.getGuild()), emotesString);
-				DatabaseManager.instance.Register(guild);
+				DatabaseManager.instance.globalRegister(guild);
 				guildCache.put(uid, guild);
 			}
 		}
@@ -241,7 +241,7 @@ public class ObjectBuilderFactory
 				String discordID = event.getMember().getUser().getId(); 
 				String avatarID = event.getAuthor().getAvatarUrl();
 				user = new KittyUser(name, guild, role, uid, avatarID, discordID);
-				DatabaseManager.instance.Register(user);
+				DatabaseManager.instance.globalRegister(user);
 				userCache.put(uid, user);
 			}
 		}
@@ -285,7 +285,7 @@ public class ObjectBuilderFactory
 				KittyRole role = KittyRole.General;
 				KittyGuild guild = guildCache.get(guildID);
 				user = new KittyUser(name, guild, role, uid, avatarID, discordID);
-				DatabaseManager.instance.Register(user);
+				DatabaseManager.instance.globalRegister(user);
 				userCache.put(uid, user);
 			}
 		}
@@ -348,6 +348,9 @@ public class ObjectBuilderFactory
 		manager.Register(LocCommands.Stub("poll"), new CommandPollManage(KittyRole.Mod, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("givebeans"), new CommandGiveBeans(KittyRole.Mod, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("rpg"), new CommandRPG(KittyRole.Mod, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("rafflestart"), new CommandRaffleStart(KittyRole.Mod, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("rafflespin"), new CommandRaffleSpin(KittyRole.Mod, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("raffleend"), new CommandRaffleEnd(KittyRole.Mod, KittyRating.Safe));
 
 		// General
 		manager.Register(LocCommands.Stub("fetch"), new CommandFetch(KittyRole.General, KittyRating.Safe));
@@ -382,6 +385,7 @@ public class ObjectBuilderFactory
 		manager.Register(LocCommands.Stub("bethistory"), new CommandBetHistory(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("crouton"), new CommandCrouton(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("rafflejoin"), new CommandRaffleJoin(KittyRole.General, KittyRating.Safe));
 		
 		return manager;
 	}

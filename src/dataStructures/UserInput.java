@@ -60,6 +60,15 @@ public class UserInput
 			isValid = false;
 		}
 	}
+	
+	//Used for injecting direct commands from plugins
+	public UserInput(String input, KittyGuild contextGuild)
+	{
+		int loc = FindFirstWhitespace(input);
+		key = input.substring(0, loc);
+		args = input.substring(loc);
+		isValid = true;
+	}
 
 	public boolean IsValid()
 	{

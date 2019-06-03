@@ -17,8 +17,7 @@ import utils.LogFilter;
 //
 public class KittyTrackedLong extends DatabaseTrackedObject 
 {
-	private long tracked;            // Tracked value
-	private final String databaseID; // in-database ID of this value
+	private long tracked; // Tracked value
 	
 	// Config
 	private final static String differentiator = "long-";
@@ -26,7 +25,6 @@ public class KittyTrackedLong extends DatabaseTrackedObject
 	public KittyTrackedLong(String readableName, String UniqueID)
 	{
 		super(differentiator + readableName + UniqueID);
-		databaseID = differentiator + readableName + UniqueID;
 	}
 	
 	public long Add(long toAdd)
@@ -73,7 +71,7 @@ public class KittyTrackedLong extends DatabaseTrackedObject
 			catch(Exception e)
 			{
 				tracked = 0;
-				GlobalLog.Error(LogFilter.Core, "Falling back to default of 0 due to failure to deserialize long with database ID " + databaseID);
+				GlobalLog.Error(LogFilter.Core, "Falling back to default of 0 due to failure to deserialize long with database ID " + identifier);
 			}
 		}
 		else

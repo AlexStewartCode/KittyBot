@@ -9,13 +9,13 @@ import utils.LogFilter;
 // two unique user objects associated with them.
 public class KittyUser extends DatabaseTrackedObject
 {
-	public KittyGuild guild;
-	public String name;
-	public String uniqueID;
-	public String discordID;
-	public String avatarID; 	
-	private KittyRole role;
-	private long beans;
+	public KittyGuild guild; // The guild this user is associated with. A KittyUser can not be associated with more than one guild.
+	public String name;      // The 'friendly name' of the user (readable name).
+	public String uniqueID;  // The combination of the guild ID that discord uses and the user-specific ID discord uses. (A discord account has one user per server).
+	public String discordID; // The user-specific ID only. This is the ID associated with the discord account.
+	public String avatarID;  // The searchable ID of the current avatar image for the user.
+	private KittyRole role;  // The command permissions role this user has for issuing bot commands for this bot.
+	private long beans;      // A value incremented each time a user sends a message in a server they're in.
 	
 	// Explicit Constructor
 	public KittyUser(String name, KittyGuild guild, KittyRole role, String uniqueID, String avatarID, String discordID)

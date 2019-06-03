@@ -13,34 +13,41 @@ import utils.LogFilter;
 // Only to be called by the generic driver.
 public class JDBCDriverSQLite extends JDBCDriver
 {
-	Connection connection = null;
-	String databaseFolder = "db/";
-	String databaseName = "catfood";
+	private static Connection connection = null;
+	public static final String databaseFolder = "db/";
+	public static final String databaseName = "catfood";
 	
 	@Override
 	public boolean Connect()
-	{		
-		try 
+	{	
+		if(connection == null)
 		{
-			{ // Scope to discard file...
-				File f = new File(databaseFolder);
-				if(!f.exists() || !f.isDirectory())
-				{
-					f.mkdir();
+			try 
+			{
+				{ // Scope to discard file...
+					File f = new File(databaseFolder);
+					if(!f.exists() || !f.isDirectory())
+					{
+						f.mkdir();
+					}
 				}
+				
+				// db parameters
+				String url = "jdbc:sqlite:" + databaseFolder + databaseName + ".db";
+				
+				// create a connection to the database
+				connection = DriverManager.getConnection(url);
+				
+				GlobalLog.Log(LogFilter.Database, "Connection to SQLite has been established.");
+			} 
+			catch (SQLException e) 
+			{
+				GlobalLog.Error(e.getMessage());
 			}
-			
-			// db parameters
-			String url = "jdbc:sqlite:db/" + databaseName + ".db";
-			
-			// create a connection to the database
-			connection = DriverManager.getConnection(url);
-			
-			GlobalLog.Log(LogFilter.Database, "Connection to SQLite has been established.");
-		} 
-		catch (SQLException e) 
+		}
+		else
 		{
-			GlobalLog.Error(e.getMessage());
+			GlobalLog.Log(LogFilter.Database, "SQLite database asked to connect a second time. This is perfectly fine as this app has all its data tied together.");
 		}
 		
 		return connection != null;
@@ -52,7 +59,9 @@ public class JDBCDriverSQLite extends JDBCDriver
 		try
 		{
 			if (connection != null)
+			{
 				connection.close();
+			}
 			
 			return true;
 		} 

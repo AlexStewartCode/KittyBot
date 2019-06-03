@@ -15,10 +15,14 @@ public class KittyGuild extends DatabaseTrackedObject
 	public KittyUser guildOwner;
 	public boolean polling;
 	public String poll; 
+	public boolean raffling; 
+	public int raffleCost; 
 	public ArrayList<String> hasVoted = new ArrayList<String>();
 	public ArrayList<String> emoji = new ArrayList<String>();
 	public ArrayList <KittyPoll> choices = new ArrayList<KittyPoll>();
 	public AdminControl control;
+	public ArrayList <KittyUser> raffleUsersUnchosen = new ArrayList<KittyUser>();
+	public ArrayList <KittyUser> raffleUsersChosen = new ArrayList<KittyUser>();
 	
 	// Database synced info
 	private final String roleListName = "guildRoles";
@@ -31,8 +35,8 @@ public class KittyGuild extends DatabaseTrackedObject
 	
 	private void RegisterTrackedObjects()
 	{
-		DatabaseManager.instance.Register(roleList);
-		DatabaseManager.instance.Register(beans);
+		DatabaseManager.instance.globalRegister(roleList);
+		DatabaseManager.instance.globalRegister(beans);
 	}
 	
 	// Default content for a guild
@@ -86,6 +90,54 @@ public class KittyGuild extends DatabaseTrackedObject
 		this.polling = false;
 		poll = null;
 		return "Poll ended!";
+	}
+	
+	//Raffle methods
+	public boolean startRaffle(int beanCost)
+	{
+		if(raffling)
+		{
+			return false;
+		}
+		raffleCost = beanCost; 
+		raffling = true; 
+		return true;
+	}
+	
+	public boolean endRaffle()
+	{
+		if(raffling)
+		{
+			raffleCost = 0;
+			raffling = false;
+			raffleUsersChosen.removeAll(raffleUsersChosen);
+			raffleUsersUnchosen.removeAll(raffleUsersUnchosen);
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean joinRaffle(KittyUser user)
+	{
+		if(!raffleUsersChosen.contains(user) && !raffleUsersUnchosen.contains(user) && user.GetBeans() > raffleCost && raffling)
+		{
+			user.ChangeBeans(raffleCost);
+			raffleUsersUnchosen.add(user);
+			return true;
+		}
+		return false; 
+	}
+	
+	public KittyUser chooseRaffleWinner()
+	{
+		if(!raffleUsersUnchosen.isEmpty())
+		{
+			KittyUser chosen = raffleUsersUnchosen.get((int) (Math.random() * raffleUsersUnchosen.size()));
+			raffleUsersUnchosen.remove(chosen);
+			raffleUsersChosen.add(chosen);
+			return chosen;
+		}
+		return null;
 	}
 	
 	@Override
