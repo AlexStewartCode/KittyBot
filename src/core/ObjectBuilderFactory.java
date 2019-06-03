@@ -386,6 +386,7 @@ public class ObjectBuilderFactory
 		manager.Register(LocCommands.Stub("crouton"), new CommandCrouton(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("rafflejoin"), new CommandRaffleJoin(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("charactercreate"), new CommandCharacterCreate(KittyRole.General, KittyRating.Safe));
 		
 		return manager;
 	}
