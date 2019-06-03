@@ -6,6 +6,7 @@ import core.benchmark.BenchmarkManager;
 import core.lua.PluginManager;
 import core.lua.PluginUser;
 import dataStructures.KittyChannel;
+import dataStructures.KittyCore;
 import dataStructures.KittyGuild;
 import dataStructures.KittyRole;
 import dataStructures.KittyUser;
@@ -27,7 +28,7 @@ import java.util.*;
 public class Main extends ListenerAdapter
 {
 	// Variables and bot specific objects
-	private static JDA kitty; // TODO: Wrap
+	private static KittyCore kittyCore;
 	private static DatabaseManager databaseManager; 
 	private static CommandEnabler commandEnabler;
 	private static CommandManager commandManager;
@@ -48,9 +49,7 @@ public class Main extends ListenerAdapter
 		pluginManager = ObjectBuilderFactory.ConstructPluginManager();
 		
 		// Bot startup
-		kitty = new JDABuilder(AccountType.BOT).setToken(Ref.TestToken).buildBlocking();
-		kitty.getPresence().setGame(Game.playing("with digital yarn"));
-		kitty.addEventListener(new Main());
+		kittyCore = ObjectBuilderFactory.ConstructKittyCore();
 	}
 
 	// When a message is sent in a server that kitty is in, this is what's called.
@@ -67,7 +66,7 @@ public class Main extends ListenerAdapter
 		KittyChannel channel = ObjectBuilderFactory.ExtractChannel(event);
 		
 		// Specialized uncached objects
-		Response response = new Response(event, kitty);
+		Response response = new Response(event, kittyCore);
 		UserInput input = new UserInput(event, guild);
 		
 		// Tweak object construction as necessary
@@ -106,6 +105,6 @@ public class Main extends ListenerAdapter
 		}
 		
 		// Run any upkeep in post we need to
-		Superintendent.PerCommandUpkeepPost(kitty, databaseManager);
+		Superintendent.PerCommandUpkeepPost(kittyCore, databaseManager);
 	}
 }

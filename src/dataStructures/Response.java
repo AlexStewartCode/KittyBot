@@ -2,6 +2,7 @@ package dataStructures;
 
 import java.io.File;
 import java.io.InputStream;
+
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.*;
@@ -16,15 +17,15 @@ public class Response
 {
 	// Variables
 	private GuildMessageReceivedEvent event;
-	private JDA kitty;
 	private final int discordMessageMax = 2000;
 	private final int kittyMessageMax = 1950;
+	private JDA kitty;
 	
 	// Constructor
-	public Response(GuildMessageReceivedEvent event, JDA kitty)
+	public Response(GuildMessageReceivedEvent event, KittyCore kitty)
 	{
 		this.event = event; 
-		this.kitty = kitty; 
+		this.kitty = kitty.jda;
 	}
 	
 	// Builds a nicely formatted embedded message based on information provided

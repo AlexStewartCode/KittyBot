@@ -93,7 +93,7 @@ public class UserInput
 		KittyUser [] KittyMentions = new KittyUser[JDAMentions.size()];
 		for(int i = 0; i < KittyMentions.length; i ++)
 		{
-			KittyMentions [i] = ObjectBuilderFactory.getCachedUser(event.getGuild().getId(), JDAMentions.get(i).getUser().getId());
+			KittyMentions [i] = ObjectBuilderFactory.getKittyUser(event.getGuild().getId(), JDAMentions.get(i).getUser().getId());
 		}
 		return KittyMentions;
 	}
