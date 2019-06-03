@@ -24,7 +24,7 @@ public class CommandDBFlush extends Command
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		int numUpdated = DatabaseManager.instance.Upkeep();
+		int numUpdated = DatabaseManager.instance.upkeep();
 
 		KittyEmbed embed = new KittyEmbed();
 		embed.title = "Database queue flushed";

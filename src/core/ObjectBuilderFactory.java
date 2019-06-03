@@ -131,7 +131,7 @@ public class ObjectBuilderFactory
 			{
 				// Construct a new guild with defaults
 				guild = new KittyGuild(uid, new AdminControl(event.getGuild()), emotesString);
-				DatabaseManager.instance.Register(guild);
+				DatabaseManager.instance.globalRegister(guild);
 				guildCache.put(uid, guild);
 			}
 		}
@@ -241,7 +241,7 @@ public class ObjectBuilderFactory
 				String discordID = event.getMember().getUser().getId(); 
 				String avatarID = event.getAuthor().getAvatarUrl();
 				user = new KittyUser(name, guild, role, uid, avatarID, discordID);
-				DatabaseManager.instance.Register(user);
+				DatabaseManager.instance.globalRegister(user);
 				userCache.put(uid, user);
 			}
 		}
@@ -285,7 +285,7 @@ public class ObjectBuilderFactory
 				KittyRole role = KittyRole.General;
 				KittyGuild guild = guildCache.get(guildID);
 				user = new KittyUser(name, guild, role, uid, avatarID, discordID);
-				DatabaseManager.instance.Register(user);
+				DatabaseManager.instance.globalRegister(user);
 				userCache.put(uid, user);
 			}
 		}
