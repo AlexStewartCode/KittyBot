@@ -8,12 +8,12 @@ import core.LocStrings;
 import core.RPManager;
 import core.Stats;
 import dataStructures.KittyChannel;
+import dataStructures.KittyCore;
 import dataStructures.KittyGuild;
 import dataStructures.KittyRole;
 import dataStructures.KittyUser;
 import dataStructures.Response;
 import dataStructures.UserInput;
-import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import offline.Ref;
 
@@ -87,7 +87,7 @@ public class Superintendent
 	// This is for stuff that we need to do on a regular basis, but don't 
 	// necessarily want running at all points in time. 
 	// Happens just after the command / plugin runs.
-	public static boolean PerCommandUpkeepPost(JDA bot, DatabaseManager databaseManager)
+	public static boolean PerCommandUpkeepPost(KittyCore kittyCore, DatabaseManager databaseManager)
 	{
 		// Upkeep database lazily on occasion
 		if(delayTimerCurrent.decrementAndGet() < 0)
@@ -97,7 +97,7 @@ public class Superintendent
 		}
 		
 		// Update command-specific
-		RPManager.Upkeep(bot);
+		RPManager.Upkeep(kittyCore);
 		
 		return true;
 	}

@@ -6,9 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
-
 import dataStructures.*;
-import net.dv8tion.jda.core.JDA;
 import utils.GlobalLog;
 import utils.LogFilter;
 
@@ -57,7 +55,7 @@ public class RPManager
 		return log;
 	}
 
-	public static void Upkeep(JDA kitty) 
+	public static void Upkeep(KittyCore kitty) 
 	{
 		Response res = new Response(null, kitty);
 		String reminder = "";

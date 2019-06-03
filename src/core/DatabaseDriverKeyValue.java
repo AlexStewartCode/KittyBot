@@ -2,6 +2,8 @@ package core;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import network.JDBCDriver;
 import network.JDBCDriverSQLite;
@@ -72,7 +74,7 @@ public class DatabaseDriverKeyValue
 	// Creates a key. The key will be created if it doesn't exist, and the default value returned.
 	public String CreateGetKey(String key)
 	{
-		GlobalLog.Log(LogFilter.Database, "CreateGeyKey: key-" + key);
+		GlobalLog.Log(LogFilter.Database, "CreateGetKey: " + key);
 		
 		if(HasKey(key))
 		{
@@ -117,6 +119,30 @@ public class DatabaseDriverKeyValue
 		String command = "INSERT INTO " + tableName + " (GlobalKey, GlobalValue) VALUES (?, ?)";
 		boolean status = driver.ExecuteStatement(JDBCStatementType.Insert, command, new String[] { key, value });
 		GlobalLog.Log(LogFilter.Database, "CreateKey status: " + status);
+	}
+	
+	// Get all keys containing a substring
+	public List<String> GetKeysWith(String keySubstring)
+	{
+		String command = "SELECT * FROM " + tableName + " WHERE " + keyColumnName + " like ?";
+		ResultSet result = driver.ExecuteReturningStatement(JDBCStatementType.Select, command, new String[] { "%" + keySubstring + "%" });
+		
+		List<String> keys = new ArrayList<String>();
+		
+		try
+		{
+			while(result.next())
+			{
+				String key = (String) result.getObject(1);
+				keys.add(key);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return keys;
 	}
 	
 	// Transforms a result into a string if possible.

@@ -1,8 +1,7 @@
 package commands;
 
-import java.awt.Color;
-
 import core.Command;
+import core.Config;
 import core.DatabaseManager;
 import core.LocStrings;
 import dataStructures.KittyChannel;
@@ -29,7 +28,7 @@ public class CommandDBFlush extends Command
 		KittyEmbed embed = new KittyEmbed();
 		embed.title = "Database queue flushed";
 		embed.descriptionText = "**Dirty:** " + numUpdated;
-		embed.color = new Color(7*16, 8*16, 9*16);
+		embed.color = Config.ColorDefault;
 		
 		res.CallEmbed(embed);
 	}
