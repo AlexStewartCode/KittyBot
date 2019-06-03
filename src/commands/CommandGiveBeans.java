@@ -14,22 +14,39 @@ public class CommandGiveBeans extends Command
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		int beans = 0;
-		try {
-			beans = Integer.parseInt(input.args.split(" ")[0]);
-		}
-		catch (NumberFormatException e)
-		{
-			res.Call(LocStrings.Stub("GiveBeansInvalid"));
-			return;
-		}
-		
+		// First, make sure someone is mentioned
 		if(input.mentions == null)
 		{
 			res.Call(LocStrings.Stub("GiveBeansNoneMentioned"));
 			return;
 		}
 		
+		// If there are mentions, try and find a number.
+		Integer beans = null;
+		String[] split = input.args.split(" ");
+		
+		// Find the first parseable number in the split string
+		for(int i = 0; i < split.length; ++i)
+		{
+			try
+			{
+				beans = Integer.parseInt(split[i]);
+				break;
+			}
+			catch (NumberFormatException e)
+			{
+				continue;
+			}
+		}
+		
+		// If there wasn't a number we could find, well, nothing we can do.
+		if(beans == null)
+		{
+			res.Call(LocStrings.Stub("GiveBeansInvalid"));
+			return;
+		}
+		
+		// Go through all the mentions and make sure every user is given beans!
 		for(int i = 0; i < input.mentions.length; i++)
 		{
 			input.mentions[i].ChangeBeans(beans);
