@@ -1,6 +1,7 @@
 package core;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 import utils.GlobalLog;
 import utils.LogFilter;
@@ -128,6 +129,10 @@ public class DatabaseManager
 		}
 	}
 	
+	public List<String> scrapeGlobalForString(String substring)
+	{
+		return globalDataDriver.GetKeysWith(substring);
+	}
 	
 	  /////////////////
 	 // Global Data //
@@ -141,7 +146,8 @@ public class DatabaseManager
 		}
 	}
 	
-	private String globalGetRemoteValue(String key)
+	// You can get values, but not modify them.
+	public String globalGetRemoteValue(String key)
 	{
 		synchronized(globalDataDriver)
 		{
@@ -170,7 +176,8 @@ public class DatabaseManager
 		}
 	}
 	
-	private String characterGetRemoteValue(String key)
+	// You can get values, but not modify them.
+	public String characterGetRemoteValue(String key)
 	{
 		synchronized(characterDataDriver)
 		{

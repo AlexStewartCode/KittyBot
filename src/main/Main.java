@@ -1,24 +1,31 @@
 package main;
 
+import java.util.List;
+
 import javax.security.auth.login.LoginException;
-import core.*;
-import core.benchmark.BenchmarkManager;
+
+import core.CharacterManager;
+import core.CommandEnabler;
+import core.CommandManager;
+import core.DatabaseManager;
+import core.ObjectBuilderFactory;
+import core.RPManager;
+import core.Stats;
 import core.lua.PluginManager;
-import core.lua.PluginUser;
 import dataStructures.KittyChannel;
+import dataStructures.KittyCore;
 import dataStructures.KittyGuild;
-import dataStructures.KittyRole;
 import dataStructures.KittyUser;
 import dataStructures.Response;
 import dataStructures.UserInput;
 import net.dv8tion.jda.core.AccountType;
-import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.events.message.guild.*;
+import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import offline.*;
+import offline.Ref;
 import utils.GlobalLog;
-import net.dv8tion.jda.core.*;
-import java.util.*;
 
 // http://www.slf4j.org/ - this JDA logging tool has been disabled by specifying NOP implementation.
 // This is the application entry point, and bot startup location!
@@ -27,30 +34,30 @@ import java.util.*;
 public class Main extends ListenerAdapter
 {
 	// Variables and bot specific objects
-	private static JDA kitty; // TODO: Wrap
+	private static KittyCore kittyCore;
 	private static DatabaseManager databaseManager; 
 	private static CommandEnabler commandEnabler;
 	private static CommandManager commandManager;
 	private static Stats stats;
 	private static RPManager rpManager;
 	private static PluginManager pluginManager;
+	private static CharacterManager charManager; 
 	
 	// Initialization and setup
 	public static void main(String[] args) throws InterruptedException, LoginException, Exception
 	{
 		// Factory startup. The ordering is intentional.
 		GlobalLog.initialize();
-		databaseManager = ObjectBuilderFactory.constructDatabaseManager();
-		commandEnabler = ObjectBuilderFactory.constructCommandEnabler();
-		commandManager = ObjectBuilderFactory.constructCommandManager(commandEnabler);
-		stats = ObjectBuilderFactory.constructStats(commandManager);
-		rpManager = ObjectBuilderFactory.constructRPManager();
-		pluginManager = ObjectBuilderFactory.constructPluginManager();
+		databaseManager = ObjectBuilderFactory.ConstructDatabaseManager();
+		commandEnabler = ObjectBuilderFactory.ConstructCommandEnabler();
+		commandManager = ObjectBuilderFactory.ConstructCommandManager(commandEnabler);
+		stats = ObjectBuilderFactory.ConstructStats(commandManager);
+		charManager = new CharacterManager();
+		rpManager = ObjectBuilderFactory.ConstructRPManager();
+		pluginManager = ObjectBuilderFactory.ConstructPluginManager();
 		
 		// Bot startup
-		kitty = new JDABuilder(AccountType.BOT).setToken(Ref.TestToken).buildBlocking();
-		kitty.getPresence().setGame(Game.playing("with digital yarn"));
-		kitty.addEventListener(new Main());
+		kittyCore = ObjectBuilderFactory.ConstructKittyCore();
 	}
 
 	// When a message is sent in a server that kitty is in, this is what's called.
@@ -67,7 +74,7 @@ public class Main extends ListenerAdapter
 		KittyChannel channel = ObjectBuilderFactory.extractChannel(event);
 		
 		// Specialized uncached objects
-		Response response = new Response(event, kitty);
+		Response response = new Response(event, kittyCore);
 		UserInput input = new UserInput(event, guild);
 		
 		// Tweak object construction as necessary
@@ -106,6 +113,6 @@ public class Main extends ListenerAdapter
 		}
 		
 		// Run any upkeep in post we need to
-		Superintendent.PerCommandUpkeepPost(kitty, databaseManager);
+		Superintendent.PerCommandUpkeepPost(kittyCore, databaseManager);
 	}
 }

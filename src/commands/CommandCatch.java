@@ -48,7 +48,7 @@ public class CommandCatch extends Command
 			else
 				person = input.mentions[0];
 				
-			String catchFilename = ImageUtils.DownloadFromURL(person.avatarID, ".png");
+			String catchFilename = ImageUtils.downloadFromURL(person.avatarID, ".png");
 			if(catchFilename == null)
 				return;
 			

@@ -48,7 +48,7 @@ public class CommandYeet extends Command
 			else
 				person = input.mentions[0];
 				
-			String yeeteeFilename = ImageUtils.DownloadFromURL(person.avatarID, ".png");
+			String yeeteeFilename = ImageUtils.downloadFromURL(person.avatarID, ".png");
 			if(yeeteeFilename == null)
 				return;
 			

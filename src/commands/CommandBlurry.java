@@ -39,7 +39,7 @@ public class CommandBlurry extends Command
 		{
 			try
 			{
-				filename = ImageUtils.DownloadFromURL(input.args.split(" ")[0], ".png");
+				filename = ImageUtils.downloadFromURL(input.args.split(" ")[0], ".png");
 				preProcessed = new File(filename);
 			}
 			catch(Exception e)
@@ -48,7 +48,7 @@ public class CommandBlurry extends Command
 				if(input.mentions != null)
 					person = input.mentions[0];
 				
-				filename = ImageUtils.DownloadFromURL(person.avatarID, ".png");
+				filename = ImageUtils.downloadFromURL(person.avatarID, ".png");
 				if(filename == null)
 					return;
 			}

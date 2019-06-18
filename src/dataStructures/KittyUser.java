@@ -64,29 +64,46 @@ public class KittyUser extends DatabaseTrackedObject
 		return beans + "," + role.getValue();
 	}
 
+	public static String[] prepareFromString(String string)
+	{
+		return string.split(",");
+	}
+	
+	public static long parseBeans(String[] prepared)
+	{
+		return Integer.parseInt(prepared[0]);
+	}
+	
+	public static KittyRole parseRole(String[] prepared)
+	{
+		return KittyRole.valueOf(Integer.parseInt(prepared[1])).get();
+	}
+	
 	@Override
 	public void DeSerialzie(String string) 
 	{
 		try
 		{
-			String[] strings = string.split(",");
-			beans = Integer.parseInt(strings[0]);
-			if(strings.length > 1)
-			{
-				role = KittyRole.valueOf(Integer.parseInt(strings[1])).get();
-			}
-			else
+			String[] strings = prepareFromString(string);
+			if(strings.length < 2)
 			{
 				GlobalLog.Log(LogFilter.Database, "Upgrading user " + name + " to include 'role' in DB");
+				
 				// Mark ourselves dirty to re-write the role information stored in the user.
 				// Just uses defaults from earlier again.
 				MarkDirty();
+			}
+			else
+			{
+				beans = parseBeans(strings);
+				role = parseRole(strings);
 			}
 		}
 		catch (NumberFormatException e)
 		{
 			GlobalLog.Warn(LogFilter.Database, "Invalid user data for user " + name + "! "
 					+ "Starting over at 0 beans with a general role!");
+			
 			// We don't need to specify the role at this point because it is set at this point.
 			// We use what the user was created with whatever defaults were in the factory. 
 			// Beans are maintained too, just in case there's some in cache.
