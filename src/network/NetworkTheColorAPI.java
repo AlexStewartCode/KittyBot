@@ -10,6 +10,23 @@ public class NetworkTheColorAPI
 {
 	private static final Gson jsonParser = new Gson();
 	
+	public class tca_XYZ
+	{
+		// This is also known as the CIE 1931 colorspace.
+		// Value meanings: https://en.wikipedia.org/wiki/CIE_1931_color_space
+		public int X;
+		public int Y;
+		public int Z;
+	}
+	
+	public class tca_cymk
+	{
+		public int c; // 0-100
+		public int m; // 0-100
+		public int y; // 0-100
+		public int k; // 0-100
+	}
+	
 	public class tca_name
 	{
 		public String value; // The name of the color in english
@@ -50,6 +67,8 @@ public class NetworkTheColorAPI
 		public tca_rgb rgb;
 		public tca_hsl hsl;
 		public tca_hsv hsv;
+		public tca_cymk cmyk;
+		public tca_XYZ XYZ;
 	}
 	
 	public ColorData LookupHex(String hex)

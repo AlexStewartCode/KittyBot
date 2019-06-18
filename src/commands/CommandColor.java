@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.text.DecimalFormat;
 
 import core.Command;
 import core.LocStrings;
@@ -41,8 +42,8 @@ public class CommandColor extends Command
 			return;
 		}
 		
-		// Config
-		int sideLength = 150;
+		// Set up the variables we'll be using based on the color, and get the color itself.
+		int sideLength = 80; // It's 80x80 because as far as I know, that's the size of a thumbnail in discord.
 		int r = colorData.rgb.r;
 		int g = colorData.rgb.g;
 		int b = colorData.rgb.b;
@@ -61,16 +62,19 @@ public class CommandColor extends Command
 
 		// Build the response
 		KittyEmbed response = new KittyEmbed();
+		String postEntry = ", ";
 		response.title = colorData.name.value + (colorData.name.exact_match_name ? "" : " (ish)");
 		response.color = parsed;
 		response.descriptionText = "```";
-		response.descriptionText += "\nrgb:  " + String.format("%1$03d", r) + "  " + String.format("%1$03d", g) + "  " + String.format("%1$03d", b);
-		response.descriptionText += "\nhsl:  " + String.format("%1$03d", colorData.hsl.h) + "  " + String.format("%1$02d", colorData.hsl.s) + "%  " + String.format("%1$02d", colorData.hsl.l) + "%";
-		response.descriptionText += "\nhsv:  " + String.format("%1$03d", colorData.hsv.h) + "  " + String.format("%1$02d", colorData.hsv.s) + "%  " + String.format("%1$02d", colorData.hsv.v) + "%";
-		response.descriptionText += "\nhex:  #" + colorData.hex.clean;
+		response.descriptionText += "\n hex:  #" + colorData.hex.clean;
+		response.descriptionText += "\n rgb:  " + String.format("%1$03d", r) + postEntry + String.format("%1$03d", g) + postEntry + String.format("%1$03d", b);
+		response.descriptionText += "\n hsl:  " + String.format("%1$03d", colorData.hsl.h) + postEntry + String.format("%1$02d", colorData.hsl.s) + "%" + postEntry + String.format("%1$02d", colorData.hsl.l) + "%";
+		response.descriptionText += "\n hsv:  " + String.format("%1$03d", colorData.hsv.h) + postEntry + String.format("%1$02d", colorData.hsv.s) + "%" + postEntry + String.format("%1$02d", colorData.hsv.v) + "%";
+		response.descriptionText += "\n xyz:  " + String.format("%1$03d", colorData.XYZ.X) + postEntry + String.format("%1$03d", colorData.XYZ.Y) + postEntry + String.format("%1$03d", colorData.XYZ.Z);
+		response.descriptionText += "\ncmyk:  " + String.format("%1$03d", colorData.cmyk.c) + postEntry + String.format("%1$03d", colorData.cmyk.m) + postEntry + String.format("%1$03d", colorData.cmyk.y) + postEntry + String.format("%1$03d", colorData.cmyk.k);
 		response.descriptionText += "```";
 		response.thumbnailURL = "attachment://" + tempFileName;
-		response.footerText = "All percentages and values are rounded to the nearest whole number." + (colorData.name.exact_match_name ? "" : " " + colorData.name.value + " is actually " + colorData.name.closest_named_hex + ".");
+		response.footerText = "All percentages and values are rounded to the nearest whole number!" + (colorData.name.exact_match_name ? "" : " '" + colorData.name.value + "' is actually " + colorData.name.closest_named_hex + ".");
 		
 		// Send then delete the temp local files
 		res.CallEmbed(response);
