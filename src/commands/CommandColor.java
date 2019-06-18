@@ -46,18 +46,25 @@ public class CommandColor extends Command
 		graphics.setColor(parsed);
 		graphics.fillRect(0, 0, sideLength, sideLength);
 		graphics.dispose();
+		
 		GlobalLog.Log("2");
+		
 		String tempFileName = ImageUtils.writeTempImageData(img, ".png");
 		File file = new File(tempFileName);
+		
 		GlobalLog.Log("3");
+		
 		KittyEmbed response = new KittyEmbed();
 		response.title = "Color Name";
 		response.color = parsed;
 		response.descriptionText = "`rgba` test\n`hex` test\n`hsv` test";
 		response.thumbnailURL = "attachment://" + tempFileName;
+		
 		GlobalLog.Log("4");
+		
 		res.CallEmbed(response);
 		ImageUtils.BlockingFileDelete(file);
+		
 		GlobalLog.Log("5");
 	};
 	

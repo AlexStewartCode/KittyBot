@@ -22,13 +22,26 @@ public class ImageUtils
 		String name = null;
 		synchronized(uniqueID)
 		{
-			name = "imagetempwriterutil_" + (uniqueID++) + extension;
+			String end = extension;
+			if(!extension.contains("."))
+			{
+				end = "." + extension;
+			}
+			
+			name = "imagetempwriterutil_" + (uniqueID++) + end;
 		}
 		
 		try
 		{
 			File outputfile = new File(name);
-			ImageIO.write(data, extension, outputfile);
+			extension = extension.replace(".", "");
+			
+			boolean didWrite = ImageIO.write(data, extension, outputfile);
+			if(!didWrite)
+			{
+				GlobalLog.Error(LogFilter.Util, "Could not identify the writer for extension type '" + extension + "' - Did you accidentally include a period or other punctuation?");
+				return null;
+			}
 			
 			return name;
 		}

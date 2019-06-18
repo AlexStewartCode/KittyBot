@@ -35,9 +35,15 @@ public class Response
 		EmbedBuilder embed = new EmbedBuilder();
 		
 		if(embedInfo.title != null && !embedInfo.title.isEmpty())
+		{
 			embed.setTitle(embedInfo.title);
+		}
 		else
+		{
+			// We have to set the title to at least something that's not empty.
+			// By defualt, this creates nothing really visible.
 			embed.setTitle(" ");
+		}
 		
 		if(embedInfo.color != null)
 			embed.setColor(embedInfo.color);
@@ -61,6 +67,7 @@ public class Response
 			String thumbPath = embedInfo.thumbnailURL;
 			String thumbName = thumbPath.replace("attachment://", "");
 			
+			// Build the message and send if the file is valid
 			MessageBuilder message = new MessageBuilder();
 			embed.setThumbnail(thumbPath);
 			message.setEmbed(embed.build());
