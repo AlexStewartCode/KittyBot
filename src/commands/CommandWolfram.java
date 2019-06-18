@@ -29,7 +29,7 @@ public class CommandWolfram extends Command
 			res.CallFile(pic, "png");
 			ImageUtils.BlockingFileDelete(pic);
 		} 
-		catch (IOException e) 
+		catch (IOException e)
 		{
 			res.Call(LocStrings.Stub("WolframError"));
 		}
