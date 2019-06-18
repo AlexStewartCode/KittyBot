@@ -429,6 +429,7 @@ public class ObjectBuilderFactory
 		manager.Register(LocCommands.Stub("charactereditname"), new CommandCharacterEditName(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("charactereditURL"), new CommandCharacterEditURL(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("leaderboard"), new CommandLeaderboard(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("color, colour"), new CommandColor(KittyRole.General, KittyRating.Safe));
 		
 		return manager;
 	}

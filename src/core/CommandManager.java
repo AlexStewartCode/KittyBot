@@ -111,12 +111,12 @@ public class CommandManager
 	}
 	
 	// Looks up command by name. If it exists, dumps help text, otherwise returns null.
-	public String GetCommandHelpText(String lookup)
+	public String GetCommandHelpText(String key)
 	{
-		Command command = commands.get(lookup);
+		Command command = commands.get(key);
 		
 		if(command != null)
-			return command.HelpText();
+			return "`" + key + "`: " + command.HelpText();
 		
 		return null;
 	}

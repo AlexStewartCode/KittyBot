@@ -26,10 +26,6 @@ public class CommandHelp extends Command
 		{
 			help = LocStrings.Stub("HelpDisplay");
 		}
-		else
-		{
-			help = "`" + input.args + "`: " + help;
-		}
 		
 		res.Call(help);
 	}
