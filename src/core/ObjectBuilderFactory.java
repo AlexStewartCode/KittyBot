@@ -425,6 +425,7 @@ public class ObjectBuilderFactory
 		manager.Register(LocCommands.Stub("rafflejoin"), new CommandRaffleJoin(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("charactercreate"), new CommandCharacterCreate(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("leaderboard"), new CommandLeaderboard(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("color, colour"), new CommandColor(KittyRole.General, KittyRating.Safe));
 		
 		return manager;
 	}

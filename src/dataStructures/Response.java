@@ -33,8 +33,10 @@ public class Response
 	{
 		EmbedBuilder embed = new EmbedBuilder();
 		
-		if(embedInfo.title != null)
+		if(embedInfo.title != null && !embedInfo.title.isEmpty())
 			embed.setTitle(embedInfo.title);
+		else
+			embed.setTitle(" ");
 		
 		if(embedInfo.color != null)
 			embed.setColor(embedInfo.color);
@@ -49,7 +51,10 @@ public class Response
 			embed.setAuthor(embedInfo.authorText, embedInfo.authorLink, embedInfo.authorImage);
 		
 		if(embedInfo.imageURL != null)
-            embed.setImage(embedInfo.imageURL);
+			embed.setImage(embedInfo.imageURL);
+		
+		if(embedInfo.thumbnailURL != null)
+			embed.setThumbnail(embedInfo.thumbnailURL);
 		
 		event.getChannel().sendMessage(embed.build()).queue();
 	}
