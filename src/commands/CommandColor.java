@@ -31,11 +31,18 @@ public class CommandColor extends Command
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		// First, parse out the color.
+		// First, try and parse out the color to make sure we can even get it.
 		ColorData colorData = theColorAPI.LookupHex(input.args.trim());
 		
+		// Verify the color was even found
+		if(colorData == null)
+		{
+			res.Call(LocStrings.Stub("ColorNotSearchable"));
+			return;
+		}
+		
 		// Config
-		int sideLength = 50;
+		int sideLength = 150;
 		int r = colorData.rgb.r;
 		int g = colorData.rgb.g;
 		int b = colorData.rgb.b;
@@ -63,7 +70,7 @@ public class CommandColor extends Command
 		response.descriptionText += "\nhex:  #" + colorData.hex.clean;
 		response.descriptionText += "```";
 		response.thumbnailURL = "attachment://" + tempFileName;
-		response.footerText = "All percentages and values are rounded to the nearest whole number";
+		response.footerText = "All percentages and values are rounded to the nearest whole number." + (colorData.name.exact_match_name ? "" : " " + colorData.name.value + " is actually " + colorData.name.closest_named_hex + ".");
 		
 		// Send then delete the temp local files
 		res.CallEmbed(response);
