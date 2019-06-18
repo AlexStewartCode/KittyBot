@@ -14,6 +14,6 @@
 	<classpathentry kind="lib" path="lib/twitter4j-core-4.0.7-javadoc.jar"/>
 	<classpathentry kind="lib" path="lib/twitter4j-core-4.0.7.jar"/>
 	<classpathentry kind="lib" path="lib/luaj-jse-3.0.1.jar"/>
-	<classpathentry kind="lib" path="F:/Shared/Coding/Java/workspace/ProKitty/lib/fuzzywuzzy-1.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/fuzzywuzzy-1.2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
