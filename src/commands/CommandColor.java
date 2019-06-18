@@ -15,10 +15,14 @@ import dataStructures.KittyRole;
 import dataStructures.KittyUser;
 import dataStructures.Response;
 import dataStructures.UserInput;
+import network.NetworkTheColorAPI;
+import network.NetworkTheColorAPI.ColorData;
 import utils.ImageUtils;
 
 public class CommandColor extends Command
 {
+	private NetworkTheColorAPI theColorAPI = new NetworkTheColorAPI();
+	
 	public CommandColor(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
@@ -27,12 +31,15 @@ public class CommandColor extends Command
 	@Override
 	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
+		// First, parse out the color.
+		ColorData colorData = theColorAPI.LookupHex(input.args.trim());
+		
 		// Config
 		int sideLength = 50;
-		float r = 209.0f/255;
-		float g = 74.0f/255;
-		float b = 153.0f/255;
-		float a = 1;
+		int r = colorData.rgb.r;
+		int g = colorData.rgb.g;
+		int b = colorData.rgb.b;
+		int a = 255; // Alpha not supported at this time
 		Color parsed = new Color(r, g, b, a);
 		
 		// Construct the image example file that we intend to display locally
@@ -47,9 +54,14 @@ public class CommandColor extends Command
 
 		// Build the response
 		KittyEmbed response = new KittyEmbed();
-		response.title = "Color Name";
+		response.title = colorData.name.value + (colorData.name.exact_match_name ? "" : " (ish)");
 		response.color = parsed;
-		response.descriptionText = "`rgba` test\n`hex` test\n`hsv` test";
+		response.descriptionText = "```";
+		response.descriptionText += "\nrgb:  " + String.format("%1$03d", r) + "  " + String.format("%1$03d", g) + "  " + String.format("%1$03d", b);
+		response.descriptionText += "\nhsl:  " + String.format("%1$03d", colorData.hsl.h) + "  " + String.format("%1$02d", colorData.hsl.s) + "%  " + String.format("%1$02d", colorData.hsl.l) + "%";
+		response.descriptionText += "\nhsv:  " + String.format("%1$03d", colorData.hsv.h) + "  " + String.format("%1$02d", colorData.hsv.s) + "%  " + String.format("%1$02d", colorData.hsv.v) + "%";
+		response.descriptionText += "\nhex:  #" + colorData.hex.clean;
+		response.descriptionText += "```";
 		response.thumbnailURL = "attachment://" + tempFileName;
 		response.footerText = "All percentages and values are rounded to the nearest whole number";
 		
