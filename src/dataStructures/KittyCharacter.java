@@ -6,43 +6,30 @@ public class KittyCharacter
 	private String name;
 	private String bio; 
 	private String refImage; 
+	private long uniqueID;
 	
-	public KittyCharacter(KittyUser owner, String name, String bio, String refImage)
+	public KittyCharacter(KittyUser owner, String name, String bio, String refImage, long uniqueID)
 	{
 		this.owner = owner;
 		this.name = name;
 		this.bio = bio;
 		this.refImage = refImage; 
+		this.uniqueID = uniqueID;
 	}
 	
-	
-	private boolean allowedToEdit(KittyUser editor)
+	public void editBio(String bio)
 	{
-		if(editor.identifier.equals(owner.identifier))
-		{
-			return true;
-		}
-		return false; 
+		this.bio = bio;
 	}
 	
-	public boolean editBio(KittyUser editor, String bio)
+	public void editRefImage(String refImage)
 	{
-		if(allowedToEdit(editor))
-		{
-			this.bio = bio;
-			return true; 
-		}
-		return false;
+		this.refImage = refImage;
 	}
 	
-	public boolean editRefImage(KittyUser editor, String refImage)
+	public void editName(String name) 
 	{
-		if(allowedToEdit(editor))
-		{
-			this.refImage = refImage;
-			return true; 
-		}
-		return false;
+		this.name = name;	
 	}
 	
 	public KittyUser getOwner()
@@ -63,6 +50,11 @@ public class KittyCharacter
 	public String getRefImage()
 	{
 		return refImage; 
+	}
+	
+	public long getUID()
+	{
+		return uniqueID;
 	}
 	
 	public String toString()

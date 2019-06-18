@@ -1,15 +1,19 @@
 package core;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import dataStructures.KittyCharacter;
+import dataStructures.KittyTrackedLong;
 import dataStructures.KittyUser;
+import me.xdrop.fuzzywuzzy.FuzzySearch;
 import utils.GlobalLog;
 import utils.LogFilter;
 
 public class CharacterManager 
 {
-	public static CharacterManager instance; 
+	public static CharacterManager instance;
+	KittyTrackedLong uniqueID = new KittyTrackedLong("CharacterIDCounter", "");
 	
 	private Vector <KittyCharacter> characters = new Vector<KittyCharacter>();
 	public CharacterManager()
@@ -25,6 +29,33 @@ public class CharacterManager
 		}
 	}
 	
+	public ArrayList<KittyCharacter> searchCharacter(String query)
+	{	
+		ArrayList<KittyCharacter> chars = new ArrayList<KittyCharacter>();
+		try
+		{
+			long UID = Long.parseLong(query);
+			for(KittyCharacter character:characters)
+			{
+				if(character.getUID() == UID)
+				{
+					chars.add(character);
+					break;
+				}
+			}
+		}catch(Exception e)
+		{
+			for(KittyCharacter character:characters)
+			{
+				if(FuzzySearch.ratio(query.toLowerCase(), character.getName().toLowerCase()) > 60)
+				{
+					chars.add(character);
+				}
+			}
+		}
+		return chars;
+	}
+	
 	public boolean addCharacter(KittyUser user, String name, String bio, String refImage)
 	{
 		for(KittyCharacter character:characters)
@@ -35,45 +66,29 @@ public class CharacterManager
 			}
 		}
 		
-		characters.add(new KittyCharacter(user, name, bio, refImage)); 
+		characters.add(new KittyCharacter(user, name, bio, refImage, uniqueID.Get()));
+		uniqueID.Add(1);
 		return true; 
 	}
 	
-	public boolean removeCharacter(KittyUser user, String name)
+	public void removeCharacter(KittyCharacter character, String name)
 	{
-		for(KittyCharacter character:characters)
-		{
-			if(character.getName().equals(name) && character.getOwner().discordID.equals(user.discordID))
-			{
-				characters.remove(character);
-				return true;
-			}
-		}
-		return false; 
+		characters.remove(character);
 	}
 	
-	public boolean editRefImage(KittyUser user, String name, String refImage)
+	public void editRefImage(KittyCharacter character, String refImage)
 	{
-		for(KittyCharacter character:characters)
-		{
-			if(character.getName().equals(name) && character.getOwner().discordID.equals(user.discordID))
-			{
-				return character.editRefImage(user, refImage);
-			}
-		}
-		return false; 
+		character.editRefImage(refImage);
 	}
 	
-	public boolean editBio(KittyUser user, String name, String bio)
+	public void editBio(KittyCharacter character, String bio)
 	{
-		for(KittyCharacter character:characters)
-		{
-			if(character.getName().equals(name) && character.getOwner().discordID.equals(user.discordID))
-			{
-				return character.editBio(user, bio);
-			}
-		}
-		return false; 
+		character.editBio(bio);
+	}
+
+	public void editName(KittyCharacter character, String name) 
+	{
+		character.editName(name);
 	}
 	
 }
