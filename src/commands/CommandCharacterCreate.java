@@ -13,7 +13,7 @@ import dataStructures.UserInput;
 
 public class CommandCharacterCreate extends Command
 {
-public CommandCharacterCreate(KittyRole level, KittyRating rating) { super(level, rating); }
+	public CommandCharacterCreate(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
 	public String HelpText() { return LocStrings.Stub("CharacterCreateInfo"); }
@@ -33,6 +33,5 @@ public CommandCharacterCreate(KittyRole level, KittyRating rating) { super(level
 			return;
 		}
 		res.Call(LocStrings.Stub("CharacterCreateDuplicate"));
-		
-	}
+		}
 }

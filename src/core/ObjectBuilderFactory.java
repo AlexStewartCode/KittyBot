@@ -424,6 +424,10 @@ public class ObjectBuilderFactory
 		manager.Register(LocCommands.Stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("rafflejoin"), new CommandRaffleJoin(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("charactercreate"), new CommandCharacterCreate(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("searchcharacter"), new CommandCharacterSearch(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("charactereditbio"), new CommandCharacterEditBio(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("charactereditname"), new CommandCharacterEditName(KittyRole.General, KittyRating.Safe));
+		manager.Register(LocCommands.Stub("charactereditURL"), new CommandCharacterEditURL(KittyRole.General, KittyRating.Safe));
 		manager.Register(LocCommands.Stub("leaderboard"), new CommandLeaderboard(KittyRole.General, KittyRating.Safe));
 		
 		return manager;
