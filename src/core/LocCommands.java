@@ -10,7 +10,7 @@ import dataStructures.Pair;
 // is performed with general strings in the application
 public class LocCommands extends BaseLocFile
 {
-	public static final String fileName = "locCommands.config";
+	public static final String fileName = Config.AssetDirectory + "locCommands.config";
 	public static final String function = "LocCommands.stub";
 	
 	private static LocCommands instance;
