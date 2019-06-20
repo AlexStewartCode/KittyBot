@@ -39,11 +39,11 @@ public class CommandHelpBuilder extends Command {
 			commandsByRole.put(KittyRole.values()[i], new ArrayList<Command>());
 		
 		// Sort commands out
-		ArrayList<Command> commands = Stats.instance.GetAllCommands();
+		ArrayList<Command> commands = Stats.instance.getAllCommands();
 		for(int i = 0; i < commands.size(); ++i)
 		{
 			Command current = commands.get(i);
-			commandsByRole.get(current.RequiredRole()).add(current);
+			commandsByRole.get(current.requiredRole()).add(current);
 		}
 		
 		// Format outstring and send it back for now
@@ -112,7 +112,7 @@ public class CommandHelpBuilder extends Command {
 					commandsSoFar.add(command);
 				
 				// Write out all the keys and the help text
-				ArrayList<String> keys = command.RegisteredNames();
+				ArrayList<String> keys = command.registeredNames();
 				for(int j = 0; j < keys.size(); ++j)
 				{
 					if(j != 0)

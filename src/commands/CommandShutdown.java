@@ -27,7 +27,7 @@ public class CommandShutdown extends Command
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		// Flag the shutdown immediately.
-		Stats.instance.IndicateShutdown();
+		Stats.instance.indicateShutdown();
 		
 		boolean isSafe = false;
 		switch(input.args.toLowerCase().trim())
@@ -48,14 +48,14 @@ public class CommandShutdown extends Command
 			// Force upkeep, this works so long as upkeep is on the main thread.
 			res.sendImmediate(LocStrings.stub("ShutdownSafe"));
 			DatabaseManager.instance.upkeep(); 
-			GlobalLog.Warn(LogFilter.Command, LocStrings.Lookup("ShutdownSafe"));
+			GlobalLog.Warn(LogFilter.Command, LocStrings.lookup("ShutdownSafe"));
 			
 			System.exit(0);
 		}
 		else
 		{
 			res.sendImmediate(LocStrings.stub("ShutdownUnsafe"));// "``");
-			GlobalLog.Warn(LogFilter.Command, LocStrings.Lookup("ShutdownSafe"));
+			GlobalLog.Warn(LogFilter.Command, LocStrings.lookup("ShutdownSafe"));
 			System.exit(0);
 		}
 	}

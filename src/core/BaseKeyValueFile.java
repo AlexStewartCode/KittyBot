@@ -33,7 +33,7 @@ public class BaseKeyValueFile
 	}
 	
 	// Reads in and calls the specifid function for each keyvalue pair we find
-	protected void Parse(Consumer<? super Pair<String, String>> keyValueCallback)
+	protected void parse(Consumer<? super Pair<String, String>> keyValueCallback)
 	{
 		File f = new File(filename);
 		if(f.isFile() && f.canRead())
@@ -60,7 +60,7 @@ public class BaseKeyValueFile
 	}
 	
 	// Writes out a set of keyvalue pairs
-	protected void Write(List<Pair<String, String>> toWrite)
+	protected void write(List<Pair<String, String>> toWrite)
 	{
 		try
 		{

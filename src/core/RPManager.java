@@ -55,7 +55,7 @@ public class RPManager
 		return log;
 	}
 
-	public static void Upkeep(KittyCore kitty) 
+	public static void upkeep(KittyCore kitty) 
 	{
 		Response res = new Response(null, kitty);
 		String reminder = "";

@@ -57,7 +57,7 @@ public class Main extends ListenerAdapter
 		pluginManager = ObjectBuilderFactory.constructPluginManager();
 		
 		// Bot startup
-		kittyCore = ObjectBuilderFactory.ConstructKittyCore();
+		kittyCore = ObjectBuilderFactory.constructKittyCore();
 	}
 
 	// When a message is sent in a server that kitty is in, this is what's called.
@@ -65,7 +65,7 @@ public class Main extends ListenerAdapter
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event)
 	{
 		// Tweak the event as necessary
-		if(!Superintendent.PreProcessSetup(event, stats))
+		if(!Superintendent.preProcessSetup(event, stats))
 			return;
 		
 		// Factory objects
@@ -78,7 +78,7 @@ public class Main extends ListenerAdapter
 		UserInput input = new UserInput(event, guild);
 		
 		// Tweak object construction as necessary
-		if(!Superintendent.PostProcessSetup(event, user, guild, channel, response, input))
+		if(!Superintendent.postProcessSetup(event, user, guild, channel, response, input))
 			return;
 				
 		// Track beans!
@@ -88,11 +88,11 @@ public class Main extends ListenerAdapter
 		RPManager.instance.addLine(channel, user, input);
 		
 		// Run any pre-emptive upkeep we need to
-		Superintendent.PerCommandUpkeepPre();
+		Superintendent.perCommandUpkeepPre();
 		
 		// Attempt to spin up a command. If the command doesn't exist.
 		// Run plugins right before invoking the commands but after all other setup.
-		if(commandManager.InvokeOnNewThread(guild, channel, user, input, response) == false)
+		if(commandManager.invokeOnNewThread(guild, channel, user, input, response) == false)
 		{
 			List<String> pluginOutput = pluginManager.runAll(input.message, user);
 			
@@ -102,7 +102,7 @@ public class Main extends ListenerAdapter
 				{
 					if(pluginOutput.get(i).startsWith("!"))
 					{
-						commandManager.InvokeOnNewThread(guild, channel, user, new UserInput(pluginOutput.get(i).substring(1), guild), response);
+						commandManager.invokeOnNewThread(guild, channel, user, new UserInput(pluginOutput.get(i).substring(1), guild), response);
 					}
 					else
 					{
@@ -113,6 +113,6 @@ public class Main extends ListenerAdapter
 		}
 		
 		// Run any upkeep in post we need to
-		Superintendent.PerCommandUpkeepPost(kittyCore, databaseManager);
+		Superintendent.perCommandUpkeepPost(kittyCore, databaseManager);
 	}
 }

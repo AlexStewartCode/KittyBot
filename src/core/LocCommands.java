@@ -25,9 +25,9 @@ public class LocCommands extends BaseLocFile
 		{
 			instance = this;
 			
-			UpdateLocFromDisk();
-			ScrapeAll();
-			SaveLocToDisk();
+			updateLocFromDisk();
+			scrapeAll();
+			saveLocToDisk();
 			
 			fileMonitor = new FileMonitor(filename);
 		}
@@ -40,19 +40,19 @@ public class LocCommands extends BaseLocFile
 	// Returns a pair, the raw key and the stub key
 	public static Pair<String, String> stub(String toStub)
 	{
-		return new Pair<String, String>(toStub, instance.GetKey(toStub));
+		return new Pair<String, String>(toStub, instance.getKey(toStub));
 	}
 	
 	// Gets all of the un-translated defaults in the commands list.
-	public static ArrayList<String> GetUnlocalizedCommands()
+	public static ArrayList<String> getUnlocalizedCommands()
 	{
 		ArrayList<String> raw = new ArrayList<>();
 		instance.stringStore.forEach((pair) -> raw.add((String)((Pair<?, ?>)pair).First ));
 		return raw;
 	}
 	
-	public static void Upkeep()
+	public static void upkeep()
 	{
-		instance.Update();
+		instance.update();
 	}
 }

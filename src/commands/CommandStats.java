@@ -28,8 +28,8 @@ public class CommandStats extends Command
 		// Variables
 		Stats stats = Stats.instance;
 		String out = "";
-		long seen = stats.GetMessagesSeen();
-		long processed = stats.GetCommandsProcessed();
+		long seen = stats.getMessagesSeen();
+		long processed = stats.getCommandsProcessed();
 		
 		// General
 		out += "General";
@@ -37,20 +37,20 @@ public class CommandStats extends Command
 		out += " Messages observed: " + seen + "\n";
 		out += "Commands processed: " + processed + "\n";
 		out += "  Command invoke %: " + ((int)((processed / (float)seen) * 1000)) / 10.0f + "%\n";
-		out += "        Bot uptime: " + stats.GetFormattedUptime() + "\n";
+		out += "        Bot uptime: " + stats.getFormattedUptime() + "\n";
 		out += "```\n";
 		
 		// Health
 		out += "Health";
 		out += "```\n";
-		out += " SMT cores: " + stats.GetCPUAvailable() + "\n";
+		out += " SMT cores: " + stats.getCPUAvailable() + "\n";
 		
 		// If CPU load works on this OS, list it. -1.0 is the error state 
-		double CPULoad = stats.GetSystemCPULoad();
+		double CPULoad = stats.getSystemCPULoad();
 		out += CPULoad > -0.9
 			 ? "  CPU Load: " + (CPULoad * 100) + "%\n" : "";
 		
-		ThreadData data = stats.GetThreadData();
+		ThreadData data = stats.getThreadData();
 		Integer terminated = data.states.get(Thread.State.TERMINATED);
 		Integer runnable = data.states.get(Thread.State.RUNNABLE);
 		Integer blocked = data.states.get(Thread.State.BLOCKED);
@@ -69,8 +69,8 @@ public class CommandStats extends Command
 		
 		
 		// Cache
-		Integer guildCount = stats.GetGuildCount();
-		Integer userCount = stats.GetUserCount();
+		Integer guildCount = stats.getGuildCount();
+		Integer userCount = stats.getUserCount();
 		
 		out += "Cache";
 		out += "```\n"

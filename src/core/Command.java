@@ -26,18 +26,18 @@ public abstract class Command
 		this.contentRating = contentRating;
 	}
 	
-	private void Reject(KittyUser user, String reason)
+	private void reject(KittyUser user, String reason)
 	{
 		GlobalLog.Warn(LogFilter.Command, this.getClass().getSimpleName() + " from " + user.name + " rejected due to command's " + reason);
 	}
 	
 	// Determine if we're exclusive enough for this command and 
 	// if the command is permitted by the guild we're in
-	private boolean CanCall(KittyGuild guild, KittyChannel channel, KittyUser user)
+	private boolean canCall(KittyGuild guild, KittyChannel channel, KittyUser user)
 	{	
 		if(guild.contentRating.getValue() < contentRating.getValue())
 		{
-			Reject(user, "content rating");
+			reject(user, "content rating");
 			return false;
 		}
 		
@@ -48,31 +48,31 @@ public abstract class Command
 			return true;
 		}
 		
-		Reject(user, "permissions");
+		reject(user, "permissions");
 		return false;
 	}
 	
 	// Called by the Command manager - this will run the command 
 	// if the issuing user has the permission to do so!
-	protected final void Invoke(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	protected final void invoke(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		if(!CanCall(guild, channel, user))
+		if(!canCall(guild, channel, user))
 			return;
 		
 		onRun(guild, channel, user, input, res);
 	}
 	
-	public ArrayList<String> RegisteredNames()
+	public ArrayList<String> registeredNames()
 	{
 		return registeredNames;
 	}
 	
-	public KittyRating Rating()
+	public KittyRating rating()
 	{
 		return contentRating;
 	}
 	
-	public KittyRole RequiredRole()
+	public KittyRole requiredRole()
 	{
 		return roleLevel;
 	}

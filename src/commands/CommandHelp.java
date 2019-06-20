@@ -20,7 +20,7 @@ public class CommandHelp extends Command
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{ 
-		String help = Stats.instance.GetHelpText(input.args);
+		String help = Stats.instance.getHelpText(input.args);
 		
 		if(help == null)
 		{

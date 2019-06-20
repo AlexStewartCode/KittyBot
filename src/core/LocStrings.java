@@ -24,9 +24,9 @@ public class LocStrings extends BaseLocFile
 		{
 			instance = this;
 			
-			UpdateLocFromDisk();
-			ScrapeAll();
-			SaveLocToDisk();
+			updateLocFromDisk();
+			scrapeAll();
+			saveLocToDisk();
 			
 			fileMonitor = new FileMonitor(filename);
 		}
@@ -38,17 +38,17 @@ public class LocStrings extends BaseLocFile
 
 	public static String stub(String toStub)
 	{
-		return Lookup(toStub);
+		return lookup(toStub);
 	}
 	
 	// Won't be picked up when scraping
-	public static String Lookup(String stubbedPreviously)
+	public static String lookup(String stubbedPreviously)
 	{
-		return instance.GetKey(stubbedPreviously);
+		return instance.getKey(stubbedPreviously);
 	}
 	
-	public static void Upkeep()
+	public static void upkeep()
 	{
-		instance.Update();
+		instance.update();
 	}
 }

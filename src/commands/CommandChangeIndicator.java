@@ -24,7 +24,7 @@ public class CommandChangeIndicator extends Command
 		String indicator = arg.substring(0, 1);
 		if(indicator.charAt(0) == '\n' || indicator.charAt(0) == '\t' || indicator.charAt(0) == '\r')
 		{
-			res.send(LocStrings.Lookup("ChangeIndicatorError"));
+			res.send(LocStrings.lookup("ChangeIndicatorError"));
 			return;
 		}
 		

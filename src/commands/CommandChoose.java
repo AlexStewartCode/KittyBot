@@ -21,7 +21,7 @@ public class CommandChoose extends Command
 	{
 		if(input.args.trim().length() == 0)
 		{
-			res.send(Stats.instance.GetHelpText(input.key));
+			res.send(Stats.instance.getHelpText(input.key));
 			return;
 		}
 		

@@ -57,13 +57,13 @@ public class DatabaseManager
 		characterDataDriver = new DatabaseDriverKeyValue(characterTableName, characterKeyColumnName, characterValueColumnName);
 		
 		// Connect data sets
-		if(globalDataDriver.Connect() == false)
+		if(globalDataDriver.connect() == false)
 		{
 			GlobalLog.Error("Global database failed to connect. Without this DB, this bot can not run.");
 			System.exit(1);
 		}
 		
-		if(characterDataDriver.Connect() == false)
+		if(characterDataDriver.connect() == false)
 		{
 			GlobalLog.Error("Character database failed to connect. Without this DB, this bot can not run.");
 			System.exit(1);
@@ -131,7 +131,7 @@ public class DatabaseManager
 	
 	public List<String> scrapeGlobalForString(String substring)
 	{
-		return globalDataDriver.GetKeysWith(substring);
+		return globalDataDriver.getKeysWith(substring);
 	}
 	
 	  /////////////////
@@ -151,7 +151,7 @@ public class DatabaseManager
 	{
 		synchronized(globalDataDriver)
 		{
-			return globalDataDriver.CreateGetKey(key);
+			return globalDataDriver.createGetKey(key);
 		}
 	}
 	
@@ -159,7 +159,7 @@ public class DatabaseManager
 	{
 		synchronized(globalDataDriver)
 		{
-			globalDataDriver.CreateSetKey(key, value);
+			globalDataDriver.createSetKey(key, value);
 		}
 	}
 	
@@ -181,7 +181,7 @@ public class DatabaseManager
 	{
 		synchronized(characterDataDriver)
 		{
-			return characterDataDriver.CreateGetKey(key);
+			return characterDataDriver.createGetKey(key);
 		}
 	}
 	
@@ -189,7 +189,7 @@ public class DatabaseManager
 	{
 		synchronized(characterDataDriver)
 		{
-			characterDataDriver.CreateSetKey(key, value);
+			characterDataDriver.createSetKey(key, value);
 		}
 	}
 	
