@@ -52,11 +52,11 @@ public class CommandMap extends Command
 		
 			String widthStr = parser.getOption("-w", true);
 			if(widthStr != null)
-				width = ValidateSize(Integer.parseInt(widthStr), MaxWidth);
+				width = validateSize(Integer.parseInt(widthStr), MaxWidth);
 			
 			String heightStr = parser.getOption("-h", true);
 			if(heightStr != null)
-				height = ValidateSize(Integer.parseInt(heightStr), MaxHeight);
+				height = validateSize(Integer.parseInt(heightStr), MaxHeight);
 		}
 		catch(NumberFormatException e) 
 		{
@@ -83,7 +83,7 @@ public class CommandMap extends Command
 		
 		// Response body creation
 		body += "```\n";
-		body += GenerateMap(width, height, randGenerator);
+		body += generateMap(width, height, randGenerator);
 		body += "\n```";
 		
 		// Send back the map
@@ -91,7 +91,7 @@ public class CommandMap extends Command
 	}
 	
 	// Verifies and appropriately caps input as necessary
-	int ValidateSize(int input, int max)
+	int validateSize(int input, int max)
 	{
 		if(input < 0)
 			throw new NumberFormatException();
@@ -104,7 +104,7 @@ public class CommandMap extends Command
 	
 	
 	// Does the map generation
-	String GenerateMap(int width, int height, Random gen)
+	String generateMap(int width, int height, Random gen)
 	{
 		String landscape[][] = new String[width][height];
 		int r1 = rand(gen);

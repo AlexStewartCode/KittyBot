@@ -41,8 +41,6 @@ public class CommandShutdown extends Command
 				break;
 		}
 		
-		
-		
 		if(isSafe)
 		{
 			// Force upkeep, this works so long as upkeep is on the main thread.

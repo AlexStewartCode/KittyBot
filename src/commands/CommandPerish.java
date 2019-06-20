@@ -59,7 +59,7 @@ public class CommandPerish  extends Command
 					return;
 			}
 			preProcessed = new File(filename);
-			ApplyTintEffect(ImageIO.read(preProcessed), name);
+			applyTintEffect(ImageIO.read(preProcessed), name);
 		}
 		catch (IOException e) 
 		{
@@ -73,7 +73,7 @@ public class CommandPerish  extends Command
 		ImageUtils.blockingFileDelete(postProcessed);
 	}
 	
-	private static void ApplyTintEffect(BufferedImage image, String name) throws IOException
+	private static void applyTintEffect(BufferedImage image, String name) throws IOException
 	{
 		// Iterate over each column left to right and touch up each pixel
 		for(int x = 0; x < image.getWidth(); ++x)

@@ -48,9 +48,9 @@ public class CommandHelpBuilder extends Command {
 		
 		// Format outstring and send it back for now
 		String out = "";
-		out += PopulateSection(KittyRole.Admin, commandsByRole, true) + "\n";
-		out += PopulateSection(KittyRole.Mod, commandsByRole, true) + "\n";
-		out += PopulateSection(KittyRole.General, commandsByRole, false) + "\n";
+		out += populateSection(KittyRole.Admin, commandsByRole, true) + "\n";
+		out += populateSection(KittyRole.Mod, commandsByRole, true) + "\n";
+		out += populateSection(KittyRole.General, commandsByRole, false) + "\n";
 		
 		// Write out file
 		String filename = "buildhelp_out.txt";
@@ -73,7 +73,7 @@ public class CommandHelpBuilder extends Command {
 	}
 	
 	// Generates the section for a specific role, optionally adding spacing after for another section 
-	private String PopulateSection(KittyRole role, HashMap<KittyRole, ArrayList<Command>> commandsByRole, boolean delimitSection)
+	private String populateSection(KittyRole role, HashMap<KittyRole, ArrayList<Command>> commandsByRole, boolean delimitSection)
 	{
 		// Formatting variables
 		final String headerStart = "<h2>";

@@ -19,13 +19,13 @@ public class CommandBoop extends Command
 		
 		public BoopTracker() { super("booptracker"); }
 		
-		public void ApplyBoop()
+		public void applyBoop()
 		{
 			++boops;
 			markDirty();
 		}
 
-		public int HowMany()
+		public int howMany()
 		{
 			return boops;
 		}
@@ -68,14 +68,14 @@ public class CommandBoop extends Command
 	{
 		if(input.mentions == null)
 		{
-			boopTracker.ApplyBoop();
-			res.send(String.format(LocStrings.stub("BoopStandard"), user.name, boopTracker.HowMany()));
+			boopTracker.applyBoop();
+			res.send(String.format(LocStrings.stub("BoopStandard"), user.name, boopTracker.howMany()));
 		}
 		else
 		{
 			if(input.mentions.length == 1)
 			{
-				boopTracker.ApplyBoop();
+				boopTracker.applyBoop();
 				res.send(String.format(LocStrings.stub("BoopPerson"), user.name, input.mentions[0].name));
 				return;
 			}
@@ -83,7 +83,7 @@ public class CommandBoop extends Command
 			String booped = ""; 
 			for(int i = 0; i < input.mentions.length; i++)
 			{
-				boopTracker.ApplyBoop();
+				boopTracker.applyBoop();
 				if(i < input.mentions.length-1)
 					booped += input.mentions[i].name + ", ";
 				else

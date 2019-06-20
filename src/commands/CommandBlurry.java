@@ -53,7 +53,7 @@ public class CommandBlurry extends Command
 					return;
 			}
 			preProcessed = new File(filename);
-			ApplySnap(ImageIO.read(preProcessed), name);
+			applySnap(ImageIO.read(preProcessed), name);
 		}
 		catch (IOException e) 
 		{
@@ -67,7 +67,7 @@ public class CommandBlurry extends Command
 		ImageUtils.blockingFileDelete(postProcessed);
 	}
 	
-	private static void ApplySnap(BufferedImage image, String name) throws IOException
+	private static void applySnap(BufferedImage image, String name) throws IOException
 	{
 		BufferedImage blurred = ImageUtils.copyImage(image);
 		// Iterate over each column left to right and touch up each pixel
