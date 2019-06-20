@@ -18,7 +18,7 @@ public class JDBCDriverSQLite extends JDBCDriver
 	public static final String databaseName = "catfood";
 	
 	@Override
-	public boolean Connect()
+	public boolean connect()
 	{	
 		if(connection == null)
 		{
@@ -38,23 +38,23 @@ public class JDBCDriverSQLite extends JDBCDriver
 				// create a connection to the database
 				connection = DriverManager.getConnection(url);
 				
-				GlobalLog.Log(LogFilter.Database, "Connection to SQLite has been established.");
+				GlobalLog.log(LogFilter.Database, "Connection to SQLite has been established.");
 			} 
 			catch (SQLException e) 
 			{
-				GlobalLog.Error(e.getMessage());
+				GlobalLog.error(e.getMessage());
 			}
 		}
 		else
 		{
-			GlobalLog.Log(LogFilter.Database, "SQLite database asked to connect a second time. This is perfectly fine as this app has all its data tied together.");
+			GlobalLog.log(LogFilter.Database, "SQLite database asked to connect a second time. This is perfectly fine as this app has all its data tied together.");
 		}
 		
 		return connection != null;
 	}
 	
 	@Override
-	public boolean Disconnect()
+	public boolean disconnect()
 	{
 		try
 		{
@@ -67,13 +67,13 @@ public class JDBCDriverSQLite extends JDBCDriver
 		} 
 		catch (SQLException ex) 
 		{
-			GlobalLog.Error(ex.getMessage());
+			GlobalLog.error(ex.getMessage());
 			return false;
 		}
 	}
 	
 	@Override
-	public ResultSet ExecuteReturningStatement(JDBCStatementType type, String command, String[] args)
+	public ResultSet executeReturningStatement(JDBCStatementType type, String command, String[] args)
 	{
 		if(connection == null)
 			return null;
@@ -114,7 +114,7 @@ public class JDBCDriverSQLite extends JDBCDriver
 		{
 			try
 			{
-				GlobalLog.Fatal(e.getMessage());
+				GlobalLog.fatal(e.getMessage());
 			}
 			catch (Exception e1)
 			{
@@ -125,7 +125,7 @@ public class JDBCDriverSQLite extends JDBCDriver
 		}
 	}
 	
-	public boolean ExecuteStatement(JDBCStatementType type, String command, String[] args)
+	public boolean executeStatement(JDBCStatementType type, String command, String[] args)
 	{
 		if(connection == null)
 			return false;
@@ -178,7 +178,7 @@ public class JDBCDriverSQLite extends JDBCDriver
 		{
 			try
 			{
-				GlobalLog.Fatal(e.getMessage());
+				GlobalLog.fatal(e.getMessage());
 			}
 			catch (Exception e1)
 			{

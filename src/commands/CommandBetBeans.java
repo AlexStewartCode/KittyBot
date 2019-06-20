@@ -11,10 +11,10 @@ public class CommandBetBeans extends Command
 	public CommandBetBeans(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("BetBeansInfo"); }
+	public String getHelpText() { return LocStrings.stub("BetBeansInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String call = "";
 		int bet = 0;
@@ -24,41 +24,41 @@ public class CommandBetBeans extends Command
 			bet = Integer.parseInt(input.args);
 			if(bet < 50)
 			{
-				res.Call(LocStrings.Stub("BetBeansLowBet"));
+				res.send(LocStrings.stub("BetBeansLowBet"));
 				return;
 			}
 		}
 		catch (NumberFormatException e)
 		{
-			res.Call(LocStrings.Stub("BetBeansNotValid"));
+			res.send(LocStrings.stub("BetBeansNotValid"));
 			return;
 		}
 		
-		if(user.GetBeans() < bet)
+		if(user.getBeans() < bet)
 		{
-			res.Call(LocStrings.Stub("BetBeansNotEnough"));
+			res.send(LocStrings.stub("BetBeansNotEnough"));
 			return;
 		}
 		
-		user.ChangeBeans(-bet);
+		user.changeBeans(-bet);
 		int [] slots = getSlots();
 		call += slotString(slots);
 		slots = sort(slots);
 		
 		win = getWinning(slots); 
 		
-		res.Call(call);
+		res.send(call);
 		
 		if(win == 0)
 			{
-				res.Call(LocStrings.Stub("BetBeansLose"));
-				guild.beans.Add(bet);
+				res.send(LocStrings.stub("BetBeansLose"));
+				guild.beans.add(bet);
 				return;
 			}
 		
-		user.ChangeBeans(bet*win);
-		guild.beans.Subtract(bet*win);
-		res.Call(String.format(LocStrings.Stub("BetBeansWin"), "" + (bet*win)));
+		user.changeBeans(bet*win);
+		guild.beans.subtract(bet*win);
+		res.send(String.format(LocStrings.stub("BetBeansWin"), "" + (bet*win)));
 	}
 	
 	private int getWinning(int [] slots)

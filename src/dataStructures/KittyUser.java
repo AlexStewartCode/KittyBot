@@ -31,35 +31,35 @@ public class KittyUser extends DatabaseTrackedObject
 	}
 
 	// Can be positive or negative
-	public void ChangeBeans(int amount)
+	public void changeBeans(int amount)
 	{
 		beans += amount;
 		
 		if(amount != 0)
-			MarkDirty();
+			markDirty();
 	}
 	
-	public void ChangeRole(KittyRole newRole)
+	public void changeRole(KittyRole newRole)
 	{
 		if(newRole != role)
 		{
 			role = newRole;
-			MarkDirty();
+			markDirty();
 		}
 	}
 	
-	public long GetBeans()
+	public long getBeans()
 	{
 		return beans;
 	}
 	
-	public KittyRole GetRole()
+	public KittyRole getRole()
 	{
 		return role;
 	}
 	
 	@Override
-	public String Serialize() 
+	public String serialize() 
 	{
 		return beans + "," + role.getValue();
 	}
@@ -80,18 +80,18 @@ public class KittyUser extends DatabaseTrackedObject
 	}
 	
 	@Override
-	public void DeSerialzie(String string) 
+	public void deSerialzie(String string) 
 	{
 		try
 		{
 			String[] strings = prepareFromString(string);
 			if(strings.length < 2)
 			{
-				GlobalLog.Log(LogFilter.Database, "Upgrading user " + name + " to include 'role' in DB");
+				GlobalLog.log(LogFilter.Database, "Upgrading user " + name + " to include 'role' in DB");
 				
 				// Mark ourselves dirty to re-write the role information stored in the user.
 				// Just uses defaults from earlier again.
-				MarkDirty();
+				markDirty();
 			}
 			else
 			{
@@ -101,13 +101,13 @@ public class KittyUser extends DatabaseTrackedObject
 		}
 		catch (NumberFormatException e)
 		{
-			GlobalLog.Warn(LogFilter.Database, "Invalid user data for user " + name + "! "
+			GlobalLog.warn(LogFilter.Database, "Invalid user data for user " + name + "! "
 					+ "Starting over at 0 beans with a general role!");
 			
 			// We don't need to specify the role at this point because it is set at this point.
 			// We use what the user was created with whatever defaults were in the factory. 
 			// Beans are maintained too, just in case there's some in cache.
-			MarkDirty();
+			markDirty();
 		}
 	}
 }

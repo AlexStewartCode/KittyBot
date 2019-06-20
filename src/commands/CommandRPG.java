@@ -23,31 +23,31 @@ public class CommandRPG extends Command
 	}
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("RPGInfo"); };
+	public String getHelpText() { return LocStrings.stub("RPGInfo"); };
 	
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.args == null || input.args.length() == 0)
 		{
-			String output = HelpText();
-			res.Call(output);
+			String output = getHelpText();
+			res.send(output);
 			return;
 		}
 		
 		String result = null;
 		synchronized(framework)
 		{
-			result = framework.Run(user.uniqueID, input.args.trim());
+			result = framework.run(user.uniqueID, input.args.trim());
 		}
 		
 		if(result == null)
 		{
-			res.Call(LocStrings.Stub("RPGInvalid"));
+			res.send(LocStrings.stub("RPGInvalid"));
 			return;
 		}
 		
-		res.Call(result);
+		res.send(result);
 	}
 }

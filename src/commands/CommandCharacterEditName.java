@@ -10,10 +10,10 @@ public class CommandCharacterEditName extends Command
 	public CommandCharacterEditName(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("CharacterEditNameInfo"); }
+	public String getHelpText() { return LocStrings.stub("CharacterEditNameInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		try
 		{
@@ -21,18 +21,18 @@ public class CommandCharacterEditName extends Command
 		}
 		catch(Exception e)
 		{
-			res.Call(LocStrings.Stub("CharacterEditNameNotValid"));
+			res.send(LocStrings.stub("CharacterEditNameNotValid"));
 			return;
 		}
 		KittyCharacter character = CharacterManager.instance.searchCharacter(input.args.split(" ")[0]).get(0);
 		if(character.getOwner().equals(user))
 		{
 			CharacterManager.instance.editName(character, input.args.substring(input.args.indexOf(' ')));
-			res.Call(LocStrings.Stub("CharacterEditNameSuccess"));
+			res.send(LocStrings.stub("CharacterEditNameSuccess"));
 		}
 		else
 		{
-			res.Call(LocStrings.Stub("CharacterEditNameNotAuth"));
+			res.send(LocStrings.stub("CharacterEditNameNotAuth"));
 		}
 	}
 }

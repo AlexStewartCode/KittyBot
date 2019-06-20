@@ -39,12 +39,12 @@ public class TaggedPairStore
 	{
 		taggedPairs = new HashMap<String, HashMap<String, String>>();
 		allPairs = new HashMap<String, String>();
-		Parse(input);
+		parse(input);
 	}
 	
 	// Calls back on each item in the entire structure. Provides section, then a pair of the keyString and valueString.
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	public void ForEach(BiConsumer<? super String, Pair<? super String, ? super String>> action)
+	public void forEach(BiConsumer<? super String, Pair<? super String, ? super String>> action)
 	{
 		Iterator it = taggedPairs.entrySet().iterator();
 		while (it.hasNext())
@@ -62,7 +62,7 @@ public class TaggedPairStore
 	
 	// Calls back each item in the structure but does not priv
 	@SuppressWarnings({"rawtypes"})
-	public void ForEach(Consumer<Pair<? super String, ? super String>> action)
+	public void forEach(Consumer<Pair<? super String, ? super String>> action)
 	{
 		Iterator it = allPairs.entrySet().iterator();
 		while (it.hasNext())
@@ -93,8 +93,8 @@ public class TaggedPairStore
 				Map.Entry internalPair = (Map.Entry)internal.next();
 				String key = (String)internalPair.getKey();
 				String value = (String)internalPair.getValue();
-				key = StringUtils.ReEscape(key);
-				value = StringUtils.ReEscape(value);
+				key = StringUtils.reEscape(key);
+				value = StringUtils.reEscape(value);
 				
 				if(key.endsWith("\\r"))
 				{
@@ -123,7 +123,7 @@ public class TaggedPairStore
 	// Parses out the string passed in into the sectionkeyValue HashMap. 
 	// Any character used in a split call is escaped just in case on 
 	// account of some characters having specific regex meanings.
-	private void Parse(String input)
+	private void parse(String input)
 	{
 		if(input == null)
 			return;
@@ -143,7 +143,7 @@ public class TaggedPairStore
 			
 			// Parse section name. If it already exists, don't bother making it.
 			String sectionName = section.substring(0, pos);
-			AddSection(sectionName);
+			addSection(sectionName);
 				
 			// Parse out the pairs within the section, split them all out. 
 			String unparsedPairs = section.substring(pos + 1);
@@ -160,8 +160,8 @@ public class TaggedPairStore
 				
 				String key = line.substring(0, splitPos);
 				String value = line.substring(splitPos + PairSplit.length());
-				key = StringUtils.UnEscape(key);
-				value = StringUtils.UnEscape(value);
+				key = StringUtils.unEscape(key);
+				value = StringUtils.unEscape(value);
 				
 				taggedPairs.get(sectionName).putIfAbsent(key, value);
 				allPairs.putIfAbsent(key, value);
@@ -171,7 +171,7 @@ public class TaggedPairStore
 	
 	// Dumps out a string array
 	@SuppressWarnings("unused")
-	private void Dump(String[] toPrint)
+	private void dump(String[] toPrint)
 	{
 		System.out.println("Length: " + toPrint.length);
 		
@@ -181,28 +181,28 @@ public class TaggedPairStore
 	
 	// Adds a KeyValue pair to the specified section if it's not already there.
 	// Also creates the section if it's not already present.
-	public void AddKeyValue(String sectionName, String key, String value)
+	public void addKeyValue(String sectionName, String key, String value)
 	{
-		AddSection(sectionName);
+		addSection(sectionName);
 		taggedPairs.get(sectionName).putIfAbsent(key, value);
 		allPairs.putIfAbsent(key, value);
 	}
 	
 	// Adds a given section to the hashmap if it's not already present
-	public void AddSection(String sectionName)
+	public void addSection(String sectionName)
 	{
 		taggedPairs.putIfAbsent(sectionName, new HashMap<String, String>());
 	}
 	
 	// Returns a HashMap of Keys to Values for a given section
 	@SuppressWarnings("unchecked")
-	public HashMap<String, String> GetSection(String sectionName)
+	public HashMap<String, String> getSection(String sectionName)
 	{
 		return (HashMap<String, String>) taggedPairs.get(sectionName).clone();
 	}
 
 	// Look up a global key
-	public String GetKey(String key)
+	public String getKey(String key)
 	{
 		if(allPairs.containsKey(key))
 			return allPairs.get(key);

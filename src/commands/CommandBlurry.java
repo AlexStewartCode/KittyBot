@@ -17,12 +17,12 @@ public class CommandBlurry extends Command
 	public CommandBlurry(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("BlurryInfo"); };
+	public String getHelpText() { return LocStrings.stub("BlurryInfo"); };
 	
 	private static Long num = 0l;
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String name = null;
 		String filename = null;
@@ -53,7 +53,7 @@ public class CommandBlurry extends Command
 					return;
 			}
 			preProcessed = new File(filename);
-			ApplySnap(ImageIO.read(preProcessed), name);
+			applySnap(ImageIO.read(preProcessed), name);
 		}
 		catch (IOException e) 
 		{
@@ -61,13 +61,13 @@ public class CommandBlurry extends Command
 		}
 		
 		postProcessed = new File(name);
-		res.CallFile(postProcessed, "png");
+		res.sendFile(postProcessed, "png");
 		
-		ImageUtils.BlockingFileDelete(preProcessed);
-		ImageUtils.BlockingFileDelete(postProcessed);
+		ImageUtils.blockingFileDelete(preProcessed);
+		ImageUtils.blockingFileDelete(postProcessed);
 	}
 	
-	private static void ApplySnap(BufferedImage image, String name) throws IOException
+	private static void applySnap(BufferedImage image, String name) throws IOException
 	{
 		BufferedImage blurred = ImageUtils.copyImage(image);
 		// Iterate over each column left to right and touch up each pixel

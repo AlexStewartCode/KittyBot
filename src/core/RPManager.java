@@ -23,7 +23,7 @@ public class RPManager
 		}
 		else
 		{
-			GlobalLog.Error(LogFilter.Core, "Attempted to create a second RP Manager!");
+			GlobalLog.error(LogFilter.Core, "Attempted to create a second RP Manager!");
 			return;
 		}
 	}
@@ -39,7 +39,7 @@ public class RPManager
 	
 	public void addLine(KittyChannel channel, KittyUser user, UserInput input)
 	{
-		if(logs.containsKey(Long.parseLong(channel.uniqueID)) && !input.IsValid())
+		if(logs.containsKey(Long.parseLong(channel.uniqueID)) && !input.isValid())
 				logs.get(Long.parseLong(channel.uniqueID)).addLine(user, input.message);
 	}
 	
@@ -55,7 +55,7 @@ public class RPManager
 		return log;
 	}
 
-	public static void Upkeep(KittyCore kitty) 
+	public static void upkeep(KittyCore kitty) 
 	{
 		Response res = new Response(null, kitty);
 		String reminder = "";
@@ -71,7 +71,7 @@ public class RPManager
 				{
 						reminder += " <@" + users.get(i) + ">";
 				}
-				res.CallToChannel(reminder, entry.getValue().getChannel().uniqueID);
+				res.sendToChannel(reminder, entry.getValue().getChannel().uniqueID);
 				reminder = "";
 				
 				entry.getValue().resetTimer();

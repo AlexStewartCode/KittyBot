@@ -74,16 +74,16 @@ public class BenchmarkCommandInfo extends BenchmarkCommand
 	}
 		
 	@Override
-	public BenchmarkFormattable OnRun(BenchmarkManager manager, BenchmarkInput input) 
+	public BenchmarkFormattable onRun(BenchmarkManager manager, BenchmarkInput input) 
 	{
 		String searchString = input.value.trim();
 		long start = System.currentTimeMillis();
-		List<BenchmarkEntry> entries = manager.FindModel(searchString);
+		List<BenchmarkEntry> entries = manager.findModel(searchString);
 		
 		if(entries.size() < 1)
 			return new BenchmarkFormattable("Couldn't find any models containing `" + searchString + "`!");
 		
-		List<BenchmarkEntry> sortedEntries = manager.EvaluateLevenshteinDistance(entries, searchString);
+		List<BenchmarkEntry> sortedEntries = manager.evaluateLevenshteinDistance(entries, searchString);
 		BenchmarkEntry entry = sortedEntries.get(0);
 		KittyEmbed embed = FormatInfoEmbed(entry);
 		

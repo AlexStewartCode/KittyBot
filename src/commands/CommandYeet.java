@@ -23,11 +23,11 @@ public class CommandYeet extends Command
 	private static Long num = 0l;
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("YeetInfo"); }
+	public String getHelpText() { return LocStrings.stub("YeetInfo"); }
 	
 	// Called when the command is run!
 	@Override 
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String name = null;
 		File yeetFile = null;
@@ -54,7 +54,7 @@ public class CommandYeet extends Command
 			
 			yeeteeFile = new File(yeeteeFilename);
 			ImageOverlayBuilder builder = new ImageOverlayBuilder("assets/yeet/frames/", "yeet ", 24, 18);
-			builder.Overlay(ImageIO.read(yeeteeFile), name);
+			builder.overlay(ImageIO.read(yeeteeFile), name);
 		} 
 		catch (IOException e) 
 		{
@@ -62,10 +62,10 @@ public class CommandYeet extends Command
 		}
 		
 		yeetFile = new File (name);
-		res.CallFile(yeetFile, "gif");
+		res.sendFile(yeetFile, "gif");
 
 		// Thread cleanup...
-		ImageUtils.BlockingFileDelete(yeetFile);
-		ImageUtils.BlockingFileDelete(yeeteeFile);
+		ImageUtils.blockingFileDelete(yeetFile);
+		ImageUtils.blockingFileDelete(yeeteeFile);
 	}
 }

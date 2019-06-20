@@ -23,10 +23,10 @@ public class CommandMap extends Command
 	public CommandMap(KittyRole roleLevel, KittyRating contentRating) { super(roleLevel, contentRating); }
 	
 	@Override
-	public String HelpText() { return String.format(LocStrings.Stub("MapInfo"), "" + MaxWidth, "" + MaxHeight); }
+	public String getHelpText() { return String.format(LocStrings.stub("MapInfo"), "" + MaxWidth, "" + MaxHeight); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res) 
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res) 
 	{
 		// Variables
 		int width = 35;
@@ -43,24 +43,24 @@ public class CommandMap extends Command
 		{
 			OptionParser parser = new OptionParser(input.args);
 			
-			String seedStr = parser.GetOption("-s", true);
+			String seedStr = parser.getOption("-s", true);
 			if(seedStr != null)
 			{
 				seed = Long.parseLong(seedStr);
 				hasSeed = true;
 			}
 		
-			String widthStr = parser.GetOption("-w", true);
+			String widthStr = parser.getOption("-w", true);
 			if(widthStr != null)
-				width = ValidateSize(Integer.parseInt(widthStr), MaxWidth);
+				width = validateSize(Integer.parseInt(widthStr), MaxWidth);
 			
-			String heightStr = parser.GetOption("-h", true);
+			String heightStr = parser.getOption("-h", true);
 			if(heightStr != null)
-				height = ValidateSize(Integer.parseInt(heightStr), MaxHeight);
+				height = validateSize(Integer.parseInt(heightStr), MaxHeight);
 		}
 		catch(NumberFormatException e) 
 		{
-			res.Call(LocStrings.Stub("MapInvalid"));
+			res.send(LocStrings.stub("MapInvalid"));
 			return;
 		} 
 		
@@ -76,22 +76,22 @@ public class CommandMap extends Command
 		}
 		
 		// Response header creation
-		header += LocStrings.Stub("MapVersion") + "\n";
-		header += LocStrings.Stub("MapSeed") + ": `" + seed + "`, ";
-		header += LocStrings.Stub("MapWidth") + "`"+ width +"`, ";
-		header += LocStrings.Stub("MapHeight") + ": `"+ height + "`\n";
+		header += LocStrings.stub("MapVersion") + "\n";
+		header += LocStrings.stub("MapSeed") + ": `" + seed + "`, ";
+		header += LocStrings.stub("MapWidth") + "`"+ width +"`, ";
+		header += LocStrings.stub("MapHeight") + ": `"+ height + "`\n";
 		
 		// Response body creation
 		body += "```\n";
-		body += GenerateMap(width, height, randGenerator);
+		body += generateMap(width, height, randGenerator);
 		body += "\n```";
 		
 		// Send back the map
-		res.Call(header + body);
+		res.send(header + body);
 	}
 	
 	// Verifies and appropriately caps input as necessary
-	int ValidateSize(int input, int max)
+	int validateSize(int input, int max)
 	{
 		if(input < 0)
 			throw new NumberFormatException();
@@ -104,7 +104,7 @@ public class CommandMap extends Command
 	
 	
 	// Does the map generation
-	String GenerateMap(int width, int height, Random gen)
+	String generateMap(int width, int height, Random gen)
 	{
 		String landscape[][] = new String[width][height];
 		int r1 = rand(gen);

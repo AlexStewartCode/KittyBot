@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.text.DecimalFormat;
 
 import core.Command;
 import core.LocStrings;
@@ -27,18 +26,18 @@ public class CommandColor extends Command
 	public CommandColor(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("ColorInfo"); }
+	public String getHelpText() { return LocStrings.stub("ColorInfo"); }
 
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		// First, try and parse out the color to make sure we can even get it.
-		ColorData colorData = theColorAPI.LookupHex(input.args.trim());
+		ColorData colorData = theColorAPI.lookupHex(input.args.trim());
 		
 		// Verify the color was even found
 		if(colorData == null)
 		{
-			res.Call(LocStrings.Stub("ColorNotSearchable"));
+			res.send(LocStrings.stub("ColorNotSearchable"));
 			return;
 		}
 		
@@ -77,8 +76,8 @@ public class CommandColor extends Command
 		response.footerText = "All percentages and values are rounded to the nearest whole number!" + (colorData.name.exact_match_name ? "" : " '" + colorData.name.value + "' is actually " + colorData.name.closest_named_hex + ".");
 		
 		// Send then delete the temp local files
-		res.CallEmbed(response);
-		ImageUtils.BlockingFileDelete(file);
+		res.send(response);
+		ImageUtils.blockingFileDelete(file);
 	};
 	
 }

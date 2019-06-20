@@ -33,12 +33,12 @@ public class BaseKeyValueFile
 	}
 	
 	// Reads in and calls the specifid function for each keyvalue pair we find
-	protected void Parse(Consumer<? super Pair<String, String>> keyValueCallback)
+	protected void parse(Consumer<? super Pair<String, String>> keyValueCallback)
 	{
 		File f = new File(filename);
 		if(f.isFile() && f.canRead())
 		{
-			String content = FileUtils.ReadContent(f).trim();
+			String content = FileUtils.readContent(f).trim();
 			String[] lines = content.split("" + pairSeparator);
 			
 			for(int i = 0; i < lines.length; ++i)
@@ -60,7 +60,7 @@ public class BaseKeyValueFile
 	}
 	
 	// Writes out a set of keyvalue pairs
-	protected void Write(List<Pair<String, String>> toWrite)
+	protected void write(List<Pair<String, String>> toWrite)
 	{
 		try
 		{
@@ -84,7 +84,7 @@ public class BaseKeyValueFile
 		}
 		catch (IOException e)
 		{
-			GlobalLog.Error(LogFilter.Core,  "Issue writing file " + filename + ": " + e.getMessage());
+			GlobalLog.error(LogFilter.Core,  "Issue writing file " + filename + ": " + e.getMessage());
 		}
 	}
 }

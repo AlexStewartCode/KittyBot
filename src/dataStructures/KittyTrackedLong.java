@@ -27,40 +27,40 @@ public class KittyTrackedLong extends DatabaseTrackedObject
 		super(differentiator + readableName + UniqueID);
 	}
 	
-	public long Add(long toAdd)
+	public long add(long toAdd)
 	{
 		tracked += toAdd;
-		MarkDirty();
+		markDirty();
 		return tracked;
 	}
 	
-	public long Subtract(long toSubtract)
+	public long subtract(long toSubtract)
 	{
 		tracked -= toSubtract;
-		MarkDirty();
+		markDirty();
 		return tracked;
 	}
 
-	public long Get()
+	public long get()
 	{
 		return tracked;
 	}
 	
-	public long Set(long newValue)
+	public long set(long newValue)
 	{
 		tracked = newValue;
-		MarkDirty();
+		markDirty();
 		return tracked;
 	}
 	
 	@Override
-	public String Serialize()
+	public String serialize()
 	{
 		return "" + tracked;
 	}
 
 	@Override
-	public void DeSerialzie(String string)
+	public void deSerialzie(String string)
 	{
 		if(string != null)
 		{
@@ -71,7 +71,7 @@ public class KittyTrackedLong extends DatabaseTrackedObject
 			catch(Exception e)
 			{
 				tracked = 0;
-				GlobalLog.Error(LogFilter.Core, "Falling back to default of 0 due to failure to deserialize long with database ID " + identifier);
+				GlobalLog.error(LogFilter.Core, "Falling back to default of 0 due to failure to deserialize long with database ID " + identifier);
 			}
 		}
 		else

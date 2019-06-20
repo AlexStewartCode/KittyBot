@@ -35,7 +35,7 @@ public class DatabaseManager
 	// Constructor to enforce singleton.
 	public DatabaseManager()
 	{
-		GlobalLog.Log(LogFilter.Database, "Creating database manager");
+		GlobalLog.log(LogFilter.Database, "Creating database manager");
 		
 		if(instance == null)
 		{
@@ -43,7 +43,7 @@ public class DatabaseManager
 		}
 		else
 		{
-			GlobalLog.Error(LogFilter.Database, "Attempted to register a second DataBase manager!");
+			GlobalLog.error(LogFilter.Database, "Attempted to register a second DataBase manager!");
 			return;
 		}
 		
@@ -57,15 +57,15 @@ public class DatabaseManager
 		characterDataDriver = new DatabaseDriverKeyValue(characterTableName, characterKeyColumnName, characterValueColumnName);
 		
 		// Connect data sets
-		if(globalDataDriver.Connect() == false)
+		if(globalDataDriver.connect() == false)
 		{
-			GlobalLog.Error("Global database failed to connect. Without this DB, this bot can not run.");
+			GlobalLog.error("Global database failed to connect. Without this DB, this bot can not run.");
 			System.exit(1);
 		}
 		
-		if(characterDataDriver.Connect() == false)
+		if(characterDataDriver.connect() == false)
 		{
-			GlobalLog.Error("Character database failed to connect. Without this DB, this bot can not run.");
+			GlobalLog.error("Character database failed to connect. Without this DB, this bot can not run.");
 			System.exit(1);
 		}
 	}
@@ -94,10 +94,10 @@ public class DatabaseManager
 			{
 				DatabaseTrackedObject dto = globalDataTrackedObjects.get(i);
 				
-				if(dto.IsDirty())
+				if(dto.isDirty())
 				{
-					globalSetRemoteValue(dto.identifier, dto.Serialize());
-					dto.Resolve();
+					globalSetRemoteValue(dto.identifier, dto.serialize());
+					dto.resolve();
 					++numUpdated;
 				}
 			}
@@ -117,10 +117,10 @@ public class DatabaseManager
 			{
 				DatabaseTrackedObject dto = characterDataTrackedObjects.get(i);
 				
-				if(dto.IsDirty())
+				if(dto.isDirty())
 				{
-					characterSetRemoteValue(dto.identifier, dto.Serialize());
-					dto.Resolve();
+					characterSetRemoteValue(dto.identifier, dto.serialize());
+					dto.resolve();
 					++numUpdated;
 				}
 			}
@@ -131,7 +131,7 @@ public class DatabaseManager
 	
 	public List<String> scrapeGlobalForString(String substring)
 	{
-		return globalDataDriver.GetKeysWith(substring);
+		return globalDataDriver.getKeysWith(substring);
 	}
 	
 	  /////////////////
@@ -142,7 +142,7 @@ public class DatabaseManager
 		synchronized(globalDataTrackedObjects)
 		{
 			globalDataTrackedObjects.add(tracked);
-			tracked.DeSerialzie(globalGetRemoteValue(tracked.identifier));
+			tracked.deSerialzie(globalGetRemoteValue(tracked.identifier));
 		}
 	}
 	
@@ -151,7 +151,7 @@ public class DatabaseManager
 	{
 		synchronized(globalDataDriver)
 		{
-			return globalDataDriver.CreateGetKey(key);
+			return globalDataDriver.createGetKey(key);
 		}
 	}
 	
@@ -159,7 +159,7 @@ public class DatabaseManager
 	{
 		synchronized(globalDataDriver)
 		{
-			globalDataDriver.CreateSetKey(key, value);
+			globalDataDriver.createSetKey(key, value);
 		}
 	}
 	
@@ -172,7 +172,7 @@ public class DatabaseManager
 		synchronized(characterDataTrackedObjects)
 		{
 			characterDataTrackedObjects.add(tracked);
-			tracked.DeSerialzie(characterGetRemoteValue(tracked.identifier));
+			tracked.deSerialzie(characterGetRemoteValue(tracked.identifier));
 		}
 	}
 	
@@ -181,7 +181,7 @@ public class DatabaseManager
 	{
 		synchronized(characterDataDriver)
 		{
-			return characterDataDriver.CreateGetKey(key);
+			return characterDataDriver.createGetKey(key);
 		}
 	}
 	
@@ -189,7 +189,7 @@ public class DatabaseManager
 	{
 		synchronized(characterDataDriver)
 		{
-			characterDataDriver.CreateSetKey(key, value);
+			characterDataDriver.createSetKey(key, value);
 		}
 	}
 	

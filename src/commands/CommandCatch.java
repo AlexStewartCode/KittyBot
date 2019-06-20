@@ -23,11 +23,11 @@ public class CommandCatch extends Command
 	private static Long num = 0l;
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("CatchInfo"); }
+	public String getHelpText() { return LocStrings.stub("CatchInfo"); }
 	
 	// Called when the command is run!
 	@Override 
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String name = null;
 		File catchFile = null;
@@ -54,7 +54,7 @@ public class CommandCatch extends Command
 			
 			catcheeFile = new File(catchFilename);
 			ImageOverlayBuilder builder = new ImageOverlayBuilder("assets/catch/frames/", "catch ", 92, 18);
-			builder.Overlay(ImageIO.read(catcheeFile), name);
+			builder.overlay(ImageIO.read(catcheeFile), name);
 		} 
 		catch (IOException e) 
 		{
@@ -62,10 +62,10 @@ public class CommandCatch extends Command
 		}
 		
 		catchFile = new File (name);
-		res.CallFile(catchFile, "gif");
+		res.sendFile(catchFile, "gif");
 
 		// Thread cleanup...
-		ImageUtils.BlockingFileDelete(catchFile);
-		ImageUtils.BlockingFileDelete(catcheeFile);
+		ImageUtils.blockingFileDelete(catchFile);
+		ImageUtils.blockingFileDelete(catcheeFile);
 	}
 }

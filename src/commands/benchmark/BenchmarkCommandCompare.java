@@ -10,7 +10,7 @@ import core.benchmark.BenchmarkManager;
 
 public class BenchmarkCommandCompare extends BenchmarkCommand 
 {
-	public BenchmarkFormattable OnRun(BenchmarkManager manager, BenchmarkInput input)
+	public BenchmarkFormattable onRun(BenchmarkManager manager, BenchmarkInput input)
 	{
 		final String lineDelimiter = "\n";
 		String output = "";
@@ -24,7 +24,7 @@ public class BenchmarkCommandCompare extends BenchmarkCommand
 			if(i != 0)
 				output += lineDelimiter;
 			
-			List<BenchmarkEntry> entries = manager.FindModel(inputSplit[i]);
+			List<BenchmarkEntry> entries = manager.findModel(inputSplit[i]);
 			
 			if(entries.size() < 1)
 				output += "Couldn't find any models containing `" + inputSplit[i] + "`!";

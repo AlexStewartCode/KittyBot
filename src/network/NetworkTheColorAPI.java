@@ -71,12 +71,12 @@ public class NetworkTheColorAPI
 		public tca_XYZ XYZ;
 	}
 	
-	public ColorData LookupHex(String hex)
+	public ColorData lookupHex(String hex)
 	{
 		try
 		{
 			hex = hex.replace("#", "");
-			String response = HTTPUtils.SendGETRequest("https://www.thecolorapi.com/id?hex=" + hex);
+			String response = HTTPUtils.sendGETRequest("https://www.thecolorapi.com/id?hex=" + hex);
 			
 			ColorData data = jsonParser.fromJson(response, ColorData.class);
 			return data;

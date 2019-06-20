@@ -14,14 +14,14 @@ public class CommandChoose extends Command
 	public CommandChoose(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("ChooseInfo"); }
+	public String getHelpText() { return LocStrings.stub("ChooseInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.args.trim().length() == 0)
 		{
-			res.Call(Stats.instance.GetHelpText(input.key));
+			res.send(Stats.instance.getHelpText(input.key));
 			return;
 		}
 		
@@ -29,10 +29,10 @@ public class CommandChoose extends Command
 		
 		if(choices.length == 1)
 		{
-			res.Call(LocStrings.Stub("ChooseOne"));
+			res.send(LocStrings.stub("ChooseOne"));
 			return;
 		}
 		
-		res.Call(String.format(LocStrings.Stub("ChooseChoice"), (choices[(int) (Math.random()*choices.length)]).toString()));
+		res.send(String.format(LocStrings.stub("ChooseChoice"), (choices[(int) (Math.random()*choices.length)]).toString()));
 	}
 }

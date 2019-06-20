@@ -39,7 +39,7 @@ public class ImageUtils
 			boolean didWrite = ImageIO.write(data, extension, outputfile);
 			if(!didWrite)
 			{
-				GlobalLog.Error(LogFilter.Util, "Could not identify the writer for extension type '" + extension + "' - Did you accidentally include a period or other punctuation?");
+				GlobalLog.error(LogFilter.Util, "Could not identify the writer for extension type '" + extension + "' - Did you accidentally include a period or other punctuation?");
 				return null;
 			}
 			
@@ -47,7 +47,7 @@ public class ImageUtils
 		}
 		catch (IOException e)
 		{
-			GlobalLog.Error(LogFilter.Util, "Exception in writeTempImageData: " + e.toString());
+			GlobalLog.error(LogFilter.Util, "Exception in writeTempImageData: " + e.toString());
 			return null;
 		}
 
@@ -90,14 +90,14 @@ public class ImageUtils
 		}
 		catch(Exception e)
 		{
-			GlobalLog.Error(LogFilter.Util, "Exception in downloadFromURL: " + e.toString());
+			GlobalLog.error(LogFilter.Util, "Exception in downloadFromURL: " + e.toString());
 			return null;
 		}
 	}
 	
 	// Deletes the file provided, if it exists. Will continue, in a blocking way,
 	// to attempt to delete the file 10 times a second until thread termination.
-	public static void BlockingFileDelete(File file)
+	public static void blockingFileDelete(File file)
 	{
 		if(file == null)
 			return;
