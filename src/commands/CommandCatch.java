@@ -62,7 +62,7 @@ public class CommandCatch extends Command
 		}
 		
 		catchFile = new File (name);
-		res.CallFile(catchFile, "gif");
+		res.sendFile(catchFile, "gif");
 
 		// Thread cleanup...
 		ImageUtils.BlockingFileDelete(catchFile);

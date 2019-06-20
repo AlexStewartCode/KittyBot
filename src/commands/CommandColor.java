@@ -37,7 +37,7 @@ public class CommandColor extends Command
 		// Verify the color was even found
 		if(colorData == null)
 		{
-			res.call(LocStrings.stub("ColorNotSearchable"));
+			res.send(LocStrings.stub("ColorNotSearchable"));
 			return;
 		}
 		
@@ -76,7 +76,7 @@ public class CommandColor extends Command
 		response.footerText = "All percentages and values are rounded to the nearest whole number!" + (colorData.name.exact_match_name ? "" : " '" + colorData.name.value + "' is actually " + colorData.name.closest_named_hex + ".");
 		
 		// Send then delete the temp local files
-		res.callEmbed(response);
+		res.send(response);
 		ImageUtils.BlockingFileDelete(file);
 	};
 	

@@ -15,7 +15,7 @@ public class CommandBeansShow extends Command
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.mentions == null)
-			res.call(String.format(LocStrings.stub("BeansShowDisplay"), user.GetBeans()));
+			res.send(String.format(LocStrings.stub("BeansShowDisplay"), user.GetBeans()));
 		else
 		{
 			String mentionedBeans = ""; 
@@ -23,7 +23,7 @@ public class CommandBeansShow extends Command
 			{
 				mentionedBeans += mentioned.name + " has " + mentioned.GetBeans() + " ";
 			}
-			res.call(String.format(LocStrings.stub("BeansShowMentioned"), mentionedBeans));
+			res.send(String.format(LocStrings.stub("BeansShowMentioned"), mentionedBeans));
 		}
 	}
 }

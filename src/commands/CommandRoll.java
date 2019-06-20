@@ -23,11 +23,11 @@ public class CommandRoll extends Command
 	{
 		try 
 		{
-			res.call(rollDice(input.args));
+			res.send(rollDice(input.args));
 		}
 		catch(Exception e)
 		{
-			res.call(LocStrings.stub("RollError"));
+			res.send(LocStrings.stub("RollError"));
 		}
 	}
 	

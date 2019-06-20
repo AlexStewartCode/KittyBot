@@ -68,7 +68,7 @@ public class CommandHelpBuilder extends Command {
 		}
 		
 		File file = new File(filename);
-		res.CallFile(file, "txt");
+		res.sendFile(file, "txt");
 		ImageUtils.BlockingFileDelete(file);
 	}
 	

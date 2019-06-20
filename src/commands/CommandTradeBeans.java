@@ -22,7 +22,7 @@ public class CommandTradeBeans extends Command
 	{
 		if(input.mentions == null)
 		{
-			res.call(LocStrings.stub("TradeBeansNoTargetError"));
+			res.send(LocStrings.stub("TradeBeansNoTargetError"));
 			return;
 		}
 		
@@ -32,25 +32,25 @@ public class CommandTradeBeans extends Command
 		}
 		catch (NumberFormatException e)
 		{
-			res.call(LocStrings.stub("TradeBeansIntParseError"));
+			res.send(LocStrings.stub("TradeBeansIntParseError"));
 			return;
 		}
 		
 		if(user.GetBeans() < beans)
 		{
-			res.call(LocStrings.stub("TradeBeansNotEnoughError"));
+			res.send(LocStrings.stub("TradeBeansNotEnoughError"));
 			return;
 		}
 		
 		if(beans < 0)
 		{
-			res.call(String.format(LocStrings.stub("TradeBeansStealingBeans"), user.name));
+			res.send(String.format(LocStrings.stub("TradeBeansStealingBeans"), user.name));
 			user.ChangeBeans(-10);
 			return; 
 		}
 		
 		input.mentions[0].ChangeBeans(beans);
 		user.ChangeBeans(-beans);
-		res.call(String.format(LocStrings.stub("TradeBeansSuccess"), user.name, input.mentions[0].name, beans));
+		res.send(String.format(LocStrings.stub("TradeBeansSuccess"), user.name, input.mentions[0].name, beans));
 	}
 }

@@ -66,6 +66,11 @@ public class CommandStats extends Command
 			+ " Cached Users: " + userCount;
 		out += "\n```";
 		
-		res.call(out);
+		KittyEmbed embed = new KittyEmbed();
+		embed.title = "Bot Stats";
+		embed.descriptionText = out;
+		embed.color = Config.ColorDefault;
+		
+		res.send(embed);
 	}
 }

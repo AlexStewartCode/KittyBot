@@ -27,7 +27,7 @@ public class CommandHelp extends Command
 			help = LocStrings.stub("HelpDisplay");
 		}
 		
-		res.call(help);
+		res.send(help);
 	}
 	
 }

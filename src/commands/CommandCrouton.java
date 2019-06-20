@@ -34,7 +34,7 @@ public class CommandCrouton extends Command
 		
 		embed.imageURL = "https://crouton.net/crouton.png";
 		
-		res.callEmbed(embed);
+		res.send(embed);
 	}
 }
 

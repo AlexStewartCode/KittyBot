@@ -17,7 +17,7 @@ public class CommandGuildRoleList extends Command
 		String roles = ""; 
 		if(guild.roleList.isEmpty())
 		{
-			res.call(String.format(LocStrings.stub("GuildRoleListEmpty")));
+			res.send(String.format(LocStrings.stub("GuildRoleListEmpty")));
 			return;
 		}
 		for(int i = 0; i < guild.roleList.size(); i++)
@@ -26,6 +26,6 @@ public class CommandGuildRoleList extends Command
 				roles += " and "; 
 			roles += guild.roleList.get(i);
 		}
-		res.call(String.format(LocStrings.stub("GuildRoleListOutput"), roles));
+		res.send(String.format(LocStrings.stub("GuildRoleListOutput"), roles));
 	}
 }

@@ -21,7 +21,7 @@ public class CommandChoose extends Command
 	{
 		if(input.args.trim().length() == 0)
 		{
-			res.call(Stats.instance.GetHelpText(input.key));
+			res.send(Stats.instance.GetHelpText(input.key));
 			return;
 		}
 		
@@ -29,10 +29,10 @@ public class CommandChoose extends Command
 		
 		if(choices.length == 1)
 		{
-			res.call(LocStrings.stub("ChooseOne"));
+			res.send(LocStrings.stub("ChooseOne"));
 			return;
 		}
 		
-		res.call(String.format(LocStrings.stub("ChooseChoice"), (choices[(int) (Math.random()*choices.length)]).toString()));
+		res.send(String.format(LocStrings.stub("ChooseChoice"), (choices[(int) (Math.random()*choices.length)]).toString()));
 	}
 }

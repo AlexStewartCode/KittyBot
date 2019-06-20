@@ -21,17 +21,17 @@ public class CommandWolfram extends Command
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.args == null || input.args.trim().length() == 0)
-			res.call(LocStrings.stub("WolframNoArgs"));
+			res.send(LocStrings.stub("WolframNoArgs"));
 		
 		try 
 		{
 			File pic = new File(searcher.getWolfram(input.args));
-			res.CallFile(pic, "png");
+			res.sendFile(pic, "png");
 			ImageUtils.BlockingFileDelete(pic);
 		} 
 		catch (IOException e)
 		{
-			res.call(LocStrings.stub("WolframError"));
+			res.send(LocStrings.stub("WolframError"));
 		}
 	}
 }

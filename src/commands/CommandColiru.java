@@ -19,11 +19,11 @@ public class CommandColiru extends Command
 	{
 		if(input.args.trim().length() < 1)
 		{
-			res.call(LocStrings.stub("ColiruError"));
+			res.send(LocStrings.stub("ColiruError"));
 			return;
 		}
 		
-		res.call(compiler.compileCPlus(input.args));
+		res.send(compiler.compileCPlus(input.args));
 	}
 
 }

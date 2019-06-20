@@ -33,11 +33,11 @@ public class CommandRaffleStart extends Command
 		
 		if(guild.startRaffle(beanCost))
 		{
-			res.call(String.format(LocStrings.stub("RaffleStartSuccess"), beanCost));
+			res.send(String.format(LocStrings.stub("RaffleStartSuccess"), beanCost));
 		}
 		else
 		{
-			res.call(LocStrings.stub("RaffleStartFailure"));
+			res.send(LocStrings.stub("RaffleStartFailure"));
 		}
 	}
 }

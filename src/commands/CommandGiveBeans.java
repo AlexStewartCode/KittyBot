@@ -17,7 +17,7 @@ public class CommandGiveBeans extends Command
 		// First, make sure someone is mentioned
 		if(input.mentions == null)
 		{
-			res.call(LocStrings.stub("GiveBeansNoneMentioned"));
+			res.send(LocStrings.stub("GiveBeansNoneMentioned"));
 			return;
 		}
 		
@@ -42,7 +42,7 @@ public class CommandGiveBeans extends Command
 		// If there wasn't a number we could find, well, nothing we can do.
 		if(beans == null)
 		{
-			res.call(LocStrings.stub("GiveBeansInvalid"));
+			res.send(LocStrings.stub("GiveBeansInvalid"));
 			return;
 		}
 		
@@ -50,7 +50,7 @@ public class CommandGiveBeans extends Command
 		for(int i = 0; i < input.mentions.length; i++)
 		{
 			input.mentions[i].ChangeBeans(beans);
-			res.call(String.format(LocStrings.stub("GiveBeansSuccess"), input.mentions[i].name, "" + beans));
+			res.send(String.format(LocStrings.stub("GiveBeansSuccess"), input.mentions[i].name, "" + beans));
 		}
 	}
 }

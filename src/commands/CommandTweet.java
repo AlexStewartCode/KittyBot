@@ -18,9 +18,9 @@ public class CommandTweet extends Command
 	{
 		//TODO: Figure out how to pass pictures correctly
 		try {
-			res.call(tweet.tweet(input.args));
+			res.send(tweet.tweet(input.args));
 		} catch (Exception e) {
-			res.call(LocStrings.stub("TweetError"));
+			res.send(LocStrings.stub("TweetError"));
 		}
 	}
 }

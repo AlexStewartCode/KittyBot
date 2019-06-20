@@ -21,6 +21,6 @@ public class CommandPing extends Command
 	@Override 
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		res.call(LocStrings.stub("PingResponse"));
+		res.send(LocStrings.stub("PingResponse"));
 	}
 }

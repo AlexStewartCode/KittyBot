@@ -60,7 +60,7 @@ public class CommandMap extends Command
 		}
 		catch(NumberFormatException e) 
 		{
-			res.call(LocStrings.stub("MapInvalid"));
+			res.send(LocStrings.stub("MapInvalid"));
 			return;
 		} 
 		
@@ -87,7 +87,7 @@ public class CommandMap extends Command
 		body += "\n```";
 		
 		// Send back the map
-		res.call(header + body);
+		res.send(header + body);
 	}
 	
 	// Verifies and appropriately caps input as necessary

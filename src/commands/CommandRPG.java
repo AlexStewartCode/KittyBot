@@ -32,7 +32,7 @@ public class CommandRPG extends Command
 		if(input.args == null || input.args.length() == 0)
 		{
 			String output = getHelpText();
-			res.call(output);
+			res.send(output);
 			return;
 		}
 		
@@ -44,10 +44,10 @@ public class CommandRPG extends Command
 		
 		if(result == null)
 		{
-			res.call(LocStrings.stub("RPGInvalid"));
+			res.send(LocStrings.stub("RPGInvalid"));
 			return;
 		}
 		
-		res.call(result);
+		res.send(result);
 	}
 }

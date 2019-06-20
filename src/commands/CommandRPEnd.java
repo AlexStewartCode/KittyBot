@@ -32,12 +32,12 @@ public class CommandRPEnd extends Command
 		
 		if(sending != null)
 		{
-			res.CallFile(sending, "txt");
-			res.call(LocStrings.stub("RPEndFileOut"));
+			res.sendFile(sending, "txt");
+			res.send(LocStrings.stub("RPEndFileOut"));
 		}
 		else
 		{
-			res.call(LocStrings.stub("RPEndError"));
+			res.send(LocStrings.stub("RPEndError"));
 		}
 	}
 }

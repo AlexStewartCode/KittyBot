@@ -30,7 +30,7 @@ public class Response
 	}
 	
 	// Builds a nicely formatted embedded message based on information provided
-	public void callEmbed(KittyEmbed embedInfo)
+	public void send(KittyEmbed embedInfo)
 	{
 		EmbedBuilder embed = new EmbedBuilder();
 		
@@ -83,13 +83,12 @@ public class Response
 			if(embedInfo.thumbnailURL != null)
 				embed.setThumbnail(embedInfo.thumbnailURL);
 			
-			event.getChannel().sendMessage(embed.build());
+			event.getChannel().sendMessage(embed.build()).queue();
 		}
-			
 	}
 	
 	// Queues a standard text-based message response to the channel that issued the command.
-	public void call(String toRespondWith)
+	public void send(String toRespondWith)
 	{
 		GlobalLog.Log(LogFilter.Response, "Sending response: " + toRespondWith);
 		if(toRespondWith.length() > discordMessageMax)
@@ -103,7 +102,7 @@ public class Response
 	}
 	
 	// Queues a standard text-based message response to the specified channel.
-	public void CallToChannel(String toRespondWith, String channelID)
+	public void sendToChannel(String toRespondWith, String channelID)
 	{
 		TextChannel channel;
 		channel = kitty.getTextChannelById(Long.parseLong(channelID));
@@ -118,7 +117,7 @@ public class Response
 	}
 	
 	// Immediately dispatches the message to the channel that issued the command.
-	public void CallImmediate(String toRespondWith)
+	public void sendImmediate(String toRespondWith)
 	{
 		GlobalLog.Log(LogFilter.Response, "Sending immediate response: " + toRespondWith);
 		if(toRespondWith.length() > discordMessageMax)
@@ -132,14 +131,14 @@ public class Response
 	}
 	
 	// Queues a file response to the channel that issued the command.
-	public void CallFile(File toRespondWith, String extension)
+	public void sendFile(File toRespondWith, String extension)
 	{
 		GlobalLog.Log(LogFilter.Response, "Sending file response");
 		event.getChannel().sendFile(toRespondWith, "return." + extension).queue();
 	}
 
 	// Queues an input stream response to the channel that issued the command.
-	public void CallInput(InputStream in, String extension) 
+	public void sendFile(InputStream in, String extension) 
 	{
 		GlobalLog.Log(LogFilter.Response, "Sending input stream response");
 		event.getChannel().sendFile(in, "return." + extension).queue();

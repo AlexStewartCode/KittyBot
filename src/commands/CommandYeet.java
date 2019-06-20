@@ -62,7 +62,7 @@ public class CommandYeet extends Command
 		}
 		
 		yeetFile = new File (name);
-		res.CallFile(yeetFile, "gif");
+		res.sendFile(yeetFile, "gif");
 
 		// Thread cleanup...
 		ImageUtils.BlockingFileDelete(yeetFile);

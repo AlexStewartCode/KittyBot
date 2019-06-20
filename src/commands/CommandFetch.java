@@ -27,30 +27,30 @@ public class CommandFetch extends Command
 			switch(num)
 			{
 				case 1:
-					res.call(String.format(LocStrings.stub("FetchBringBack"), emote));
+					res.send(String.format(LocStrings.stub("FetchBringBack"), emote));
 					break;
 				case 2:
-					res.call(String.format(LocStrings.stub("FetchRunAway")));
+					res.send(String.format(LocStrings.stub("FetchRunAway")));
 					break;
 				case 3:
-					res.call(String.format(LocStrings.stub("FetchBringBackWrong"), guild.emoji.get((int)(Math.random() * guild.emoji.size()) + 1)));
+					res.send(String.format(LocStrings.stub("FetchBringBackWrong"), guild.emoji.get((int)(Math.random() * guild.emoji.size()) + 1)));
 					break;
 				case 4: 
-					res.call(String.format(LocStrings.stub("FetchEat"), emote));
+					res.send(String.format(LocStrings.stub("FetchEat"), emote));
 					break;
 				case 5: 
-					res.call(String.format(LocStrings.stub("FetchCatchRun"), emote));
+					res.send(String.format(LocStrings.stub("FetchCatchRun"), emote));
 					break;
 				case 6:
-					res.call(String.format(LocStrings.stub("FetchStare"), user.name));
+					res.send(String.format(LocStrings.stub("FetchStare"), user.name));
 					break;
 					default:
-						res.call("" + num);
+						res.send("" + num);
 			}
 		}
 		else
 		{
-			res.call(String.format(LocStrings.stub("FetchError")));
+			res.send(String.format(LocStrings.stub("FetchError")));
 			System.out.println(emote);
 		}
 	}

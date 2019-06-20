@@ -35,7 +35,7 @@ public class CommandBenchmark extends Command
 		if(input.args == null || input.args.length() == 0)
 		{
 			String output = getHelpText();
-			res.call(output);
+			res.send(output);
 			return;
 		}
 		
@@ -47,7 +47,7 @@ public class CommandBenchmark extends Command
 		
 		if(commandOutput == null)
 		{
-			res.call(LocStrings.stub("BenchmarkInvalid"));
+			res.send(LocStrings.stub("BenchmarkInvalid"));
 			return;
 		}
 		

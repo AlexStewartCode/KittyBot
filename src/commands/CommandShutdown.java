@@ -46,7 +46,7 @@ public class CommandShutdown extends Command
 		if(isSafe)
 		{
 			// Force upkeep, this works so long as upkeep is on the main thread.
-			res.CallImmediate(LocStrings.stub("ShutdownSafe"));
+			res.sendImmediate(LocStrings.stub("ShutdownSafe"));
 			DatabaseManager.instance.upkeep(); 
 			GlobalLog.Warn(LogFilter.Command, LocStrings.Lookup("ShutdownSafe"));
 			
@@ -54,7 +54,7 @@ public class CommandShutdown extends Command
 		}
 		else
 		{
-			res.CallImmediate(LocStrings.stub("ShutdownUnsafe"));// "``");
+			res.sendImmediate(LocStrings.stub("ShutdownUnsafe"));// "``");
 			GlobalLog.Warn(LogFilter.Command, LocStrings.Lookup("ShutdownSafe"));
 			System.exit(0);
 		}

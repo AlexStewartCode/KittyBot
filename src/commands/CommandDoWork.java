@@ -28,6 +28,6 @@ public class CommandDoWork extends Command
 			thispieceofshit += Math.log((double)i);
 		}
 		
-		res.call(LocStrings.stub("DoWorkFinished"));
+		res.send(LocStrings.stub("DoWorkFinished"));
 	}
 }

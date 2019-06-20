@@ -106,7 +106,7 @@ public class Main extends ListenerAdapter
 					}
 					else
 					{
-						response.call(pluginOutput.get(i));
+						response.send(pluginOutput.get(i));
 					}
 				}
 			}

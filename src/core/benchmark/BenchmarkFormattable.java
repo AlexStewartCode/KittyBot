@@ -33,8 +33,8 @@ public class BenchmarkFormattable
 	public void call(Response res)
 	{
 		if(resEmbed == null)
-			res.call(resString);
+			res.send(resString);
 		else
-			res.callEmbed(resEmbed);
+			res.send(resEmbed);
 	}
 }

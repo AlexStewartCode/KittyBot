@@ -69,14 +69,14 @@ public class CommandBoop extends Command
 		if(input.mentions == null)
 		{
 			boopTracker.ApplyBoop();
-			res.call(String.format(LocStrings.stub("BoopStandard"), user.name, boopTracker.HowMany()));
+			res.send(String.format(LocStrings.stub("BoopStandard"), user.name, boopTracker.HowMany()));
 		}
 		else
 		{
 			if(input.mentions.length == 1)
 			{
 				boopTracker.ApplyBoop();
-				res.call(String.format(LocStrings.stub("BoopPerson"), user.name, input.mentions[0].name));
+				res.send(String.format(LocStrings.stub("BoopPerson"), user.name, input.mentions[0].name));
 				return;
 			}
 			
@@ -90,7 +90,7 @@ public class CommandBoop extends Command
 					booped +=  "and " + input.mentions[i].name;
 			}
 			
-			res.call(String.format(LocStrings.stub("BoopMultiple"), user.name, booped));
+			res.send(String.format(LocStrings.stub("BoopMultiple"), user.name, booped));
 		}
 	}
 }

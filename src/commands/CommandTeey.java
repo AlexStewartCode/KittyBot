@@ -62,7 +62,7 @@ public class CommandTeey extends Command
 		}
 		
 		teeyFile = new File (name);
-		res.CallFile(teeyFile, "gif");
+		res.sendFile(teeyFile, "gif");
 
 		// Thread cleanup...
 		ImageUtils.BlockingFileDelete(teeyFile);

@@ -24,14 +24,14 @@ public class CommandCharacterCreate extends Command
 		String [] info = input.args.split(",");
 		if(info.length < 3)
 		{
-			res.call(LocStrings.stub("CharacterCreateNullInfo"));
+			res.send(LocStrings.stub("CharacterCreateNullInfo"));
 			return;
 		}
 		if(CharacterManager.instance.addCharacter(user, info[0], info[1], info[2]))
 		{
-			res.call(LocStrings.stub("CharacterCreateSuccess"));
+			res.send(LocStrings.stub("CharacterCreateSuccess"));
 			return;
 		}
-		res.call(LocStrings.stub("CharacterCreateDuplicate"));
+		res.send(LocStrings.stub("CharacterCreateDuplicate"));
 		}
 }

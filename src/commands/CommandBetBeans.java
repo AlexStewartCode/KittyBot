@@ -24,19 +24,19 @@ public class CommandBetBeans extends Command
 			bet = Integer.parseInt(input.args);
 			if(bet < 50)
 			{
-				res.call(LocStrings.stub("BetBeansLowBet"));
+				res.send(LocStrings.stub("BetBeansLowBet"));
 				return;
 			}
 		}
 		catch (NumberFormatException e)
 		{
-			res.call(LocStrings.stub("BetBeansNotValid"));
+			res.send(LocStrings.stub("BetBeansNotValid"));
 			return;
 		}
 		
 		if(user.GetBeans() < bet)
 		{
-			res.call(LocStrings.stub("BetBeansNotEnough"));
+			res.send(LocStrings.stub("BetBeansNotEnough"));
 			return;
 		}
 		
@@ -47,18 +47,18 @@ public class CommandBetBeans extends Command
 		
 		win = getWinning(slots); 
 		
-		res.call(call);
+		res.send(call);
 		
 		if(win == 0)
 			{
-				res.call(LocStrings.stub("BetBeansLose"));
+				res.send(LocStrings.stub("BetBeansLose"));
 				guild.beans.Add(bet);
 				return;
 			}
 		
 		user.ChangeBeans(bet*win);
 		guild.beans.Subtract(bet*win);
-		res.call(String.format(LocStrings.stub("BetBeansWin"), "" + (bet*win)));
+		res.send(String.format(LocStrings.stub("BetBeansWin"), "" + (bet*win)));
 	}
 	
 	private int getWinning(int [] slots)

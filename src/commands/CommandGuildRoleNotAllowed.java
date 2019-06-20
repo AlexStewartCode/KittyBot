@@ -28,11 +28,11 @@ public class CommandGuildRoleNotAllowed extends Command
 			if(guild.roleList.contains(role))
 			{
 				guild.roleList.remove(role);
-				res.call(LocStrings.stub("GuildRoleNotAllowedSuccess"));
+				res.send(LocStrings.stub("GuildRoleNotAllowedSuccess"));
 			}
 			else
 			{
-				res.call(String.format(LocStrings.stub("GuildRoleNotAllowedFailure"), role));
+				res.send(String.format(LocStrings.stub("GuildRoleNotAllowedFailure"), role));
 			}
 		}
 	}

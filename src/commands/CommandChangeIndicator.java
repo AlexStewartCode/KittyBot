@@ -17,18 +17,18 @@ public class CommandChangeIndicator extends Command
 		String arg = input.args.trim();
 		if(arg.length() == 0)
 		{
-			res.call(LocStrings.stub("ChangeIndicatorError"));
+			res.send(LocStrings.stub("ChangeIndicatorError"));
 			return;
 		}
 		
 		String indicator = arg.substring(0, 1);
 		if(indicator.charAt(0) == '\n' || indicator.charAt(0) == '\t' || indicator.charAt(0) == '\r')
 		{
-			res.call(LocStrings.Lookup("ChangeIndicatorError"));
+			res.send(LocStrings.Lookup("ChangeIndicatorError"));
 			return;
 		}
 		
 		guild.SetCommandIndicator(indicator);
-		res.call(String.format(LocStrings.stub("ChangeIndicatorChanged"), guild.GetCommandIndicator()));
+		res.send(String.format(LocStrings.stub("ChangeIndicatorChanged"), guild.GetCommandIndicator()));
 	}
 }

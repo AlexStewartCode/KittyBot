@@ -25,16 +25,16 @@ public class CommandGuildRoleRemove extends Command
 		{
 			if(guild.control.removeRole(user.discordID, role))
 			{
-				res.call(String.format(LocStrings.stub("GuildRoleRemoveSuccess"), role, user.name));
+				res.send(String.format(LocStrings.stub("GuildRoleRemoveSuccess"), role, user.name));
 			}
 			else
 			{
-				res.call(String.format(LocStrings.stub("GuildRoleRemoveFailure"), role, user.name));
+				res.send(String.format(LocStrings.stub("GuildRoleRemoveFailure"), role, user.name));
 			}
 		}
 		else
 		{
-			res.call(String.format(LocStrings.stub("GuildRoleRemoveNotAllowed"), role));
+			res.send(String.format(LocStrings.stub("GuildRoleRemoveNotAllowed"), role));
 		}
 	}
 }

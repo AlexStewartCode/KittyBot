@@ -21,18 +21,18 @@ public class CommandCharacterEditBio extends Command
 		}
 		catch(Exception e)
 		{
-			res.call(LocStrings.stub("CharacterEditBioNotValid"));
+			res.send(LocStrings.stub("CharacterEditBioNotValid"));
 			return;
 		}
 		KittyCharacter character = CharacterManager.instance.searchCharacter(input.args.split(" ")[0]).get(0);
 		if(character.getOwner().equals(user))
 		{
 			CharacterManager.instance.editBio(character, input.args.substring(input.args.indexOf(' ')));
-			res.call(LocStrings.stub("CharacterEditBioSuccess"));
+			res.send(LocStrings.stub("CharacterEditBioSuccess"));
 		}
 		else
 		{
-			res.call(LocStrings.stub("CharacterEditBioNotAuth"));
+			res.send(LocStrings.stub("CharacterEditBioNotAuth"));
 		}
 	}
 }

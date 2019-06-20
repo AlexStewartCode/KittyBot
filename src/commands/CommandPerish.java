@@ -67,7 +67,7 @@ public class CommandPerish  extends Command
 		}
 		
 		postProcessed = new File(name);
-		res.CallFile(postProcessed, "png");
+		res.sendFile(postProcessed, "png");
 		
 		ImageUtils.BlockingFileDelete(preProcessed);
 		ImageUtils.BlockingFileDelete(postProcessed);

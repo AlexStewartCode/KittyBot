@@ -55,11 +55,11 @@ public class CommandRating extends Command
 		}
 		
 		if(newRating != null)
-			res.call(LocStrings.stub("RatingChanged") + " " + newRating);
+			res.send(LocStrings.stub("RatingChanged") + " " + newRating);
 		else
-			res.call(LocStrings.stub("RatingInvalid") + " `" + input.args + "`");
+			res.send(LocStrings.stub("RatingInvalid") + " `" + input.args + "`");
 		
 		if(newRating.equals("Filtered")) 
-			res.call(LocStrings.stub("RatingWarning"));
+			res.send(LocStrings.stub("RatingWarning"));
 	}
 }

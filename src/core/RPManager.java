@@ -71,7 +71,7 @@ public class RPManager
 				{
 						reminder += " <@" + users.get(i) + ">";
 				}
-				res.CallToChannel(reminder, entry.getValue().getChannel().uniqueID);
+				res.sendToChannel(reminder, entry.getValue().getChannel().uniqueID);
 				reminder = "";
 				
 				entry.getValue().resetTimer();

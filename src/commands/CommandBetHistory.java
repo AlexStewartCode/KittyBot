@@ -20,6 +20,6 @@ public class CommandBetHistory extends Command
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		res.call(String.format(LocStrings.stub("BetHistoryOutput"), guild.beans.Get()));
+		res.send(String.format(LocStrings.stub("BetHistoryOutput"), guild.beans.Get()));
 	}
 }
