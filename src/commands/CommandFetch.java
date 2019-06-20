@@ -15,10 +15,10 @@ public class CommandFetch extends Command
 	public CommandFetch(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("FetchInfo"); }
+	public String getHelpText() { return LocStrings.stub("FetchInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String emote = input.args.split(" ")[0];
 		if(emote.startsWith("<") && emote.endsWith(">"))
@@ -27,30 +27,30 @@ public class CommandFetch extends Command
 			switch(num)
 			{
 				case 1:
-					res.Call(String.format(LocStrings.Stub("FetchBringBack"), emote));
+					res.send(String.format(LocStrings.stub("FetchBringBack"), emote));
 					break;
 				case 2:
-					res.Call(String.format(LocStrings.Stub("FetchRunAway")));
+					res.send(String.format(LocStrings.stub("FetchRunAway")));
 					break;
 				case 3:
-					res.Call(String.format(LocStrings.Stub("FetchBringBackWrong"), guild.emoji.get((int)(Math.random() * guild.emoji.size()) + 1)));
+					res.send(String.format(LocStrings.stub("FetchBringBackWrong"), guild.emoji.get((int)(Math.random() * guild.emoji.size()) + 1)));
 					break;
 				case 4: 
-					res.Call(String.format(LocStrings.Stub("FetchEat"), emote));
+					res.send(String.format(LocStrings.stub("FetchEat"), emote));
 					break;
 				case 5: 
-					res.Call(String.format(LocStrings.Stub("FetchCatchRun"), emote));
+					res.send(String.format(LocStrings.stub("FetchCatchRun"), emote));
 					break;
 				case 6:
-					res.Call(String.format(LocStrings.Stub("FetchStare"), user.name));
+					res.send(String.format(LocStrings.stub("FetchStare"), user.name));
 					break;
 					default:
-						res.Call("" + num);
+						res.send("" + num);
 			}
 		}
 		else
 		{
-			res.Call(String.format(LocStrings.Stub("FetchError")));
+			res.send(String.format(LocStrings.stub("FetchError")));
 			System.out.println(emote);
 		}
 	}

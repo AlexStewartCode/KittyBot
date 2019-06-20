@@ -11,16 +11,16 @@ public class CommandTweet extends Command
 	public CommandTweet(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("TweetInfo"); }
+	public String getHelpText() { return LocStrings.stub("TweetInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		//TODO: Figure out how to pass pictures correctly
 		try {
-			res.Call(tweet.tweet(input.args));
+			res.send(tweet.tweet(input.args));
 		} catch (Exception e) {
-			res.Call(LocStrings.Stub("TweetError"));
+			res.send(LocStrings.stub("TweetError"));
 		}
 	}
 }

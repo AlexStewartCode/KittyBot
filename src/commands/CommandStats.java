@@ -3,7 +3,9 @@ package commands;
 import core.Command;
 import core.LocStrings;
 import core.CommandManager.ThreadData;
+import core.Config;
 import dataStructures.KittyChannel;
+import dataStructures.KittyEmbed;
 import dataStructures.KittyGuild;
 import dataStructures.KittyRating;
 import dataStructures.KittyRole;
@@ -17,33 +19,38 @@ public class CommandStats extends Command
 	public CommandStats(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("StatsInfo"); }
+	public String getHelpText() { return LocStrings.stub("StatsInfo"); }
 	
 	// Called when the command is run!
 	@Override 
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		String out = "```\n";
+		// Variables
 		Stats stats = Stats.instance;
+		String out = "";
+		long seen = stats.getMessagesSeen();
+		long processed = stats.getCommandsProcessed();
 		
-		long seen = stats.GetMessagesSeen();
-		long processed = stats.GetCommandsProcessed();
-		
-		out += "----- [General] -----\n";
+		// General
+		out += "General";
+		out += "```\n";
 		out += " Messages observed: " + seen + "\n";
 		out += "Commands processed: " + processed + "\n";
 		out += "  Command invoke %: " + ((int)((processed / (float)seen) * 1000)) / 10.0f + "%\n";
-		out += "   KittyBot uptime: " + stats.GetFormattedUptime() + "\n";
-		out += "\n";
-		out += "----- [Health] -----\n";
-		out += " SMT cores: " + stats.GetCPUAvailable() + "\n";
+		out += "        Bot uptime: " + stats.getFormattedUptime() + "\n";
+		out += "```\n";
 		
-		// If CPU load works on this OS, list it.
-		double CPULoad = stats.GetSystemCPULoad();
-		if(CPULoad > -0.9) // -1.0 is the error state 
-			out += "System CPU Load: " + (CPULoad * 100) + "%\n";
+		// Health
+		out += "Health";
+		out += "```\n";
+		out += " SMT cores: " + stats.getCPUAvailable() + "\n";
 		
-		ThreadData data = stats.GetThreadData();
+		// If CPU load works on this OS, list it. -1.0 is the error state 
+		double CPULoad = stats.getSystemCPULoad();
+		out += CPULoad > -0.9
+			 ? "  CPU Load: " + (CPULoad * 100) + "%\n" : "";
+		
+		ThreadData data = stats.getThreadData();
 		Integer terminated = data.states.get(Thread.State.TERMINATED);
 		Integer runnable = data.states.get(Thread.State.RUNNABLE);
 		Integer blocked = data.states.get(Thread.State.BLOCKED);
@@ -58,14 +65,25 @@ public class CommandStats extends Command
 			+ " term-" + (terminated == null ? 0 : terminated)
 			+ "\n";
 		
-		Integer guildCount = stats.GetGuildCount();
-		Integer userCount = stats.GetUserCount();
+		out += "```\n";
 		
-		out += "\n----- [Cache] -----\n"
+		
+		// Cache
+		Integer guildCount = stats.getGuildCount();
+		Integer userCount = stats.getUserCount();
+		
+		out += "Cache";
+		out += "```\n"
 			+ "Cached Guilds: " + guildCount + "\n"
 			+ " Cached Users: " + userCount;
+		
 		out += "\n```";
 		
-		res.Call(out);
+		KittyEmbed embed = new KittyEmbed();
+		embed.title = "Bot Stats";
+		embed.descriptionText = out;
+		embed.color = Config.ColorDefault;
+		
+		res.send(embed);
 	}
 }

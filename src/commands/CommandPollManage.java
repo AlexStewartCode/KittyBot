@@ -14,23 +14,23 @@ public class CommandPollManage extends Command
 	public CommandPollManage(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("PollManageInfo"); }
+	public String getHelpText() { return LocStrings.stub("PollManageInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		switch(input.args.split(" ")[0].toLowerCase())
 		{
 		case "start":
-			res.Call(guild.startPoll(input.args.substring(input.args.indexOf(' ')).trim()));
+			res.send(guild.startPoll(input.args.substring(input.args.indexOf(' ')).trim()));
 			break;
 			
 		case "choice":
-			res.Call(guild.addChoiceToPoll(input.args.substring(input.args.indexOf(' ')).trim()));
+			res.send(guild.addChoiceToPoll(input.args.substring(input.args.indexOf(' ')).trim()));
 			break;
 			
 		case "stop":
-			res.Call(guild.endPoll());
+			res.send(guild.endPoll());
 			break; 
 		
 		default:

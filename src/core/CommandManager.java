@@ -31,7 +31,7 @@ public class CommandManager
 	
 	// Allows the command manager to keep track of a command. Takes a pair (the un-localized and localzied commands)
 	// and the command associated with the localized commands.
-	public void Register(Pair<String, String> pair, Command command)
+	public void register(Pair<String, String> pair, Command command)
 	{	
 		if(pair == null || pair.Second == null)
 			return;
@@ -39,7 +39,7 @@ public class CommandManager
 		// If we haven't already split a multisplit command (or even assessed that), 
 		// then verify if we even need to register the commands at all. If it's 
 		// not enabled, don't register it. 
-		if(pair.First != null && !commandEnabler.IsEnabled(pair.First))
+		if(pair.First != null && !commandEnabler.isEnabled(pair.First))
 			return;
 		
 		String key = pair.Second;
@@ -48,7 +48,7 @@ public class CommandManager
 		{
 			
 			String[] keys = key.split(",");
-			Register(keys, command);
+			register(keys, command);
 			return;
 		}
 		
@@ -59,25 +59,25 @@ public class CommandManager
 		
 		if(old != null)
 		{
-			GlobalLog.Warn(LogFilter.Core, "Writing over a command with the key " + key);
+			GlobalLog.warn(LogFilter.Core, "Writing over a command with the key " + key);
 			return;
 		}
 		
-		GlobalLog.Log(LogFilter.Core, "Command registered under key " + key);
+		GlobalLog.log(LogFilter.Core, "Command registered under key " + key);
 	}
 	
 	// Registers a command under multiple names!
-	public void Register(String[] keys, Command command)
+	public void register(String[] keys, Command command)
 	{
 		for(int i = 0; i < keys.length; ++i)
-			Register(new Pair<String, String>(null, keys[i].trim()), command);
+			register(new Pair<String, String>(null, keys[i].trim()), command);
 	}
 	
 	// Calls the command but on a whole new thread!
-	public boolean InvokeOnNewThread(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response responseContext)
+	public boolean invokeOnNewThread(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response responseContext)
 	{
 		// This is here to prevent spinning up a thread if this wasn't even a command.
-		if(input == null || !input.IsValid())
+		if(input == null || !input.isValid())
 			return false;
 		
 		Command command = commands.get(input.key);
@@ -91,44 +91,44 @@ public class CommandManager
 		}
 		else
 		{
-			GlobalLog.Warn(LogFilter.Command, "User " + user.name + " tried to invoke command that doesn't exist: " + input.key);
+			GlobalLog.warn(LogFilter.Command, "User " + user.name + " tried to invoke command that doesn't exist: " + input.key);
 			return false;
 		}
 	}
 	
 	// Calls the command specified with the key, providing user information arguments, etc.
-	void Invoke(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response responseContext)
+	void invoke(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response responseContext)
 	{
-		if(input == null || !input.IsValid())
+		if(input == null || !input.isValid())
 			return;
 		
 		Command command = commands.get(input.key);
 		if(command != null)
 		{
 			++invokeCount;
-			command.Invoke(guild, channel, user, input, responseContext);
+			command.invoke(guild, channel, user, input, responseContext);
 		}
 	}
 	
 	// Looks up command by name. If it exists, dumps help text, otherwise returns null.
-	public String GetCommandHelpText(String lookup)
+	public String getCommandHelpText(String key)
 	{
-		Command command = commands.get(lookup);
+		Command command = commands.get(key);
 		
 		if(command != null)
-			return command.HelpText();
+			return "`" + key + "`: " + command.getHelpText();
 		
 		return null;
 	}
 	
 	// Returns the number of commands sent so far during this program run
-	public long GetInvokeCount()
+	public long getInvokeCount()
 	{
 		return invokeCount;
 	}
 	
 	// Returns all commands by name
-	public ArrayList<Command> GetAllRegisteredCommands()
+	public ArrayList<Command> getAllRegisteredCommands()
 	{
 		ArrayList<Command> cmds = new ArrayList<Command>();
 		for(Entry<String, Command> entry : commands.entrySet())
@@ -142,7 +142,7 @@ public class CommandManager
 	{
 		public HashMap<Thread.State, Integer> states = new HashMap<Thread.State, Integer>();
 	}
-	public ThreadData DumpThreadData()
+	public ThreadData dumpThreadData()
 	{
 		ThreadData data = new ThreadData();
 		

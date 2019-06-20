@@ -15,11 +15,11 @@ public class CommandDoWork extends Command
 	public CommandDoWork(KittyRole level, KittyRating rating) { super(level, rating); }
 
 	@Override
-	public String HelpText() { return LocStrings.Stub("DoWorkInfo"); }
+	public String getHelpText() { return LocStrings.stub("DoWorkInfo"); }
 	
 	// Called when the command is run!
 	@Override 
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		@SuppressWarnings("unused")
 		long thispieceofshit = 0; 
@@ -28,6 +28,6 @@ public class CommandDoWork extends Command
 			thispieceofshit += Math.log((double)i);
 		}
 		
-		res.Call(LocStrings.Stub("DoWorkFinished"));
+		res.send(LocStrings.stub("DoWorkFinished"));
 	}
 }

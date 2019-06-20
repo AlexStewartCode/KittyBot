@@ -21,7 +21,7 @@ public class KittyTrackedString extends DatabaseTrackedObject
 		synchronized(trackedString)
 		{
 			trackedString = newValue;
-			MarkDirty();
+			markDirty();
 		}
 	}
 	
@@ -35,13 +35,13 @@ public class KittyTrackedString extends DatabaseTrackedObject
 	}
 	
 	@Override
-	public String Serialize() 
+	public String serialize() 
 	{
 		return trackedString;
 	}
 
 	@Override
-	public void DeSerialzie(String string)
+	public void deSerialzie(String string)
 	{
 		if(string != null && !string.isEmpty())
 		{
@@ -49,9 +49,9 @@ public class KittyTrackedString extends DatabaseTrackedObject
 		}
 		else
 		{
-			GlobalLog.Log(LogFilter.Database, "String had null or empty value with identifier: " + identifier); 
+			GlobalLog.log(LogFilter.Database, "String had null or empty value with identifier: " + identifier); 
 			string = "";
-			MarkDirty();
+			markDirty();
 		}
 	}
 

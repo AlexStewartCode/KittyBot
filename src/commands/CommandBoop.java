@@ -19,22 +19,22 @@ public class CommandBoop extends Command
 		
 		public BoopTracker() { super("booptracker"); }
 		
-		public void ApplyBoop()
+		public void applyBoop()
 		{
 			++boops;
-			MarkDirty();
+			markDirty();
 		}
 
-		public int HowMany()
+		public int howMany()
 		{
 			return boops;
 		}
 		
 		@Override
-		public String Serialize() { return "" + boops; }
+		public String serialize() { return "" + boops; }
 
 		@Override
-		public void DeSerialzie(String string) 
+		public void deSerialzie(String string) 
 		{ 
 			try
 			{
@@ -42,9 +42,9 @@ public class CommandBoop extends Command
 			}
 			catch (NumberFormatException e)
 			{
-				GlobalLog.Warn(LogFilter.Command, "No valid value was found for boops! Starting over at 0!");
+				GlobalLog.warn(LogFilter.Command, "No valid value was found for boops! Starting over at 0!");
 				boops = 0;
-				MarkDirty();
+				markDirty();
 			}
 		}
 	}
@@ -60,37 +60,37 @@ public class CommandBoop extends Command
 	}
 
 	@Override
-	public String HelpText() { return LocStrings.Stub("BoopInfo"); }
+	public String getHelpText() { return LocStrings.stub("BoopInfo"); }
 	
 	// Called when the command is run!
 	@Override 
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.mentions == null)
 		{
-			boopTracker.ApplyBoop();
-			res.Call(String.format(LocStrings.Stub("BoopStandard"), user.name, boopTracker.HowMany()));
+			boopTracker.applyBoop();
+			res.send(String.format(LocStrings.stub("BoopStandard"), user.name, boopTracker.howMany()));
 		}
 		else
 		{
 			if(input.mentions.length == 1)
 			{
-				boopTracker.ApplyBoop();
-				res.Call(String.format(LocStrings.Stub("BoopPerson"), user.name, input.mentions[0].name));
+				boopTracker.applyBoop();
+				res.send(String.format(LocStrings.stub("BoopPerson"), user.name, input.mentions[0].name));
 				return;
 			}
 			
 			String booped = ""; 
 			for(int i = 0; i < input.mentions.length; i++)
 			{
-				boopTracker.ApplyBoop();
+				boopTracker.applyBoop();
 				if(i < input.mentions.length-1)
 					booped += input.mentions[i].name + ", ";
 				else
 					booped +=  "and " + input.mentions[i].name;
 			}
 			
-			res.Call(String.format(LocStrings.Stub("BoopMultiple"), user.name, booped));
+			res.send(String.format(LocStrings.stub("BoopMultiple"), user.name, booped));
 		}
 	}
 }

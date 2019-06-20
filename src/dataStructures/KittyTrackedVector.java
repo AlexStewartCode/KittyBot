@@ -44,7 +44,7 @@ public class KittyTrackedVector extends DatabaseTrackedObject
 	public void add(String str)
 	{
 		trackedVector.add(str);
-		this.MarkDirty();
+		this.markDirty();
 	}
 	
 	public boolean isEmpty()
@@ -65,12 +65,12 @@ public class KittyTrackedVector extends DatabaseTrackedObject
 	public void remove(String str)
 	{
 		trackedVector.remove(str);
-		this.MarkDirty();
+		this.markDirty();
 	}
 	
 	// Writes out the roles as a single string that can be parsed back in later
 	@Override
-	public String Serialize() 
+	public String serialize() 
 	{
 		String toSerialize = "";
 		
@@ -87,7 +87,7 @@ public class KittyTrackedVector extends DatabaseTrackedObject
 
 	// Reads in the roles as a delimited single string that needs parsing
 	@Override
-	public void DeSerialzie(String string)
+	public void deSerialzie(String string)
 	{
 		if(string != null)
 		{

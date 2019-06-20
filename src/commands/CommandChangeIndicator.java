@@ -9,26 +9,26 @@ public class CommandChangeIndicator extends Command
 	public CommandChangeIndicator(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("ChangeIndicatorInfo"); }
+	public String getHelpText() { return LocStrings.stub("ChangeIndicatorInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String arg = input.args.trim();
 		if(arg.length() == 0)
 		{
-			res.Call(LocStrings.Stub("ChangeIndicatorError"));
+			res.send(LocStrings.stub("ChangeIndicatorError"));
 			return;
 		}
 		
 		String indicator = arg.substring(0, 1);
 		if(indicator.charAt(0) == '\n' || indicator.charAt(0) == '\t' || indicator.charAt(0) == '\r')
 		{
-			res.Call(LocStrings.Lookup("ChangeIndicatorError"));
+			res.send(LocStrings.lookup("ChangeIndicatorError"));
 			return;
 		}
 		
-		guild.SetCommandIndicator(indicator);
-		res.Call(String.format(LocStrings.Stub("ChangeIndicatorChanged"), guild.GetCommandIndicator()));
+		guild.setCommandIndicator(indicator);
+		res.send(String.format(LocStrings.stub("ChangeIndicatorChanged"), guild.getCommandIndicator()));
 	}
 }

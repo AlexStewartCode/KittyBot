@@ -13,7 +13,7 @@ public abstract class DatabaseTrackedObject
 		this.identifier = identifier;
 	}
 	
-	public final boolean IsDirty()
+	public final boolean isDirty()
 	{
 		synchronized(isDirty)
 		{
@@ -21,7 +21,7 @@ public abstract class DatabaseTrackedObject
 		}
 	}
 	
-	public final void MarkDirty()
+	public final void markDirty()
 	{
 		synchronized(isDirty)
 		{
@@ -29,7 +29,7 @@ public abstract class DatabaseTrackedObject
 		}
 	}
 	
-	public final void Resolve()
+	public final void resolve()
 	{
 		synchronized(isDirty)
 		{
@@ -39,6 +39,6 @@ public abstract class DatabaseTrackedObject
 	
 	// Consider an object factory instead of dedicated serialization methods
 	// if this starts to become impractical. For now, it works.
-	public abstract String Serialize();
-	public abstract void DeSerialzie(String string);
+	public abstract String serialize();
+	public abstract void deSerialzie(String string);
 }

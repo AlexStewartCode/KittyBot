@@ -26,10 +26,10 @@ public class CommandHelpBuilder extends Command {
 	}
 
 	@Override
-	public String HelpText() { return LocStrings.Stub("HelpBuilderInfo"); }
+	public String getHelpText() { return LocStrings.stub("HelpBuilderInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		// Holds command groups
 		HashMap<KittyRole, ArrayList<Command>> commandsByRole = new HashMap<KittyRole, ArrayList<Command>>();
@@ -39,18 +39,18 @@ public class CommandHelpBuilder extends Command {
 			commandsByRole.put(KittyRole.values()[i], new ArrayList<Command>());
 		
 		// Sort commands out
-		ArrayList<Command> commands = Stats.instance.GetAllCommands();
+		ArrayList<Command> commands = Stats.instance.getAllCommands();
 		for(int i = 0; i < commands.size(); ++i)
 		{
 			Command current = commands.get(i);
-			commandsByRole.get(current.RequiredRole()).add(current);
+			commandsByRole.get(current.requiredRole()).add(current);
 		}
 		
 		// Format outstring and send it back for now
 		String out = "";
-		out += PopulateSection(KittyRole.Admin, commandsByRole, true) + "\n";
-		out += PopulateSection(KittyRole.Mod, commandsByRole, true) + "\n";
-		out += PopulateSection(KittyRole.General, commandsByRole, false) + "\n";
+		out += populateSection(KittyRole.Admin, commandsByRole, true) + "\n";
+		out += populateSection(KittyRole.Mod, commandsByRole, true) + "\n";
+		out += populateSection(KittyRole.General, commandsByRole, false) + "\n";
 		
 		// Write out file
 		String filename = "buildhelp_out.txt";
@@ -63,17 +63,17 @@ public class CommandHelpBuilder extends Command {
 		} 
 		catch (FileNotFoundException e)
 		{
-			GlobalLog.Error(e.toString());
+			GlobalLog.error(e.toString());
 			return;
 		}
 		
 		File file = new File(filename);
-		res.CallFile(file, "txt");
-		ImageUtils.BlockingFileDelete(file);
+		res.sendFile(file, "txt");
+		ImageUtils.blockingFileDelete(file);
 	}
 	
 	// Generates the section for a specific role, optionally adding spacing after for another section 
-	private String PopulateSection(KittyRole role, HashMap<KittyRole, ArrayList<Command>> commandsByRole, boolean delimitSection)
+	private String populateSection(KittyRole role, HashMap<KittyRole, ArrayList<Command>> commandsByRole, boolean delimitSection)
 	{
 		// Formatting variables
 		final String headerStart = "<h2>";
@@ -112,7 +112,7 @@ public class CommandHelpBuilder extends Command {
 					commandsSoFar.add(command);
 				
 				// Write out all the keys and the help text
-				ArrayList<String> keys = command.RegisteredNames();
+				ArrayList<String> keys = command.registeredNames();
 				for(int j = 0; j < keys.size(); ++j)
 				{
 					if(j != 0)
@@ -121,7 +121,7 @@ public class CommandHelpBuilder extends Command {
 					accumulated += leadStart + keys.get(j) + leadEnd;
 				}
 				
-				accumulated += leadFollow + commands.get(i).HelpText() + lineDelimiter;;
+				accumulated += leadFollow + commands.get(i).getHelpText() + lineDelimiter;;
 			}
 						
 			accumulated += sectionEnd;
