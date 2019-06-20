@@ -8,28 +8,22 @@ import dataStructures.Pair;
 
 // Performs the same localization for the strings associated with command names as 
 // is performed with general strings in the application
-public class LocCommands extends BaseLocFile
+public class LocCommands extends BaseLocFile implements IConfigSection
 {
-	public static final String fileName = Config.AssetDirectory + "locCommands.config";
+	public static final String HeaderName = "Localized Commands";
 	public static final String function = "LocCommands.stub";
 	
 	private static LocCommands instance;
 	
 	public LocCommands() 
 	{
-		super(fileName, function);
+		super(function);
 		
 		GlobalLog.log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
 		
 		if(instance == null)
 		{
 			instance = this;
-			
-			updateLocFromDisk();
-			scrapeAll();
-			saveLocToDisk();
-			
-			fileMonitor = new FileMonitor(filename);
 		}
 		else
 		{
@@ -51,8 +45,27 @@ public class LocCommands extends BaseLocFile
 		return raw;
 	}
 	
-	public static void upkeep()
-	{
-		instance.update();
+	@Override
+	public String getHeader() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void preUpdate() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getContent() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

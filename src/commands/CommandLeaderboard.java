@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import core.Command;
-import core.Config;
+import core.Constants;
 import core.DatabaseManager;
 import core.LocStrings;
 import core.ObjectBuilderFactory;
@@ -79,7 +79,7 @@ public class CommandLeaderboard extends Command
 		// Configure output
 		final int listSize = 10;
 		KittyEmbed embed = new KittyEmbed();
-		embed.color = Config.ColorDefault;
+		embed.color = Constants.ColorDefault;
 		embed.title = LocStrings.stub("LeaderboardTitle");
 		embed.descriptionText = "";
 		

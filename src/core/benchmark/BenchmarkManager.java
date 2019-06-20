@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import core.Config;
+import core.Constants;
 import dataStructures.Pair;
 import utils.io.DirectoryMonitor;
 import utils.io.FileUtils;
@@ -17,7 +17,7 @@ import utils.io.MonitoredFile;
 public class BenchmarkManager
 {
 	// Variables
-	public final String directory = Config.AssetDirectory + "userbench/";
+	public final String directory = Constants.AssetDirectory + "userbench/";
 	public final String extension = ".csv";
 	public final String lineDelimiter = "\n";
 	

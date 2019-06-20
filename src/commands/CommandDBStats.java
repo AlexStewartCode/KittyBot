@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import core.Command;
-import core.Config;
+import core.Constants;
 import core.DatabaseManager;
 import core.LocStrings;
 import dataStructures.KittyChannel;
@@ -36,7 +36,7 @@ public class CommandDBStats extends Command
 		embed.descriptionText = "**Tracked Items:** " + DatabaseManager.instance.getTrackedObjectsSize();
 		embed.descriptionText += "\n";
 		embed.descriptionText += "**Last Upkeep:** " + dateFormat.format(DatabaseManager.instance.getLastUpkeep()) + " UTC-7"; 
-		embed.color = Config.ColorDefault;
+		embed.color = Constants.ColorDefault;
 		
 		res.send(embed);
 	}

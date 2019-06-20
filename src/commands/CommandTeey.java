@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import core.Command;
-import core.Config;
+import core.Constants;
 import core.LocStrings;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
@@ -54,7 +54,7 @@ public class CommandTeey extends Command
 				return;
 			
 			teeyeeFile = new File(yeeteeFilename);
-			ImageOverlayBuilder builder = new ImageOverlayBuilder(Config.AssetDirectory + "teey/frames/", "teey ", 24, 18);
+			ImageOverlayBuilder builder = new ImageOverlayBuilder(Constants.AssetDirectory + "teey/frames/", "teey ", 24, 18);
 			builder.overlay(ImageIO.read(teeyeeFile), name);
 		} 
 		catch (IOException e) 

@@ -492,7 +492,7 @@ public class ObjectBuilderFactory
 		lazyInit();
 		
 		if(pluginManager == null)
-			pluginManager = new PluginManager(Config.AssetDirectory + "plugins/");
+			pluginManager = new PluginManager(Constants.AssetDirectory + "plugins/");
 		
 		return pluginManager;
 	}

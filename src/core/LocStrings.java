@@ -9,26 +9,20 @@ import utils.io.FileMonitor;
 // can then be localized.
 public class LocStrings extends BaseLocFile
 {
-	public static final String fileName = Config.AssetDirectory + "locStrings.config";
+	public static final String fileName = Constants.AssetDirectory + "locStrings.config";
 	public static final String function = "LocStrings.stub";
 	
 	private static LocStrings instance;
 	
 	public LocStrings()
 	{
-		super(fileName, function);
+		super(function);
 		
 		GlobalLog.log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
 		
 		if(instance == null)
 		{
 			instance = this;
-			
-			updateLocFromDisk();
-			scrapeAll();
-			saveLocToDisk();
-			
-			fileMonitor = new FileMonitor(filename);
 		}
 		else
 		{

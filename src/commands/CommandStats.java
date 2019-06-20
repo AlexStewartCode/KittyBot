@@ -3,7 +3,7 @@ package commands;
 import core.Command;
 import core.LocStrings;
 import core.CommandManager.ThreadData;
-import core.Config;
+import core.Constants;
 import dataStructures.KittyChannel;
 import dataStructures.KittyEmbed;
 import dataStructures.KittyGuild;
@@ -82,7 +82,7 @@ public class CommandStats extends Command
 		KittyEmbed embed = new KittyEmbed();
 		embed.title = "Bot Stats";
 		embed.descriptionText = out;
-		embed.color = Config.ColorDefault;
+		embed.color = Constants.ColorDefault;
 		
 		res.send(embed);
 	}

@@ -1,7 +1,7 @@
 package commands;
 
 import core.Command;
-import core.Config;
+import core.Constants;
 import core.DatabaseManager;
 import core.LocStrings;
 import dataStructures.KittyChannel;
@@ -28,7 +28,7 @@ public class CommandDBFlush extends Command
 		KittyEmbed embed = new KittyEmbed();
 		embed.title = "Database queue flushed";
 		embed.descriptionText = "**Dirty:** " + numUpdated;
-		embed.color = Config.ColorDefault;
+		embed.color = Constants.ColorDefault;
 		
 		res.send(embed);
 	}

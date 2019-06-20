@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import core.Command;
-import core.Config;
+import core.Constants;
 import core.LocStrings;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
@@ -54,7 +54,7 @@ public class CommandYeet extends Command
 				return;
 			
 			yeeteeFile = new File(yeeteeFilename);
-			ImageOverlayBuilder builder = new ImageOverlayBuilder(Config.AssetDirectory + "yeet/frames/", "yeet ", 24, 18);
+			ImageOverlayBuilder builder = new ImageOverlayBuilder(Constants.AssetDirectory + "yeet/frames/", "yeet ", 24, 18);
 			builder.overlay(ImageIO.read(yeeteeFile), name);
 		} 
 		catch (IOException e) 

@@ -23,7 +23,6 @@ public abstract class BaseLocFile
 	public static final String KittySourceDirectory = "./src";
 	
 	// Filename
-	public final String filename; // Example: "localization.config"; 
 	public final String functionName; // Example: "Localizer.Stub";
 	
 	// Local translation storage
@@ -38,28 +37,11 @@ public abstract class BaseLocFile
 	protected FileMonitor fileMonitor;
 	
 	// Constructor 
-	public BaseLocFile(String filename, String functionName)
+	public BaseLocFile(String functionName)
 	{
-		this.filename = filename;
 		this.functionName = functionName;
 	}
-	
-	// Checks the file specified for updates
-	public void update()
-	{
-		synchronized(stringStore)
-		{
-			fileMonitor.update(this::onFileChange);
-		}
-	}
-	
-	// When the file is changed
-	protected void onFileChange(MonitoredFile file)
-	{
-		log("Loc file was modified at path " + file.path);
-		updateLocFromDisk();
-	}
-	
+
 	// Structure used for holding a pair of strings and any other info we need 
 	// about localized information that is being looked up.
 	private class LocInfo
@@ -127,63 +109,14 @@ public abstract class BaseLocFile
 		
 		return value;
 	}
-	
-	// Reads a file to string, adapted from https://stackoverflow.com/a/326440/5383198
-	private String readFileAsString(String path, Charset encoding)
-	{
-		try
-		{
-			byte[] encoded = Files.readAllBytes(Paths.get(path));
-			return new String(encoded, encoding);
-		}
-		catch (IOException e)
-		{
-			warn("No file found to read from!");
-		}
-		
-		return null;
-	}
 
 	// Update localization from the disk on file. Creates the file if it doesn't exist.
 	// This file is internally formatted as an ini file.
-	public void updateLocFromDisk()
+	public void updateLocFromString(String fileContents)
 	{
-		log("Attempting to read localization file: " + filename);
+		log("Attempting to read localization file contents");
 		
-		try
-		{
-			String fileContents = readFileAsString(filename, Charset.defaultCharset());
-			
-			if(fileContents == null)
-			{
-				File file = new File(filename);
-				file.createNewFile();
-			}
-			
-			stringStore = new TaggedPairStore(fileContents);
-		}
-		catch(IOException e)
-		{
-			error("IO exception during localization file read");
-		}
-	}
-	
-	// Rewrites out at the specified filename with existing stubs.
-	// This preserves existing localized phrases.
-	public void saveLocToDisk()
-	{
-		log("Attempting to write updated localization file");
-		
-		try
-		{	
-			PrintWriter pw = new PrintWriter(filename);
-			pw.println(stringStore.toString());
-			pw.close();
-		}
-		catch(IOException e)
-		{
-			error("IO exception during localization file write");
-		}
+		stringStore = new TaggedPairStore(fileContents);
 	}
 
 	private void tryStripSpecified(Path path, ArrayList<LocInfo> toFill)
