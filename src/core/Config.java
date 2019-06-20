@@ -55,7 +55,7 @@ public class Config
 		File configFile = new File(filepath);
 		if(configFile.exists())
 		{
-			String configContents = FileUtils.readContent(new File(filepath));
+			String configContents = FileUtils.readContent(configFile);
 			reformConfig(configContents);
 		}
 		else
@@ -76,14 +76,16 @@ public class Config
 	{
 		for(IConfigSection section : sections)
 		{
-			
+			// Parse stuff and sections here based on interface
 		}
 	}
 	
 	public void upkeep()
 	{
-		configFile.update((monitoredFile) -> {
-			monitoredFile.path
+		monitoredConfigFile.update((monitoredFile) -> {
+			File configFile = new File(filepath);
+			String configContents = FileUtils.readContent(configFile);
+			reformConfig(configContents);
 		});
 	}
 	
