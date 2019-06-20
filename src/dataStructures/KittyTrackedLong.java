@@ -27,26 +27,26 @@ public class KittyTrackedLong extends DatabaseTrackedObject
 		super(differentiator + readableName + UniqueID);
 	}
 	
-	public long Add(long toAdd)
+	public long add(long toAdd)
 	{
 		tracked += toAdd;
 		markDirty();
 		return tracked;
 	}
 	
-	public long Subtract(long toSubtract)
+	public long subtract(long toSubtract)
 	{
 		tracked -= toSubtract;
 		markDirty();
 		return tracked;
 	}
 
-	public long Get()
+	public long get()
 	{
 		return tracked;
 	}
 	
-	public long Set(long newValue)
+	public long set(long newValue)
 	{
 		tracked = newValue;
 		markDirty();

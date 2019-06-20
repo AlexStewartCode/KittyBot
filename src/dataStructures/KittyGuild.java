@@ -119,9 +119,9 @@ public class KittyGuild extends DatabaseTrackedObject
 	
 	public boolean joinRaffle(KittyUser user)
 	{
-		if(!raffleUsersChosen.contains(user) && !raffleUsersUnchosen.contains(user) && user.GetBeans() > raffleCost && raffling)
+		if(!raffleUsersChosen.contains(user) && !raffleUsersUnchosen.contains(user) && user.getBeans() > raffleCost && raffling)
 		{
-			user.ChangeBeans(raffleCost);
+			user.changeBeans(raffleCost);
 			raffleUsersUnchosen.add(user);
 			return true;
 		}

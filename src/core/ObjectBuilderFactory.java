@@ -172,7 +172,7 @@ public class ObjectBuilderFactory
 		{
 			KittyUser cachedUser = userCache.get(uid);
 			if(cachedUser != null)
-				role = cachedUser.GetRole();
+				role = cachedUser.getRole();
 		}
 		
 		return role;

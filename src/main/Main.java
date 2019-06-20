@@ -82,7 +82,7 @@ public class Main extends ListenerAdapter
 			return;
 				
 		// Track beans!
-		user.ChangeBeans(1);
+		user.changeBeans(1);
 		
 		// RP logging system
 		RPManager.instance.addLine(channel, user, input);

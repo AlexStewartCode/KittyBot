@@ -39,7 +39,7 @@ public class RPManager
 	
 	public void addLine(KittyChannel channel, KittyUser user, UserInput input)
 	{
-		if(logs.containsKey(Long.parseLong(channel.uniqueID)) && !input.IsValid())
+		if(logs.containsKey(Long.parseLong(channel.uniqueID)) && !input.isValid())
 				logs.get(Long.parseLong(channel.uniqueID)).addLine(user, input.message);
 	}
 	

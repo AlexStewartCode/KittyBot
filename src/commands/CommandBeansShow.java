@@ -15,13 +15,13 @@ public class CommandBeansShow extends Command
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.mentions == null)
-			res.send(String.format(LocStrings.stub("BeansShowDisplay"), user.GetBeans()));
+			res.send(String.format(LocStrings.stub("BeansShowDisplay"), user.getBeans()));
 		else
 		{
 			String mentionedBeans = ""; 
 			for(KittyUser mentioned:input.mentions)
 			{
-				mentionedBeans += mentioned.name + " has " + mentioned.GetBeans() + " ";
+				mentionedBeans += mentioned.name + " has " + mentioned.getBeans() + " ";
 			}
 			res.send(String.format(LocStrings.stub("BeansShowMentioned"), mentionedBeans));
 		}

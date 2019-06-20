@@ -16,11 +16,11 @@ public class CommandRole extends Command
 	{
 		if(input.args.isEmpty())
 		{
-			res.send(LocStrings.stub("RoleStandardResponse") + " " + user.GetRole().name() + "!");
+			res.send(LocStrings.stub("RoleStandardResponse") + " " + user.getRole().name() + "!");
 			return;
 		}
 		
-		if(user.GetRole().getValue() < KittyRole.Admin.getValue())
+		if(user.getRole().getValue() < KittyRole.Admin.getValue())
 		{
 			res.send(String.format(LocStrings.stub("RoleError"), KittyRole.Admin.toString()));
 			return;
@@ -52,7 +52,7 @@ public class CommandRole extends Command
 		String users = "";
 		for(int i = 0; i < input.mentions.length; i++)
 		{
-			input.mentions[i].ChangeRole(newRole); 
+			input.mentions[i].changeRole(newRole); 
 			users += input.mentions[i].name + " ";
 		}
 		

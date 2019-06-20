@@ -43,7 +43,7 @@ public abstract class Command
 		
 		//TODO: ADD CHANNEL CHECK HERE
 		
-		if(user.GetRole().getValue() >= roleLevel.getValue())
+		if(user.getRole().getValue() >= roleLevel.getValue())
 		{
 			return true;
 		}

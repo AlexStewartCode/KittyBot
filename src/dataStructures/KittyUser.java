@@ -31,7 +31,7 @@ public class KittyUser extends DatabaseTrackedObject
 	}
 
 	// Can be positive or negative
-	public void ChangeBeans(int amount)
+	public void changeBeans(int amount)
 	{
 		beans += amount;
 		
@@ -39,7 +39,7 @@ public class KittyUser extends DatabaseTrackedObject
 			markDirty();
 	}
 	
-	public void ChangeRole(KittyRole newRole)
+	public void changeRole(KittyRole newRole)
 	{
 		if(newRole != role)
 		{
@@ -48,12 +48,12 @@ public class KittyUser extends DatabaseTrackedObject
 		}
 	}
 	
-	public long GetBeans()
+	public long getBeans()
 	{
 		return beans;
 	}
 	
-	public KittyRole GetRole()
+	public KittyRole getRole()
 	{
 		return role;
 	}

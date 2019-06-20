@@ -121,7 +121,7 @@ public abstract class BaseLocFile
 		if(stringStore == null)
 			return input;
 		
-		String value = stringStore.GetKey(input);
+		String value = stringStore.getKey(input);
 		if(value == null || value.trim().length() < 1)
 			return input;
 		
@@ -206,6 +206,6 @@ public abstract class BaseLocFile
 		FileUtils.AcquireAllFiles(KittySourceDirectory).forEach((path) -> TryStripSpecified(path, localizeList));
 				
 		for(LocInfo toStub : localizeList)
-			stringStore.AddKeyValue(toStub.file, toStub.phrase, toStub.phrase);
+			stringStore.addKeyValue(toStub.file, toStub.phrase, toStub.phrase);
 	}
 }

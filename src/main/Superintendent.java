@@ -55,14 +55,14 @@ public class Superintendent
 		
 		// If the guild member is the owner, give them admin role by default.
 		if(event.getMember().isOwner())
-			user.ChangeRole(KittyRole.Admin);
+			user.changeRole(KittyRole.Admin);
 		
 		// Give devs the dev role
 		for(int i = 0; i < Ref.devIDs.length; ++i)
 		{
 			if(event.getAuthor().getId().equals(Ref.devIDs[i]))
 			{
-				user.ChangeRole(KittyRole.Dev);
+				user.changeRole(KittyRole.Dev);
 				break;
 			}
 		}

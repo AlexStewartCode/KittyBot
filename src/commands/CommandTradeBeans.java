@@ -36,7 +36,7 @@ public class CommandTradeBeans extends Command
 			return;
 		}
 		
-		if(user.GetBeans() < beans)
+		if(user.getBeans() < beans)
 		{
 			res.send(LocStrings.stub("TradeBeansNotEnoughError"));
 			return;
@@ -45,12 +45,12 @@ public class CommandTradeBeans extends Command
 		if(beans < 0)
 		{
 			res.send(String.format(LocStrings.stub("TradeBeansStealingBeans"), user.name));
-			user.ChangeBeans(-10);
+			user.changeBeans(-10);
 			return; 
 		}
 		
-		input.mentions[0].ChangeBeans(beans);
-		user.ChangeBeans(-beans);
+		input.mentions[0].changeBeans(beans);
+		user.changeBeans(-beans);
 		res.send(String.format(LocStrings.stub("TradeBeansSuccess"), user.name, input.mentions[0].name, beans));
 	}
 }

@@ -49,7 +49,7 @@ public class CommandGiveBeans extends Command
 		// Go through all the mentions and make sure every user is given beans!
 		for(int i = 0; i < input.mentions.length; i++)
 		{
-			input.mentions[i].ChangeBeans(beans);
+			input.mentions[i].changeBeans(beans);
 			res.send(String.format(LocStrings.stub("GiveBeansSuccess"), input.mentions[i].name, "" + beans));
 		}
 	}

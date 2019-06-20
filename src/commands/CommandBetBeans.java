@@ -34,13 +34,13 @@ public class CommandBetBeans extends Command
 			return;
 		}
 		
-		if(user.GetBeans() < bet)
+		if(user.getBeans() < bet)
 		{
 			res.send(LocStrings.stub("BetBeansNotEnough"));
 			return;
 		}
 		
-		user.ChangeBeans(-bet);
+		user.changeBeans(-bet);
 		int [] slots = getSlots();
 		call += slotString(slots);
 		slots = sort(slots);
@@ -52,12 +52,12 @@ public class CommandBetBeans extends Command
 		if(win == 0)
 			{
 				res.send(LocStrings.stub("BetBeansLose"));
-				guild.beans.Add(bet);
+				guild.beans.add(bet);
 				return;
 			}
 		
-		user.ChangeBeans(bet*win);
-		guild.beans.Subtract(bet*win);
+		user.changeBeans(bet*win);
+		guild.beans.subtract(bet*win);
 		res.send(String.format(LocStrings.stub("BetBeansWin"), "" + (bet*win)));
 	}
 	

@@ -77,7 +77,7 @@ public class CommandManager
 	public boolean InvokeOnNewThread(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response responseContext)
 	{
 		// This is here to prevent spinning up a thread if this wasn't even a command.
-		if(input == null || !input.IsValid())
+		if(input == null || !input.isValid())
 			return false;
 		
 		Command command = commands.get(input.key);
@@ -99,7 +99,7 @@ public class CommandManager
 	// Calls the command specified with the key, providing user information arguments, etc.
 	void Invoke(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response responseContext)
 	{
-		if(input == null || !input.IsValid())
+		if(input == null || !input.isValid())
 			return;
 		
 		Command command = commands.get(input.key);

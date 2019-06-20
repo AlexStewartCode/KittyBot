@@ -66,8 +66,8 @@ public class CharacterManager
 			}
 		}
 		
-		characters.add(new KittyCharacter(user, name, bio, refImage, uniqueID.Get()));
-		uniqueID.Add(1);
+		characters.add(new KittyCharacter(user, name, bio, refImage, uniqueID.get()));
+		uniqueID.add(1);
 		return true; 
 	}
 	

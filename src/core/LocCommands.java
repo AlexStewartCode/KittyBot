@@ -47,7 +47,7 @@ public class LocCommands extends BaseLocFile
 	public static ArrayList<String> GetUnlocalizedCommands()
 	{
 		ArrayList<String> raw = new ArrayList<>();
-		instance.stringStore.ForEach((pair) -> raw.add((String)((Pair<?, ?>)pair).First ));
+		instance.stringStore.forEach((pair) -> raw.add((String)((Pair<?, ?>)pair).First ));
 		return raw;
 	}
 	
