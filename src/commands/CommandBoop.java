@@ -22,7 +22,7 @@ public class CommandBoop extends Command
 		public void ApplyBoop()
 		{
 			++boops;
-			MarkDirty();
+			markDirty();
 		}
 
 		public int HowMany()
@@ -31,10 +31,10 @@ public class CommandBoop extends Command
 		}
 		
 		@Override
-		public String Serialize() { return "" + boops; }
+		public String serialize() { return "" + boops; }
 
 		@Override
-		public void DeSerialzie(String string) 
+		public void deSerialzie(String string) 
 		{ 
 			try
 			{
@@ -44,7 +44,7 @@ public class CommandBoop extends Command
 			{
 				GlobalLog.Warn(LogFilter.Command, "No valid value was found for boops! Starting over at 0!");
 				boops = 0;
-				MarkDirty();
+				markDirty();
 			}
 		}
 	}

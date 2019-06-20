@@ -28,7 +28,7 @@ public class CommandChangeIndicator extends Command
 			return;
 		}
 		
-		guild.SetCommandIndicator(indicator);
-		res.send(String.format(LocStrings.stub("ChangeIndicatorChanged"), guild.GetCommandIndicator()));
+		guild.setCommandIndicator(indicator);
+		res.send(String.format(LocStrings.stub("ChangeIndicatorChanged"), guild.getCommandIndicator()));
 	}
 }

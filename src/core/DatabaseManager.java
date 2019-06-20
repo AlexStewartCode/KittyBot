@@ -94,10 +94,10 @@ public class DatabaseManager
 			{
 				DatabaseTrackedObject dto = globalDataTrackedObjects.get(i);
 				
-				if(dto.IsDirty())
+				if(dto.isDirty())
 				{
-					globalSetRemoteValue(dto.identifier, dto.Serialize());
-					dto.Resolve();
+					globalSetRemoteValue(dto.identifier, dto.serialize());
+					dto.resolve();
 					++numUpdated;
 				}
 			}
@@ -117,10 +117,10 @@ public class DatabaseManager
 			{
 				DatabaseTrackedObject dto = characterDataTrackedObjects.get(i);
 				
-				if(dto.IsDirty())
+				if(dto.isDirty())
 				{
-					characterSetRemoteValue(dto.identifier, dto.Serialize());
-					dto.Resolve();
+					characterSetRemoteValue(dto.identifier, dto.serialize());
+					dto.resolve();
 					++numUpdated;
 				}
 			}
@@ -142,7 +142,7 @@ public class DatabaseManager
 		synchronized(globalDataTrackedObjects)
 		{
 			globalDataTrackedObjects.add(tracked);
-			tracked.DeSerialzie(globalGetRemoteValue(tracked.identifier));
+			tracked.deSerialzie(globalGetRemoteValue(tracked.identifier));
 		}
 	}
 	
@@ -172,7 +172,7 @@ public class DatabaseManager
 		synchronized(characterDataTrackedObjects)
 		{
 			characterDataTrackedObjects.add(tracked);
-			tracked.DeSerialzie(characterGetRemoteValue(tracked.identifier));
+			tracked.deSerialzie(characterGetRemoteValue(tracked.identifier));
 		}
 	}
 	

@@ -36,7 +36,7 @@ public class KittyUser extends DatabaseTrackedObject
 		beans += amount;
 		
 		if(amount != 0)
-			MarkDirty();
+			markDirty();
 	}
 	
 	public void ChangeRole(KittyRole newRole)
@@ -44,7 +44,7 @@ public class KittyUser extends DatabaseTrackedObject
 		if(newRole != role)
 		{
 			role = newRole;
-			MarkDirty();
+			markDirty();
 		}
 	}
 	
@@ -59,7 +59,7 @@ public class KittyUser extends DatabaseTrackedObject
 	}
 	
 	@Override
-	public String Serialize() 
+	public String serialize() 
 	{
 		return beans + "," + role.getValue();
 	}
@@ -80,7 +80,7 @@ public class KittyUser extends DatabaseTrackedObject
 	}
 	
 	@Override
-	public void DeSerialzie(String string) 
+	public void deSerialzie(String string) 
 	{
 		try
 		{
@@ -91,7 +91,7 @@ public class KittyUser extends DatabaseTrackedObject
 				
 				// Mark ourselves dirty to re-write the role information stored in the user.
 				// Just uses defaults from earlier again.
-				MarkDirty();
+				markDirty();
 			}
 			else
 			{
@@ -107,7 +107,7 @@ public class KittyUser extends DatabaseTrackedObject
 			// We don't need to specify the role at this point because it is set at this point.
 			// We use what the user was created with whatever defaults were in the factory. 
 			// Beans are maintained too, just in case there's some in cache.
-			MarkDirty();
+			markDirty();
 		}
 	}
 }

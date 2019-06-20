@@ -38,7 +38,7 @@ public class UserInput
 			mentions = FindMentionedUsers(event);
 		
 		toParse = toParse.trim();
-		String commandIndicator = guildContext.GetCommandIndicator();
+		String commandIndicator = guildContext.getCommandIndicator();
 		if(toParse.startsWith(commandIndicator))
 		{
 			int loc = FindFirstWhitespace(toParse);

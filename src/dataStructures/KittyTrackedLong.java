@@ -30,14 +30,14 @@ public class KittyTrackedLong extends DatabaseTrackedObject
 	public long Add(long toAdd)
 	{
 		tracked += toAdd;
-		MarkDirty();
+		markDirty();
 		return tracked;
 	}
 	
 	public long Subtract(long toSubtract)
 	{
 		tracked -= toSubtract;
-		MarkDirty();
+		markDirty();
 		return tracked;
 	}
 
@@ -49,18 +49,18 @@ public class KittyTrackedLong extends DatabaseTrackedObject
 	public long Set(long newValue)
 	{
 		tracked = newValue;
-		MarkDirty();
+		markDirty();
 		return tracked;
 	}
 	
 	@Override
-	public String Serialize()
+	public String serialize()
 	{
 		return "" + tracked;
 	}
 
 	@Override
-	public void DeSerialzie(String string)
+	public void deSerialzie(String string)
 	{
 		if(string != null)
 		{
