@@ -29,7 +29,7 @@ public class BenchmarkCommandCompare extends BenchmarkCommand
 			if(entries.size() < 1)
 				output += "Couldn't find any models containing `" + inputSplit[i] + "`!";
 			
-			output += BenchmarkCommandInfo.FormatInfo(entries.get(0));
+			output += BenchmarkCommandInfo.formatInfo(entries.get(0));
 			output += lineDelimiter;
 			
 			if(entries.size() > 1)

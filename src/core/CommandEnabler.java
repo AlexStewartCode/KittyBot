@@ -23,8 +23,9 @@ public class CommandEnabler extends BaseKeyValueFile
 	// Local variables
 	private HashMap<String, Boolean> enabledMap; // Quick lookup
 	private ArrayList<String> keyList; // Tracking ordering for later
-	private final static String name = "commands.config";
+	private final static String name = Config.AssetDirectory + "commands.config";
 	
+	// Constructor
 	public CommandEnabler()
 	{
 		super(name);

@@ -9,7 +9,7 @@ import utils.io.FileMonitor;
 // can then be localized.
 public class LocStrings extends BaseLocFile
 {
-	public static final String fileName = "locStrings.config";
+	public static final String fileName = Config.AssetDirectory + "locStrings.config";
 	public static final String function = "LocStrings.stub";
 	
 	private static LocStrings instance;

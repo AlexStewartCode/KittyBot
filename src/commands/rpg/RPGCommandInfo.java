@@ -8,7 +8,6 @@ import core.rpg.RPGWeapon;
 
 public class RPGCommandInfo extends RPGCommand
 {
-
 	@Override
 	public String onRun(RPGState state, RPGInput input)
 	{
@@ -27,7 +26,7 @@ public class RPGCommandInfo extends RPGCommand
 			case "hand":
 			case "att":
 			case "attack":
-				out = WeaponStats(state.player.getWeapon());
+				out = weaponStats(state.player.getWeapon());
 				break;
 
 			case "armour":
@@ -44,7 +43,7 @@ public class RPGCommandInfo extends RPGCommand
 			case "dress":
 			case "wear":
 			case "outfit":
-				out = ArmorStats(state.player.getArmor());
+				out = armorStats(state.player.getArmor());
 				break;
 		}
 		
@@ -54,7 +53,7 @@ public class RPGCommandInfo extends RPGCommand
 		return out;
 	}
 	
-	private String WeaponStats(RPGWeapon weapon)
+	private String weaponStats(RPGWeapon weapon)
 	{
 		if(weapon == null)
 			return null;
@@ -72,7 +71,7 @@ public class RPGCommandInfo extends RPGCommand
 		return out;
 	}
 	
-	private String ArmorStats(RPGArmor armor)
+	private String armorStats(RPGArmor armor)
 	{
 		if(armor == null)
 			return null;
