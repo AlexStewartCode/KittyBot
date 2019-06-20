@@ -30,27 +30,27 @@ public class CommandBenchmark extends Command
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		framework.Update();
+		framework.update();
 		
 		if(input.args == null || input.args.length() == 0)
 		{
 			String output = getHelpText();
-			res.Call(output);
+			res.call(output);
 			return;
 		}
 		
 		BenchmarkFormattable commandOutput = null;
 		synchronized(framework)
 		{
-			commandOutput = framework.Run(input.args.trim());
+			commandOutput = framework.run(input.args.trim());
 		}
 		
 		if(commandOutput == null)
 		{
-			res.Call(LocStrings.stub("BenchmarkInvalid"));
+			res.call(LocStrings.stub("BenchmarkInvalid"));
 			return;
 		}
 		
-		commandOutput.Call(res);
+		commandOutput.call(res);
 	}
 }

@@ -21,18 +21,18 @@ public class CommandCharacterEditName extends Command
 		}
 		catch(Exception e)
 		{
-			res.Call(LocStrings.stub("CharacterEditNameNotValid"));
+			res.call(LocStrings.stub("CharacterEditNameNotValid"));
 			return;
 		}
 		KittyCharacter character = CharacterManager.instance.searchCharacter(input.args.split(" ")[0]).get(0);
 		if(character.getOwner().equals(user))
 		{
 			CharacterManager.instance.editName(character, input.args.substring(input.args.indexOf(' ')));
-			res.Call(LocStrings.stub("CharacterEditNameSuccess"));
+			res.call(LocStrings.stub("CharacterEditNameSuccess"));
 		}
 		else
 		{
-			res.Call(LocStrings.stub("CharacterEditNameNotAuth"));
+			res.call(LocStrings.stub("CharacterEditNameNotAuth"));
 		}
 	}
 }

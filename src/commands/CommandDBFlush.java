@@ -30,6 +30,6 @@ public class CommandDBFlush extends Command
 		embed.descriptionText = "**Dirty:** " + numUpdated;
 		embed.color = Config.ColorDefault;
 		
-		res.CallEmbed(embed);
+		res.callEmbed(embed);
 	}
 }

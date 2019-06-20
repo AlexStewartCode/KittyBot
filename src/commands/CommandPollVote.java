@@ -17,7 +17,7 @@ public class CommandPollVote extends Command
 		{
 			if(guild.hasVoted.contains(user.uniqueID))
 			{
-				res.Call(LocStrings.stub("PollVoteAlreadyVoted"));
+				res.call(LocStrings.stub("PollVoteAlreadyVoted"));
 				return;
 			}
 			try 
@@ -25,23 +25,23 @@ public class CommandPollVote extends Command
 				int voteNum = Integer.parseInt(input.args)-1;
 				if(voteNum >= guild.choices.size() || voteNum < 0)
 				{
-					res.Call(String.format(LocStrings.stub("PollVoteNotValidVote"), voteNum));
+					res.call(String.format(LocStrings.stub("PollVoteNotValidVote"), voteNum));
 					return;
 				}
 				
 				KittyPoll polled = guild.choices.get(voteNum);
 				polled.votes++;
 				guild.hasVoted.add(user.uniqueID);
-				res.Call(LocStrings.stub("PollVoteSuccess") + " `" + polled.choice + "`!");
+				res.call(LocStrings.stub("PollVoteSuccess") + " `" + polled.choice + "`!");
 				return;
 			}
 			catch (NumberFormatException e)
 			{
-				res.Call(LocStrings.stub("PollVoteNotValidNumber"));
+				res.call(LocStrings.stub("PollVoteNotValidNumber"));
 				return;
 			}
 		}
 		
-		res.Call(LocStrings.stub("PollVoteNoPoll"));
+		res.call(LocStrings.stub("PollVoteNoPoll"));
 	}
 }

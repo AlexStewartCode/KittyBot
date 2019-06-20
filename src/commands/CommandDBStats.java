@@ -38,6 +38,6 @@ public class CommandDBStats extends Command
 		embed.descriptionText += "**Last Upkeep:** " + dateFormat.format(DatabaseManager.instance.getLastUpkeep()) + " UTC-7"; 
 		embed.color = Config.ColorDefault;
 		
-		res.CallEmbed(embed);
+		res.callEmbed(embed);
 	}
 }

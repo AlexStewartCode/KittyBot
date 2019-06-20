@@ -22,11 +22,11 @@ public class CommandRaffleEnd extends Command
 	{
 		if(guild.endRaffle())
 		{
-			res.Call(LocStrings.stub("RaffleEndSuccess"));
+			res.call(LocStrings.stub("RaffleEndSuccess"));
 		}
 		else
 		{
-			res.Call(LocStrings.stub("RaffleEndFailure"));
+			res.call(LocStrings.stub("RaffleEndFailure"));
 		}
 	}
 }

@@ -21,7 +21,7 @@ public class CommandWolfram extends Command
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.args == null || input.args.trim().length() == 0)
-			res.Call(LocStrings.stub("WolframNoArgs"));
+			res.call(LocStrings.stub("WolframNoArgs"));
 		
 		try 
 		{
@@ -31,7 +31,7 @@ public class CommandWolfram extends Command
 		} 
 		catch (IOException e)
 		{
-			res.Call(LocStrings.stub("WolframError"));
+			res.call(LocStrings.stub("WolframError"));
 		}
 	}
 }

@@ -15,7 +15,7 @@ public class CommandPollShow extends Command
 	{
 		if(!guild.polling)
 		{
-			res.Call(LocStrings.stub("PollShowNoPoll"));
+			res.call(LocStrings.stub("PollShowNoPoll"));
 			return;
 		}
 		String poll = String.format(LocStrings.stub("PollShowPoll"), guild.poll);
@@ -25,6 +25,6 @@ public class CommandPollShow extends Command
 			poll += (i+1) + ": `" + guild.choices.get(i).choice + "`\n";
 		}
 		
-		res.Call(poll);
+		res.call(poll);
 	}
 }

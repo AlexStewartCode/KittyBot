@@ -31,6 +31,6 @@ public class CommandPollResults extends Command
 			results += String.format(LocStrings.stub("PollResultsResponse"), votes.get(i).votes, votes.get(i).choice, (int)(((double)votes.get(i).votes) / ((double)totalVotes) * 100));
 		}
 		
-		res.Call(results);
+		res.call(results);
 	}
 }

@@ -30,7 +30,7 @@ public class Response
 	}
 	
 	// Builds a nicely formatted embedded message based on information provided
-	public void CallEmbed(KittyEmbed embedInfo)
+	public void callEmbed(KittyEmbed embedInfo)
 	{
 		EmbedBuilder embed = new EmbedBuilder();
 		
@@ -89,7 +89,7 @@ public class Response
 	}
 	
 	// Queues a standard text-based message response to the channel that issued the command.
-	public void Call(String toRespondWith)
+	public void call(String toRespondWith)
 	{
 		GlobalLog.Log(LogFilter.Response, "Sending response: " + toRespondWith);
 		if(toRespondWith.length() > discordMessageMax)

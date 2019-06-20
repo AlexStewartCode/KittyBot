@@ -16,13 +16,13 @@ public class CommandRole extends Command
 	{
 		if(input.args.isEmpty())
 		{
-			res.Call(LocStrings.stub("RoleStandardResponse") + " " + user.GetRole().name() + "!");
+			res.call(LocStrings.stub("RoleStandardResponse") + " " + user.GetRole().name() + "!");
 			return;
 		}
 		
 		if(user.GetRole().getValue() < KittyRole.Admin.getValue())
 		{
-			res.Call(String.format(LocStrings.stub("RoleError"), KittyRole.Admin.toString()));
+			res.call(String.format(LocStrings.stub("RoleError"), KittyRole.Admin.toString()));
 			return;
 		}
 		
@@ -46,7 +46,7 @@ public class CommandRole extends Command
 				break; 
 				
 			default:
-				res.Call(LocStrings.stub("RoleNeededRole"));
+				res.call(LocStrings.stub("RoleNeededRole"));
 				return;
 		}
 		String users = "";
@@ -56,6 +56,6 @@ public class CommandRole extends Command
 			users += input.mentions[i].name + " ";
 		}
 		
-		res.Call(String.format(LocStrings.stub("RoleChanged"), users, newRole.name()));
+		res.call(String.format(LocStrings.stub("RoleChanged"), users, newRole.name()));
 	}
 }

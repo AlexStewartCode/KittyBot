@@ -25,16 +25,16 @@ public class CommandGuildRoleAdd extends Command
 		{
 			if(guild.control.addRole(user.discordID, role))
 			{
-				res.Call(String.format(LocStrings.stub("GuildRoleAddSuccess"), role, user.name));
+				res.call(String.format(LocStrings.stub("GuildRoleAddSuccess"), role, user.name));
 			}
 			else
 			{
-				res.Call(String.format(LocStrings.stub("GuildRoleAddFailure"), role, user.name));
+				res.call(String.format(LocStrings.stub("GuildRoleAddFailure"), role, user.name));
 			}
 		}
 		else
 		{
-			res.Call(String.format(LocStrings.stub("GuildRoleAddNotAllowed"), role));
+			res.call(String.format(LocStrings.stub("GuildRoleAddNotAllowed"), role));
 		}
 	}
 }

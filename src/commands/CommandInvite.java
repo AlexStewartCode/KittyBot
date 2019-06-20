@@ -15,7 +15,7 @@ public class CommandInvite extends Command
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		res.Call("https://discordapp.com/oauth2/authorize?&client_id="+ Ref.CliID 
+		res.call("https://discordapp.com/oauth2/authorize?&client_id="+ Ref.CliID 
 				+"&scope=bot&permissions=8");
 	}
 }

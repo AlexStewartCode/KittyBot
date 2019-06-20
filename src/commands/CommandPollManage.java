@@ -22,15 +22,15 @@ public class CommandPollManage extends Command
 		switch(input.args.split(" ")[0].toLowerCase())
 		{
 		case "start":
-			res.Call(guild.startPoll(input.args.substring(input.args.indexOf(' ')).trim()));
+			res.call(guild.startPoll(input.args.substring(input.args.indexOf(' ')).trim()));
 			break;
 			
 		case "choice":
-			res.Call(guild.addChoiceToPoll(input.args.substring(input.args.indexOf(' ')).trim()));
+			res.call(guild.addChoiceToPoll(input.args.substring(input.args.indexOf(' ')).trim()));
 			break;
 			
 		case "stop":
-			res.Call(guild.endPoll());
+			res.call(guild.endPoll());
 			break; 
 		
 		default:

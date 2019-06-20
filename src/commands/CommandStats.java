@@ -66,6 +66,6 @@ public class CommandStats extends Command
 			+ " Cached Users: " + userCount;
 		out += "\n```";
 		
-		res.Call(out);
+		res.call(out);
 	}
 }

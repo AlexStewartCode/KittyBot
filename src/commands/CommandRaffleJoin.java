@@ -22,11 +22,11 @@ public class CommandRaffleJoin extends Command
 	{
 		if(guild.joinRaffle(user))
 		{
-			res.Call(LocStrings.stub("RaffleJoinSuccess"));
+			res.call(LocStrings.stub("RaffleJoinSuccess"));
 		}
 		else
 		{
-			res.Call(LocStrings.stub("RaffleJoinFailure"));
+			res.call(LocStrings.stub("RaffleJoinFailure"));
 		}
 	}
 }

@@ -27,6 +27,6 @@ public class CommandRPStart extends Command
 			}
 		}
 		
-		res.Call(RPManager.instance.newRP(channel, users));
+		res.call(RPManager.instance.newRP(channel, users));
 	}
 }

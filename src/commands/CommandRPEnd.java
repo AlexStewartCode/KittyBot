@@ -33,11 +33,11 @@ public class CommandRPEnd extends Command
 		if(sending != null)
 		{
 			res.CallFile(sending, "txt");
-			res.Call(LocStrings.stub("RPEndFileOut"));
+			res.call(LocStrings.stub("RPEndFileOut"));
 		}
 		else
 		{
-			res.Call(LocStrings.stub("RPEndError"));
+			res.call(LocStrings.stub("RPEndError"));
 		}
 	}
 }

@@ -20,21 +20,21 @@ public class CommandCharacterSearch extends Command
 		ArrayList <KittyCharacter> characters = CharacterManager.instance.searchCharacter(input.args);
 		if(characters.size() < 1)
 		{
-			res.Call(LocStrings.stub("CharacterSearchNoCharacterFound"));
+			res.call(LocStrings.stub("CharacterSearchNoCharacterFound"));
 			return;
 		}
 		if(characters.size() > 1)
 		{
-			res.Call(LocStrings.stub("CharacterSearchMultipleCharacterHeader"));
+			res.call(LocStrings.stub("CharacterSearchMultipleCharacterHeader"));
 			for(KittyCharacter character:characters)
 			{
-				res.Call(String.format(LocStrings.stub("CharacterSearchMultipleCharacter"), character.getName(), character.getOwner().name, character.getUID()));
+				res.call(String.format(LocStrings.stub("CharacterSearchMultipleCharacter"), character.getName(), character.getOwner().name, character.getUID()));
 			}
 			return;
 		}
 		else
 		{
-			res.Call(String.format(LocStrings.stub("CharacterSearchOneCharacter"), characters.get(0).getOwner().name, characters.get(0).getName(), characters.get(0).getBio(), characters.get(0).getRefImage(), characters.get(0).getUID()));
+			res.call(String.format(LocStrings.stub("CharacterSearchOneCharacter"), characters.get(0).getOwner().name, characters.get(0).getName(), characters.get(0).getBio(), characters.get(0).getRefImage(), characters.get(0).getUID()));
 		}
 	}
 }

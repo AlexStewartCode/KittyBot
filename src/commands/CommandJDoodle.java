@@ -19,10 +19,10 @@ public class CommandJDoodle extends Command
 	{
 		if(input.args.trim().length() < 1)
 		{
-			res.Call(LocStrings.stub("JDoodleError"));
+			res.call(LocStrings.stub("JDoodleError"));
 			return;
 		}
 		
-		res.Call(compiler.compileJava(input.args));
+		res.call(compiler.compileJava(input.args));
 	}
 }

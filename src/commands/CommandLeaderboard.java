@@ -94,6 +94,6 @@ public class CommandLeaderboard extends Command
 		}
 		
 		// Write out embed result
-		res.CallEmbed(embed);
+		res.callEmbed(embed);
 	}
 }

@@ -41,8 +41,8 @@ public class CommandEightBall extends Command
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.args.trim().length() < 1)
-			res.Call(LocStrings.stub("EightBallError"));
+			res.call(LocStrings.stub("EightBallError"));
 		
-		res.Call(answers[(int) (Math.random()*answers.length)]);
+		res.call(answers[(int) (Math.random()*answers.length)]);
 	}
 }

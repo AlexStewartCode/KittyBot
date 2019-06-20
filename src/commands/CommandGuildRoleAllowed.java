@@ -27,12 +27,12 @@ public class CommandGuildRoleAllowed extends Command
 			role = roles[i].trim();
 			if(guild.roleList.contains(role))
 			{
-				res.Call(LocStrings.stub("GuildRoleAllowedDuplicate"));
+				res.call(LocStrings.stub("GuildRoleAllowedDuplicate"));
 			}
 			else
 			{
 				guild.roleList.add(role);
-				res.Call(String.format(LocStrings.stub("GuildRoleAllowedSuccess"), role));
+				res.call(String.format(LocStrings.stub("GuildRoleAllowedSuccess"), role));
 			}
 		}
 	}

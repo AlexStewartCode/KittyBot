@@ -20,6 +20,6 @@ public class CommandInfo extends Command
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		res.Call(LocStrings.stub("InfoResponse"));
+		res.call(LocStrings.stub("InfoResponse"));
 	}
 }

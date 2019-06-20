@@ -21,18 +21,18 @@ public class CommandCharacterEditURL extends Command
 		}
 		catch(Exception e)
 		{
-			res.Call(LocStrings.stub("CharacterEditURLNotValid"));
+			res.call(LocStrings.stub("CharacterEditURLNotValid"));
 			return;
 		}
 		KittyCharacter character = CharacterManager.instance.searchCharacter(input.args.split(" ")[0]).get(0);
 		if(character.getOwner().equals(user))
 		{
 			CharacterManager.instance.editRefImage(character, input.args.substring(input.args.indexOf(' ')));
-			res.Call(LocStrings.stub("CharacterEditURLSuccess"));
+			res.call(LocStrings.stub("CharacterEditURLSuccess"));
 		}
 		else
 		{
-			res.Call(LocStrings.stub("CharacterEditURLNotAuth"));
+			res.call(LocStrings.stub("CharacterEditURLNotAuth"));
 		}
 	}
 }

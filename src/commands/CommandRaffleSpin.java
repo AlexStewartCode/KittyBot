@@ -22,11 +22,11 @@ public class CommandRaffleSpin extends Command
 	{
 		try
 		{
-			res.Call(String.format(LocStrings.stub("RaffleSpinSuccess"), guild.chooseRaffleWinner().name));
+			res.call(String.format(LocStrings.stub("RaffleSpinSuccess"), guild.chooseRaffleWinner().name));
 		}
 		catch(Exception e)
 		{
-			res.Call(LocStrings.stub("RaffleSpinFailure"));
+			res.call(LocStrings.stub("RaffleSpinFailure"));
 		}
 	}
 }
