@@ -39,7 +39,7 @@ public class CommandRPG extends Command
 		String result = null;
 		synchronized(framework)
 		{
-			result = framework.Run(user.uniqueID, input.args.trim());
+			result = framework.run(user.uniqueID, input.args.trim());
 		}
 		
 		if(result == null)

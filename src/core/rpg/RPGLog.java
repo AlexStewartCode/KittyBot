@@ -5,7 +5,7 @@ import utils.LogFilter;
 
 public class RPGLog 
 {
-	public static void Log(String toWrite)
+	public static void log(String toWrite)
 	{
 		GlobalLog.Log(LogFilter.Command, "[RPG] " + toWrite);
 	}
