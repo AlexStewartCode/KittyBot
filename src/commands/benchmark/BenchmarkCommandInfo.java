@@ -14,7 +14,7 @@ public class BenchmarkCommandInfo extends BenchmarkCommand
 {
 	static final String lineDelimiter = "\n";
 	
-	public static String FormatInfo(BenchmarkEntry entry)
+	public static String formatInfo(BenchmarkEntry entry)
 	{
 		String output = "";
 		
