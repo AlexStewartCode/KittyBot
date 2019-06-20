@@ -35,7 +35,7 @@ public class DatabaseManager
 	// Constructor to enforce singleton.
 	public DatabaseManager()
 	{
-		GlobalLog.Log(LogFilter.Database, "Creating database manager");
+		GlobalLog.log(LogFilter.Database, "Creating database manager");
 		
 		if(instance == null)
 		{
@@ -43,7 +43,7 @@ public class DatabaseManager
 		}
 		else
 		{
-			GlobalLog.Error(LogFilter.Database, "Attempted to register a second DataBase manager!");
+			GlobalLog.error(LogFilter.Database, "Attempted to register a second DataBase manager!");
 			return;
 		}
 		
@@ -59,13 +59,13 @@ public class DatabaseManager
 		// Connect data sets
 		if(globalDataDriver.connect() == false)
 		{
-			GlobalLog.Error("Global database failed to connect. Without this DB, this bot can not run.");
+			GlobalLog.error("Global database failed to connect. Without this DB, this bot can not run.");
 			System.exit(1);
 		}
 		
 		if(characterDataDriver.connect() == false)
 		{
-			GlobalLog.Error("Character database failed to connect. Without this DB, this bot can not run.");
+			GlobalLog.error("Character database failed to connect. Without this DB, this bot can not run.");
 			System.exit(1);
 		}
 	}

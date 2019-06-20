@@ -23,7 +23,7 @@ public class RPManager
 		}
 		else
 		{
-			GlobalLog.Error(LogFilter.Core, "Attempted to create a second RP Manager!");
+			GlobalLog.error(LogFilter.Core, "Attempted to create a second RP Manager!");
 			return;
 		}
 	}

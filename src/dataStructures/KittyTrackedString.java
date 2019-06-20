@@ -49,7 +49,7 @@ public class KittyTrackedString extends DatabaseTrackedObject
 		}
 		else
 		{
-			GlobalLog.Log(LogFilter.Database, "String had null or empty value with identifier: " + identifier); 
+			GlobalLog.log(LogFilter.Database, "String had null or empty value with identifier: " + identifier); 
 			string = "";
 			markDirty();
 		}

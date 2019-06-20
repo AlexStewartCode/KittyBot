@@ -54,7 +54,7 @@ public class CommandTeey extends Command
 			
 			teeyeeFile = new File(yeeteeFilename);
 			ImageOverlayBuilder builder = new ImageOverlayBuilder("assets/teey/frames/", "teey ", 24, 18);
-			builder.Overlay(ImageIO.read(teeyeeFile), name);
+			builder.overlay(ImageIO.read(teeyeeFile), name);
 		} 
 		catch (IOException e) 
 		{
@@ -65,7 +65,7 @@ public class CommandTeey extends Command
 		res.sendFile(teeyFile, "gif");
 
 		// Thread cleanup...
-		ImageUtils.BlockingFileDelete(teeyFile);
-		ImageUtils.BlockingFileDelete(teeyeeFile);
+		ImageUtils.blockingFileDelete(teeyFile);
+		ImageUtils.blockingFileDelete(teeyeeFile);
 	}
 }

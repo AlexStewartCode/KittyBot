@@ -43,18 +43,18 @@ public class CommandMap extends Command
 		{
 			OptionParser parser = new OptionParser(input.args);
 			
-			String seedStr = parser.GetOption("-s", true);
+			String seedStr = parser.getOption("-s", true);
 			if(seedStr != null)
 			{
 				seed = Long.parseLong(seedStr);
 				hasSeed = true;
 			}
 		
-			String widthStr = parser.GetOption("-w", true);
+			String widthStr = parser.getOption("-w", true);
 			if(widthStr != null)
 				width = ValidateSize(Integer.parseInt(widthStr), MaxWidth);
 			
-			String heightStr = parser.GetOption("-h", true);
+			String heightStr = parser.getOption("-h", true);
 			if(heightStr != null)
 				height = ValidateSize(Integer.parseInt(heightStr), MaxHeight);
 		}

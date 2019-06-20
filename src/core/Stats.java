@@ -31,7 +31,7 @@ public class Stats
 		}
 		else
 		{
-			GlobalLog.Error(LogFilter.Core, "Attempted to create a second Stats singleton!");
+			GlobalLog.error(LogFilter.Core, "Attempted to create a second Stats singleton!");
 			return;
 		}
 		

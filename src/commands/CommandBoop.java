@@ -42,7 +42,7 @@ public class CommandBoop extends Command
 			}
 			catch (NumberFormatException e)
 			{
-				GlobalLog.Warn(LogFilter.Command, "No valid value was found for boops! Starting over at 0!");
+				GlobalLog.warn(LogFilter.Command, "No valid value was found for boops! Starting over at 0!");
 				boops = 0;
 				markDirty();
 			}

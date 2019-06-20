@@ -35,7 +35,7 @@ public class BenchmarkManager
 		
 		rebuildLookup();
 		
-		BenchmarkLog.log("Took " + (Instant.now().toEpochMilli() - start) + " ms to load " + raw.size() + " entries from " + directoryMonitor.GetCurrentFiles().size() + " file" + (raw.size() > 1 ? "s" : ""));
+		BenchmarkLog.log("Took " + (Instant.now().toEpochMilli() - start) + " ms to load " + raw.size() + " entries from " + directoryMonitor.getCurrentFiles().size() + " file" + (raw.size() > 1 ? "s" : ""));
 	}
 	
 	// Rebuilds the files being monitored
@@ -50,14 +50,14 @@ public class BenchmarkManager
 			
 			synchronized(directoryMonitor)
 			{
-				files = directoryMonitor.GetCurrentFiles();
+				files = directoryMonitor.getCurrentFiles();
 			}
 			
 			if(files != null)
 			{
 				for(MonitoredFile mf : files)
 				{
-					String contents = FileUtils.ReadContent(mf.path);
+					String contents = FileUtils.readContent(mf.path);
 					String[] lines = contents.split(lineDelimiter);
 					
 					for(int i = 1; i < lines.length; ++i)
@@ -169,7 +169,7 @@ public class BenchmarkManager
 	public void update()
 	{
 		needsUpdate = false;
-		directoryMonitor.Update(this::onRescan, this::onRescan, this::onRescan);
+		directoryMonitor.update(this::onRescan, this::onRescan, this::onRescan);
 		
 		if(needsUpdate)
 			rebuildLookup();

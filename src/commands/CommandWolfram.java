@@ -27,7 +27,7 @@ public class CommandWolfram extends Command
 		{
 			File pic = new File(searcher.getWolfram(input.args));
 			res.sendFile(pic, "png");
-			ImageUtils.BlockingFileDelete(pic);
+			ImageUtils.blockingFileDelete(pic);
 		} 
 		catch (IOException e)
 		{

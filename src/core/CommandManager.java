@@ -59,11 +59,11 @@ public class CommandManager
 		
 		if(old != null)
 		{
-			GlobalLog.Warn(LogFilter.Core, "Writing over a command with the key " + key);
+			GlobalLog.warn(LogFilter.Core, "Writing over a command with the key " + key);
 			return;
 		}
 		
-		GlobalLog.Log(LogFilter.Core, "Command registered under key " + key);
+		GlobalLog.log(LogFilter.Core, "Command registered under key " + key);
 	}
 	
 	// Registers a command under multiple names!
@@ -91,7 +91,7 @@ public class CommandManager
 		}
 		else
 		{
-			GlobalLog.Warn(LogFilter.Command, "User " + user.name + " tried to invoke command that doesn't exist: " + input.key);
+			GlobalLog.warn(LogFilter.Command, "User " + user.name + " tried to invoke command that doesn't exist: " + input.key);
 			return false;
 		}
 	}

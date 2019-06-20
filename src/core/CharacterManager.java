@@ -24,7 +24,7 @@ public class CharacterManager
 		}
 		else
 		{
-			GlobalLog.Error(LogFilter.Core, "Attempted to create a second CharacterManager singleton!");
+			GlobalLog.error(LogFilter.Core, "Attempted to create a second CharacterManager singleton!");
 			return;
 		}
 	}

@@ -63,13 +63,13 @@ public class CommandHelpBuilder extends Command {
 		} 
 		catch (FileNotFoundException e)
 		{
-			GlobalLog.Error(e.toString());
+			GlobalLog.error(e.toString());
 			return;
 		}
 		
 		File file = new File(filename);
 		res.sendFile(file, "txt");
-		ImageUtils.BlockingFileDelete(file);
+		ImageUtils.blockingFileDelete(file);
 	}
 	
 	// Generates the section for a specific role, optionally adding spacing after for another section 

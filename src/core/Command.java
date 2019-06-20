@@ -28,7 +28,7 @@ public abstract class Command
 	
 	private void reject(KittyUser user, String reason)
 	{
-		GlobalLog.Warn(LogFilter.Command, this.getClass().getSimpleName() + " from " + user.name + " rejected due to command's " + reason);
+		GlobalLog.warn(LogFilter.Command, this.getClass().getSimpleName() + " from " + user.name + " rejected due to command's " + reason);
 	}
 	
 	// Determine if we're exclusive enough for this command and 

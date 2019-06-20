@@ -32,7 +32,7 @@ public class CommandColor extends Command
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		// First, try and parse out the color to make sure we can even get it.
-		ColorData colorData = theColorAPI.LookupHex(input.args.trim());
+		ColorData colorData = theColorAPI.lookupHex(input.args.trim());
 		
 		// Verify the color was even found
 		if(colorData == null)
@@ -77,7 +77,7 @@ public class CommandColor extends Command
 		
 		// Send then delete the temp local files
 		res.send(response);
-		ImageUtils.BlockingFileDelete(file);
+		ImageUtils.blockingFileDelete(file);
 	};
 	
 }

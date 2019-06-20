@@ -30,9 +30,9 @@ public abstract class BaseLocFile
 	protected TaggedPairStore stringStore; 
 	
 	// Logging
-	private void log(String str) { GlobalLog.Log(LogFilter.Strings, str); }
-	private void warn(String str) { GlobalLog.Warn(LogFilter.Strings, str); }
-	private void error(String str) { GlobalLog.Error(LogFilter.Strings, str); }
+	private void log(String str) { GlobalLog.log(LogFilter.Strings, str); }
+	private void warn(String str) { GlobalLog.warn(LogFilter.Strings, str); }
+	private void error(String str) { GlobalLog.error(LogFilter.Strings, str); }
 	
 	// File monitoring
 	protected FileMonitor fileMonitor;
@@ -49,7 +49,7 @@ public abstract class BaseLocFile
 	{
 		synchronized(stringStore)
 		{
-			fileMonitor.Update(this::onFileChange);
+			fileMonitor.update(this::onFileChange);
 		}
 	}
 	
@@ -80,7 +80,7 @@ public abstract class BaseLocFile
 		String filename = path.getFileName().toString();
 		if(filename.contains(".java"))
 		{
-			String contents = FileUtils.ReadContent(path);
+			String contents = FileUtils.readContent(path);
 			String[] split = contents.split(functionName);
 			
 			// Identify all localizer function calls
@@ -203,7 +203,7 @@ public abstract class BaseLocFile
 	public void scrapeAll()
 	{
 		ArrayList<LocInfo> localizeList = new ArrayList<LocInfo>();
-		FileUtils.AcquireAllFiles(KittySourceDirectory).forEach((path) -> tryStripSpecified(path, localizeList));
+		FileUtils.acquireAllFiles(KittySourceDirectory).forEach((path) -> tryStripSpecified(path, localizeList));
 				
 		for(LocInfo toStub : localizeList)
 			stringStore.addKeyValue(toStub.file, toStub.phrase, toStub.phrase);

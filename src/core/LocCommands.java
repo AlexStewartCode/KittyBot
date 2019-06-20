@@ -19,7 +19,7 @@ public class LocCommands extends BaseLocFile
 	{
 		super(fileName, function);
 		
-		GlobalLog.Log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
+		GlobalLog.log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
 		
 		if(instance == null)
 		{
@@ -33,7 +33,7 @@ public class LocCommands extends BaseLocFile
 		}
 		else
 		{
-			GlobalLog.Error(LogFilter.Core, "You can't have two of the following: " + this.getClass().getSimpleName());
+			GlobalLog.error(LogFilter.Core, "You can't have two of the following: " + this.getClass().getSimpleName());
 		}
 	}
 

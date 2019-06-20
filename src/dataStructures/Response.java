@@ -90,7 +90,7 @@ public class Response
 	// Queues a standard text-based message response to the channel that issued the command.
 	public void send(String toRespondWith)
 	{
-		GlobalLog.Log(LogFilter.Response, "Sending response: " + toRespondWith);
+		GlobalLog.log(LogFilter.Response, "Sending response: " + toRespondWith);
 		if(toRespondWith.length() > discordMessageMax)
 		{
 			event.getChannel().sendMessage(toRespondWith.substring(0, kittyMessageMax) + "\n\nI think that's enough!").queue();
@@ -119,7 +119,7 @@ public class Response
 	// Immediately dispatches the message to the channel that issued the command.
 	public void sendImmediate(String toRespondWith)
 	{
-		GlobalLog.Log(LogFilter.Response, "Sending immediate response: " + toRespondWith);
+		GlobalLog.log(LogFilter.Response, "Sending immediate response: " + toRespondWith);
 		if(toRespondWith.length() > discordMessageMax)
 		{
 			event.getChannel().sendMessage(toRespondWith.substring(0, kittyMessageMax) + "\n\nI think that's enough!");
@@ -133,14 +133,14 @@ public class Response
 	// Queues a file response to the channel that issued the command.
 	public void sendFile(File toRespondWith, String extension)
 	{
-		GlobalLog.Log(LogFilter.Response, "Sending file response");
+		GlobalLog.log(LogFilter.Response, "Sending file response");
 		event.getChannel().sendFile(toRespondWith, "return." + extension).queue();
 	}
 
 	// Queues an input stream response to the channel that issued the command.
 	public void sendFile(InputStream in, String extension) 
 	{
-		GlobalLog.Log(LogFilter.Response, "Sending input stream response");
+		GlobalLog.log(LogFilter.Response, "Sending input stream response");
 		event.getChannel().sendFile(in, "return." + extension).queue();
 	}
 }

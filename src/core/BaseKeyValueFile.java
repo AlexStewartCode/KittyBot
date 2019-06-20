@@ -38,7 +38,7 @@ public class BaseKeyValueFile
 		File f = new File(filename);
 		if(f.isFile() && f.canRead())
 		{
-			String content = FileUtils.ReadContent(f).trim();
+			String content = FileUtils.readContent(f).trim();
 			String[] lines = content.split("" + pairSeparator);
 			
 			for(int i = 0; i < lines.length; ++i)
@@ -84,7 +84,7 @@ public class BaseKeyValueFile
 		}
 		catch (IOException e)
 		{
-			GlobalLog.Error(LogFilter.Core,  "Issue writing file " + filename + ": " + e.getMessage());
+			GlobalLog.error(LogFilter.Core,  "Issue writing file " + filename + ": " + e.getMessage());
 		}
 	}
 }

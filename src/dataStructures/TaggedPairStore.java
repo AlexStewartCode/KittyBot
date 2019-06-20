@@ -93,8 +93,8 @@ public class TaggedPairStore
 				Map.Entry internalPair = (Map.Entry)internal.next();
 				String key = (String)internalPair.getKey();
 				String value = (String)internalPair.getValue();
-				key = StringUtils.ReEscape(key);
-				value = StringUtils.ReEscape(value);
+				key = StringUtils.reEscape(key);
+				value = StringUtils.reEscape(value);
 				
 				if(key.endsWith("\\r"))
 				{
@@ -160,8 +160,8 @@ public class TaggedPairStore
 				
 				String key = line.substring(0, splitPos);
 				String value = line.substring(splitPos + PairSplit.length());
-				key = StringUtils.UnEscape(key);
-				value = StringUtils.UnEscape(value);
+				key = StringUtils.unEscape(key);
+				value = StringUtils.unEscape(value);
 				
 				taggedPairs.get(sectionName).putIfAbsent(key, value);
 				allPairs.putIfAbsent(key, value);

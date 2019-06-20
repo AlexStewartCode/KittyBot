@@ -54,7 +54,7 @@ public class CommandCatch extends Command
 			
 			catcheeFile = new File(catchFilename);
 			ImageOverlayBuilder builder = new ImageOverlayBuilder("assets/catch/frames/", "catch ", 92, 18);
-			builder.Overlay(ImageIO.read(catcheeFile), name);
+			builder.overlay(ImageIO.read(catcheeFile), name);
 		} 
 		catch (IOException e) 
 		{
@@ -65,7 +65,7 @@ public class CommandCatch extends Command
 		res.sendFile(catchFile, "gif");
 
 		// Thread cleanup...
-		ImageUtils.BlockingFileDelete(catchFile);
-		ImageUtils.BlockingFileDelete(catcheeFile);
+		ImageUtils.blockingFileDelete(catchFile);
+		ImageUtils.blockingFileDelete(catcheeFile);
 	}
 }

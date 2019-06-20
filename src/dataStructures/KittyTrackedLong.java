@@ -71,7 +71,7 @@ public class KittyTrackedLong extends DatabaseTrackedObject
 			catch(Exception e)
 			{
 				tracked = 0;
-				GlobalLog.Error(LogFilter.Core, "Falling back to default of 0 due to failure to deserialize long with database ID " + identifier);
+				GlobalLog.error(LogFilter.Core, "Falling back to default of 0 due to failure to deserialize long with database ID " + identifier);
 			}
 		}
 		else

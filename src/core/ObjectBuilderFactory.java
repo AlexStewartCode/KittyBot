@@ -99,7 +99,7 @@ public class ObjectBuilderFactory
 		}
 		catch(InterruptedException ie)
 		{
-			GlobalLog.Error(LogFilter.Core, "Issue during object builder lazy initialization."
+			GlobalLog.error(LogFilter.Core, "Issue during object builder lazy initialization."
 				+ " The factory was not initialized, and kitty will not be able to continue functionally.");
 		}
 	}

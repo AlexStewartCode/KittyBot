@@ -48,14 +48,14 @@ public class CommandShutdown extends Command
 			// Force upkeep, this works so long as upkeep is on the main thread.
 			res.sendImmediate(LocStrings.stub("ShutdownSafe"));
 			DatabaseManager.instance.upkeep(); 
-			GlobalLog.Warn(LogFilter.Command, LocStrings.lookup("ShutdownSafe"));
+			GlobalLog.warn(LogFilter.Command, LocStrings.lookup("ShutdownSafe"));
 			
 			System.exit(0);
 		}
 		else
 		{
 			res.sendImmediate(LocStrings.stub("ShutdownUnsafe"));// "``");
-			GlobalLog.Warn(LogFilter.Command, LocStrings.lookup("ShutdownSafe"));
+			GlobalLog.warn(LogFilter.Command, LocStrings.lookup("ShutdownSafe"));
 			System.exit(0);
 		}
 	}

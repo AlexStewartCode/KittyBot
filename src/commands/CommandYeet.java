@@ -54,7 +54,7 @@ public class CommandYeet extends Command
 			
 			yeeteeFile = new File(yeeteeFilename);
 			ImageOverlayBuilder builder = new ImageOverlayBuilder("assets/yeet/frames/", "yeet ", 24, 18);
-			builder.Overlay(ImageIO.read(yeeteeFile), name);
+			builder.overlay(ImageIO.read(yeeteeFile), name);
 		} 
 		catch (IOException e) 
 		{
@@ -65,7 +65,7 @@ public class CommandYeet extends Command
 		res.sendFile(yeetFile, "gif");
 
 		// Thread cleanup...
-		ImageUtils.BlockingFileDelete(yeetFile);
-		ImageUtils.BlockingFileDelete(yeeteeFile);
+		ImageUtils.blockingFileDelete(yeetFile);
+		ImageUtils.blockingFileDelete(yeeteeFile);
 	}
 }

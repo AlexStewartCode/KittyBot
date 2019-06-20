@@ -69,8 +69,8 @@ public class CommandPerish  extends Command
 		postProcessed = new File(name);
 		res.sendFile(postProcessed, "png");
 		
-		ImageUtils.BlockingFileDelete(preProcessed);
-		ImageUtils.BlockingFileDelete(postProcessed);
+		ImageUtils.blockingFileDelete(preProcessed);
+		ImageUtils.blockingFileDelete(postProcessed);
 	}
 	
 	private static void ApplyTintEffect(BufferedImage image, String name) throws IOException

@@ -32,7 +32,7 @@ public class CommandLeaderboard extends Command
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		// Start by force-flushing. We need to be up-to-date.
-		GlobalLog.Log("Flushed database for " + DatabaseManager.instance.upkeep() + " items.");
+		GlobalLog.log("Flushed database for " + DatabaseManager.instance.upkeep() + " items.");
 		
 		// Get all users associated with a guild and get their bean count
 		String guildID = guild.uniqueID;
@@ -74,7 +74,7 @@ public class CommandLeaderboard extends Command
 			return (int)difference;
 		});
 		
-		GlobalLog.Log(LogFilter.Command, "Sorted through " + users.size() + " KittyUsers for leaderboard purposes.");
+		GlobalLog.log(LogFilter.Command, "Sorted through " + users.size() + " KittyUsers for leaderboard purposes.");
 		
 		// Configure output
 		final int listSize = 10;

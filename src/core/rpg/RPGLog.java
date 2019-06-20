@@ -7,6 +7,6 @@ public class RPGLog
 {
 	public static void log(String toWrite)
 	{
-		GlobalLog.Log(LogFilter.Command, "[RPG] " + toWrite);
+		GlobalLog.log(LogFilter.Command, "[RPG] " + toWrite);
 	}
 }

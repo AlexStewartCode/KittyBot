@@ -87,7 +87,7 @@ public class KittyUser extends DatabaseTrackedObject
 			String[] strings = prepareFromString(string);
 			if(strings.length < 2)
 			{
-				GlobalLog.Log(LogFilter.Database, "Upgrading user " + name + " to include 'role' in DB");
+				GlobalLog.log(LogFilter.Database, "Upgrading user " + name + " to include 'role' in DB");
 				
 				// Mark ourselves dirty to re-write the role information stored in the user.
 				// Just uses defaults from earlier again.
@@ -101,7 +101,7 @@ public class KittyUser extends DatabaseTrackedObject
 		}
 		catch (NumberFormatException e)
 		{
-			GlobalLog.Warn(LogFilter.Database, "Invalid user data for user " + name + "! "
+			GlobalLog.warn(LogFilter.Database, "Invalid user data for user " + name + "! "
 					+ "Starting over at 0 beans with a general role!");
 			
 			// We don't need to specify the role at this point because it is set at this point.

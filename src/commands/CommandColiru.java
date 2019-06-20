@@ -23,7 +23,7 @@ public class CommandColiru extends Command
 			return;
 		}
 		
-		res.send(compiler.compileCPlus(input.args));
+		res.send(compiler.compileCPlusPlus(input.args));
 	}
 
 }

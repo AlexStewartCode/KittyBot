@@ -30,7 +30,7 @@ public class CommandEnabler extends BaseKeyValueFile
 		super(name);
 		
 		// Create/Init variables
-		GlobalLog.Log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
+		GlobalLog.log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
 		enabledMap = new HashMap<>();
 		keyList = new ArrayList<>();
 		
@@ -68,7 +68,7 @@ public class CommandEnabler extends BaseKeyValueFile
 			
 			if(enabledMap.putIfAbsent(command, defaultEnabledState) == null)
 			{
-				GlobalLog.Log(LogFilter.Strings, "Identified new toggleable raw command: " + command);
+				GlobalLog.log(LogFilter.Strings, "Identified new toggleable raw command: " + command);
 				keyList.add(command);
 			}
 		}
