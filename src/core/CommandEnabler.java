@@ -13,7 +13,7 @@ import utils.LogFilter;
 // commands that are being looked up will behave slightly differently so trimming
 // rules for this file are different than the localization ones - this is more 
 // aggresive with whitespace removal.
-public class CommandEnabler extends BaseKeyValueFile
+public class CommandEnabler extends BaseKeyValueFile implements IConfigSection
 {
 	// Config/const variables
 	public static final String enabled = "1";
@@ -105,5 +105,29 @@ public class CommandEnabler extends BaseKeyValueFile
 			return enabledMap.get(toCheck);
 		
 		return true;
+	}
+
+	@Override
+	public String getHeader() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void preUpdate() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getContent() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

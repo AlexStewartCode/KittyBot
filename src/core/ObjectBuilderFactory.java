@@ -58,7 +58,7 @@ public class ObjectBuilderFactory
 	@SuppressWarnings("unused") private static LocCommands locCommands;
 	
 	// Config
-	private static Config config;
+	@SuppressWarnings("unused") private static Config config;
 	
 	// Lazy initialization multithreaded mutex stuff to prevent explosions.
 	// TODO: Investigate using 'synchronized' instead potentially
@@ -85,7 +85,9 @@ public class ObjectBuilderFactory
 				database = null;
 				stats = null;
 				
-				// Create the config. We need to do this all first.
+				// Start by reading from things that are external. Because
+				// we require these things to be resolved before the rest of the application,
+				// we place them here.
 				config = new Config();
 			}
 			finally

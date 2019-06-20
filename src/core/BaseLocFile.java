@@ -1,19 +1,13 @@
 package core;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import dataStructures.TaggedPairStore;
 import utils.GlobalLog;
 import utils.LogFilter;
 import utils.io.FileMonitor;
 import utils.io.FileUtils;
-import utils.io.MonitoredFile;
+
 
 // A quick-and-dirty localization tool that scrapes the project for calls to itself, then
 // generates/updates a file externally with all the stub values as keys that are localized.

@@ -2,9 +2,8 @@ package main;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import core.Config;
 import core.DatabaseManager;
-import core.LocCommands;
-import core.LocStrings;
 import core.RPManager;
 import core.Stats;
 import dataStructures.KittyChannel;
@@ -74,9 +73,8 @@ public class Superintendent
 	// Happens just before the command / plugin runs.
 	public static boolean perCommandUpkeepPre()
 	{
-		// Upkeep localization system's file monitoring
-		LocStrings.upkeep();
-		LocCommands.upkeep();
+		// Upkeep the config file monitoring
+		Config.instance.upkeep();
 		
 		return true;
 	}
