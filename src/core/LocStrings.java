@@ -40,9 +40,4 @@ public class LocStrings extends BaseLocFile
 	{
 		return instance.getKey(stubbedPreviously);
 	}
-	
-	public static void upkeep()
-	{
-		instance.update();
-	}
 }

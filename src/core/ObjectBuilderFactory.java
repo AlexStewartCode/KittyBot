@@ -57,8 +57,8 @@ public class ObjectBuilderFactory
 	@SuppressWarnings("unused") private static LocStrings locStrings;
 	@SuppressWarnings("unused") private static LocCommands locCommands;
 	
-	// Handles if we can or can't use specific commands, parsing a config file based on loc data to do so.
-	private static CommandEnabler commandEnabler;
+	// Config
+	private static Config config;
 	
 	// Lazy initialization multithreaded mutex stuff to prevent explosions.
 	// TODO: Investigate using 'synchronized' instead potentially
@@ -85,11 +85,8 @@ public class ObjectBuilderFactory
 				database = null;
 				stats = null;
 				
-				// Start by reading from things that are external. Because
-				// we require these things to be resolved before the rest of the application,
-				// we place them here.
-				locStrings = new LocStrings();
-				locCommands = new LocCommands();
+				// Create the config. We need to do this all first.
+				config = new Config();
 			}
 			finally
 			{
@@ -440,17 +437,6 @@ public class ObjectBuilderFactory
 		manager.register(LocCommands.stub("color, colour"), new CommandColor(KittyRole.General, KittyRating.Safe));
 		
 		return manager;
-	}
-	
-	// Constructs a CommandEnabler if it doesn't exist, and gets the existing one if it does. 
-	public static CommandEnabler constructCommandEnabler()
-	{
-		lazyInit();
-
-		if(commandEnabler == null)
-			commandEnabler = new CommandEnabler();
-		
-		return commandEnabler;
 	}
 	
 	// Default database manager construction. It can be constructed 
