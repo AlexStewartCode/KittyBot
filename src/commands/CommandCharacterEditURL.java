@@ -10,10 +10,10 @@ public class CommandCharacterEditURL extends Command
 	public CommandCharacterEditURL(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("CharacterEditURLInfo"); }
+	public String getHelpText() { return LocStrings.stub("CharacterEditURLInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		try
 		{
@@ -21,18 +21,18 @@ public class CommandCharacterEditURL extends Command
 		}
 		catch(Exception e)
 		{
-			res.Call(LocStrings.Stub("CharacterEditURLNotValid"));
+			res.Call(LocStrings.stub("CharacterEditURLNotValid"));
 			return;
 		}
 		KittyCharacter character = CharacterManager.instance.searchCharacter(input.args.split(" ")[0]).get(0);
 		if(character.getOwner().equals(user))
 		{
 			CharacterManager.instance.editRefImage(character, input.args.substring(input.args.indexOf(' ')));
-			res.Call(LocStrings.Stub("CharacterEditURLSuccess"));
+			res.Call(LocStrings.stub("CharacterEditURLSuccess"));
 		}
 		else
 		{
-			res.Call(LocStrings.Stub("CharacterEditURLNotAuth"));
+			res.Call(LocStrings.stub("CharacterEditURLNotAuth"));
 		}
 	}
 }

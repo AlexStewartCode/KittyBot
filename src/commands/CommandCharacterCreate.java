@@ -16,22 +16,22 @@ public class CommandCharacterCreate extends Command
 	public CommandCharacterCreate(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("CharacterCreateInfo"); }
+	public String getHelpText() { return LocStrings.stub("CharacterCreateInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String [] info = input.args.split(",");
 		if(info.length < 3)
 		{
-			res.Call(LocStrings.Stub("CharacterCreateNullInfo"));
+			res.Call(LocStrings.stub("CharacterCreateNullInfo"));
 			return;
 		}
 		if(CharacterManager.instance.addCharacter(user, info[0], info[1], info[2]))
 		{
-			res.Call(LocStrings.Stub("CharacterCreateSuccess"));
+			res.Call(LocStrings.stub("CharacterCreateSuccess"));
 			return;
 		}
-		res.Call(LocStrings.Stub("CharacterCreateDuplicate"));
+		res.Call(LocStrings.stub("CharacterCreateDuplicate"));
 		}
 }

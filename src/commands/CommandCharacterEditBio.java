@@ -10,10 +10,10 @@ public class CommandCharacterEditBio extends Command
 	public CommandCharacterEditBio(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("CharacterEditBioInfo"); }
+	public String getHelpText() { return LocStrings.stub("CharacterEditBioInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		try
 		{
@@ -21,18 +21,18 @@ public class CommandCharacterEditBio extends Command
 		}
 		catch(Exception e)
 		{
-			res.Call(LocStrings.Stub("CharacterEditBioNotValid"));
+			res.Call(LocStrings.stub("CharacterEditBioNotValid"));
 			return;
 		}
 		KittyCharacter character = CharacterManager.instance.searchCharacter(input.args.split(" ")[0]).get(0);
 		if(character.getOwner().equals(user))
 		{
 			CharacterManager.instance.editBio(character, input.args.substring(input.args.indexOf(' ')));
-			res.Call(LocStrings.Stub("CharacterEditBioSuccess"));
+			res.Call(LocStrings.stub("CharacterEditBioSuccess"));
 		}
 		else
 		{
-			res.Call(LocStrings.Stub("CharacterEditBioNotAuth"));
+			res.Call(LocStrings.stub("CharacterEditBioNotAuth"));
 		}
 	}
 }

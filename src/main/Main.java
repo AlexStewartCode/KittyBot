@@ -48,13 +48,13 @@ public class Main extends ListenerAdapter
 	{
 		// Factory startup. The ordering is intentional.
 		GlobalLog.initialize();
-		databaseManager = ObjectBuilderFactory.ConstructDatabaseManager();
-		commandEnabler = ObjectBuilderFactory.ConstructCommandEnabler();
-		commandManager = ObjectBuilderFactory.ConstructCommandManager(commandEnabler);
-		stats = ObjectBuilderFactory.ConstructStats(commandManager);
+		databaseManager = ObjectBuilderFactory.constructDatabaseManager();
+		commandEnabler = ObjectBuilderFactory.constructCommandEnabler();
+		commandManager = ObjectBuilderFactory.constructCommandManager(commandEnabler);
+		stats = ObjectBuilderFactory.constructStats(commandManager);
 		charManager = new CharacterManager();
-		rpManager = ObjectBuilderFactory.ConstructRPManager();
-		pluginManager = ObjectBuilderFactory.ConstructPluginManager();
+		rpManager = ObjectBuilderFactory.constructRPManager();
+		pluginManager = ObjectBuilderFactory.constructPluginManager();
 		
 		// Bot startup
 		kittyCore = ObjectBuilderFactory.ConstructKittyCore();
