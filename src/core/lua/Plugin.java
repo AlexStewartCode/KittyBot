@@ -44,17 +44,17 @@ public class Plugin
 		}
 		catch (IOException e)
 		{
-			PluginLog.Error(e.getMessage());
+			PluginLog.error(e.getMessage());
 		}
 	}
 	
-	public List<String> Run(String args, PluginUser user)
+	public List<String> run(String args, PluginUser user)
 	{
 		try
 		{
 			List<String> outputs = new Vector<String>();
 			
-			LuaValue res = func_plugin.call(LuaValue.valueOf(args), user.AsLua());
+			LuaValue res = func_plugin.call(LuaValue.valueOf(args), user.asLua());
 			
 			if(!res.isnil())
 			{
@@ -87,7 +87,7 @@ public class Plugin
 		}
 		catch(Exception e)
 		{
-			PluginLog.Error("Failed to run plugin from file " + filepath);
+			PluginLog.error("Failed to run plugin from file " + filepath);
 		}
 		
 		return null;

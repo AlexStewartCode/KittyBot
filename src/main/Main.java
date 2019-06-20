@@ -94,7 +94,7 @@ public class Main extends ListenerAdapter
 		// Run plugins right before invoking the commands but after all other setup.
 		if(commandManager.InvokeOnNewThread(guild, channel, user, input, response) == false)
 		{
-			List<String> pluginOutput = pluginManager.RunAll(input.message, user);
+			List<String> pluginOutput = pluginManager.runAll(input.message, user);
 			
 			if(pluginOutput != null && pluginOutput.size() > 0)
 			{
