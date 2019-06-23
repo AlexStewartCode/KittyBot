@@ -13,9 +13,6 @@ import utils.io.FileUtils;
 // generates/updates a file externally with all the stub values as keys that are localized.
 public abstract class BaseLocFile
 {
-	// Pre-defined values 
-	public static final String KittySourceDirectory = "./src";
-	
 	// Filename
 	public final String functionName; // Example: "Localizer.Stub";
 	
@@ -130,7 +127,7 @@ public abstract class BaseLocFile
 	public void scrapeAll()
 	{
 		ArrayList<LocInfo> localizeList = new ArrayList<LocInfo>();
-		FileUtils.acquireAllFiles(KittySourceDirectory).forEach((path) -> tryStripSpecified(path, localizeList));
+		FileUtils.acquireAllFiles(Constants.SourceDirectory).forEach((path) -> tryStripSpecified(path, localizeList));
 				
 		for(LocInfo toStub : localizeList)
 			stringStore.addKeyValue(toStub.file, toStub.phrase, toStub.phrase);

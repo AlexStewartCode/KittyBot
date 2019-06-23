@@ -46,25 +46,17 @@ public class LocCommands extends BaseLocFile implements IConfigSection
 	
 	@Override
 	public String getHeader() {
-		// TODO Auto-generated method stub
-		return null;
+		return HeaderName;
 	}
 
 	@Override
-	public void preUpdate() {
-		// TODO Auto-generated method stub
-		
+	public void read(String contents) {
+		updateLocFromString(contents);
+		scrapeAll();
 	}
 
 	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String getContent() {
-		// TODO Auto-generated method stub
-		return null;
+	public String write() {
+		return super.toString();
 	}
 }

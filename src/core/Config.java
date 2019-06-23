@@ -1,9 +1,10 @@
 package core;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Vector;
-
 import utils.GlobalLog;
 import utils.LogFilter;
 import utils.io.FileMonitor;
@@ -14,12 +15,7 @@ public class Config
 	private static final String filepath = Constants.AssetDirectory + Constants.ConfigFilename; 
 	
 	public static Config instance;
-	
-	// Accessable config related things
-	public LocStrings locStrings;
-	public LocCommands locCommands;
-	public CommandEnabler commandEnabler;
-	
+
 	// Private
 	private Vector<IConfigSection> sections;
 	private FileMonitor monitoredConfigFile;
@@ -32,9 +28,9 @@ public class Config
 			sections = new Vector<IConfigSection>();
 			
 			// Add all sections
-			sections.add(new CommandEnabler());
-			sections.add(new LocStrings());
 			sections.add(new LocCommands());
+			sections.add(new LocStrings());
+			sections.add(new CommandEnabler());
 			
 			// Read file in and parse everything out
 			performStartup();
@@ -50,13 +46,14 @@ public class Config
 		}
 	}
 	
+	// Perform startup
 	private void performStartup()
 	{
 		File configFile = new File(filepath);
+		
 		if(configFile.exists())
 		{
-			String configContents = FileUtils.readContent(configFile);
-			reformConfig(configContents);
+			reformConfig(configFile);
 		}
 		else
 		{
@@ -72,20 +69,104 @@ public class Config
 		}
 	}
 	
-	private void reformConfig(String fullContents)
+	public static final String sectionStart = "[[";
+	public static final String sectionEnd = "]]";
+	public static final String headerStart = "[";
+	public static final String headerEnd = "]";
+	public static final String pairSplit = "=";
+	public static final String pairSeparator = "\n";
+	
+	private void reformConfig(File configFile)
 	{
-		for(IConfigSection section : sections)
+		// Read and update
+		String configContents = FileUtils.readContent(configFile);
+		readConfigs(configContents);
+		
+		// Form updated data as necessary for autogeneration
+		String output = combineConfigs();
+		String path = configFile.getPath();
+		
+		// Write to file.
+		FileWriter fileWriter;
+		
+		try
 		{
-			// Parse stuff and sections here based on interface
+			fileWriter = new FileWriter(path);
+			fileWriter.write(output);
+			fileWriter.close();
 		}
+		catch (IOException e)
+		{
+			GlobalLog.error(LogFilter.Core, "Config writing failure.");
+			GlobalLog.error(LogFilter.Core, e.getMessage());
+		}
+	}
+	
+	public void readConfigs(String fullContents)
+	{
+		String[] str = fullContents.split(pairSeparator);
+		HashMap<String, String> parsedSections = new HashMap<String, String>();
+		
+		String currentHeader = "";
+		for(int i = 0; i < str.length; ++i)
+		{
+			String line = str[i].trim();
+			if(line.startsWith(sectionStart) && line.endsWith(sectionEnd))
+			{
+				currentHeader = line.substring(sectionStart.length(), line.length() - sectionEnd.length());
+			}
+			else
+			{
+				String sectionContents = parsedSections.getOrDefault(currentHeader, "");
+				parsedSections.put(currentHeader, sectionContents);
+			}
+		}
+		
+		for(int i = 0; i < sections.size(); ++i)
+		{
+			IConfigSection section = sections.get(i);
+			String header = section.getHeader();
+			String content = parsedSections.getOrDefault(header, null);
+			
+			if(content != null)
+			{
+				section.read(content);
+			}
+			else
+			{
+				GlobalLog.warn(LogFilter.Core, "Mismatch during config parsing - expected but did not find " + header);
+			}
+		}
+	}
+	
+	public String combineConfigs()
+	{
+		String output = "";
+		
+		for(int i = 0; i < sections.size(); ++i)
+		{
+			// If not the first section, add spacing!
+			if(i != 0)
+			{
+				for(int spacing = 0; spacing < 3; ++spacing)
+				{
+					output += pairSeparator;
+				}
+			}
+			
+			IConfigSection section = sections.get(i);
+			output += sectionStart + section.getHeader() + sectionEnd + pairSeparator;
+			output += section.write() + pairSeparator;
+		}
+		
+		return output;
 	}
 	
 	public void upkeep()
 	{
 		monitoredConfigFile.update((monitoredFile) -> {
 			File configFile = new File(filepath);
-			String configContents = FileUtils.readContent(configFile);
-			reformConfig(configContents);
+			reformConfig(configFile);
 		});
 	}
 	

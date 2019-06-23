@@ -49,7 +49,7 @@ public class Main extends ListenerAdapter
 		// Factory startup. The ordering is intentional.
 		GlobalLog.initialize();
 		databaseManager = ObjectBuilderFactory.constructDatabaseManager();
-		commandManager = ObjectBuilderFactory.constructCommandManager(Config.instance.commandEnabler);
+		commandManager = ObjectBuilderFactory.constructCommandManager(CommandEnabler.instance); // TODO: Untangle this singleton
 		stats = ObjectBuilderFactory.constructStats(commandManager);
 		charManager = new CharacterManager();
 		rpManager = ObjectBuilderFactory.constructRPManager();

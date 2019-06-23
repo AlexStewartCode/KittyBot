@@ -19,32 +19,38 @@ public class CommandEnabler extends BaseKeyValueFile implements IConfigSection
 	public static final String enabled = "1";
 	public static final String disabled = "0";
 	public static final boolean defaultEnabledState = true;
+	public static final String HeaderName = "Command Management";
 	
 	// Local variables
 	private HashMap<String, Boolean> enabledMap; // Quick lookup
 	private ArrayList<String> keyList; // Tracking ordering for later
-	private final static String name = Constants.AssetDirectory + "commands.config";
+
+	public static CommandEnabler instance;
 	
 	// Constructor
 	public CommandEnabler()
 	{
-		super(name);
+		super();
 		
-		// Create/Init variables
-		GlobalLog.log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
-		enabledMap = new HashMap<>();
-		keyList = new ArrayList<>();
-		
-		// Startup
-		readIn();
-		getTrackedCommands();
-		writeOut();
+		if(instance == null)
+		{
+			// Create/Init variables
+			GlobalLog.log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
+			enabledMap = new HashMap<>();
+			keyList = new ArrayList<>();
+			
+			instance = this;
+		}
+		else
+		{
+			GlobalLog.error(LogFilter.Core, "You can't have two of the following: " + this.getClass().getSimpleName());
+		}
 	}
 	
 	// Reads in the config file and parses it, keeping tabs on the order it read things
-	private void readIn()
+	private void readIn(String contents)
 	{
-		parse((pair) ->{
+		parse(contents, (pair) ->{
 			String key = pair.First;
 			String value = pair.Second;
 			
@@ -76,7 +82,7 @@ public class CommandEnabler extends BaseKeyValueFile implements IConfigSection
 	}
 	
 	// Write out enabled/disabled file info.
-	private void writeOut()
+	private String writeOut()
 	{
 		List<Pair<String, String>> list = new Vector<Pair<String, String>>();
 		
@@ -93,7 +99,7 @@ public class CommandEnabler extends BaseKeyValueFile implements IConfigSection
 		
 		Collections.sort(list, (c1, c2) -> { return c1.First.compareTo(c2.First); });
 		
-		write(list);
+		return write(list);
 	}
 	
 	// Looks up a key to see if it's enabled or not
@@ -109,25 +115,17 @@ public class CommandEnabler extends BaseKeyValueFile implements IConfigSection
 
 	@Override
 	public String getHeader() {
-		// TODO Auto-generated method stub
-		return null;
+		return HeaderName;
 	}
 
 	@Override
-	public void preUpdate() {
-		// TODO Auto-generated method stub
-		
+	public void read(String contents) {
+		getTrackedCommands();
+		readIn(contents);
 	}
 
 	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String getContent() {
-		// TODO Auto-generated method stub
-		return null;
+	public String write() {
+		return writeOut();
 	}
 }
