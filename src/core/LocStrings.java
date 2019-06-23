@@ -53,6 +53,6 @@ public class LocStrings extends BaseLocFile implements IConfigSection
 
 	@Override
 	public String write() {
-		return super.toString();
+		return toString();
 	}
 }

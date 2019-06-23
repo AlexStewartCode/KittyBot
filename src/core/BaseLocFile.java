@@ -132,4 +132,10 @@ public abstract class BaseLocFile
 		for(LocInfo toStub : localizeList)
 			stringStore.addKeyValue(toStub.file, toStub.phrase, toStub.phrase);
 	}
+	
+	// Converts this to a string
+	public String toString()
+	{
+		return stringStore.toString();
+	}
 }
