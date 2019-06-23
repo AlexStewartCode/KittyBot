@@ -57,9 +57,13 @@ public class CommandEnabler extends BaseKeyValueFile implements IConfigSection
 			keyList.add(key);
 
 			if(value.equalsIgnoreCase(enabled))
+			{
 				enabledMap.putIfAbsent(key, true);
+			}
 			else
+			{
 				enabledMap.putIfAbsent(key, false);
+			}
 		});
 	}
 	
@@ -92,7 +96,9 @@ public class CommandEnabler extends BaseKeyValueFile implements IConfigSection
 			String value = enabled.toLowerCase();
 			
 			if(enabledMap.get(key) == false)
+			{
 				value = disabled.toLowerCase();
+			}
 			
 			list.add(new Pair<String, String>(key, value));
 		}
@@ -108,7 +114,9 @@ public class CommandEnabler extends BaseKeyValueFile implements IConfigSection
 		String toCheck = key.toLowerCase();
 		
 		if(enabledMap.containsKey(toCheck))
+		{
 			return enabledMap.get(toCheck);
+		}
 		
 		return true;
 	}

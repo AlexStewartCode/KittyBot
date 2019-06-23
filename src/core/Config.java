@@ -1,8 +1,10 @@
 package core;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Vector;
 import utils.GlobalLog;
@@ -84,14 +86,11 @@ public class Config
 		
 		// Form updated data as necessary for autogeneration
 		String output = combineConfigs();
-		String path = configFile.getPath();
-		
+
 		// Write to file.
-		FileWriter fileWriter;
-		
 		try
 		{
-			fileWriter = new FileWriter(path);
+			OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(configFile), StandardCharsets.UTF_8);
 			fileWriter.write(output);
 			fileWriter.close();
 		}
@@ -118,7 +117,7 @@ public class Config
 			else
 			{
 				String sectionContents = parsedSections.getOrDefault(currentHeader, "");
-				parsedSections.put(currentHeader, sectionContents);
+				parsedSections.put(currentHeader, sectionContents + line + pairSeparator);
 			}
 		}
 		
