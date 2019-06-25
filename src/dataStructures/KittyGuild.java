@@ -33,7 +33,7 @@ public class KittyGuild extends DatabaseTrackedObject
 	
 	private String commandIndicator;
 	
-	private void RegisterTrackedObjects()
+	private void registerTrackedObjects()
 	{
 		DatabaseManager.instance.globalRegister(roleList);
 		DatabaseManager.instance.globalRegister(beans);
@@ -46,13 +46,13 @@ public class KittyGuild extends DatabaseTrackedObject
 		this.uniqueID = uniqueID;
 		roleList = new KittyTrackedVector(roleListName, uniqueID);
 		beans = new KittyTrackedLong(beansName, uniqueID);
-		RegisterTrackedObjects();
+		registerTrackedObjects();
 		
 		control = adminControl;
 		this.contentRating = KittyRating.Safe; 
 		this.polling = false;
 		this.emoji = emoji;
-		SetCommandIndicator("!");
+		setCommandIndicator("!");
 	}
 	
 	// Explicit constructor
@@ -62,9 +62,9 @@ public class KittyGuild extends DatabaseTrackedObject
 		this.uniqueID = uniqueID;
 		roleList = new KittyTrackedVector(roleListName, uniqueID);
 		beans = new KittyTrackedLong(beansName, uniqueID);
-		RegisterTrackedObjects();
+		registerTrackedObjects();
 		
-		SetCommandIndicator(commandIndicator);
+		setCommandIndicator(commandIndicator);
 		this.contentRating = contentRating;
 		this.polling = false;
 		this.guildOwner = guildOwner;
@@ -119,9 +119,9 @@ public class KittyGuild extends DatabaseTrackedObject
 	
 	public boolean joinRaffle(KittyUser user)
 	{
-		if(!raffleUsersChosen.contains(user) && !raffleUsersUnchosen.contains(user) && user.GetBeans() > raffleCost && raffling)
+		if(!raffleUsersChosen.contains(user) && !raffleUsersUnchosen.contains(user) && user.getBeans() > raffleCost && raffling)
 		{
-			user.ChangeBeans(raffleCost);
+			user.changeBeans(raffleCost);
 			raffleUsersUnchosen.add(user);
 			return true;
 		}
@@ -141,31 +141,31 @@ public class KittyGuild extends DatabaseTrackedObject
 	}
 	
 	@Override
-	public String Serialize() 
+	public String serialize() 
 	{
 		return commandIndicator;
 	}
 
 	@Override
-	public void DeSerialzie(String string) 
+	public void deSerialzie(String string) 
 	{
 		if(string == null || string.length() == 0)
-			SetCommandIndicator("!");
+			setCommandIndicator("!");
 		else
-			SetCommandIndicator(string);
+			setCommandIndicator(string);
 	}
 	
-	public String GetCommandIndicator()
+	public String getCommandIndicator()
 	{
 		return commandIndicator;
 	}
 	
-	public void SetCommandIndicator(String newIndicator)
+	public void setCommandIndicator(String newIndicator)
 	{
 		if(newIndicator != commandIndicator)
 		{
 			commandIndicator = newIndicator;
-			MarkDirty();
+			markDirty();
 		}
 	}
 }

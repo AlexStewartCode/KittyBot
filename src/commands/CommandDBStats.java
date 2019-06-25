@@ -26,10 +26,10 @@ public class CommandDBStats extends Command
 	}
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("DBStatsInfo"); }
+	public String getHelpText() { return LocStrings.stub("DBStatsInfo"); }
 
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		KittyEmbed embed = new KittyEmbed();
 		embed.title = "Database Info";
@@ -38,6 +38,6 @@ public class CommandDBStats extends Command
 		embed.descriptionText += "**Last Upkeep:** " + dateFormat.format(DatabaseManager.instance.getLastUpkeep()) + " UTC-7"; 
 		embed.color = Config.ColorDefault;
 		
-		res.CallEmbed(embed);
+		res.send(embed);
 	}
 }

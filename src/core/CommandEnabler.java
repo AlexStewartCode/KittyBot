@@ -23,27 +23,28 @@ public class CommandEnabler extends BaseKeyValueFile
 	// Local variables
 	private HashMap<String, Boolean> enabledMap; // Quick lookup
 	private ArrayList<String> keyList; // Tracking ordering for later
-	private final static String name = "commands.config";
+	private final static String name = Config.AssetDirectory + "commands.config";
 	
+	// Constructor
 	public CommandEnabler()
 	{
 		super(name);
 		
 		// Create/Init variables
-		GlobalLog.Log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
+		GlobalLog.log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
 		enabledMap = new HashMap<>();
 		keyList = new ArrayList<>();
 		
 		// Startup
-		ReadIn();
-		GetTrackedCommands();
-		WriteOut();
+		readIn();
+		getTrackedCommands();
+		writeOut();
 	}
 	
 	// Reads in the config file and parses it, keeping tabs on the order it read things
-	private void ReadIn()
+	private void readIn()
 	{
-		Parse((pair) ->{
+		parse((pair) ->{
 			String key = pair.First;
 			String value = pair.Second;
 			
@@ -58,9 +59,9 @@ public class CommandEnabler extends BaseKeyValueFile
 	
 	// Look up the already scraped values from the localizer and store them if they
 	// don't already exist in the lookup. Defaults to defaultEnabledState.
-	private void GetTrackedCommands()
+	private void getTrackedCommands()
 	{
-		ArrayList<String> unloc = LocCommands.GetUnlocalizedCommands();
+		ArrayList<String> unloc = LocCommands.getUnlocalizedCommands();
 		
 		for(int i = 0; i < unloc.size(); ++i)
 		{
@@ -68,14 +69,14 @@ public class CommandEnabler extends BaseKeyValueFile
 			
 			if(enabledMap.putIfAbsent(command, defaultEnabledState) == null)
 			{
-				GlobalLog.Log(LogFilter.Strings, "Identified new toggleable raw command: " + command);
+				GlobalLog.log(LogFilter.Strings, "Identified new toggleable raw command: " + command);
 				keyList.add(command);
 			}
 		}
 	}
 	
 	// Write out enabled/disabled file info.
-	private void WriteOut()
+	private void writeOut()
 	{
 		List<Pair<String, String>> list = new Vector<Pair<String, String>>();
 		
@@ -92,11 +93,11 @@ public class CommandEnabler extends BaseKeyValueFile
 		
 		Collections.sort(list, (c1, c2) -> { return c1.First.compareTo(c2.First); });
 		
-		Write(list);
+		write(list);
 	}
 	
 	// Looks up a key to see if it's enabled or not
-	public boolean IsEnabled(String key)
+	public boolean isEnabled(String key)
 	{
 		String toCheck = key.toLowerCase();
 		

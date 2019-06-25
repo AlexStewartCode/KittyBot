@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import core.Command;
+import core.Config;
 import core.LocStrings;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
@@ -23,11 +24,11 @@ public class CommandYeet extends Command
 	private static Long num = 0l;
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("YeetInfo"); }
+	public String getHelpText() { return LocStrings.stub("YeetInfo"); }
 	
 	// Called when the command is run!
 	@Override 
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String name = null;
 		File yeetFile = null;
@@ -48,13 +49,13 @@ public class CommandYeet extends Command
 			else
 				person = input.mentions[0];
 				
-			String yeeteeFilename = ImageUtils.DownloadFromURL(person.avatarID, ".png");
+			String yeeteeFilename = ImageUtils.downloadFromURL(person.avatarID, ".png");
 			if(yeeteeFilename == null)
 				return;
 			
 			yeeteeFile = new File(yeeteeFilename);
-			ImageOverlayBuilder builder = new ImageOverlayBuilder("assets/yeet/frames/", "yeet ", 24, 18);
-			builder.Overlay(ImageIO.read(yeeteeFile), name);
+			ImageOverlayBuilder builder = new ImageOverlayBuilder(Config.AssetDirectory + "yeet/frames/", "yeet ", 24, 18);
+			builder.overlay(ImageIO.read(yeeteeFile), name);
 		} 
 		catch (IOException e) 
 		{
@@ -62,10 +63,10 @@ public class CommandYeet extends Command
 		}
 		
 		yeetFile = new File (name);
-		res.CallFile(yeetFile, "gif");
+		res.sendFile(yeetFile, "gif");
 
 		// Thread cleanup...
-		ImageUtils.BlockingFileDelete(yeetFile);
-		ImageUtils.BlockingFileDelete(yeeteeFile);
+		ImageUtils.blockingFileDelete(yeetFile);
+		ImageUtils.blockingFileDelete(yeeteeFile);
 	}
 }

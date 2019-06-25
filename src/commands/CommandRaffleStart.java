@@ -15,12 +15,12 @@ public class CommandRaffleStart extends Command
 	public CommandRaffleStart(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("RaffleStartInfo"); }
+	public String getHelpText() { return LocStrings.stub("RaffleStartInfo"); }
 	
 	public int beanCost;
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		try
 		{
@@ -30,13 +30,14 @@ public class CommandRaffleStart extends Command
 		{
 			beanCost = 100; 
 		}
+		
 		if(guild.startRaffle(beanCost))
 		{
-			res.Call(String.format(LocStrings.Stub("RaffleStartSuccess"), beanCost));
+			res.send(String.format(LocStrings.stub("RaffleStartSuccess"), beanCost));
 		}
 		else
 		{
-			res.Call(LocStrings.Stub("RaffleStartFailure"));
+			res.send(LocStrings.stub("RaffleStartFailure"));
 		}
 	}
 }

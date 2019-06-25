@@ -9,15 +9,15 @@ public class CommandGiveBeans extends Command
 	public CommandGiveBeans (KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("GiveBeansInfo"); }
+	public String getHelpText() { return LocStrings.stub("GiveBeansInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		// First, make sure someone is mentioned
 		if(input.mentions == null)
 		{
-			res.Call(LocStrings.Stub("GiveBeansNoneMentioned"));
+			res.send(LocStrings.stub("GiveBeansNoneMentioned"));
 			return;
 		}
 		
@@ -42,15 +42,15 @@ public class CommandGiveBeans extends Command
 		// If there wasn't a number we could find, well, nothing we can do.
 		if(beans == null)
 		{
-			res.Call(LocStrings.Stub("GiveBeansInvalid"));
+			res.send(LocStrings.stub("GiveBeansInvalid"));
 			return;
 		}
 		
 		// Go through all the mentions and make sure every user is given beans!
 		for(int i = 0; i < input.mentions.length; i++)
 		{
-			input.mentions[i].ChangeBeans(beans);
-			res.Call(String.format(LocStrings.Stub("GiveBeansSuccess"), input.mentions[i].name, "" + beans));
+			input.mentions[i].changeBeans(beans);
+			res.send(String.format(LocStrings.stub("GiveBeansSuccess"), input.mentions[i].name, "" + beans));
 		}
 	}
 }

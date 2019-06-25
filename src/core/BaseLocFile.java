@@ -30,9 +30,9 @@ public abstract class BaseLocFile
 	protected TaggedPairStore stringStore; 
 	
 	// Logging
-	private void Log(String str) { GlobalLog.Log(LogFilter.Strings, str); }
-	private void Warn(String str) { GlobalLog.Warn(LogFilter.Strings, str); }
-	private void Error(String str) { GlobalLog.Error(LogFilter.Strings, str); }
+	private void log(String str) { GlobalLog.log(LogFilter.Strings, str); }
+	private void warn(String str) { GlobalLog.warn(LogFilter.Strings, str); }
+	private void error(String str) { GlobalLog.error(LogFilter.Strings, str); }
 	
 	// File monitoring
 	protected FileMonitor fileMonitor;
@@ -45,19 +45,19 @@ public abstract class BaseLocFile
 	}
 	
 	// Checks the file specified for updates
-	public void Update()
+	public void update()
 	{
 		synchronized(stringStore)
 		{
-			fileMonitor.Update(this::OnFileChange);
+			fileMonitor.update(this::onFileChange);
 		}
 	}
 	
 	// When the file is changed
-	protected void OnFileChange(MonitoredFile file)
+	protected void onFileChange(MonitoredFile file)
 	{
-		Log("Loc file was modified at path " + file.path);
-		UpdateLocFromDisk();
+		log("Loc file was modified at path " + file.path);
+		updateLocFromDisk();
 	}
 	
 	// Structure used for holding a pair of strings and any other info we need 
@@ -75,12 +75,12 @@ public abstract class BaseLocFile
 	}
 	
 	// Do processing on each path in the scraped directory here, assuming it's .java
-	public void StripForContents(Path path, ArrayList<LocInfo> strings)
+	public void stripForContents(Path path, ArrayList<LocInfo> strings)
 	{
 		String filename = path.getFileName().toString();
 		if(filename.contains(".java"))
 		{
-			String contents = FileUtils.ReadContent(path);
+			String contents = FileUtils.readContent(path);
 			String[] split = contents.split(functionName);
 			
 			// Identify all localizer function calls
@@ -101,11 +101,11 @@ public abstract class BaseLocFile
 							
 							strings.add(new LocInfo(filename.substring(0, filename.lastIndexOf('.')), toLocalize));
 							
-							Log("Found lookup call in " + path + ": " + toLocalize);
+							log("Found lookup call in " + path + ": " + toLocalize);
 						}
 						catch(IndexOutOfBoundsException e)
 						{
-							Warn("Found phrase but couldn't parse in file " + path);
+							warn("Found phrase but couldn't parse in file " + path);
 						}
 					}
 				}
@@ -116,12 +116,12 @@ public abstract class BaseLocFile
 	// Nothing for now, but in the future will return a parsed and localized version of
 	// the string in question if one can be found. If the localized string is empty, 
 	// returns a the key instead which is the default phrase.
-	public String GetKey(String input)
+	public String getKey(String input)
 	{
 		if(stringStore == null)
 			return input;
 		
-		String value = stringStore.GetKey(input);
+		String value = stringStore.getKey(input);
 		if(value == null || value.trim().length() < 1)
 			return input;
 		
@@ -129,7 +129,7 @@ public abstract class BaseLocFile
 	}
 	
 	// Reads a file to string, adapted from https://stackoverflow.com/a/326440/5383198
-	private String ReadFileAsString(String path, Charset encoding)
+	private String readFileAsString(String path, Charset encoding)
 	{
 		try
 		{
@@ -138,7 +138,7 @@ public abstract class BaseLocFile
 		}
 		catch (IOException e)
 		{
-			Warn("No file found to read from!");
+			warn("No file found to read from!");
 		}
 		
 		return null;
@@ -146,13 +146,13 @@ public abstract class BaseLocFile
 
 	// Update localization from the disk on file. Creates the file if it doesn't exist.
 	// This file is internally formatted as an ini file.
-	public void UpdateLocFromDisk()
+	public void updateLocFromDisk()
 	{
-		Log("Attempting to read localization file: " + filename);
+		log("Attempting to read localization file: " + filename);
 		
 		try
 		{
-			String fileContents = ReadFileAsString(filename, Charset.defaultCharset());
+			String fileContents = readFileAsString(filename, Charset.defaultCharset());
 			
 			if(fileContents == null)
 			{
@@ -164,15 +164,15 @@ public abstract class BaseLocFile
 		}
 		catch(IOException e)
 		{
-			Error("IO exception during localization file read");
+			error("IO exception during localization file read");
 		}
 	}
 	
 	// Rewrites out at the specified filename with existing stubs.
 	// This preserves existing localized phrases.
-	public void SaveLocToDisk()
+	public void saveLocToDisk()
 	{
-		Log("Attempting to write updated localization file");
+		log("Attempting to write updated localization file");
 		
 		try
 		{	
@@ -182,30 +182,30 @@ public abstract class BaseLocFile
 		}
 		catch(IOException e)
 		{
-			Error("IO exception during localization file write");
+			error("IO exception during localization file write");
 		}
 	}
 
-	private void TryStripSpecified(Path path, ArrayList<LocInfo> toFill)
+	private void tryStripSpecified(Path path, ArrayList<LocInfo> toFill)
 	{
 		try
 		{
-			StripForContents(path, toFill);
+			stripForContents(path, toFill);
 		}
 		catch(Exception e)
 		{
-			Error("issue with file: " + path.toString());
+			error("issue with file: " + path.toString());
 		}
 	}
 	
 	// Scrape the project and generate all the possible localizeable phrases.
 	// This stubs out phrases to be localized.
-	public void ScrapeAll()
+	public void scrapeAll()
 	{
 		ArrayList<LocInfo> localizeList = new ArrayList<LocInfo>();
-		FileUtils.AcquireAllFiles(KittySourceDirectory).forEach((path) -> TryStripSpecified(path, localizeList));
+		FileUtils.acquireAllFiles(KittySourceDirectory).forEach((path) -> tryStripSpecified(path, localizeList));
 				
 		for(LocInfo toStub : localizeList)
-			stringStore.AddKeyValue(toStub.file, toStub.phrase, toStub.phrase);
+			stringStore.addKeyValue(toStub.file, toStub.phrase, toStub.phrase);
 	}
 }

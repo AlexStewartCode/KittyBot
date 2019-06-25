@@ -17,12 +17,12 @@ public class CommandStark extends Command
 	public CommandStark(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("StarkInfo"); };
+	public String getHelpText() { return LocStrings.stub("StarkInfo"); };
 	
 	private static Long num = 0l;
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String name = null;
 		String filename = null;
@@ -39,7 +39,7 @@ public class CommandStark extends Command
 		{
 			try
 			{
-				filename = ImageUtils.DownloadFromURL(input.args.split(" ")[0], ".png");
+				filename = ImageUtils.downloadFromURL(input.args.split(" ")[0], ".png");
 				preProcessed = new File(filename);
 			}
 			catch(Exception e)
@@ -48,12 +48,12 @@ public class CommandStark extends Command
 				if(input.mentions != null)
 					person = input.mentions[0];
 				
-				filename = ImageUtils.DownloadFromURL(person.avatarID, ".png");
+				filename = ImageUtils.downloadFromURL(person.avatarID, ".png");
 				if(filename == null)
 					return;
 			}
 			preProcessed = new File(filename);
-			ApplySnap(ImageIO.read(preProcessed), name);
+			applySnap(ImageIO.read(preProcessed), name);
 		}
 		catch (IOException e) 
 		{
@@ -61,13 +61,13 @@ public class CommandStark extends Command
 		}
 		
 		postProcessed = new File(name);
-		res.CallFile(postProcessed, "png");
+		res.sendFile(postProcessed, "png");
 		
-		ImageUtils.BlockingFileDelete(preProcessed);
-		ImageUtils.BlockingFileDelete(postProcessed);
+		ImageUtils.blockingFileDelete(preProcessed);
+		ImageUtils.blockingFileDelete(postProcessed);
 	}
 	
-	private static void ApplySnap(BufferedImage image, String name) throws IOException
+	private static void applySnap(BufferedImage image, String name) throws IOException
 	{
 		BufferedImage snap = ImageUtils.copyImage(image);
 		// Iterate over each column left to right and touch up each pixel

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import core.Command;
+import core.Config;
 import core.LocStrings;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
@@ -23,11 +24,11 @@ public class CommandTeey extends Command
 	private static Long num = 0l;
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("TeeyInfo"); }
+	public String getHelpText() { return LocStrings.stub("TeeyInfo"); }
 	
 	// Called when the command is run!
 	@Override 
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String name = null;
 		File teeyFile = null;
@@ -48,13 +49,13 @@ public class CommandTeey extends Command
 			else
 				person = input.mentions[0];
 				
-			String yeeteeFilename = ImageUtils.DownloadFromURL(person.avatarID, ".png");
+			String yeeteeFilename = ImageUtils.downloadFromURL(person.avatarID, ".png");
 			if(yeeteeFilename == null)
 				return;
 			
 			teeyeeFile = new File(yeeteeFilename);
-			ImageOverlayBuilder builder = new ImageOverlayBuilder("assets/teey/frames/", "teey ", 24, 18);
-			builder.Overlay(ImageIO.read(teeyeeFile), name);
+			ImageOverlayBuilder builder = new ImageOverlayBuilder(Config.AssetDirectory + "teey/frames/", "teey ", 24, 18);
+			builder.overlay(ImageIO.read(teeyeeFile), name);
 		} 
 		catch (IOException e) 
 		{
@@ -62,10 +63,10 @@ public class CommandTeey extends Command
 		}
 		
 		teeyFile = new File (name);
-		res.CallFile(teeyFile, "gif");
+		res.sendFile(teeyFile, "gif");
 
 		// Thread cleanup...
-		ImageUtils.BlockingFileDelete(teeyFile);
-		ImageUtils.BlockingFileDelete(teeyeeFile);
+		ImageUtils.blockingFileDelete(teeyFile);
+		ImageUtils.blockingFileDelete(teeyeeFile);
 	}
 }

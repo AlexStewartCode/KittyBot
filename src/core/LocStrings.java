@@ -9,8 +9,8 @@ import utils.io.FileMonitor;
 // can then be localized.
 public class LocStrings extends BaseLocFile
 {
-	public static final String fileName = "locStrings.config";
-	public static final String function = "LocStrings.Stub";
+	public static final String fileName = Config.AssetDirectory + "locStrings.config";
+	public static final String function = "LocStrings.stub";
 	
 	private static LocStrings instance;
 	
@@ -18,37 +18,37 @@ public class LocStrings extends BaseLocFile
 	{
 		super(fileName, function);
 		
-		GlobalLog.Log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
+		GlobalLog.log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
 		
 		if(instance == null)
 		{
 			instance = this;
 			
-			UpdateLocFromDisk();
-			ScrapeAll();
-			SaveLocToDisk();
+			updateLocFromDisk();
+			scrapeAll();
+			saveLocToDisk();
 			
 			fileMonitor = new FileMonitor(filename);
 		}
 		else
 		{
-			GlobalLog.Error(LogFilter.Core, "You can't have two of the following: " + this.getClass().getSimpleName());
+			GlobalLog.error(LogFilter.Core, "You can't have two of the following: " + this.getClass().getSimpleName());
 		}
 	}
 
-	public static String Stub(String toStub)
+	public static String stub(String toStub)
 	{
-		return Lookup(toStub);
+		return lookup(toStub);
 	}
 	
 	// Won't be picked up when scraping
-	public static String Lookup(String stubbedPreviously)
+	public static String lookup(String stubbedPreviously)
 	{
-		return instance.GetKey(stubbedPreviously);
+		return instance.getKey(stubbedPreviously);
 	}
 	
-	public static void Upkeep()
+	public static void upkeep()
 	{
-		instance.Update();
+		instance.update();
 	}
 }

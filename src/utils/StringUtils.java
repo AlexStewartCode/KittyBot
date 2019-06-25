@@ -2,7 +2,7 @@ package utils;
 
 public class StringUtils
 {
-	public static String UnEscape(String str)
+	public static String unEscape(String str)
 	{
 		str = str.replaceAll("\\\\b", "\b");
 		str = str.replaceAll("\\\\n", "\n");
@@ -15,7 +15,7 @@ public class StringUtils
 		return str;
 	}
 	
-	public static String ReEscape(String str)
+	public static String reEscape(String str)
 	{
 		str = str.replaceAll("\\\b", "\\\\\\b");
 		str = str.replaceAll("\\\n", "\\\\\\n");
@@ -27,7 +27,7 @@ public class StringUtils
 	}
 	
 	// Finds first whitespace in the string
-	public static int FindFirstWhitespace(String str)
+	public static int findFirstWhitespace(String str)
 	{
 		for (int i = 0; i < str.length(); ++i) 
 		{

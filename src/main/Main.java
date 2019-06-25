@@ -48,16 +48,16 @@ public class Main extends ListenerAdapter
 	{
 		// Factory startup. The ordering is intentional.
 		GlobalLog.initialize();
-		databaseManager = ObjectBuilderFactory.ConstructDatabaseManager();
-		commandEnabler = ObjectBuilderFactory.ConstructCommandEnabler();
-		commandManager = ObjectBuilderFactory.ConstructCommandManager(commandEnabler);
-		stats = ObjectBuilderFactory.ConstructStats(commandManager);
+		databaseManager = ObjectBuilderFactory.constructDatabaseManager();
+		commandEnabler = ObjectBuilderFactory.constructCommandEnabler();
+		commandManager = ObjectBuilderFactory.constructCommandManager(commandEnabler);
+		stats = ObjectBuilderFactory.constructStats(commandManager);
 		charManager = new CharacterManager();
-		rpManager = ObjectBuilderFactory.ConstructRPManager();
-		pluginManager = ObjectBuilderFactory.ConstructPluginManager();
+		rpManager = ObjectBuilderFactory.constructRPManager();
+		pluginManager = ObjectBuilderFactory.constructPluginManager();
 		
 		// Bot startup
-		kittyCore = ObjectBuilderFactory.ConstructKittyCore();
+		kittyCore = ObjectBuilderFactory.constructKittyCore();
 	}
 
 	// When a message is sent in a server that kitty is in, this is what's called.
@@ -65,36 +65,36 @@ public class Main extends ListenerAdapter
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event)
 	{
 		// Tweak the event as necessary
-		if(!Superintendent.PreProcessSetup(event, stats))
+		if(!Superintendent.preProcessSetup(event, stats))
 			return;
 		
 		// Factory objects
-		KittyUser user = ObjectBuilderFactory.ExtractUser(event);
-		KittyGuild guild = ObjectBuilderFactory.ExtractGuild(event);
-		KittyChannel channel = ObjectBuilderFactory.ExtractChannel(event);
+		KittyUser user = ObjectBuilderFactory.extractUser(event);
+		KittyGuild guild = ObjectBuilderFactory.extractGuild(event);
+		KittyChannel channel = ObjectBuilderFactory.extractChannel(event);
 		
 		// Specialized uncached objects
 		Response response = new Response(event, kittyCore);
 		UserInput input = new UserInput(event, guild);
 		
 		// Tweak object construction as necessary
-		if(!Superintendent.PostProcessSetup(event, user, guild, channel, response, input))
+		if(!Superintendent.postProcessSetup(event, user, guild, channel, response, input))
 			return;
 				
 		// Track beans!
-		user.ChangeBeans(1);
+		user.changeBeans(1);
 		
 		// RP logging system
 		RPManager.instance.addLine(channel, user, input);
 		
 		// Run any pre-emptive upkeep we need to
-		Superintendent.PerCommandUpkeepPre();
+		Superintendent.perCommandUpkeepPre();
 		
 		// Attempt to spin up a command. If the command doesn't exist.
 		// Run plugins right before invoking the commands but after all other setup.
-		if(commandManager.InvokeOnNewThread(guild, channel, user, input, response) == false)
+		if(commandManager.invokeOnNewThread(guild, channel, user, input, response) == false)
 		{
-			List<String> pluginOutput = pluginManager.RunAll(input.message, user);
+			List<String> pluginOutput = pluginManager.runAll(input.message, user);
 			
 			if(pluginOutput != null && pluginOutput.size() > 0)
 			{
@@ -102,17 +102,17 @@ public class Main extends ListenerAdapter
 				{
 					if(pluginOutput.get(i).startsWith("!"))
 					{
-						commandManager.InvokeOnNewThread(guild, channel, user, new UserInput(pluginOutput.get(i).substring(1), guild), response);
+						commandManager.invokeOnNewThread(guild, channel, user, new UserInput(pluginOutput.get(i).substring(1), guild), response);
 					}
 					else
 					{
-						response.Call(pluginOutput.get(i));
+						response.send(pluginOutput.get(i));
 					}
 				}
 			}
 		}
 		
 		// Run any upkeep in post we need to
-		Superintendent.PerCommandUpkeepPost(kittyCore, databaseManager);
+		Superintendent.perCommandUpkeepPost(kittyCore, databaseManager);
 	}
 }

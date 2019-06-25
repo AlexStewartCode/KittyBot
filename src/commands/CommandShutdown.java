@@ -20,14 +20,14 @@ public class CommandShutdown extends Command
 	public CommandShutdown(KittyRole level, KittyRating rating) { super(level, rating); }
 
 	@Override
-	public String HelpText() { return LocStrings.Stub("ShutdownInfo"); }
+	public String getHelpText() { return LocStrings.stub("ShutdownInfo"); }
 	
 	// Called when the command is run!
 	@Override 
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		// Flag the shutdown immediately.
-		Stats.instance.IndicateShutdown();
+		Stats.instance.indicateShutdown();
 		
 		boolean isSafe = false;
 		switch(input.args.toLowerCase().trim())
@@ -41,21 +41,19 @@ public class CommandShutdown extends Command
 				break;
 		}
 		
-		
-		
 		if(isSafe)
 		{
 			// Force upkeep, this works so long as upkeep is on the main thread.
-			res.CallImmediate(LocStrings.Stub("ShutdownSafe"));
+			res.sendImmediate(LocStrings.stub("ShutdownSafe"));
 			DatabaseManager.instance.upkeep(); 
-			GlobalLog.Warn(LogFilter.Command, LocStrings.Lookup("ShutdownSafe"));
+			GlobalLog.warn(LogFilter.Command, LocStrings.lookup("ShutdownSafe"));
 			
 			System.exit(0);
 		}
 		else
 		{
-			res.CallImmediate(LocStrings.Stub("ShutdownUnsafe"));// "``");
-			GlobalLog.Warn(LogFilter.Command, LocStrings.Lookup("ShutdownSafe"));
+			res.sendImmediate(LocStrings.stub("ShutdownUnsafe"));// "``");
+			GlobalLog.warn(LogFilter.Command, LocStrings.lookup("ShutdownSafe"));
 			System.exit(0);
 		}
 	}

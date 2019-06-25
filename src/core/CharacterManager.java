@@ -24,7 +24,7 @@ public class CharacterManager
 		}
 		else
 		{
-			GlobalLog.Error(LogFilter.Core, "Attempted to create a second CharacterManager singleton!");
+			GlobalLog.error(LogFilter.Core, "Attempted to create a second CharacterManager singleton!");
 			return;
 		}
 	}
@@ -66,8 +66,8 @@ public class CharacterManager
 			}
 		}
 		
-		characters.add(new KittyCharacter(user, name, bio, refImage, uniqueID.Get()));
-		uniqueID.Add(1);
+		characters.add(new KittyCharacter(user, name, bio, refImage, uniqueID.get()));
+		uniqueID.add(1);
 		return true; 
 	}
 	

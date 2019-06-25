@@ -12,12 +12,12 @@ public class CommandGuildRoleList extends Command
 	public CommandGuildRoleList(KittyRole level, KittyRating rating) { super(level, rating);}
 
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res) 
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res) 
 	{
 		String roles = ""; 
 		if(guild.roleList.isEmpty())
 		{
-			res.Call(String.format(LocStrings.Stub("GuildRoleListEmpty")));
+			res.send(String.format(LocStrings.stub("GuildRoleListEmpty")));
 			return;
 		}
 		for(int i = 0; i < guild.roleList.size(); i++)
@@ -26,6 +26,6 @@ public class CommandGuildRoleList extends Command
 				roles += " and "; 
 			roles += guild.roleList.get(i);
 		}
-		res.Call(String.format(LocStrings.Stub("GuildRoleListOutput"), roles));
+		res.send(String.format(LocStrings.stub("GuildRoleListOutput"), roles));
 	}
 }

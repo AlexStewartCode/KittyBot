@@ -21,17 +21,17 @@ import offline.Ref;
 public class Superintendent
 {
 	// This is run on the JDA GuildMessageReceivedEvent before anything else happens.
-	public static boolean PreProcessSetup(GuildMessageReceivedEvent event, Stats stats)
+	public static boolean preProcessSetup(GuildMessageReceivedEvent event, Stats stats)
 	{
 		// Verify we have an event
 		if(event == null)
 			return false;
 		
 		// Track number of messages seen
-		stats.NoteMessageEvent();
+		stats.noteMessageEvent();
 		
 		// If we're mid-shutdown, no more commands.
-		if(stats.GetIsShuttingDown())
+		if(stats.getIsShuttingDown())
 			return false;
 		
 		// Swat down highest ban level immediately before even hitting command parsing.
@@ -47,7 +47,7 @@ public class Superintendent
 	
 	// This runs after all the objects have been constructed! 
 	// Modifications to objects here stick!
-	public static boolean PostProcessSetup(GuildMessageReceivedEvent event, KittyUser user, KittyGuild guild, KittyChannel channel, Response res, UserInput input)
+	public static boolean postProcessSetup(GuildMessageReceivedEvent event, KittyUser user, KittyGuild guild, KittyChannel channel, Response res, UserInput input)
 	{
 		// Verify we have everything. From here out, we promise we have that all.
 		if(event == null || user == null || guild == null || channel == null || res == null || input == null)
@@ -55,14 +55,14 @@ public class Superintendent
 		
 		// If the guild member is the owner, give them admin role by default.
 		if(event.getMember().isOwner())
-			user.ChangeRole(KittyRole.Admin);
+			user.changeRole(KittyRole.Admin);
 		
 		// Give devs the dev role
 		for(int i = 0; i < Ref.devIDs.length; ++i)
 		{
 			if(event.getAuthor().getId().equals(Ref.devIDs[i]))
 			{
-				user.ChangeRole(KittyRole.Dev);
+				user.changeRole(KittyRole.Dev);
 				break;
 			}
 		}
@@ -72,11 +72,11 @@ public class Superintendent
 	
 	// Only called once per command. Good for lazily updating.
 	// Happens just before the command / plugin runs.
-	public static boolean PerCommandUpkeepPre()
+	public static boolean perCommandUpkeepPre()
 	{
 		// Upkeep localization system's file monitoring
-		LocStrings.Upkeep();
-		LocCommands.Upkeep();
+		LocStrings.upkeep();
+		LocCommands.upkeep();
 		
 		return true;
 	}
@@ -87,7 +87,7 @@ public class Superintendent
 	// This is for stuff that we need to do on a regular basis, but don't 
 	// necessarily want running at all points in time. 
 	// Happens just after the command / plugin runs.
-	public static boolean PerCommandUpkeepPost(KittyCore kittyCore, DatabaseManager databaseManager)
+	public static boolean perCommandUpkeepPost(KittyCore kittyCore, DatabaseManager databaseManager)
 	{
 		// Upkeep database lazily on occasion
 		if(delayTimerCurrent.decrementAndGet() < 0)
@@ -97,7 +97,7 @@ public class Superintendent
 		}
 		
 		// Update command-specific
-		RPManager.Upkeep(kittyCore);
+		RPManager.upkeep(kittyCore);
 		
 		return true;
 	}

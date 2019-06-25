@@ -25,32 +25,32 @@ public class CommandBenchmark extends Command
 	}
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("BenchmarkInfo"); }
+	public String getHelpText() { return LocStrings.stub("BenchmarkInfo"); }
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		framework.Update();
+		framework.update();
 		
 		if(input.args == null || input.args.length() == 0)
 		{
-			String output = HelpText();
-			res.Call(output);
+			String output = getHelpText();
+			res.send(output);
 			return;
 		}
 		
 		BenchmarkFormattable commandOutput = null;
 		synchronized(framework)
 		{
-			commandOutput = framework.Run(input.args.trim());
+			commandOutput = framework.run(input.args.trim());
 		}
 		
 		if(commandOutput == null)
 		{
-			res.Call(LocStrings.Stub("BenchmarkInvalid"));
+			res.send(LocStrings.stub("BenchmarkInvalid"));
 			return;
 		}
 		
-		commandOutput.Call(res);
+		commandOutput.call(res);
 	}
 }

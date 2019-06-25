@@ -9,21 +9,21 @@ public class CommandBeansShow extends Command
 	public CommandBeansShow(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String HelpText() { return LocStrings.Stub("BeansShowInfo"); };
+	public String getHelpText() { return LocStrings.stub("BeansShowInfo"); };
 	
 	@Override
-	public void OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
+	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		if(input.mentions == null)
-			res.Call(String.format(LocStrings.Stub("BeansShowDisplay"), user.GetBeans()));
+			res.send(String.format(LocStrings.stub("BeansShowDisplay"), user.getBeans()));
 		else
 		{
 			String mentionedBeans = ""; 
 			for(KittyUser mentioned:input.mentions)
 			{
-				mentionedBeans += mentioned.name + " has " + mentioned.GetBeans() + " ";
+				mentionedBeans += mentioned.name + " has " + mentioned.getBeans() + " ";
 			}
-			res.Call(String.format(LocStrings.Stub("BeansShowMentioned"), mentionedBeans));
+			res.send(String.format(LocStrings.stub("BeansShowMentioned"), mentionedBeans));
 		}
 	}
 }
