@@ -1,6 +1,7 @@
 package core;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 import utils.io.FileMonitor;
 
@@ -25,9 +26,9 @@ public class Config
 			sections.add(new LocStrings());
 			sections.add(new CommandEnabler());
 			
-			// Being monitoring configs and mark this as the instance now that it's made
+			// Build the config file, then start monitoring it.
+			buildConfigFile(filepath);
 			monitoredConfigFile = new FileMonitor(filepath);
-			build(filepath);
 
 			instance = this;
 		}
@@ -39,16 +40,27 @@ public class Config
 		}
 	}
 	
-	public void build(String path)
+	public void buildConfigFile(String path)
 	{
 		configCSV = new ConfigCSV(sections, path);
+		Map<String, List<ConfigItem>> groupedSections = ConfigCSV.groupByColumn(configCSV.getItems(), 0);
+		
+		if(groupedSections != null)
+		{
+			for(IConfigSection section : sections)
+			{
+				List<ConfigItem> items = groupedSections.getOrDefault(section.getSectionTitle(), new Vector<ConfigItem>());
+				section.consume(items);
+			}
+		}
+		
 		configCSV.writeFile();
 	}
 	
 	public void upkeep()
 	{
 		monitoredConfigFile.update((monitoredFile) -> {
-			build(monitoredFile.path.toString());
+			buildConfigFile(monitoredFile.path.toString());
 		});
 	}
 }

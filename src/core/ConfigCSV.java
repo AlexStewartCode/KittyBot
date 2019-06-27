@@ -6,7 +6,6 @@ import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,7 +90,14 @@ public class ConfigCSV
 	// Get a copy of the internal items
 	public List<ConfigItem> getItems()
 	{
-		return Arrays.asList((ConfigItem[])fileContents.toArray());
+		List<ConfigItem> out = new Vector<ConfigItem>();
+		
+		for(ConfigItem item : fileContents)
+		{
+			out.add(new ConfigItem(item.type, item.key, item.value));
+		}
+		
+		return out;
 	}
 	
 	// Set the internal items
