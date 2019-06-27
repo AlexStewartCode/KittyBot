@@ -33,8 +33,8 @@ public class SubCommandFormattable
 	public void Call(Response res)
 	{
 		if(resEmbed == null)
-			res.Call(resString);
+			res.send(resString);
 		else
-			res.CallEmbed(resEmbed);
+			res.send(resEmbed);
 	}
 }

@@ -20,9 +20,9 @@ public class SubCommandFramework
 	{
 		name = name.toLowerCase();
 		if(commands.put(name, command) != null)
-			GlobalLog.Error("Multiple registration of a name with name '" + name + "'!");
+			GlobalLog.error("Multiple registration of a name with name '" + name + "'!");
 		
-		GlobalLog.Log("Registered " + name);
+		GlobalLog.log("Registered " + name);
 	}
 	
 	public SubCommandFormattable run(KittyGuild guild, KittyChannel channel, KittyUser user, String input)

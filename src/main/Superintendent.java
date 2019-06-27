@@ -2,7 +2,7 @@ package main;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import core.Config;
+import core.DEPRECATED_Config;
 import core.DatabaseManager;
 import core.RPManager;
 import core.Stats;
@@ -74,7 +74,7 @@ public class Superintendent
 	public static boolean perCommandUpkeepPre()
 	{
 		// Upkeep the config file monitoring
-		Config.instance.upkeep();
+		DEPRECATED_Config.instance.upkeep();
 		
 		return true;
 	}

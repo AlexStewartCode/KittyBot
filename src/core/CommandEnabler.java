@@ -13,7 +13,7 @@ import utils.LogFilter;
 // commands that are being looked up will behave slightly differently so trimming
 // rules for this file are different than the localization ones - this is more 
 // aggresive with whitespace removal.
-public class CommandEnabler extends BaseKeyValueFile implements IConfigSection
+public class CommandEnabler extends BaseKeyValueFile implements DEPRECATED_IConfigSection
 {
 	// Config/const variables
 	public static final String enabled = "1";

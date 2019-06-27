@@ -2,6 +2,8 @@ package core;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
+
 import dataStructures.TaggedPairStore;
 import utils.GlobalLog;
 import utils.LogFilter;
@@ -137,5 +139,10 @@ public abstract class BaseLocFile
 	public String toString()
 	{
 		return stringStore.toString();
+	}
+	
+	public List<ConfigItem> toConfigList();
+	{
+		
 	}
 }

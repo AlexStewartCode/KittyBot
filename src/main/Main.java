@@ -7,7 +7,7 @@ import javax.security.auth.login.LoginException;
 import core.CharacterManager;
 import core.CommandEnabler;
 import core.CommandManager;
-import core.Config;
+import core.DEPRECATED_Config;
 import core.DatabaseManager;
 import core.ObjectBuilderFactory;
 import core.RPManager;

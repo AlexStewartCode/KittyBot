@@ -1,6 +1,8 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import utils.GlobalLog;
 import utils.LogFilter;
 import dataStructures.Pair;
@@ -43,20 +45,36 @@ public class LocCommands extends BaseLocFile implements IConfigSection
 		instance.stringStore.forEach((pair) -> raw.add((String)((Pair<?, ?>)pair).First ));
 		return raw;
 	}
-	
+//	
+//	@Override
+//	public String getHeader() {
+//		return HeaderName;
+//	}
+//
+//	@Override
+//	public void read(String contents) {
+//		updateLocFromString(contents);
+//		scrapeAll();
+//	}
+//
+//	@Override
+//	public String write() {
+//		return toString();
+//	}
+
 	@Override
-	public String getHeader() {
+	public String getSectionTitle() {
 		return HeaderName;
 	}
 
 	@Override
-	public void read(String contents) {
-		updateLocFromString(contents);
+	public void consume(List<ConfigItem> pairs) {
 		scrapeAll();
 	}
 
 	@Override
-	public String write() {
-		return toString();
+	public List<ConfigItem> produce() {
+		// TODO Auto-generated method stub
+		return;
 	}
 }

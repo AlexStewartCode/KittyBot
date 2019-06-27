@@ -1,5 +1,7 @@
 package core;
 
+import java.util.List;
+
 import utils.GlobalLog;
 import utils.LogFilter;
 
@@ -41,18 +43,34 @@ public class LocStrings extends BaseLocFile implements IConfigSection
 	}
 
 	@Override
-	public String getHeader() {
+	public String getSectionTitle() {
 		return HeaderName;
 	}
 
 	@Override
-	public void read(String contents) {
-		updateLocFromString(contents);
+	public void consume(List<ConfigItem> pairs) {
 		scrapeAll();
 	}
 
 	@Override
-	public String write() {
-		return toString();
+	public List<ConfigItem> produce() {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+//	@Override
+//	public String getHeader() {
+//		return HeaderName;
+//	}
+//
+//	@Override
+//	public void read(String contents) {
+//		updateLocFromString(contents);
+//		scrapeAll();
+//	}
+//
+//	@Override
+//	public String write() {
+//		return toString();
+//	}
 }
