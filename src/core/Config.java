@@ -3,6 +3,8 @@ package core;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+
+import utils.GlobalLog;
 import utils.io.FileMonitor;
 
 public class Config
@@ -59,7 +61,9 @@ public class Config
 	
 	public void upkeep()
 	{
-		monitoredConfigFile.update((monitoredFile) -> {
+		monitoredConfigFile.update((monitoredFile) ->
+		{
+			GlobalLog.log("File updated at " + monitoredFile.path);
 			buildConfigFile(monitoredFile.path.toString());
 		});
 	}
