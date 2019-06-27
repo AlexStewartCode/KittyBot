@@ -1,7 +1,6 @@
 package core;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import utils.GlobalLog;
 import utils.LogFilter;
@@ -18,7 +17,7 @@ public class LocCommands extends BaseLocFile implements IConfigSection
 	
 	public LocCommands() 
 	{
-		super(function);
+		super(HeaderName, function);
 		
 		GlobalLog.log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
 		
@@ -42,39 +41,7 @@ public class LocCommands extends BaseLocFile implements IConfigSection
 	public static ArrayList<String> getUnlocalizedCommands()
 	{
 		ArrayList<String> raw = new ArrayList<>();
-		instance.stringStore.forEach((pair) -> raw.add((String)((Pair<?, ?>)pair).First ));
+		instance.localized.keySet().forEach((key) -> raw.add(key));
 		return raw;
-	}
-//	
-//	@Override
-//	public String getHeader() {
-//		return HeaderName;
-//	}
-//
-//	@Override
-//	public void read(String contents) {
-//		updateLocFromString(contents);
-//		scrapeAll();
-//	}
-//
-//	@Override
-//	public String write() {
-//		return toString();
-//	}
-
-	@Override
-	public String getSectionTitle() {
-		return HeaderName;
-	}
-
-	@Override
-	public void consume(List<ConfigItem> pairs) {
-		scrapeAll();
-	}
-
-	@Override
-	public List<ConfigItem> produce() {
-		// TODO Auto-generated method stub
-		return;
 	}
 }

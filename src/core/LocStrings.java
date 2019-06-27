@@ -1,14 +1,12 @@
 package core;
 
-import java.util.List;
-
 import utils.GlobalLog;
 import utils.LogFilter;
 
 // A quick-and-dirty localization tool that scrapes the project for calls to itself, then
 // generates/updates a file externally (phrases.config) with all the stub values as keys that 
 // can then be localized.
-public class LocStrings extends BaseLocFile implements IConfigSection
+public class LocStrings extends BaseLocFile
 {
 	public static final String HeaderName = "Localized Strings";
 	public static final String function = "LocStrings.stub";
@@ -17,7 +15,7 @@ public class LocStrings extends BaseLocFile implements IConfigSection
 	
 	public LocStrings()
 	{
-		super(function);
+		super(HeaderName, function);
 		
 		GlobalLog.log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
 		
@@ -41,36 +39,4 @@ public class LocStrings extends BaseLocFile implements IConfigSection
 	{
 		return instance.getKey(stubbedPreviously);
 	}
-
-	@Override
-	public String getSectionTitle() {
-		return HeaderName;
-	}
-
-	@Override
-	public void consume(List<ConfigItem> pairs) {
-		scrapeAll();
-	}
-
-	@Override
-	public List<ConfigItem> produce() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-//	@Override
-//	public String getHeader() {
-//		return HeaderName;
-//	}
-//
-//	@Override
-//	public void read(String contents) {
-//		updateLocFromString(contents);
-//		scrapeAll();
-//	}
-//
-//	@Override
-//	public String write() {
-//		return toString();
-//	}
 }

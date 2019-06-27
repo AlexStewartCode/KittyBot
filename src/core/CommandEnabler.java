@@ -13,7 +13,7 @@ import utils.LogFilter;
 // commands that are being looked up will behave slightly differently so trimming
 // rules for this file are different than the localization ones - this is more 
 // aggresive with whitespace removal.
-public class CommandEnabler extends BaseKeyValueFile implements DEPRECATED_IConfigSection
+public class CommandEnabler implements IConfigSection
 {
 	// Config/const variables
 	public static final String enabled = "1";
@@ -48,14 +48,15 @@ public class CommandEnabler extends BaseKeyValueFile implements DEPRECATED_IConf
 	}
 	
 	// Reads in the config file and parses it, keeping tabs on the order it read things
-	private void readIn(String contents)
+	private void readIn(List<ConfigItem> items)
 	{
-		parse(contents, (pair) ->{
-			String key = pair.First;
-			String value = pair.Second;
+		for(ConfigItem item : items)
+		{
+			String key = item.key;
+			String value = item.value;
 			
 			keyList.add(key);
-
+			
 			if(value.equalsIgnoreCase(enabled))
 			{
 				enabledMap.putIfAbsent(key, true);
@@ -64,7 +65,7 @@ public class CommandEnabler extends BaseKeyValueFile implements DEPRECATED_IConf
 			{
 				enabledMap.putIfAbsent(key, false);
 			}
-		});
+		}
 	}
 	
 	// Look up the already scraped values from the localizer and store them if they
@@ -86,8 +87,9 @@ public class CommandEnabler extends BaseKeyValueFile implements DEPRECATED_IConf
 	}
 	
 	// Write out enabled/disabled file info.
-	private String writeOut()
+	private List<ConfigItem> writeOut()
 	{
+		// Parse in original format
 		List<Pair<String, String>> list = new Vector<Pair<String, String>>();
 		
 		for(int i = 0; i < keyList.size(); ++i)
@@ -105,7 +107,15 @@ public class CommandEnabler extends BaseKeyValueFile implements DEPRECATED_IConf
 		
 		Collections.sort(list, (c1, c2) -> { return c1.First.compareTo(c2.First); });
 		
-		return write(list);
+		// Convert to new ConfigItem list format for return
+		List<ConfigItem> configItems = new Vector<ConfigItem>();
+		
+		for(Pair<String, String> pair : list)
+		{
+			configItems.add(new ConfigItem(HeaderName, pair.First, pair.Second));
+		}
+		
+		return configItems;
 	}
 	
 	// Looks up a key to see if it's enabled or not
@@ -122,18 +132,21 @@ public class CommandEnabler extends BaseKeyValueFile implements DEPRECATED_IConf
 	}
 
 	@Override
-	public String getHeader() {
+	public String getSectionTitle()
+	{
 		return HeaderName;
 	}
 
 	@Override
-	public void read(String contents) {
+	public void consume(List<ConfigItem> pairs)
+	{
+		readIn(pairs);
 		getTrackedCommands();
-		readIn(contents);
 	}
 
 	@Override
-	public String write() {
+	public List<ConfigItem> produce()
+	{
 		return writeOut();
 	}
 }
