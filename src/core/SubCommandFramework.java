@@ -1,0 +1,33 @@
+package core;
+
+import java.util.HashMap;
+
+import dataStructures.KittyChannel;
+import dataStructures.KittyGuild;
+import dataStructures.KittyUser;
+import utils.GlobalLog;
+
+public class SubCommandFramework 
+{
+	HashMap<String, SubCommand> commands = new HashMap<String, SubCommand>();
+	
+	public SubCommandFramework()
+	{
+		
+	}
+	
+	public void addCommand(String name, SubCommand command)
+	{
+		name = name.toLowerCase();
+		if(commands.put(name, command) != null)
+			GlobalLog.Error("Multiple registration of a name with name '" + name + "'!");
+		
+		GlobalLog.Log("Registered " + name);
+	}
+	
+	public SubCommandFormattable run(KittyGuild guild, KittyChannel channel, KittyUser user, String input)
+	{
+		SubCommandFormattable res = commands.get(input.split(" ")[0].toLowerCase()).OnRun(guild, channel, user, input.substring(input.indexOf(" ")));
+		return res;
+	}
+}
