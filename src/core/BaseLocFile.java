@@ -169,7 +169,6 @@ public abstract class BaseLocFile implements IConfigSection
 	@Override
 	public void consume(List<ConfigItem> pairs)
 	{
-		GlobalLog.log("Ok nice!");
 		localized.clear();
 		buildLocalized(pairs);
 		scrapeAll();
