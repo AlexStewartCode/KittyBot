@@ -22,11 +22,14 @@ public class ConfigCSV
 	// Variables
 	private final String path;
 	private List<ConfigItem> fileContents;
+	private List<IConfigSection> sections;
 	
 	// Constructor
 	public ConfigCSV(List<IConfigSection> sections, String path)
 	{
 		this.path = path;
+		this.sections = sections;
+		
 		fileContents = new Vector<ConfigItem>();
 		
 		read(path);
@@ -115,15 +118,23 @@ public class ConfigCSV
 			List<String[]> toWrite = new Vector<String[]>();
 			toWrite.add(ConfigItem.header);
 			
-			for(ConfigItem item : fileContents)
+			for(IConfigSection section : sections)
 			{
-				toWrite.add(item.getAll());
+				List<ConfigItem> items = section.produce();
+				
+				for(ConfigItem item : items)
+				{
+					toWrite.add(item.getAll());
+				}
 			}
+			
 			Writer writer = Files.newBufferedWriter(Paths.get(path));
+			
 			CSVWriter csvWriter = makeWriter(writer);
 			csvWriter.writeAll(toWrite);
 			csvWriter.flush();
 			csvWriter.close();
+			
 			writer.close();
 		}
 		catch (IOException e)

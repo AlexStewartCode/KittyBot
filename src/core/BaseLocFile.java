@@ -43,7 +43,14 @@ public abstract class BaseLocFile implements IConfigSection
 	{
 		for(ConfigItem item : pairs)
 		{
-			localized.put(item.key, item.value);
+			if(item.value.trim().length() <= 0)
+			{
+				localized.put(item.key, item.key);
+			}
+			else
+			{
+				localized.put(item.key, item.value);
+			}
 		}
 	}
 	
@@ -162,6 +169,7 @@ public abstract class BaseLocFile implements IConfigSection
 	@Override
 	public void consume(List<ConfigItem> pairs)
 	{
+		GlobalLog.log("Ok nice!");
 		localized.clear();
 		buildLocalized(pairs);
 		scrapeAll();
@@ -171,10 +179,20 @@ public abstract class BaseLocFile implements IConfigSection
 	public List<ConfigItem> produce()
 	{
 		List<ConfigItem> items = new Vector<ConfigItem>();
-		
-		for(Entry<String, String> entry : localized.entrySet())
+
+		for(Entry<String, String> keyValuePair : localized.entrySet())
 		{
-			items.add(new ConfigItem(headerName, entry.getKey(), entry.getValue()));
+			String key = keyValuePair.getKey();
+			String value = keyValuePair.getValue();
+			
+			if(key.equalsIgnoreCase(value))
+			{
+				items.add(new ConfigItem(headerName, key, ""));
+			}
+			else
+			{
+				items.add(new ConfigItem(headerName, key, value));
+			}
 		}
 		
 		items.sort((item1, item2) -> item1.key.compareToIgnoreCase(item2.key));
