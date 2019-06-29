@@ -15,6 +15,8 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
 
+import utils.GlobalLog;
+
 public class ConfigCSV
 {
 	// Variables
@@ -67,12 +69,11 @@ public class ConfigCSV
 			{
 				if(record.length < ConfigItem.items)
 				{
-					System.out.println("Incorrect number of items on line " + line + " in " + path);
+					GlobalLog.warn("Incorrect number of items on line " + line + " in " + path);
 					continue;
 				}
 				
-				ConfigItem parsedLine = new ConfigItem(record[0], record[1], record[2]);				
-				System.out.println(parsedLine);
+				ConfigItem parsedLine = new ConfigItem(record[0], record[1], record[2]);
 				fileContents.add(parsedLine);
 				++line;
 			}
@@ -111,17 +112,19 @@ public class ConfigCSV
 	{
 		try
 		{
-			Writer writer = Files.newBufferedWriter(Paths.get(path));
-			CSVWriter csvWriter = makeWriter(writer);
-			
-			csvWriter.writeNext(ConfigItem.header);
+			List<String[]> toWrite = new Vector<String[]>();
+			toWrite.add(ConfigItem.header);
 			
 			for(ConfigItem item : fileContents)
 			{
-				csvWriter.writeNext(item.getAll());
+				toWrite.add(item.getAll());
 			}
-			
+			Writer writer = Files.newBufferedWriter(Paths.get(path));
+			CSVWriter csvWriter = makeWriter(writer);
+			csvWriter.writeAll(toWrite);
+			csvWriter.flush();
 			csvWriter.close();
+			writer.close();
 		}
 		catch (IOException e)
 		{

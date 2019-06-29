@@ -166,7 +166,7 @@
 "Localized Strings","InviteInfo","Provides a direct invite link for KittyBot"
 "Localized Strings","DBFlushInfo","Takes all objects queued for the database and writes them to the database, then says how many were written."
 "Localized Commands","indicator",""
-"Localized Commands","yeet","yeet, yeety"
+"Localized Commands","yeet",""
 "Localized Commands","guildroleremove",""
 "Localized Commands","bethistory",""
 "Localized Commands","benchmark, bench",""

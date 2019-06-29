@@ -19,7 +19,7 @@ public class CommandEnabler implements IConfigSection
 	public static final String enabled = "1";
 	public static final String disabled = "0";
 	public static final boolean defaultEnabledState = true;
-	public static final String HeaderName = "Command Management";
+	public static final String HeaderName = "Command Enabler";
 	
 	// Local variables
 	private HashMap<String, Boolean> enabledMap; // Quick lookup
