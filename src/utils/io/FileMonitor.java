@@ -44,8 +44,11 @@ public class FileMonitor
 		if(last.longValue() != file.lastModified.longValue())
 		{
 			IOLog.log("Most recently modified at " + last + ", stored version at " + file.lastModified);
+			
 			file = new MonitoredFile(file.path, last);
 			fileChanged.accept(file);
+			
+			file = new MonitoredFile(file.path, FileUtils.lastModified(file.path));
 		}
 	}
 }

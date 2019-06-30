@@ -1,35 +1,32 @@
 package core;
 
 import java.util.ArrayList;
+
 import utils.GlobalLog;
 import utils.LogFilter;
-import utils.io.FileMonitor;
 import dataStructures.Pair;
 
 // Performs the same localization for the strings associated with command names as 
 // is performed with general strings in the application
-public class LocCommands extends BaseLocFile
+public class LocCommands extends BaseLocFile implements IConfigSection
 {
-	public static final String fileName = Config.AssetDirectory + "locCommands.config";
+	// Defined const variables
+	public static final String HeaderName = "Localized Commands";
 	public static final String function = "LocCommands.stub";
 	
+	// Instance
 	private static LocCommands instance;
 	
+	// Constructor
 	public LocCommands() 
 	{
-		super(fileName, function);
+		super(HeaderName, function);
 		
 		GlobalLog.log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
 		
 		if(instance == null)
 		{
 			instance = this;
-			
-			updateLocFromDisk();
-			scrapeAll();
-			saveLocToDisk();
-			
-			fileMonitor = new FileMonitor(filename);
 		}
 		else
 		{
@@ -47,12 +44,7 @@ public class LocCommands extends BaseLocFile
 	public static ArrayList<String> getUnlocalizedCommands()
 	{
 		ArrayList<String> raw = new ArrayList<>();
-		instance.stringStore.forEach((pair) -> raw.add((String)((Pair<?, ?>)pair).First ));
+		instance.localized.keySet().forEach((key) -> raw.add(key));
 		return raw;
-	}
-	
-	public static void upkeep()
-	{
-		instance.update();
 	}
 }

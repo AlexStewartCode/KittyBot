@@ -3,8 +3,16 @@ package core;
 import java.util.*;
 import java.util.Map.Entry;
 
+import commands.characters.CommandCharacterEditBio;
+import commands.characters.CommandCharacterEditName;
+import commands.characters.CommandCharacterEditURL;
+import commands.characters.CommandCharacterSearch;
+import commands.general.*;
+import commands.guildrole.CommandGuildRoleMain;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
+import dataStructures.KittyRating;
+import dataStructures.KittyRole;
 import dataStructures.KittyUser;
 import dataStructures.Pair;
 import dataStructures.Response;
@@ -20,13 +28,97 @@ public class CommandManager
 	private CommandEnabler commandEnabler;
 	private long invokeCount;
 	
+	// Singleton
+	public static CommandManager instance;
+	
 	// Default Constructor
 	public CommandManager(CommandEnabler commandEnabler)
 	{
-		this.commands = new HashMap<String, Command>();
-		this.threadAccumulator = new ArrayList<CommandThread>();
-		this.invokeCount = 0;
-		this.commandEnabler = commandEnabler; 
+		GlobalLog.log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
+		
+		if(instance == null)
+		{
+			this.commands = new HashMap<String, Command>();
+			this.threadAccumulator = new ArrayList<CommandThread>();
+			this.invokeCount = 0;
+			this.commandEnabler = commandEnabler; 
+			
+			registerAllCommands();
+			
+			instance = this;
+		}
+		else
+		{
+			GlobalLog.error(LogFilter.Core, "You can't have two of the following: " + this.getClass().getSimpleName());
+		}
+	}
+	
+	// Registers all the commands for the instance
+	public void registerAllCommands()
+	{
+		this.commands.clear();
+		
+		// Dev
+		this.register(LocCommands.stub("work"), new CommandDoWork(KittyRole.Dev, KittyRating.Safe));
+		this.register(LocCommands.stub("shutdown"), new CommandShutdown(KittyRole.Dev, KittyRating.Safe));
+		this.register(LocCommands.stub("stats"), new CommandStats(KittyRole.Dev, KittyRating.Safe));
+		this.register(LocCommands.stub("invite"), new CommandInvite(KittyRole.Dev, KittyRating.Safe));
+		this.register(LocCommands.stub("buildHelp"), new CommandHelpBuilder(KittyRole.Dev, KittyRating.Safe));
+		this.register(LocCommands.stub("tweet"), new CommandTweet(KittyRole.Dev, KittyRating.Safe));
+		this.register(LocCommands.stub("dbflush"), new CommandDBFlush(KittyRole.Dev, KittyRating.Safe));
+		this.register(LocCommands.stub("dbstats"), new CommandDBStats(KittyRole.Dev, KittyRating.Safe));
+		
+		// Admin
+		this.register(LocCommands.stub("rating"), new CommandRating(KittyRole.Admin, KittyRating.Safe));
+		this.register(LocCommands.stub("indicator"), new CommandChangeIndicator(KittyRole.Admin, KittyRating.Safe));
+		
+		// Mod
+		this.register(LocCommands.stub("poll"), new CommandPollManage(KittyRole.Mod, KittyRating.Safe));
+		this.register(LocCommands.stub("givebeans"), new CommandGiveBeans(KittyRole.Mod, KittyRating.Safe));
+		this.register(LocCommands.stub("rpg"), new CommandRPG(KittyRole.Mod, KittyRating.Safe));
+		this.register(LocCommands.stub("rafflestart"), new CommandRaffleStart(KittyRole.Mod, KittyRating.Safe));
+		this.register(LocCommands.stub("rafflespin"), new CommandRaffleSpin(KittyRole.Mod, KittyRating.Safe));
+		this.register(LocCommands.stub("raffleend"), new CommandRaffleEnd(KittyRole.Mod, KittyRating.Safe));
+
+		// General
+		this.register(LocCommands.stub("fetch"), new CommandFetch(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("teey"), new CommandTeey(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("perish, thenperish"), new CommandPerish(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("yeet"), new CommandYeet(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("ping"), new CommandPing(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("boop"), new CommandBoop(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("roll"), new CommandRoll(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("choose"), new CommandChoose(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("help"), new CommandHelp(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("info, about"), new CommandInfo(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("vote"), new CommandPollVote(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("results"), new CommandPollResults(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("showpoll"), new CommandPollShow(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("wolfram"), new CommandWolfram(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("c++, g++, cplus, cpp"), new CommandColiru(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("java, jdoodle"), new CommandJDoodle(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("beans"), new CommandBeansShow(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("kittyrole"), new CommandRole(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("bet"), new CommandBetBeans(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("map"), new CommandMap(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("rpstart"), new CommandRPStart(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("rpend"), new CommandRPEnd(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("tony, stark, dontfeelgood, dontfeelsogood"), new CommandStark(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("blur"), new CommandBlurry(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("eightball, 8ball"), new CommandEightBall(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("catch"), new CommandCatch(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("bethistory"), new CommandBetHistory(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("crouton"), new CommandCrouton(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("rafflejoin"), new CommandRaffleJoin(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("searchcharacter"), new CommandCharacterSearch(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("charactereditbio"), new CommandCharacterEditBio(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("charactereditname"), new CommandCharacterEditName(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("charactereditURL"), new CommandCharacterEditURL(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("leaderboard"), new CommandLeaderboard(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("color, colour"), new CommandColor(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("remind"), new CommandRemind(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("role"), new CommandGuildRoleMain(KittyRole.General, KittyRating.Safe));
 	}
 	
 	// Allows the command manager to keep track of a command. Takes a pair (the un-localized and localzied commands)
@@ -36,41 +128,23 @@ public class CommandManager
 		if(pair == null || pair.Second == null)
 			return;
 		
-		// If we haven't already split a multisplit command (or even assessed that), 
-		// then verify if we even need to register the commands at all. If it's 
-		// not enabled, don't register it. 
-		if(pair.First != null && !commandEnabler.isEnabled(pair.First))
-			return;
-		
-		String key = pair.Second;
-		
-		if(key.contains(","))
-		{
-			
-			String[] keys = key.split(",");
-			register(keys, command);
-			return;
-		}
-		
-		key = key.toLowerCase();
-		command.registeredNames.add(key);
-		
-		Command old = commands.put(key, command);
-		
-		if(old != null)
-		{
-			GlobalLog.warn(LogFilter.Core, "Writing over a command with the key " + key);
-			return;
-		}
-		
-		GlobalLog.log(LogFilter.Core, "Command registered under key " + key);
-	}
-	
-	// Registers a command under multiple names!
-	public void register(String[] keys, Command command)
-	{
+		String[] keys = pair.Second.split(",");
+
 		for(int i = 0; i < keys.length; ++i)
-			register(new Pair<String, String>(null, keys[i].trim()), command);
+		{
+			String key = keys[i].trim().toLowerCase();
+			
+			command.registeredNames.add(key);
+			Command old = commands.put(key, command);
+			
+			if(old != null)
+			{
+				GlobalLog.warn(LogFilter.Core, "Writing over a command with the key " + key);
+				return;
+			}
+			
+			GlobalLog.log(LogFilter.Core, "Command registered under key " + key);
+		}
 	}
 	
 	// Calls the command but on a whole new thread!
@@ -78,6 +152,12 @@ public class CommandManager
 	{
 		// This is here to prevent spinning up a thread if this wasn't even a command.
 		if(input == null || !input.isValid())
+			return false;
+		
+		// At this point, verify that the command is enabled. If we don't have any info
+		// on if it's enabled or not, we assume it's enabled to prevent broken functionality due
+		// to formatting or casing issues.
+		if(input.key != null && !commandEnabler.isEnabled(input.key))
 			return false;
 		
 		Command command = commands.get(input.key);

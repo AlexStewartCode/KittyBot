@@ -7,18 +7,16 @@ import java.util.concurrent.Semaphore;
 
 import javax.security.auth.login.LoginException;
 
-import commands.*;
+import commands.characters.*;
+import commands.general.*;
+import commands.guildrole.CommandGuildRoleMain;
 import core.lua.PluginManager;
 import dataStructures.*;
 import main.Main;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.Emote;
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import offline.Ref;
 import utils.AdminControl;
@@ -51,14 +49,17 @@ public class ObjectBuilderFactory
 	
 	// Plugin manager
 	private static PluginManager pluginManager;
-
+	
+	// Command manager
+	private static CommandManager commandManager;
+	
 	// Localization classes - these are singletons, but should be initialized before almost all other 
 	// things so their inclusion in the factory is to ensure they're started at the correct time.
 	@SuppressWarnings("unused") private static LocStrings locStrings;
 	@SuppressWarnings("unused") private static LocCommands locCommands;
 	
-	// Handles if we can or can't use specific commands, parsing a config file based on loc data to do so.
-	private static CommandEnabler commandEnabler;
+	// Config
+	@SuppressWarnings("unused") private static Config config;
 	
 	// Lazy initialization multithreaded mutex stuff to prevent explosions.
 	// TODO: Investigate using 'synchronized' instead potentially
@@ -88,8 +89,7 @@ public class ObjectBuilderFactory
 				// Start by reading from things that are external. Because
 				// we require these things to be resolved before the rest of the application,
 				// we place them here.
-				locStrings = new LocStrings();
-				locCommands = new LocCommands();
+				config = new Config();
 			}
 			finally
 			{
@@ -371,86 +371,10 @@ public class ObjectBuilderFactory
 	{
 		lazyInit();
 		
-		CommandManager manager = new CommandManager(commandEnabler);
+		if(commandManager == null)
+			commandManager = new CommandManager(commandEnabler);
 		
-		// Dev
-		manager.register(LocCommands.stub("work"), new CommandDoWork(KittyRole.Dev, KittyRating.Safe));
-		manager.register(LocCommands.stub("shutdown"), new CommandShutdown(KittyRole.Dev, KittyRating.Safe));
-		manager.register(LocCommands.stub("stats"), new CommandStats(KittyRole.Dev, KittyRating.Safe));
-		manager.register(LocCommands.stub("invite"), new CommandInvite(KittyRole.Dev, KittyRating.Safe));
-		manager.register(LocCommands.stub("buildHelp"), new CommandHelpBuilder(KittyRole.Dev, KittyRating.Safe));
-		manager.register(LocCommands.stub("tweet"), new CommandTweet(KittyRole.Dev, KittyRating.Safe));
-		manager.register(LocCommands.stub("dbflush"), new CommandDBFlush(KittyRole.Dev, KittyRating.Safe));
-		manager.register(LocCommands.stub("dbstats"), new CommandDBStats(KittyRole.Dev, KittyRating.Safe));
-		
-		// Admin
-		manager.register(LocCommands.stub("rating"), new CommandRating(KittyRole.Admin, KittyRating.Safe));
-		manager.register(LocCommands.stub("indicator"), new CommandChangeIndicator(KittyRole.Admin, KittyRating.Safe));
-		manager.register(LocCommands.stub("guildroleallowed"), new CommandGuildRoleAllowed(KittyRole.Admin, KittyRating.Safe));
-		manager.register(LocCommands.stub("guildrolenotallowed"), new CommandGuildRoleNotAllowed(KittyRole.Admin, KittyRating.Safe));
-		
-		// Mod
-		manager.register(LocCommands.stub("poll"), new CommandPollManage(KittyRole.Mod, KittyRating.Safe));
-		manager.register(LocCommands.stub("givebeans"), new CommandGiveBeans(KittyRole.Mod, KittyRating.Safe));
-		manager.register(LocCommands.stub("rpg"), new CommandRPG(KittyRole.Mod, KittyRating.Safe));
-		manager.register(LocCommands.stub("rafflestart"), new CommandRaffleStart(KittyRole.Mod, KittyRating.Safe));
-		manager.register(LocCommands.stub("rafflespin"), new CommandRaffleSpin(KittyRole.Mod, KittyRating.Safe));
-		manager.register(LocCommands.stub("raffleend"), new CommandRaffleEnd(KittyRole.Mod, KittyRating.Safe));
-
-		// General
-		manager.register(LocCommands.stub("fetch"), new CommandFetch(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("guildroleadd"), new CommandGuildRoleAdd(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("guildroleremove"), new CommandGuildRoleRemove(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("teey"), new CommandTeey(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("perish, thenperish"), new CommandPerish(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("yeet"), new CommandYeet(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("ping"), new CommandPing(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("boop"), new CommandBoop(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("roll"), new CommandRoll(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("choose"), new CommandChoose(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("help"), new CommandHelp(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("info, about"), new CommandInfo(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("vote"), new CommandPollVote(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("results"), new CommandPollResults(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("showpoll"), new CommandPollShow(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("wolfram"), new CommandWolfram(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("c++, g++, cplus, cpp"), new CommandColiru(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("java, jdoodle"), new CommandJDoodle(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("beans"), new CommandBeansShow(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("role"), new CommandRole(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("bet"), new CommandBetBeans(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("map"), new CommandMap(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("rpstart"), new CommandRPStart(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("rpend"), new CommandRPEnd(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("tony, stark, dontfeelgood, dontfeelsogood"), new CommandStark(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("blur"), new CommandBlurry(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("eightball, 8ball"), new CommandEightBall(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("catch"), new CommandCatch(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("guildrolelist"), new CommandGuildRoleList(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("bethistory"), new CommandBetHistory(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("crouton"), new CommandCrouton(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("rafflejoin"), new CommandRaffleJoin(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("charactercreate"), new CommandCharacterCreate(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("searchcharacter"), new CommandCharacterSearch(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("charactereditbio"), new CommandCharacterEditBio(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("charactereditname"), new CommandCharacterEditName(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("charactereditURL"), new CommandCharacterEditURL(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("leaderboard"), new CommandLeaderboard(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("color, colour"), new CommandColor(KittyRole.General, KittyRating.Safe));
-		
-		return manager;
-	}
-	
-	// Constructs a CommandEnabler if it doesn't exist, and gets the existing one if it does. 
-	public static CommandEnabler constructCommandEnabler()
-	{
-		lazyInit();
-
-		if(commandEnabler == null)
-			commandEnabler = new CommandEnabler();
-		
-		return commandEnabler;
+		return commandManager;
 	}
 	
 	// Default database manager construction. It can be constructed 
@@ -492,7 +416,7 @@ public class ObjectBuilderFactory
 		lazyInit();
 		
 		if(pluginManager == null)
-			pluginManager = new PluginManager(Config.AssetDirectory + "plugins/");
+			pluginManager = new PluginManager(Constants.AssetDirectory + "plugins/");
 		
 		return pluginManager;
 	}

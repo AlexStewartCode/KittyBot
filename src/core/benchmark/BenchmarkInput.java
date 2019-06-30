@@ -30,7 +30,5 @@ public class BenchmarkInput
 		key = raw.substring(0, whitespacePos).trim();
 		value = raw.substring(whitespacePos).trim();
 	}
-	
-
 }
 

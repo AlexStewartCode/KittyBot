@@ -2,33 +2,26 @@ package core;
 
 import utils.GlobalLog;
 import utils.LogFilter;
-import utils.io.FileMonitor;
 
 // A quick-and-dirty localization tool that scrapes the project for calls to itself, then
 // generates/updates a file externally (phrases.config) with all the stub values as keys that 
 // can then be localized.
 public class LocStrings extends BaseLocFile
 {
-	public static final String fileName = Config.AssetDirectory + "locStrings.config";
+	public static final String HeaderName = "Localized Strings";
 	public static final String function = "LocStrings.stub";
 	
 	private static LocStrings instance;
 	
 	public LocStrings()
 	{
-		super(fileName, function);
+		super(HeaderName, function);
 		
 		GlobalLog.log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
 		
 		if(instance == null)
 		{
 			instance = this;
-			
-			updateLocFromDisk();
-			scrapeAll();
-			saveLocToDisk();
-			
-			fileMonitor = new FileMonitor(filename);
 		}
 		else
 		{
@@ -45,10 +38,5 @@ public class LocStrings extends BaseLocFile
 	public static String lookup(String stubbedPreviously)
 	{
 		return instance.getKey(stubbedPreviously);
-	}
-	
-	public static void upkeep()
-	{
-		instance.update();
 	}
 }
