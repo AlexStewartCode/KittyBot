@@ -8,9 +8,9 @@ import dataStructures.KittyRating;
 import dataStructures.KittyRole;
 import dataStructures.KittyUser;
 
-public class CommandGuildRoleAdd extends SubCommand
+public class SubCommandAdd extends SubCommand
 {
-	public CommandGuildRoleAdd(KittyRole level, KittyRating rating) { super(level, rating); }
+	public SubCommandAdd(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
 	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, String input)

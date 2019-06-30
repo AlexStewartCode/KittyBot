@@ -9,9 +9,9 @@ import dataStructures.KittyRating;
 import dataStructures.KittyRole;
 import dataStructures.KittyUser;
 
-public class CommandGuildRoleNotAllowed extends SubCommand
+public class SubCommandNotAllowed extends SubCommand
 {
-	public CommandGuildRoleNotAllowed(KittyRole level, KittyRating rating) { super(level, rating); }
+	public SubCommandNotAllowed(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
 	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, String input)

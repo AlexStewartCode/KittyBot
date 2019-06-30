@@ -2,6 +2,11 @@ package core;
 
 import java.util.*;
 import java.util.Map.Entry;
+
+import commands.characters.CommandCharacterEditBio;
+import commands.characters.CommandCharacterEditName;
+import commands.characters.CommandCharacterEditURL;
+import commands.characters.CommandCharacterSearch;
 import commands.general.*;
 import commands.guildrole.CommandGuildRoleMain;
 import dataStructures.KittyChannel;
@@ -106,7 +111,6 @@ public class CommandManager
 		this.register(LocCommands.stub("crouton"), new CommandCrouton(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("rafflejoin"), new CommandRaffleJoin(KittyRole.General, KittyRating.Safe));
-		this.register(LocCommands.stub("charactercreate"), new CommandCharacterCreate(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("searchcharacter"), new CommandCharacterSearch(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("charactereditbio"), new CommandCharacterEditBio(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("charactereditname"), new CommandCharacterEditName(KittyRole.General, KittyRating.Safe));

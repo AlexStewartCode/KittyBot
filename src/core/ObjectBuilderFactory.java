@@ -7,17 +7,16 @@ import java.util.concurrent.Semaphore;
 
 import javax.security.auth.login.LoginException;
 
+import commands.characters.*;
+import commands.general.*;
+import commands.guildrole.CommandGuildRoleMain;
 import core.lua.PluginManager;
 import dataStructures.*;
 import main.Main;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.Emote;
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import offline.Ref;
 import utils.AdminControl;
