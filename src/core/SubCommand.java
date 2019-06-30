@@ -18,7 +18,7 @@ public abstract class SubCommand
 	
 	private void Reject(KittyUser user, String reason)
 	{
-		GlobalLog.Warn(LogFilter.Command, this.getClass().getSimpleName() + " from " + user.name + " rejected due to command's " + reason);
+		GlobalLog.warn(LogFilter.Command, this.getClass().getSimpleName() + " from " + user.name + " rejected due to command's " + reason);
 	}
 	
 	private boolean CanCall(KittyGuild guild, KittyChannel channel, KittyUser user)
@@ -31,7 +31,7 @@ public abstract class SubCommand
 		
 		//TODO: ADD CHANNEL CHECK HERE
 		
-		if(user.GetRole().getValue() >= roleLevel.getValue())
+		if(user.getRole().getValue() >= roleLevel.getValue())
 		{
 			return true;
 		}

@@ -7,7 +7,8 @@ import java.util.concurrent.Semaphore;
 
 import javax.security.auth.login.LoginException;
 
-import commands.*;
+import commands.general.*;
+import commands.guildrole.CommandGuildRoleMain;
 import core.lua.PluginManager;
 import dataStructures.*;
 import main.Main;
@@ -386,8 +387,6 @@ public class ObjectBuilderFactory
 		// Admin
 		manager.register(LocCommands.stub("rating"), new CommandRating(KittyRole.Admin, KittyRating.Safe));
 		manager.register(LocCommands.stub("indicator"), new CommandChangeIndicator(KittyRole.Admin, KittyRating.Safe));
-		manager.register(LocCommands.stub("guildroleallowed"), new CommandGuildRoleAllowed(KittyRole.Admin, KittyRating.Safe));
-		manager.register(LocCommands.stub("guildrolenotallowed"), new CommandGuildRoleNotAllowed(KittyRole.Admin, KittyRating.Safe));
 		
 		// Mod
 		manager.register(LocCommands.stub("poll"), new CommandPollManage(KittyRole.Mod, KittyRating.Safe));
@@ -399,8 +398,6 @@ public class ObjectBuilderFactory
 
 		// General
 		manager.register(LocCommands.stub("fetch"), new CommandFetch(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("guildroleadd"), new CommandGuildRoleAdd(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("guildroleremove"), new CommandGuildRoleRemove(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("teey"), new CommandTeey(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("perish, thenperish"), new CommandPerish(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("yeet"), new CommandYeet(KittyRole.General, KittyRating.Safe));
@@ -417,7 +414,7 @@ public class ObjectBuilderFactory
 		manager.register(LocCommands.stub("c++, g++, cplus, cpp"), new CommandColiru(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("java, jdoodle"), new CommandJDoodle(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("beans"), new CommandBeansShow(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("role"), new CommandRole(KittyRole.General, KittyRating.Safe));
+		manager.register(LocCommands.stub("kittyrole"), new CommandRole(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("bet"), new CommandBetBeans(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("map"), new CommandMap(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("rpstart"), new CommandRPStart(KittyRole.General, KittyRating.Safe));
@@ -426,7 +423,6 @@ public class ObjectBuilderFactory
 		manager.register(LocCommands.stub("blur"), new CommandBlurry(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("eightball, 8ball"), new CommandEightBall(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("catch"), new CommandCatch(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("guildrolelist"), new CommandGuildRoleList(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("bethistory"), new CommandBetHistory(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("crouton"), new CommandCrouton(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
@@ -438,6 +434,8 @@ public class ObjectBuilderFactory
 		manager.register(LocCommands.stub("charactereditURL"), new CommandCharacterEditURL(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("leaderboard"), new CommandLeaderboard(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("color, colour"), new CommandColor(KittyRole.General, KittyRating.Safe));
+		manager.register(LocCommands.stub("remind"), new CommandRemind(KittyRole.General, KittyRating.Safe));
+		manager.register(LocCommands.stub("role"), new CommandGuildRoleMain(KittyRole.General, KittyRating.Safe));
 		
 		return manager;
 	}
