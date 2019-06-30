@@ -10,11 +10,14 @@ import dataStructures.Pair;
 // is performed with general strings in the application
 public class LocCommands extends BaseLocFile implements IConfigSection
 {
+	// Defined const variables
 	public static final String HeaderName = "Localized Commands";
 	public static final String function = "LocCommands.stub";
 	
+	// Instance
 	private static LocCommands instance;
 	
+	// Constructor
 	public LocCommands() 
 	{
 		super(HeaderName, function);

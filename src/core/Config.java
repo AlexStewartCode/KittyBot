@@ -65,6 +65,9 @@ public class Config
 		{
 			GlobalLog.log("File updated at " + monitoredFile.path);
 			buildConfigFile(monitoredFile.path.toString());
+			
+			// Re-register all commands now that we've updated the config
+			CommandManager.instance.registerAllCommands();
 		});
 	}
 }
