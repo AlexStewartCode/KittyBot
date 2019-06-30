@@ -1,4 +1,4 @@
-package commands;
+package commands.general;
 
 import java.util.Stack;
 
