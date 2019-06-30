@@ -22,11 +22,12 @@ public class SubCommandFramework
 		if(commands.put(name, command) != null)
 			GlobalLog.error("Multiple registration of a name with name '" + name + "'!");
 		
-		GlobalLog.log("Registered " + name);
+		GlobalLog.log("Registered SubCommand " + name);
 	}
 	
 	public SubCommandFormattable run(KittyGuild guild, KittyChannel channel, KittyUser user, String input)
 	{
+		System.out.print(input);
 		SubCommandFormattable res = commands.get(input.split(" ")[0].toLowerCase()).OnRun(guild, channel, user, input.substring(input.indexOf(" ")));
 		return res;
 	}
