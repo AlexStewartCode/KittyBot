@@ -3,10 +3,7 @@ package core;
 import java.util.*;
 import java.util.Map.Entry;
 
-import commands.characters.CommandCharacterEditBio;
-import commands.characters.CommandCharacterEditName;
-import commands.characters.CommandCharacterEditURL;
-import commands.characters.CommandCharacterSearch;
+import commands.characters.CommandCharacterMain;
 import commands.general.*;
 import commands.guildrole.CommandGuildRoleMain;
 import dataStructures.KittyChannel;
@@ -111,14 +108,11 @@ public class CommandManager
 		this.register(LocCommands.stub("crouton"), new CommandCrouton(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("rafflejoin"), new CommandRaffleJoin(KittyRole.General, KittyRating.Safe));
-		this.register(LocCommands.stub("searchcharacter"), new CommandCharacterSearch(KittyRole.General, KittyRating.Safe));
-		this.register(LocCommands.stub("charactereditbio"), new CommandCharacterEditBio(KittyRole.General, KittyRating.Safe));
-		this.register(LocCommands.stub("charactereditname"), new CommandCharacterEditName(KittyRole.General, KittyRating.Safe));
-		this.register(LocCommands.stub("charactereditURL"), new CommandCharacterEditURL(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("leaderboard"), new CommandLeaderboard(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("color, colour"), new CommandColor(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("remind"), new CommandRemind(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("role"), new CommandGuildRoleMain(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("character"), new CommandCharacterMain(KittyRole.General, KittyRating.Safe));
 	}
 	
 	// Allows the command manager to keep track of a command. Takes a pair (the un-localized and localzied commands)
