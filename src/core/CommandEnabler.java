@@ -18,12 +18,15 @@ public class CommandEnabler implements IConfigSection
 	public static final String enabled = "1";
 	public static final String disabled = "0";
 	public static final boolean defaultEnabledState = true;
+	public static final String commandSplit = ",";
 	public static final String HeaderName = "Command Enabler";
 	
 	// Local variables
 	private HashMap<String, Boolean> enabledMap; // Quick lookup
-	private ArrayList<String> keyList; // Tracking ordering for later
-
+	private HashMap<String, String> likeNames;	 // Single names mapped to multiple names for use in enabledMap.
+	private ArrayList<String> keyList;			 // Tracking ordering for later
+	
+	// Instance
 	public static CommandEnabler instance;
 	
 	// Constructor
@@ -37,6 +40,7 @@ public class CommandEnabler implements IConfigSection
 			GlobalLog.log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
 			enabledMap = new HashMap<>();
 			keyList = new ArrayList<>();
+			likeNames = new HashMap<String, String>();
 			
 			instance = this;
 		}
@@ -57,8 +61,10 @@ public class CommandEnabler implements IConfigSection
 			String key = item.key;
 			String value = item.value;
 			
+			// Keep track of the key itself
 			keyList.add(key);
 			
+			// Write if it's enabled or disabled.
 			if(value.equalsIgnoreCase(enabled))
 			{
 				enabledMap.putIfAbsent(key, true);
@@ -66,6 +72,13 @@ public class CommandEnabler implements IConfigSection
 			else
 			{
 				enabledMap.putIfAbsent(key, false);
+			}
+			
+			// Keep track of alternate names
+			String[] keys = key.split(commandSplit);
+			for(int i = 0; i < keys.length; ++i)
+			{
+				likeNames.putIfAbsent(keys[i], key);
 			}
 		}
 	}
@@ -117,12 +130,15 @@ public class CommandEnabler implements IConfigSection
 	{
 		String toCheck = key.toLowerCase();
 		
-		if(enabledMap.containsKey(toCheck))
-		{
-			return enabledMap.get(toCheck);
-		}
+		// Look up to see if we have the key anywhere. If not, default to enabled.
+		// It should be noted that this is just checking for disabled commands, we don't
+		// determine if a key is actually a real command in here or not.
+		String fullKey = likeNames.getOrDefault(toCheck, null);
+		if(fullKey == null)
+			return true; 
 		
-		return true;
+		// If we have it, look it up. If we can't find it, default to true.
+		return enabledMap.getOrDefault(fullKey, true);
 	}
 
 	@Override

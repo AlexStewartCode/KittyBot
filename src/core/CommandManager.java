@@ -36,12 +36,6 @@ public class CommandManager
 		if(pair == null || pair.Second == null)
 			return;
 		
-		// If we haven't already split a multisplit command (or even assessed that), 
-		// then verify if we even need to register the commands at all. If it's 
-		// not enabled, don't register it. 
-		if(pair.First != null && !commandEnabler.isEnabled(pair.First))
-			return;
-		
 		String key = pair.Second;
 		
 		if(key.contains(","))
@@ -78,6 +72,12 @@ public class CommandManager
 	{
 		// This is here to prevent spinning up a thread if this wasn't even a command.
 		if(input == null || !input.isValid())
+			return false;
+		
+		// If we haven't already split a multisplit command (or even assessed that), 
+		// then verify if we even need to register the commands at all. If it's 
+		// not enabled, don't register it. 
+		if(input.key != null && !commandEnabler.isEnabled(input.key))
 			return false;
 		
 		Command command = commands.get(input.key);
