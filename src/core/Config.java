@@ -66,7 +66,10 @@ public class Config
 			GlobalLog.log("File updated at " + monitoredFile.path);
 			buildConfigFile(monitoredFile.path.toString());
 			
-			// Re-register all commands now that we've updated the config
+			// Re-register all commands now that we've updated the config.
+			// Before we do that tho, sync off anything that needs syncing.
+			// TODO: This is not thread safe.
+			DatabaseManager.instance.upkeep();
 			CommandManager.instance.registerAllCommands();
 		});
 	}

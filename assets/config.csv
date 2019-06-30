@@ -101,6 +101,7 @@
 "Localized Strings","CharacterEditURLNotAuth","You're not authorized to change that character! "
 "Localized Strings","CharacterEditURLNotValid","That's not a valid url! "
 "Localized Strings","CharacterEditURLSuccess","Successfully changed your reference! "
+"Localized Strings","CharacterInfo",""
 "Localized Strings","CharacterSearchInfo","Find a character with their name or Unique ID! `charactersearch name` or `charactersearch UniqueID`"
 "Localized Strings","CharacterSearchMultipleCharacter","%s is owned by %s. Unique ID is `%s`"
 "Localized Strings","CharacterSearchMultipleCharacterHeader","I found a couple characters with that name, use `charactersearch UniqueID` with their Unique ID to find them!"
