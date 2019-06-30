@@ -2,7 +2,8 @@ package core;
 
 import java.util.*;
 import java.util.Map.Entry;
-import commands.*;
+import commands.general.*;
+import commands.guildrole.CommandGuildRoleMain;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
 import dataStructures.KittyRating;
@@ -65,8 +66,6 @@ public class CommandManager
 		// Admin
 		this.register(LocCommands.stub("rating"), new CommandRating(KittyRole.Admin, KittyRating.Safe));
 		this.register(LocCommands.stub("indicator"), new CommandChangeIndicator(KittyRole.Admin, KittyRating.Safe));
-		this.register(LocCommands.stub("guildroleallowed"), new CommandGuildRoleAllowed(KittyRole.Admin, KittyRating.Safe));
-		this.register(LocCommands.stub("guildrolenotallowed"), new CommandGuildRoleNotAllowed(KittyRole.Admin, KittyRating.Safe));
 		
 		// Mod
 		this.register(LocCommands.stub("poll"), new CommandPollManage(KittyRole.Mod, KittyRating.Safe));
@@ -78,8 +77,6 @@ public class CommandManager
 
 		// General
 		this.register(LocCommands.stub("fetch"), new CommandFetch(KittyRole.General, KittyRating.Safe));
-		this.register(LocCommands.stub("guildroleadd"), new CommandGuildRoleAdd(KittyRole.General, KittyRating.Safe));
-		this.register(LocCommands.stub("guildroleremove"), new CommandGuildRoleRemove(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("teey"), new CommandTeey(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("perish, thenperish"), new CommandPerish(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("yeet"), new CommandYeet(KittyRole.General, KittyRating.Safe));
@@ -96,7 +93,7 @@ public class CommandManager
 		this.register(LocCommands.stub("c++, g++, cplus, cpp"), new CommandColiru(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("java, jdoodle"), new CommandJDoodle(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("beans"), new CommandBeansShow(KittyRole.General, KittyRating.Safe));
-		this.register(LocCommands.stub("role"), new CommandRole(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("kittyrole"), new CommandRole(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("bet"), new CommandBetBeans(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("map"), new CommandMap(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("rpstart"), new CommandRPStart(KittyRole.General, KittyRating.Safe));
@@ -105,7 +102,6 @@ public class CommandManager
 		this.register(LocCommands.stub("blur"), new CommandBlurry(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("eightball, 8ball"), new CommandEightBall(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("catch"), new CommandCatch(KittyRole.General, KittyRating.Safe));
-		this.register(LocCommands.stub("guildrolelist"), new CommandGuildRoleList(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("bethistory"), new CommandBetHistory(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("crouton"), new CommandCrouton(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
@@ -117,6 +113,8 @@ public class CommandManager
 		this.register(LocCommands.stub("charactereditURL"), new CommandCharacterEditURL(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("leaderboard"), new CommandLeaderboard(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("color, colour"), new CommandColor(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("remind"), new CommandRemind(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("role"), new CommandGuildRoleMain(KittyRole.General, KittyRating.Safe));
 	}
 	
 	// Allows the command manager to keep track of a command. Takes a pair (the un-localized and localzied commands)
