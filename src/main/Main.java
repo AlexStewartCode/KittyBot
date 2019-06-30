@@ -36,7 +36,6 @@ public class Main extends ListenerAdapter
 	// Variables and bot specific objects
 	private static KittyCore kittyCore;
 	private static DatabaseManager databaseManager; 
-	private static CommandEnabler commandEnabler;
 	private static CommandManager commandManager;
 	private static Stats stats;
 	private static RPManager rpManager;
@@ -49,8 +48,7 @@ public class Main extends ListenerAdapter
 		// Factory startup. The ordering is intentional.
 		GlobalLog.initialize();
 		databaseManager = ObjectBuilderFactory.constructDatabaseManager();
-		commandEnabler = ObjectBuilderFactory.constructCommandEnabler();
-		commandManager = ObjectBuilderFactory.constructCommandManager(commandEnabler);
+		commandManager = ObjectBuilderFactory.constructCommandManager(CommandEnabler.instance); // TODO: Untangle this singleton
 		stats = ObjectBuilderFactory.constructStats(commandManager);
 		charManager = new CharacterManager();
 		rpManager = ObjectBuilderFactory.constructRPManager();
