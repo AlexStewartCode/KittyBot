@@ -25,7 +25,7 @@ public class ConfigCSV
 	private List<IConfigSection> sections;
 	
 	// Constructor
-	public ConfigCSV(List<IConfigSection> sections, String path)
+	public ConfigCSV(List<IConfigSection> sections, String path) throws IOException
 	{
 		this.path = path;
 		this.sections = sections;
@@ -46,49 +46,42 @@ public class ConfigCSV
 	}
 	
 	// Read the file. This is internal only.
-	private void read(String filepath)
+	private void read(String filepath) throws IOException
 	{
-		try
+		File configFile = new File(filepath);
+		
+		// If we had to create a new file, write the default header into it.
+		if(configFile.createNewFile())
 		{
-			File configFile = new File(filepath);
-			
-			// If we had to create a new file, write the default header into it.
-			if(configFile.createNewFile())
+			Writer writer = Files.newBufferedWriter(Paths.get(path));
+			CSVWriter csvWriter = makeWriter(writer);
+			csvWriter.writeNext(ConfigItem.header);
+			csvWriter.close();
+		}
+		
+		Reader reader = Files.newBufferedReader(Paths.get(filepath));
+		CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
+		fileContents.clear();
+		
+		// Read contents. As for the line number, we not only start counting at 1, we also skip the header.
+		int line = 2; 
+		String[] record = null;
+		while ((record = csvReader.readNext()) != null)
+		{
+			if(record.length < ConfigItem.items)
 			{
-				Writer writer = Files.newBufferedWriter(Paths.get(path));
-				CSVWriter csvWriter = makeWriter(writer);
-				csvWriter.writeNext(ConfigItem.header);
-				csvWriter.close();
+				GlobalLog.warn("Incorrect number of items on line " + line + " in " + path);
+				continue;
 			}
 			
-			Reader reader = Files.newBufferedReader(Paths.get(filepath));
-			CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
-			fileContents.clear();
-			
-			// Read contents. As for the line number, we not only start counting at 1, we also skip the header.
-			int line = 2; 
-			String[] record = null;
-			while ((record = csvReader.readNext()) != null)
-			{
-				if(record.length < ConfigItem.items)
-				{
-					GlobalLog.warn("Incorrect number of items on line " + line + " in " + path);
-					continue;
-				}
-				
-				ConfigItem parsedLine = new ConfigItem(record[0], record[1], record[2]);
-				fileContents.add(parsedLine);
-				++line;
-			}
-			
-			// Close down
-			csvReader.close();
-			reader.close();
+			ConfigItem parsedLine = new ConfigItem(record[0], record[1], record[2]);
+			fileContents.add(parsedLine);
+			++line;
 		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+		
+		// Close down
+		csvReader.close();
+		reader.close();
 	}
 	
 	// Get a copy of the internal items
