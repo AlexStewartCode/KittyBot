@@ -125,8 +125,8 @@ public abstract class BaseLocFile implements IConfigSection
 		}
 	}
 	
-	// Returns the value. If the localized string is empty, 
-	// returns a the key instead which is the default phrase.
+	// Returns the localized string if available. 
+	// If the localized string is empty, returns a the key instead as the default phrase.
 	public String getKey(String input)
 	{
 		if(localized == null)
