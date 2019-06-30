@@ -5,9 +5,9 @@ import core.SubCommand;
 import core.SubCommandFormattable;
 import dataStructures.*;
 
-public class CommandGuildRoleRemove extends SubCommand
+public class SubCommandRemove extends SubCommand
 {
-	public CommandGuildRoleRemove(KittyRole level, KittyRating rating) { super(level, rating); }
+	public SubCommandRemove(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
 	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, String input)

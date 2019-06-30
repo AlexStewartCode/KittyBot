@@ -7,6 +7,7 @@ import java.util.concurrent.Semaphore;
 
 import javax.security.auth.login.LoginException;
 
+import commands.characters.*;
 import commands.general.*;
 import commands.guildrole.CommandGuildRoleMain;
 import core.lua.PluginManager;
@@ -15,11 +16,7 @@ import main.Main;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.Emote;
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import offline.Ref;
 import utils.AdminControl;
@@ -427,7 +424,6 @@ public class ObjectBuilderFactory
 		manager.register(LocCommands.stub("crouton"), new CommandCrouton(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("rafflejoin"), new CommandRaffleJoin(KittyRole.General, KittyRating.Safe));
-		manager.register(LocCommands.stub("charactercreate"), new CommandCharacterCreate(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("searchcharacter"), new CommandCharacterSearch(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("charactereditbio"), new CommandCharacterEditBio(KittyRole.General, KittyRating.Safe));
 		manager.register(LocCommands.stub("charactereditname"), new CommandCharacterEditName(KittyRole.General, KittyRating.Safe));

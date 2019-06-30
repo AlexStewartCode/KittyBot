@@ -1,4 +1,4 @@
-package commands.general;
+package commands.characters;
 
 import core.CharacterManager;
 import core.Command;

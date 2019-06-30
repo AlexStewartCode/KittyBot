@@ -1,4 +1,4 @@
-package commands.guildrole;
+package commands.characters;
 
 import core.Command;
 import core.LocStrings;
@@ -11,20 +11,16 @@ import dataStructures.KittyUser;
 import dataStructures.Response;
 import dataStructures.UserInput;
 
-public class CommandGuildRoleMain extends Command
+public class CommandCharacterMain extends Command
 {
 	SubCommandFramework framework = new SubCommandFramework();
-	public CommandGuildRoleMain(KittyRole level, KittyRating rating) 
+	public CommandCharacterMain(KittyRole level, KittyRating rating) 
 	{ 
 		super(level, rating); 
-		framework.addCommand("add", new SubCommandAdd (KittyRole.General, KittyRating.Safe));
-		framework.addCommand("remove", new SubCommandRemove(KittyRole.General, KittyRating.Safe));
-		framework.addCommand("allowed", new SubCommandAllowed(KittyRole.Admin, KittyRating.Safe));
-		framework.addCommand("unallowed", new SubCommandNotAllowed(KittyRole.Admin, KittyRating.Safe));
 	}
 	
 	@Override
-	public String getHelpText() { return LocStrings.stub("GuildRoleInfo"); }
+	public String getHelpText() { return LocStrings.stub("CharacterInfo"); }
 	
 	
 	

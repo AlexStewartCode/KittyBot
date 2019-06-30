@@ -1,4 +1,4 @@
-package commands.general;
+package commands.characters;
 
 import java.util.ArrayList;
 
