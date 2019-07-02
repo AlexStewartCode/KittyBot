@@ -1,11 +1,57 @@
 package core;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map.Entry;
 
 import commands.characters.CommandCharacterMain;
-import commands.general.*;
+import commands.general.CommandBeansShow;
+import commands.general.CommandBenchmark;
+import commands.general.CommandBetBeans;
+import commands.general.CommandBetHistory;
+import commands.general.CommandBlurry;
+import commands.general.CommandBoop;
+import commands.general.CommandCatch;
+import commands.general.CommandChangeIndicator;
+import commands.general.CommandChoose;
+import commands.general.CommandColiru;
+import commands.general.CommandColor;
+import commands.general.CommandCrouton;
+import commands.general.CommandDBFlush;
+import commands.general.CommandDBStats;
+import commands.general.CommandDoWork;
+import commands.general.CommandEightBall;
+import commands.general.CommandFetch;
+import commands.general.CommandGiveBeans;
+import commands.general.CommandHelp;
+import commands.general.CommandHelpBuilder;
+import commands.general.CommandInfo;
+import commands.general.CommandInvite;
+import commands.general.CommandJDoodle;
+import commands.general.CommandLeaderboard;
+import commands.general.CommandMap;
+import commands.general.CommandPerish;
+import commands.general.CommandPing;
+import commands.general.CommandRPEnd;
+import commands.general.CommandRPG;
+import commands.general.CommandRPStart;
+import commands.general.CommandRating;
+import commands.general.CommandRemind;
+import commands.general.CommandRole;
+import commands.general.CommandRoll;
+import commands.general.CommandShutdown;
+import commands.general.CommandStark;
+import commands.general.CommandStats;
+import commands.general.CommandTeey;
+import commands.general.CommandTweet;
+import commands.general.CommandWolfram;
+import commands.general.CommandYeet;
 import commands.guildrole.CommandGuildRoleMain;
+import commands.poll.CommandPollManage;
+import commands.poll.CommandPollResults;
+import commands.poll.CommandPollShow;
+import commands.poll.CommandPollVote;
+import commands.raffle.CommandRaffleMain;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
 import dataStructures.KittyRating;
@@ -73,9 +119,6 @@ public class CommandManager
 		this.register(LocCommands.stub("poll"), new CommandPollManage(KittyRole.Mod, KittyRating.Safe));
 		this.register(LocCommands.stub("givebeans"), new CommandGiveBeans(KittyRole.Mod, KittyRating.Safe));
 		this.register(LocCommands.stub("rpg"), new CommandRPG(KittyRole.Mod, KittyRating.Safe));
-		this.register(LocCommands.stub("rafflestart"), new CommandRaffleStart(KittyRole.Mod, KittyRating.Safe));
-		this.register(LocCommands.stub("rafflespin"), new CommandRaffleSpin(KittyRole.Mod, KittyRating.Safe));
-		this.register(LocCommands.stub("raffleend"), new CommandRaffleEnd(KittyRole.Mod, KittyRating.Safe));
 
 		// General
 		this.register(LocCommands.stub("fetch"), new CommandFetch(KittyRole.General, KittyRating.Safe));
@@ -107,12 +150,12 @@ public class CommandManager
 		this.register(LocCommands.stub("bethistory"), new CommandBetHistory(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("crouton"), new CommandCrouton(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("benchmark, bench"), new CommandBenchmark(KittyRole.General, KittyRating.Safe));
-		this.register(LocCommands.stub("rafflejoin"), new CommandRaffleJoin(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("leaderboard"), new CommandLeaderboard(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("color, colour"), new CommandColor(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("remind"), new CommandRemind(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("role"), new CommandGuildRoleMain(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("character"), new CommandCharacterMain(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("raffle"), new CommandRaffleMain(KittyRole.General, KittyRating.Safe));
 	}
 	
 	// Allows the command manager to keep track of a command. Takes a pair (the un-localized and localzied commands)

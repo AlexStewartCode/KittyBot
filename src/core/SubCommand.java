@@ -23,6 +23,7 @@ public abstract class SubCommand
 	
 	private boolean CanCall(KittyGuild guild, KittyChannel channel, KittyUser user)
 	{	
+		System.out.println("TESTING CAN CALL");
 		if(guild.contentRating.getValue() < contentRating.getValue())
 		{
 			Reject(user, "content rating");
@@ -42,12 +43,12 @@ public abstract class SubCommand
 	
 	// Called by the Command manager - this will run the command 
 	// if the issuing user has the permission to do so!
-	protected final void Invoke(KittyGuild guild, KittyChannel channel, KittyUser user, String input)
+	protected final SubCommandFormattable Invoke(KittyGuild guild, KittyChannel channel, KittyUser user, String input)
 	{
 		if(!CanCall(guild, channel, user))
-			return;
+			return null;
 		
-		OnRun(guild, channel, user, input);
+		return OnRun(guild, channel, user, input);
 	}
 	
 	public KittyRating Rating()

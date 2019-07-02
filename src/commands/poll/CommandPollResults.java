@@ -1,4 +1,4 @@
-package commands.general;
+package commands.poll;
 
 import java.util.ArrayList;
 
