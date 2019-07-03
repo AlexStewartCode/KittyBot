@@ -1,33 +1,31 @@
 package core.lua;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
+
 
 import dataStructures.KittyUser;
+import utils.GlobalLog;
+import utils.LogFilter;
+import utils.io.DirectoryMonitor;
 
 // Reads in, handles, and manipulates plugins. Plugins are loaded in the order they appear in the folder.
 public class PluginManager
 {
 	// Variables
-	public final String pluginFolder;
 	public ArrayList<Plugin> plugins;
+	public DirectoryMonitor directoryMonitor;
 	
 	// Constructor
 	public PluginManager(String folder)
 	{
-		this.pluginFolder = folder;
+		this.directoryMonitor = new DirectoryMonitor(folder);
 		plugins = new ArrayList<Plugin>();
 
 		try
 		{
-			try (Stream<Path> paths = Files.walk(Paths.get(this.pluginFolder)))
-			{
-				paths.filter(Files::isRegularFile).forEach((path)->{ addPlugin(path); });
-			}
+			directoryMonitor.getCurrentFiles().forEach((file) -> addPlugin(file.path));
 		}
 		catch(Exception e)
 		{
@@ -35,6 +33,43 @@ public class PluginManager
 		}
 	}
 	
+	public void update()
+	{
+		directoryMonitor.update(
+				(addedFile) ->
+				{
+					addPlugin(addedFile.path);
+					
+					GlobalLog.log(LogFilter.Plugin, "Found new plugin at " + addedFile.path);
+				}, 
+				(updatedFile) ->
+				{
+					for(Plugin plugin : plugins)
+					{
+						if(plugin.filepath.toString().equalsIgnoreCase(updatedFile.path.toString()))
+						{
+							plugin.reRead();
+							break;
+						}
+					}
+					
+					GlobalLog.log(LogFilter.Plugin, "A plugin was updated " + updatedFile.path);
+				}, 
+				(deletedFile) ->
+				{
+					for(int i = plugins.size() - 1; i >= 0; i--)
+					{
+						Plugin plugin = plugins.get(i);
+						
+						if(plugin.filepath.toString().equalsIgnoreCase(deletedFile.path.toString()))
+							plugins.remove(i);
+					}
+					
+					GlobalLog.log(LogFilter.Plugin, "Plugin deleted at " + deletedFile.path);
+				});
+	}
+	
+	// Registers a plugin based on the path
 	public void addPlugin(Path path)
 	{
 		plugins.add(new Plugin(path));
@@ -66,6 +101,8 @@ public class PluginManager
 	public void printAll()
 	{
 		for(int i = 0; i < plugins.size(); ++i)
+		{
 			PluginLog.log(plugins.get(i).contents.toString());
+		}
 	}
 }
