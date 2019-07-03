@@ -1,29 +1,18 @@
 package utils;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
+@SuppressWarnings("deprecation")
 public class StringUtils
 {
 	public static String unEscape(String str)
 	{
-		str = str.replaceAll("\\\\b", "\b");
-		str = str.replaceAll("\\\\n", "\n");
-		str = str.replaceAll("\\\\t", "\t");
-		str = str.replaceAll("\\\\r", "\r");
-		str = str.replaceAll("\\\\f", "\f");
-		str = str.replaceAll("\\\\\"", "\"");
-		str = str.replaceAll("\\\\\\\\\\\\", "\\\\");
-		
-		return str;
+		return StringEscapeUtils.unescapeJava(str);
 	}
 	
 	public static String reEscape(String str)
 	{
-		str = str.replaceAll("\\\b", "\\\\\\b");
-		str = str.replaceAll("\\\n", "\\\\\\n");
-		str = str.replaceAll("\\\t", "\\\\\\t");
-		str = str.replaceAll("\\\r", "\\\\\\r");
-		str = str.replaceAll("\\\f", "\\\\\\f");
-		
-		return str;
+		return StringEscapeUtils.escapeJava(str);
 	}
 	
 	// Finds first whitespace in the string

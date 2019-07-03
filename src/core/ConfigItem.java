@@ -1,5 +1,7 @@
 package core;
 
+import utils.StringUtils;
+
 // Everything in here must be a string type. This class does not
 // perform any parsing past naming columns, and just holds the raw data.
 public class ConfigItem
@@ -30,7 +32,7 @@ public class ConfigItem
 	
 	public String[] getAll()
 	{
-		return new String[] {type, key, value};
+		return new String[] {StringUtils.reEscape(type), StringUtils.reEscape(key), StringUtils.reEscape(value) };
 	}
 	
 	public String toString()

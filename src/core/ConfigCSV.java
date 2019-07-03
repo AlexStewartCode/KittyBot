@@ -14,8 +14,10 @@ import java.util.Vector;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
+import com.opencsv.RFC4180ParserBuilder;
 
 import utils.GlobalLog;
+import utils.StringUtils;
 
 public class ConfigCSV
 {
@@ -41,7 +43,7 @@ public class ConfigCSV
 		return new CSVWriter(writer,
 				CSVWriter.DEFAULT_SEPARATOR,
 				CSVWriter.DEFAULT_QUOTE_CHARACTER,
-				'\\',
+				CSVWriter.DEFAULT_ESCAPE_CHARACTER,
 				CSVWriter.DEFAULT_LINE_END);
 	}
 	
@@ -60,7 +62,7 @@ public class ConfigCSV
 		}
 		
 		Reader reader = Files.newBufferedReader(Paths.get(filepath));
-		CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
+		CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).withCSVParser(new RFC4180ParserBuilder().build()).build();
 		fileContents.clear();
 		
 		// Read contents. As for the line number, we not only start counting at 1, we also skip the header.
@@ -74,7 +76,7 @@ public class ConfigCSV
 				continue;
 			}
 			
-			ConfigItem parsedLine = new ConfigItem(record[0], record[1], record[2]);
+			ConfigItem parsedLine = new ConfigItem(StringUtils.unEscape(record[0]), StringUtils.unEscape(record[1]), StringUtils.unEscape(record[2]));
 			fileContents.add(parsedLine);
 			++line;
 		}
