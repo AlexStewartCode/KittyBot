@@ -47,10 +47,6 @@ import commands.general.CommandTweet;
 import commands.general.CommandWolfram;
 import commands.general.CommandYeet;
 import commands.guildrole.CommandGuildRoleMain;
-import commands.poll.CommandPollManage;
-import commands.poll.CommandPollResults;
-import commands.poll.CommandPollShow;
-import commands.poll.CommandPollVote;
 import commands.raffle.CommandRaffleMain;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
@@ -116,7 +112,6 @@ public class CommandManager
 		this.register(LocCommands.stub("indicator"), new CommandChangeIndicator(KittyRole.Admin, KittyRating.Safe));
 		
 		// Mod
-		this.register(LocCommands.stub("poll"), new CommandPollManage(KittyRole.Mod, KittyRating.Safe));
 		this.register(LocCommands.stub("givebeans"), new CommandGiveBeans(KittyRole.Mod, KittyRating.Safe));
 		this.register(LocCommands.stub("rpg"), new CommandRPG(KittyRole.Mod, KittyRating.Safe));
 
@@ -131,9 +126,6 @@ public class CommandManager
 		this.register(LocCommands.stub("choose"), new CommandChoose(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("help"), new CommandHelp(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("info, about"), new CommandInfo(KittyRole.General, KittyRating.Safe));
-		this.register(LocCommands.stub("vote"), new CommandPollVote(KittyRole.General, KittyRating.Safe));
-		this.register(LocCommands.stub("results"), new CommandPollResults(KittyRole.General, KittyRating.Safe));
-		this.register(LocCommands.stub("showpoll"), new CommandPollShow(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("wolfram"), new CommandWolfram(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("c++, g++, cplus, cpp"), new CommandColiru(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("java, jdoodle"), new CommandJDoodle(KittyRole.General, KittyRating.Safe));
