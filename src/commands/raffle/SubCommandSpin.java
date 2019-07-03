@@ -9,20 +9,20 @@ import dataStructures.KittyRating;
 import dataStructures.KittyRole;
 import dataStructures.KittyUser;
 
-public class CommandRaffleEnd extends SubCommand
+public class SubCommandSpin extends SubCommand
 {
-	public CommandRaffleEnd(KittyRole level, KittyRating rating) { super(level, rating); }
+	public SubCommandSpin(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
 	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, String input)
 	{
-		if(guild.endRaffle())
+		try
 		{
-			return new SubCommandFormattable (LocStrings.stub("RaffleEndSuccess"));
+			return new SubCommandFormattable (String.format(LocStrings.stub("RaffleSpinSuccess"), guild.chooseRaffleWinner().name));
 		}
-		else
+		catch(Exception e)
 		{
-			return new SubCommandFormattable (LocStrings.stub("RaffleEndFailure"));
+			return new SubCommandFormattable (LocStrings.stub("RaffleSpinFailure"));
 		}
 	}
 }

@@ -46,7 +46,7 @@ public abstract class SubCommand
 	protected final SubCommandFormattable Invoke(KittyGuild guild, KittyChannel channel, KittyUser user, String input)
 	{
 		if(!CanCall(guild, channel, user))
-			return null;
+			return new SubCommandFormattable("Can't run that!");
 		
 		return OnRun(guild, channel, user, input);
 	}

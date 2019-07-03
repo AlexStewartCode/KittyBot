@@ -5,9 +5,9 @@ import core.SubCommand;
 import core.SubCommandFormattable;
 import dataStructures.*;
 
-public class CommandRaffleJoin extends SubCommand
+public class SubCommandJoin extends SubCommand
 {
-	public CommandRaffleJoin(KittyRole level, KittyRating rating) { super(level, rating); }
+	public SubCommandJoin(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
 	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, String input)

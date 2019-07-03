@@ -10,10 +10,10 @@ public class CommandRaffleMain extends Command
 	public CommandRaffleMain(KittyRole level, KittyRating rating) 
 	{ 
 		super(level, rating); 
-		framework.addCommand("start", new CommandRaffleStart(KittyRole.Mod, KittyRating.Safe));
-		framework.addCommand("spin", new CommandRaffleSpin(KittyRole.Mod, KittyRating.Safe));
-		framework.addCommand("end", new CommandRaffleEnd(KittyRole.Mod, KittyRating.Safe));
-		framework.addCommand("join", new CommandRaffleJoin(KittyRole.General, KittyRating.Safe));
+		framework.addCommand("start", new SubCommandStart(KittyRole.Mod, KittyRating.Safe));
+		framework.addCommand("spin", new SubCommandSpin(KittyRole.Mod, KittyRating.Safe));
+		framework.addCommand("end", new SubCommandEnd(KittyRole.Mod, KittyRating.Safe));
+		framework.addCommand("join", new SubCommandJoin(KittyRole.General, KittyRating.Safe));
 	}
 	
 	@Override

@@ -5,9 +5,9 @@ import core.SubCommand;
 import core.SubCommandFormattable;
 import dataStructures.*;
 
-public class CommandRaffleStart extends SubCommand
+public class SubCommandStart extends SubCommand
 {
-	public CommandRaffleStart(KittyRole level, KittyRating rating) { super(level, rating); }
+	public SubCommandStart(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	public int beanCost;
 	
