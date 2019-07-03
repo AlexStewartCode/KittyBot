@@ -184,7 +184,7 @@
 "Localized Strings","LeaderboardInfo","Shows you the 10 users with the most beans on the server"
 "Localized Strings","LeaderboardTitle","Server Leaderboard"
 "Localized Strings","MapHeight",""
-"Localized Strings","MapInfo","Generates a map! You can pass additional information if you want with the flags `-s<seed>`. If one of the fields isn't provided, its default will be used. Note that adjusting the width and height impacts the map outcomes.nn**Defaults**nDefault Seed: Random,nDefault Width: 35(max %s),nDefault Height: 25(max %s)nn**Key**nLand: ~nMountain: \u25B2nBeach: "
+"Localized Strings","MapInfo","Generates a map! You can pass additional information if you want with the flags `-s<seed>`. If one of the fields isn't provided, its default will be used. Note that adjusting the width and height impacts the map outcomes.\n\n**Defaults**\nDefault Seed: Random,\nDefault Width: 35(max %s),\nDefault Height: 25(max %s)\n\n**Key**\nLand: ~\nMountain: \u25B2\nBeach: =\nTrees: \u00A5\nVolcano: #"
 "Localized Strings","MapInvalid","Invalid arguments provided!"
 "Localized Strings","MapSeed","Seed"
 "Localized Strings","MapVersion","Using mapgen v0.1"
