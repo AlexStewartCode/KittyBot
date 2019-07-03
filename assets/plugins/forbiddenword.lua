@@ -8,6 +8,7 @@ function plugin(message, user)
 		hours = ((timedif / (60*60)) % 24); 
 		mins = ((timedif / (60)) % 60); 
 		secs = timedif % 60;
+		
 		return "*GASP!!!* \n" .. user.name .. " said **THE** word! It's been " .. round(days) .. " days, " .. round(hours) .. " hours, " .. round(mins) .. " minutes, and " .. round(secs) .. " seconds since the last time!"; 
 	end
 	

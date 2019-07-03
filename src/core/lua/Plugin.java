@@ -26,12 +26,14 @@ public class Plugin
 	public Plugin(Path filepath)
 	{
 		this.filepath = filepath;
-		
-		
-		StringBuilder contentBuilder = new StringBuilder();
-
+		reRead();
+	}
+	
+	public void reRead()
+	{
 		try 
 		{
+			StringBuilder contentBuilder = new StringBuilder();
 			Stream<String> stream = Files.lines(filepath, StandardCharsets.UTF_8);
 			stream.forEach(str -> contentBuilder.append(str).append("\n"));
 			stream.close();

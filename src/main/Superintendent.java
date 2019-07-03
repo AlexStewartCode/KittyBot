@@ -6,6 +6,7 @@ import core.Config;
 import core.DatabaseManager;
 import core.RPManager;
 import core.Stats;
+import core.lua.PluginManager;
 import dataStructures.KittyChannel;
 import dataStructures.KittyCore;
 import dataStructures.KittyGuild;
@@ -71,11 +72,13 @@ public class Superintendent
 	
 	// Only called once per command. Good for lazily updating.
 	// Happens just before the command / plugin runs.
-	public static boolean perCommandUpkeepPre()
+	public static boolean perCommandUpkeepPre(PluginManager pluginManager)
 	{
 		// Upkeep the config file monitoring
 		Config.instance.upkeep();
+		pluginManager.update();
 		
+		// Return if we succeeded or not. At this time, we always succeed.
 		return true;
 	}
 	
