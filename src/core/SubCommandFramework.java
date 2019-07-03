@@ -27,7 +27,6 @@ public class SubCommandFramework
 	
 	public SubCommandFormattable run(KittyGuild guild, KittyChannel channel, KittyUser user, String input)
 	{
-		System.out.println(input);
 		SubCommandFormattable res = null;
 		try
 		{

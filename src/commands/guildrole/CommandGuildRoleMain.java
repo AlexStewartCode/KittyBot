@@ -19,6 +19,7 @@ public class CommandGuildRoleMain extends Command
 		super(level, rating); 
 		framework.addCommand("add", new SubCommandAdd (KittyRole.General, KittyRating.Safe));
 		framework.addCommand("remove", new SubCommandRemove(KittyRole.General, KittyRating.Safe));
+		framework.addCommand("list", new SubCommandList(KittyRole.General, KittyRating.Safe));
 		framework.addCommand("allowed", new SubCommandAllowed(KittyRole.Admin, KittyRating.Safe));
 		framework.addCommand("unallowed", new SubCommandNotAllowed(KittyRole.Admin, KittyRating.Safe));
 	}

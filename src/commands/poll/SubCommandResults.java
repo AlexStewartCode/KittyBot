@@ -25,7 +25,7 @@ public class SubCommandResults extends SubCommand
 		
 		for(int i = 0; i < votes.size(); i++)
 		{
-			results += String.format(LocStrings.stub("PollResultsResponse"), votes.get(i).votes, votes.get(i).choice, (int)(((double)votes.get(i).votes) / ((double)totalVotes) * 100));
+			results += String.format(LocStrings.stub("PollResultsResponse"), votes.get(i).votes, votes.get(i).choice, (int)(((double)votes.get(i).votes) / ((double)totalVotes) * 100)) + "\n";
 		}
 		
 		return new SubCommandFormattable (results);

@@ -25,7 +25,7 @@ public class SubCommandVote extends SubCommand
 			}
 			try 
 			{
-				int voteNum = Integer.parseInt(input)-1;
+				int voteNum = Integer.parseInt(input.substring(input.indexOf(" ")).trim())-1;
 				if(voteNum >= guild.choices.size() || voteNum < 0)
 				{
 					return new SubCommandFormattable (String.format(LocStrings.stub("PollVoteNotValidVote"), voteNum));
