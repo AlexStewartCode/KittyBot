@@ -7,9 +7,6 @@ import java.util.concurrent.Semaphore;
 
 import javax.security.auth.login.LoginException;
 
-import commands.characters.*;
-import commands.general.*;
-import commands.guildrole.CommandGuildRoleMain;
 import core.lua.PluginManager;
 import dataStructures.*;
 import main.Main;

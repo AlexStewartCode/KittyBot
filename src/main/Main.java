@@ -86,7 +86,8 @@ public class Main extends ListenerAdapter
 		RPManager.instance.addLine(channel, user, input);
 		
 		// Run any pre-emptive upkeep we need to
-		Superintendent.perCommandUpkeepPre();
+		if(!Superintendent.perCommandUpkeepPre(pluginManager))
+			return;
 		
 		// Attempt to spin up a command. If the command doesn't exist.
 		// Run plugins right before invoking the commands but after all other setup.
@@ -111,6 +112,7 @@ public class Main extends ListenerAdapter
 		}
 		
 		// Run any upkeep in post we need to
-		Superintendent.perCommandUpkeepPost(kittyCore, databaseManager);
+		if(!Superintendent.perCommandUpkeepPost(kittyCore, databaseManager))
+			return;
 	}
 }

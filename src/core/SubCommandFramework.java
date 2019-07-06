@@ -27,8 +27,16 @@ public class SubCommandFramework
 	
 	public SubCommandFormattable run(KittyGuild guild, KittyChannel channel, KittyUser user, String input)
 	{
-		System.out.print(input);
-		SubCommandFormattable res = commands.get(input.split(" ")[0].toLowerCase()).OnRun(guild, channel, user, input.substring(input.indexOf(" ")));
+		SubCommandFormattable res = null;
+		try
+		{
+			res = commands.get(input.split(" ")[0].toLowerCase()).Invoke(guild, channel, user, input.substring(input.indexOf(" ")));
+		}
+		catch(Exception e)
+		{
+			res = commands.get(input.split(" ")[0].toLowerCase()).Invoke(guild, channel, user, "");
+		}
+		
 		return res;
 	}
 }
