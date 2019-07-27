@@ -6,14 +6,7 @@ import java.util.Stack;
 
 import core.Command;
 import core.LocStrings;
-import dataStructures.KittyChannel;
-import dataStructures.KittyEmbed;
-import dataStructures.KittyGuild;
-import dataStructures.KittyRating;
-import dataStructures.KittyRole;
-import dataStructures.KittyUser;
-import dataStructures.Response;
-import dataStructures.UserInput;
+import dataStructures.*;
 
 public class CommandRoll extends Command
 {
@@ -133,10 +126,12 @@ public class CommandRoll extends Command
 		return "Roll```" + thing + "```" + "Steps```" + steps + "```" + "Final value ```" + values.pop() +"```";
 	}
 	
+	
 	private String calculate(Stack<Integer> nums, Stack<Character> operators)
 	{
 		int second = nums.pop();
 		int first = nums.pop();
+		int rolls[] = null;
 		int value = 0;
 		char op = operators.pop();
 		
@@ -155,27 +150,40 @@ public class CommandRoll extends Command
 				value = first / second;
 				break;
 			case 'd': 
-				value = roll(first, second);
+				rolls = roll(first, second);
+				System.out.println(first);
+				for(int i= 0; i < first; i++)
+				{
+					value += rolls[i];
+				}
+				
 		}
 		nums.add(value);
-		return (first + "" + op + "" + second + "=" + value);
+		if(rolls == null)
+			return (first + "" + op + "" + second + "=" + value);
+		String rollValues = "";
+		for(int i= 0; i < first; i++)
+		{
+			rollValues += "\uD83C\uDFB2"  + rolls[i] + " ";
+		}
+		return (first + "" + op + "" + second + "=" + value + "(" + rollValues.trim() + ")");
 	}
 
-	private int roll(int first, int second) 
+	private int[] roll(int first, int second) 
 	{
-		int total = 0;
 		int roll = 0;
 		int dice = first;
 		int sides = second;
+		int [] rolls = new int [sides];
 		
 		if(dice < 1)
-			return 0; 
+			return new int[0]; 
 		for(int i = 0; dice > i; i ++)
 		{
 			roll = (int)(Math.random() * sides) + 1;
-			total += roll;
+			rolls[i] = roll;
 		}
-		return total;
+		return rolls;
 	}
 
 	private boolean hasPrecendence(char op1, char op2)
