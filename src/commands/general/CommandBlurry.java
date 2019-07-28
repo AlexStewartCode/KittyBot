@@ -73,14 +73,18 @@ public class CommandBlurry extends Command
 	{
 		BufferedImage blurred = ImageUtils.copyImage(image);
 		// Iterate over each column left to right and touch up each pixel
-		for(int x = 0; x < image.getWidth(); ++x)
+		for(int i = 0; i < 10; i++)
 		{
-			for(int y = 0; y < image.getHeight(); ++y)
+			for(int x = 0; x < image.getWidth(); ++x)
 			{
-				blurred.setRGB(x, y, getColorAvg(image, x, y).getRGB());
+				for(int y = 0; y < image.getHeight(); ++y)
+				{
+					blurred.setRGB(x, y, getColorAvg(image, x, y).getRGB());
+				}
 			}
+			image = blurred;
 		}
-		image = ImageUtils.copyImage(blurred);
+		
 
 		File outputfile = new File(name);
 		ImageIO.write(blurred, "png", outputfile);
@@ -93,12 +97,16 @@ public class CommandBlurry extends Command
 		float g = 0; 
 		float b = 0;
 		
-
 		for(int xCor = -2; xCor <= 2; xCor++)
 		{
 			for(int yCor = -2; yCor <= 2; yCor++)
 			{
-				current = new Color(image.getRGB(clamp(x + xCor, 0, image.getWidth() - 1), clamp(y + yCor, 0, image.getHeight() - 1)));
+				int curX = clamp(x + xCor, 0, image.getWidth() - 1);
+				int curY = clamp(y + yCor, 0, image.getHeight() - 1);
+				
+				
+				current = new Color(image.getRGB(curX, curY));
+				
 				r += getGaus(current.getRed(), xCor, yCor);
 				g += getGaus(current.getGreen(), xCor, yCor);
 				b += getGaus(current.getBlue(), xCor, yCor);

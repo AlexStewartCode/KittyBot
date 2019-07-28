@@ -16,22 +16,29 @@ public class SubCommandAdd extends SubCommand
 	@Override
 	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input)
 	{
-		String role = input.args.split(" ")[0];
-		if(guild.roleList.contains(role))
+		String [] roles = input.args.split(",");
+		String role;
+		String formatted = "";
+		for(int i = 0; i < roles.length; i++)
 		{
-			if(guild.control.addRole(user.discordID, role))
+			role = roles[i].trim();
+			if(guild.roleList.contains(role))
 			{
-				 return new SubCommandFormattable("ADDED  RIN YOU NEED TO FIX THIS"); 
+				if(guild.control.addRole(user.discordID, role))
+				{
+					 formatted += "Addded " + role + "!"; 
+				}
+				else
+				{
+					formatted += "Failed to add " + role + "!"; 
+				}
 			}
 			else
 			{
-				return new SubCommandFormattable("FAILED RIN YOU NEED TO FIX THIS TOO");
+				formatted += "You're not allowed to add " + role + "!"; 
 			}
 		}
-		else
-		{
-			return new SubCommandFormattable("NOT ALLOWED FIX THIS ONE TOO SNEP FACE");
-		}
+		return new SubCommandFormattable(formatted);
 	}
 	
 }
