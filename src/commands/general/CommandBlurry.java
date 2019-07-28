@@ -20,6 +20,11 @@ public class CommandBlurry extends Command
 	public String getHelpText() { return LocStrings.stub("BlurryInfo"); };
 	
 	private static Long num = 0l;
+	private static double [][] blur = {{0.0030, 0.0133, 0.0219, 0.0133, 0.0030},
+									   {0.0133, 0.0596, 0.0983, 0.0596, 0.0133},
+									   {0.0219, 0.0983, 0.1621, 0.0983, 0.0219},
+									   {0.0133, 0.0596, 0.0983, 0.0596, 0.0133},
+									   {0.0030, 0.0133, 0.0219, 0.0133, 0.0030}};
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
