@@ -7,15 +7,16 @@ import dataStructures.KittyGuild;
 import dataStructures.KittyRating;
 import dataStructures.KittyRole;
 import dataStructures.KittyUser;
+import dataStructures.UserInput;
 
 public class SubCommandAdd extends SubCommand
 {
 	public SubCommandAdd(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, String input)
+	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input)
 	{
-		String role = input.split(" ")[0];
+		String role = input.args.split(" ")[0];
 		if(guild.roleList.contains(role))
 		{
 			if(guild.control.addRole(user.discordID, role))

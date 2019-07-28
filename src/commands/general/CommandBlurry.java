@@ -20,11 +20,8 @@ public class CommandBlurry extends Command
 	public String getHelpText() { return LocStrings.stub("BlurryInfo"); };
 	
 	private static Long num = 0l;
-	private static double [][] blur = {{0.0030, 0.0133, 0.0219, 0.0133, 0.0030},
-									   {0.0133, 0.0596, 0.0983, 0.0596, 0.0133},
-									   {0.0219, 0.0983, 0.1621, 0.0983, 0.0219},
-									   {0.0133, 0.0596, 0.0983, 0.0596, 0.0133},
-									   {0.0030, 0.0133, 0.0219, 0.0133, 0.0030}};
+	private static float [] weights = {.00390625f, .0156625f, .0234475f, .0156625f, .00390625f};
+	
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
@@ -58,7 +55,7 @@ public class CommandBlurry extends Command
 					return;
 			}
 			preProcessed = new File(filename);
-			applySnap(ImageIO.read(preProcessed), name);
+			applyBlur(ImageIO.read(preProcessed), name);
 		}
 		catch (IOException e) 
 		{
@@ -72,51 +69,69 @@ public class CommandBlurry extends Command
 		ImageUtils.blockingFileDelete(postProcessed);
 	}
 	
-	private static void applySnap(BufferedImage image, String name) throws IOException
+	private static void applyBlur(BufferedImage image, String name) throws IOException
 	{
 		BufferedImage blurred = ImageUtils.copyImage(image);
 		// Iterate over each column left to right and touch up each pixel
-		for(int i = 0; i < 50; ++i)
+		for(int x = 0; x < image.getWidth(); ++x)
 		{
-			for(int x = 1; x < image.getWidth() - 1; ++x)
+			for(int y = 0; y < image.getHeight(); ++y)
 			{
-				for(int y = 1; y < image.getHeight() - 1; ++y)
-				{
-					blurred.setRGB(x, y, getColorAvg(image, x, y).getRGB());
-				}
+				blurred.setRGB(x, y, getColorAvg(image, x, y).getRGB());
 			}
-			image = ImageUtils.copyImage(blurred);
 		}
-		
-		
+		image = ImageUtils.copyImage(blurred);
+
 		File outputfile = new File(name);
 		ImageIO.write(blurred, "png", outputfile);
 	}
 	
 	private static Color getColorAvg(BufferedImage image, int x, int y)
 	{
-		Color center = new Color(image.getRGB(x, y), true);
-		Color one = new Color(image.getRGB(x - 1, y), true);
-		Color two = new Color(image.getRGB(x - 1, y - 1), true);
-		Color three = new Color(image.getRGB(x, y - 1), true);
-		Color four = new Color(image.getRGB(x + 1, y - 1), true);
-		Color five = new Color(image.getRGB(x + 1, y), true);
-		Color six = new Color(image.getRGB(x + 1, y + 1), true);
-		Color seven = new Color(image.getRGB(x, y + 1), true);
-		Color eight = new Color(image.getRGB(x -1, y + 1), true);
+		Color current;
+		float r = 0; 
+		float g = 0; 
+		float b = 0;
 		
-		int blue = center.getBlue() + one.getBlue() + two.getBlue() + three.getBlue() + four.getBlue() + five.getBlue() + six.getBlue() + seven.getBlue() + eight.getBlue();
-		int red = center.getRed() + one.getRed() + two.getRed() + three.getRed() + four.getRed() + five.getRed() + six.getRed() + seven.getRed() + eight.getRed();
-		int green = center.getGreen() + one.getGreen() + two.getGreen() + three.getGreen() + four.getGreen() + five.getGreen() + six.getGreen() + seven.getGreen() + eight.getGreen();
-		int alpha = center.getAlpha() + one.getAlpha() + two.getAlpha() + three.getAlpha() + four.getAlpha() + five.getAlpha() + six.getAlpha() + seven.getAlpha() + eight.getAlpha();
+
+		for(int xCor = -2; xCor <= 2; xCor++)
+		{
+			for(int yCor = -2; yCor <= 2; yCor++)
+			{
+				current = new Color(image.getRGB(clamp(x + xCor, 0, image.getWidth() - 1), clamp(y + yCor, 0, image.getHeight() - 1)));
+				r += getGaus(current.getRed(), xCor, yCor);
+				g += getGaus(current.getGreen(), xCor, yCor);
+				b += getGaus(current.getBlue(), xCor, yCor);
+			}
+		}
+		int red = (int)r;
+		int green = (int)g;
+		int blue = (int)b;
+		return new Color(red, green, blue);
+	}
+	
+	private static int clamp(int num, int min, int max)
+	{
+		if(num >= max)
+			return max;
+		if(num < min)
+			return min;
+		return num;
+	}
+	
+	private static float getGaus(int col, int x, int y)
+	{
+		x += 2; 
+		y+= 2;
+		float result = weights[x];
+		if(y == 2 || y == 4)
+			result *= 4; 
+		if(y==3)
+			result *= 6;
 		
-		blue /= 9;
-		red /= 9;
-		green /= 9;
-		alpha /= 9;
+		result *= col; 
 		
-		Color blur = new Color(red, green, blue, alpha);
-		
-		return blur;
-	}	
+		return result;
+	}
+	
 }

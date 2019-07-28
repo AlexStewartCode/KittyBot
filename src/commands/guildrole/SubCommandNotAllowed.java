@@ -8,16 +8,17 @@ import dataStructures.KittyGuild;
 import dataStructures.KittyRating;
 import dataStructures.KittyRole;
 import dataStructures.KittyUser;
+import dataStructures.UserInput;
 
 public class SubCommandNotAllowed extends SubCommand
 {
 	public SubCommandNotAllowed(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, String input)
+	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input)
 	{
-		input = input.toLowerCase();
-		String [] roles = input.split(",");
+		String lowerInput = input.args.toLowerCase();
+		String [] roles = lowerInput.split(",");
 		for(String role:roles)
 		{
 			if(guild.roleList.contains(role.trim()))

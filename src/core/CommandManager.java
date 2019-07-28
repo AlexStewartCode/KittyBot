@@ -47,6 +47,7 @@ import commands.general.CommandTweet;
 import commands.general.CommandWolfram;
 import commands.general.CommandYeet;
 import commands.guildrole.CommandGuildRoleMain;
+import commands.mod.CommandModMain;
 import commands.poll.CommandPollMain;
 import commands.raffle.CommandRaffleMain;
 import dataStructures.KittyChannel;
@@ -115,6 +116,7 @@ public class CommandManager
 		// Mod
 		this.register(LocCommands.stub("givebeans"), new CommandGiveBeans(KittyRole.Mod, KittyRating.Safe));
 		this.register(LocCommands.stub("rpg"), new CommandRPG(KittyRole.Mod, KittyRating.Safe));
+		this.register(LocCommands.stub("mod"), new CommandModMain(KittyRole.Mod, KittyRating.Safe));
 
 		// General
 		this.register(LocCommands.stub("fetch"), new CommandFetch(KittyRole.General, KittyRating.Safe));
