@@ -48,6 +48,7 @@ import commands.general.CommandWolfram;
 import commands.general.CommandYeet;
 import commands.guildrole.CommandGuildRoleMain;
 import commands.mod.CommandModMain;
+import commands.music.CommandMusicMain;
 import commands.poll.CommandPollMain;
 import commands.raffle.CommandRaffleMain;
 import dataStructures.KittyChannel;
@@ -152,7 +153,7 @@ public class CommandManager
 		this.register(LocCommands.stub("character"), new CommandCharacterMain(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("raffle"), new CommandRaffleMain(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("poll"), new CommandPollMain(KittyRole.General, KittyRating.Safe));
-		
+		this.register(LocCommands.stub("music"), new CommandMusicMain(KittyRole.General, KittyRating.Safe));
 	}
 	
 	// Allows the command manager to keep track of a command. Takes a pair (the un-localized and localzied commands)

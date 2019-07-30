@@ -17,6 +17,7 @@ import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import offline.Ref;
 import utils.AdminControl;
+import utils.AudioUtils;
 import utils.GlobalLog;
 import utils.LogFilter;
 
@@ -140,7 +141,7 @@ public class ObjectBuilderFactory
 			else
 			{
 				// Construct a new guild with defaults
-				guild = new KittyGuild(uid, new AdminControl(event.getGuild()), emotesString);
+				guild = new KittyGuild(uid, new AdminControl(event.getGuild()), emotesString, new AudioUtils(event.getGuild()));
 				DatabaseManager.instance.globalRegister(guild);
 				guildCache.put(uid, guild);
 			}
