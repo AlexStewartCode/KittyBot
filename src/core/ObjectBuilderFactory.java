@@ -7,6 +7,9 @@ import java.util.concurrent.Semaphore;
 
 import javax.security.auth.login.LoginException;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
+
 import core.lua.PluginManager;
 import dataStructures.*;
 import main.Main;
@@ -50,6 +53,9 @@ public class ObjectBuilderFactory
 	
 	// Command manager
 	private static CommandManager commandManager;
+	
+	//Audio track manager
+	AudioPlayerManager audioPlayer = new DefaultAudioPlayerManager();
 	
 	// Localization classes - these are singletons, but should be initialized before almost all other 
 	// things so their inclusion in the factory is to ensure they're started at the correct time.
