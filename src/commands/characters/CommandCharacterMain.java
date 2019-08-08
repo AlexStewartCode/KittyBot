@@ -22,12 +22,9 @@ public class CommandCharacterMain extends Command
 	@Override
 	public String getHelpText() { return LocStrings.stub("CharacterInfo"); }
 	
-	
-	
-	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		framework.run(guild, channel, user, input.args).Call(res);
+		framework.run(guild, channel, user, input).Call(res);
 	}
 }

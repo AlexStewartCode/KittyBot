@@ -19,6 +19,7 @@ public class CommandGuildRoleMain extends Command
 		super(level, rating); 
 		framework.addCommand("add", new SubCommandAdd (KittyRole.General, KittyRating.Safe));
 		framework.addCommand("remove", new SubCommandRemove(KittyRole.General, KittyRating.Safe));
+		framework.addCommand("list", new SubCommandList(KittyRole.General, KittyRating.Safe));
 		framework.addCommand("allowed", new SubCommandAllowed(KittyRole.Admin, KittyRating.Safe));
 		framework.addCommand("unallowed", new SubCommandNotAllowed(KittyRole.Admin, KittyRating.Safe));
 	}
@@ -26,12 +27,9 @@ public class CommandGuildRoleMain extends Command
 	@Override
 	public String getHelpText() { return LocStrings.stub("GuildRoleInfo"); }
 	
-	
-	
-	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		framework.run(guild, channel, user, input.args).Call(res);
+		framework.run(guild, channel, user, input).Call(res);
 	}
 }

@@ -7,6 +7,9 @@ import java.util.concurrent.Semaphore;
 
 import javax.security.auth.login.LoginException;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
+
 import core.lua.PluginManager;
 import dataStructures.*;
 import main.Main;
@@ -17,6 +20,7 @@ import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import offline.Ref;
 import utils.AdminControl;
+import utils.AudioUtils;
 import utils.GlobalLog;
 import utils.LogFilter;
 
@@ -49,6 +53,9 @@ public class ObjectBuilderFactory
 	
 	// Command manager
 	private static CommandManager commandManager;
+	
+	//Audio track manager
+	private static AudioPlayerManager audioPlayer = new DefaultAudioPlayerManager();
 	
 	// Localization classes - these are singletons, but should be initialized before almost all other 
 	// things so their inclusion in the factory is to ensure they're started at the correct time.
@@ -140,7 +147,8 @@ public class ObjectBuilderFactory
 			else
 			{
 				// Construct a new guild with defaults
-				guild = new KittyGuild(uid, new AdminControl(event.getGuild()), emotesString);
+				guild = new KittyGuild(uid, new AdminControl(event.getGuild()), emotesString, 
+						new AudioUtils(event.getGuild(), audioPlayer.createPlayer()));
 				DatabaseManager.instance.globalRegister(guild);
 				guildCache.put(uid, guild);
 			}
