@@ -326,8 +326,13 @@ public class ObjectBuilderFactory
 		if(user == null)
 		{
 			Guild jdaGuild = kitty.getGuildById(guildID);
+			if(jdaGuild == null) return null;
+			
 			Member jdaMember = jdaGuild.getMemberById(userID);
+			if(jdaMember == null) return null;
+			
 			User jdaUser = jdaMember.getUser();
+			if(jdaUser == null) return null;
 			
 			user = extractUserByJDAUser(guildID, jdaMember.getNickname(), jdaUser.getId(), jdaUser.getAvatarUrl(), jdaUser.getId());
 			updateUser(user, jdaMember);
