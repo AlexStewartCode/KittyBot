@@ -1,5 +1,6 @@
 package commands.guildrole;
 
+import core.LocStrings;
 import core.SubCommand;
 import core.SubCommandFormattable;
 import dataStructures.KittyChannel;
@@ -26,16 +27,16 @@ public class SubCommandAdd extends SubCommand
 			{
 				if(guild.control.addRole(user.discordID, role))
 				{
-					 formatted += "Addded " + role + "!"; 
+					 formatted += String.format(LocStrings.stub("GuildRoleAddSuccess"), role, user.name); 
 				}
 				else
 				{
-					formatted += "Failed to add " + role + "!"; 
+					formatted += String.format(LocStrings.stub("GuildRoleAddFailure"), role, user.name);
 				}
 			}
 			else
 			{
-				formatted += "You're not allowed to add " + role + "!"; 
+				formatted += String.format(LocStrings.stub("GuildRoleAddNotAllowed"), role);
 			}
 		}
 		return new SubCommandFormattable(formatted);

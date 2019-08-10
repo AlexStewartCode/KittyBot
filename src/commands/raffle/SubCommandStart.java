@@ -34,7 +34,7 @@ public class SubCommandStart extends SubCommand
 		}
 		else
 		{
-			return new SubCommandFormattable (LocStrings.stub("RaffleStartFailure"));
+			return new SubCommandFormattable (String.format(LocStrings.stub("RaffleStartFailure"), beanCost));
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package commands.raffle;
 
 import core.Command;
+import core.LocStrings;
 import core.SubCommandFramework;
 import dataStructures.*;
 
@@ -15,6 +16,9 @@ public class CommandRaffleMain extends Command
 		framework.addCommand("end", new SubCommandEnd(KittyRole.Mod, KittyRating.Safe));
 		framework.addCommand("join", new SubCommandJoin(KittyRole.General, KittyRating.Safe));
 	}
+	
+	@Override
+	public String getHelpText() { return LocStrings.stub("RaffleInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res) 

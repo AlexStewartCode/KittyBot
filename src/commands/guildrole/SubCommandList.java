@@ -19,7 +19,7 @@ public class SubCommandList extends SubCommand
 	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input)
 	{
 		String roles = ""; 
-		if(guild.roleList.isEmpty())
+		if(guild.roleList.size() < 2)
 		{
 			return new SubCommandFormattable(String.format(LocStrings.stub("GuildRoleListEmpty")));
 		}

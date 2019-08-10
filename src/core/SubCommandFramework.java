@@ -41,7 +41,10 @@ public class SubCommandFramework
 		}
 		catch(Exception e)
 		{
-			return new SubCommandFormattable("That's not a valid subcommand!");
+			String help = Stats.instance.getHelpText(input.key);
+			if(help != null)
+				return new SubCommandFormattable(help);
+			return new SubCommandFormattable("Something has gone very wrong.");
 		}
 	}
 }

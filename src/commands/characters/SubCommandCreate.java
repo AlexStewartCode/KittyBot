@@ -23,6 +23,7 @@ public class SubCommandCreate extends SubCommand
 		{
 			return new SubCommandFormattable (LocStrings.stub("CharacterCreateNullInfo"));
 		}
+		//user name bio url
 		if(CharacterManager.instance.addCharacter(user, info[0], info[1], info[2]))
 		{
 			return new SubCommandFormattable (LocStrings.stub("CharacterCreateSuccess"));

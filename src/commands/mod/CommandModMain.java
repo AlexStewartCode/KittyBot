@@ -23,7 +23,7 @@ public class CommandModMain extends Command
 	}
 	
 	@Override
-	public String getHelpText() { return LocStrings.stub("GuildRoleInfo"); }
+	public String getHelpText() { return LocStrings.stub("ModInfo"); }
 	
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)

@@ -42,7 +42,7 @@ public class KittyGuild extends DatabaseTrackedObject
 	}
 	
 	// Default content for a guild
-	public KittyGuild(String uniqueID, AdminControl adminControl, ArrayList <String> emoji, AudioUtils audio)
+	public KittyGuild(String uniqueID, AdminControl adminControl, ArrayList <String> emoji)
 	{
 		super(uniqueID);
 		this.uniqueID = uniqueID;
@@ -54,7 +54,6 @@ public class KittyGuild extends DatabaseTrackedObject
 		this.contentRating = KittyRating.Safe; 
 		this.polling = false;
 		this.emoji = emoji;
-		this.audio = audio;
 		setCommandIndicator("!");
 	}
 	
