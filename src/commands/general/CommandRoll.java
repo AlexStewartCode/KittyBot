@@ -151,7 +151,6 @@ public class CommandRoll extends Command
 				break;
 			case 'd': 
 				rolls = roll(first, second);
-				System.out.println(first);
 				for(int i= 0; i < first; i++)
 				{
 					value += rolls[i];
@@ -177,7 +176,7 @@ public class CommandRoll extends Command
 		int [] rolls = new int [sides];
 		
 		if(dice < 1)
-			return new int[0]; 
+			return new int[0];
 		for(int i = 0; dice > i; i ++)
 		{
 			roll = (int)(Math.random() * sides) + 1;
