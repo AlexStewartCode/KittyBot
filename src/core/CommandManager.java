@@ -5,47 +5,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import commands.characters.CommandCharacterMain;
-import commands.general.CommandBeansShow;
-import commands.general.CommandBenchmark;
-import commands.general.CommandBetBeans;
-import commands.general.CommandBetHistory;
-import commands.general.CommandBlurry;
-import commands.general.CommandBoop;
-import commands.general.CommandCatch;
-import commands.general.CommandChangeIndicator;
-import commands.general.CommandChoose;
-import commands.general.CommandColiru;
-import commands.general.CommandColor;
-import commands.general.CommandCrouton;
-import commands.general.CommandDBFlush;
-import commands.general.CommandDBStats;
-import commands.general.CommandDoWork;
-import commands.general.CommandEightBall;
-import commands.general.CommandFetch;
-import commands.general.CommandGiveBeans;
-import commands.general.CommandHelp;
-import commands.general.CommandHelpBuilder;
-import commands.general.CommandInfo;
-import commands.general.CommandInvite;
-import commands.general.CommandJDoodle;
-import commands.general.CommandLeaderboard;
-import commands.general.CommandMap;
-import commands.general.CommandPerish;
-import commands.general.CommandPing;
-import commands.general.CommandRPEnd;
-import commands.general.CommandRPG;
-import commands.general.CommandRPStart;
-import commands.general.CommandRating;
-import commands.general.CommandRemind;
-import commands.general.CommandRole;
-import commands.general.CommandRoll;
-import commands.general.CommandShutdown;
-import commands.general.CommandStark;
-import commands.general.CommandStats;
-import commands.general.CommandTeey;
-import commands.general.CommandTweet;
-import commands.general.CommandWolfram;
-import commands.general.CommandYeet;
+import commands.general.*;
 import commands.guildrole.CommandGuildRoleMain;
 import commands.mod.CommandModMain;
 import commands.music.CommandMusicMain;
@@ -116,7 +76,6 @@ public class CommandManager
 		
 		// Mod
 		this.register(LocCommands.stub("givebeans"), new CommandGiveBeans(KittyRole.Mod, KittyRating.Safe));
-		this.register(LocCommands.stub("rpg"), new CommandRPG(KittyRole.Mod, KittyRating.Safe));
 		this.register(LocCommands.stub("mod"), new CommandModMain(KittyRole.Mod, KittyRating.Safe));
 
 		// General
