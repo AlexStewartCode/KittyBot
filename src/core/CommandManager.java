@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import commands.benchmark.CommandBenchmark;
 import commands.characters.CommandCharacterMain;
 import commands.general.*;
 import commands.guildrole.CommandGuildRoleMain;

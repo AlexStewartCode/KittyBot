@@ -19,6 +19,6 @@ public class CommandDewStart extends SubCommand
 	@Override
 	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input) 
 	{
-		return new SubCommandFormattable (guild.endPoll());
+		return new SubCommandFormattable ("weh");
 	}
 }

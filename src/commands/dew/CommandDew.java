@@ -17,7 +17,7 @@ public class CommandDew extends Command  {
 	{
 		super(level, rating);
 		
-		framework.addCommand("start", command);
+		framework.addCommand("start", new CommandDewStart(KittyRole.Dev, KittyRating.Safe));
 	}
 	
 	@Override

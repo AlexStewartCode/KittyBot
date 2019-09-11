@@ -1,4 +1,4 @@
-package commands.general;
+package commands.benchmark;
 
 import core.Command;
 import core.LocStrings;
