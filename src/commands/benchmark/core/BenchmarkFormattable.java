@@ -1,4 +1,4 @@
-package core.benchmark;
+package commands.benchmark.core;
 
 import dataStructures.KittyEmbed;
 import dataStructures.Response;

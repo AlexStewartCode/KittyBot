@@ -1,4 +1,4 @@
-package core.benchmark;
+package commands.benchmark.core;
 
 import java.util.HashMap;
 import commands.benchmark.*;

@@ -1,9 +1,9 @@
 package commands.benchmark;
 
+import commands.benchmark.core.BenchmarkFormattable;
+import commands.benchmark.core.BenchmarkFramework;
 import core.Command;
 import core.LocStrings;
-import core.benchmark.BenchmarkFormattable;
-import core.benchmark.BenchmarkFramework;
 import dataStructures.KittyChannel;
 import dataStructures.KittyGuild;
 import dataStructures.KittyRating;

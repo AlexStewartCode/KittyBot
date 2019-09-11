@@ -2,7 +2,11 @@ package commands.benchmark;
 
 import java.util.List;
 
-import core.benchmark.*;
+import commands.benchmark.core.BenchmarkCommand;
+import commands.benchmark.core.BenchmarkEntry;
+import commands.benchmark.core.BenchmarkFormattable;
+import commands.benchmark.core.BenchmarkInput;
+import commands.benchmark.core.BenchmarkManager;
 
 public class BenchmarkCommandFind extends BenchmarkCommand 
 {
