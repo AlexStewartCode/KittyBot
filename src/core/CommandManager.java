@@ -71,6 +71,7 @@ public class CommandManager
 		this.register(LocCommands.stub("tweet"), new CommandTweet(KittyRole.Dev, KittyRating.Safe));
 		this.register(LocCommands.stub("dbflush"), new CommandDBFlush(KittyRole.Dev, KittyRating.Safe));
 		this.register(LocCommands.stub("dbstats"), new CommandDBStats(KittyRole.Dev, KittyRating.Safe));
+		this.register(LocCommands.stub("dew"), new CommandDew(KittyRole.Dev, KittyRating.Safe));
 		
 		// Admin
 		this.register(LocCommands.stub("rating"), new CommandRating(KittyRole.Admin, KittyRating.Safe));
@@ -115,7 +116,7 @@ public class CommandManager
 		this.register(LocCommands.stub("raffle"), new CommandRaffleMain(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("poll"), new CommandPollMain(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("music"), new CommandMusicMain(KittyRole.General, KittyRating.Safe));
-		this.register(LocCommands.stub("dew"), new CommandDew(KittyRole.Dev, KittyRating.Safe));
+		this.register(LocCommands.stub("weh"), new CommandWeh(KittyRole.General, KittyRating.Safe));
 	}
 	
 	// Allows the command manager to keep track of a command. Takes a pair (the un-localized and localzied commands)
