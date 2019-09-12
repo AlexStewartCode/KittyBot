@@ -109,7 +109,7 @@
 "Localized Strings","DBFlushInfo","Takes all objects queued for the database and writes them to the database, then says how many were written."
 "Localized Strings","DBStatsInfo","Shows current statistics for the database"
 "Localized Strings","DefaultDanceInfo","y'all know forknife, get ready to dance, or make a friend dance with @!"
-"Localized Strings","DewInfo",""
+"Localized Strings","DewInfo","A fun little dev experiment!"
 "Localized Strings","DoWorkFinished","I finished with my work! :D"
 "Localized Strings","DoWorkInfo","Occupies a core for a few seconds"
 "Localized Strings","EightBallError","Hmm? You'll need to ask a question!"
