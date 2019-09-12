@@ -28,7 +28,7 @@ public class CommandDew extends Command  {
 	{
 		super(level, rating);
 		
-		framework.addCommand("start", new CommandDewStart(KittyRole.Dev, KittyRating.Safe));
+		framework.addCommand("luatest", new CommandDewLuaTest(KittyRole.Dev, KittyRating.Safe));
 	}
 	
 }
