@@ -1,8 +1,11 @@
 package commands.dew.core.data;
 
-public enum DewMapTile
+import commands.dew.core.api.IDewLuaSerializable;
+
+public enum DewMapTile 
 {
-	Default(0), Tree(1);
+	// Assign multiples of 2 for flag purposes
+	Default(0), Grass(1), Tree(2);
 	
 	private final int value;
 	private DewMapTile(int value) 

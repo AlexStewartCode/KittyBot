@@ -1,5 +1,7 @@
 package commands.dew;
 
+import commands.dew.core.data.*;
+import commands.dew.core.impl.DewLuaCore;
 import core.SubCommand;
 import core.SubCommandFormattable;
 import dataStructures.KittyChannel;
@@ -16,9 +18,19 @@ public class CommandDewStart extends SubCommand
 		super(roleLevel, contentRating);
 	}
 
+	private String asCodeBlock(String string)
+	{
+		return "```lua\n" + string + "```"; 
+	}
+	
 	@Override
 	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input) 
 	{
-		return new SubCommandFormattable ("weh");
+		String out = "";
+		
+		out += asCodeBlock(DewLuaCore.toLua(new DewMap()));
+		out += asCodeBlock(DewLuaCore.toLua(new DewMovementInfo()));
+		
+		return new SubCommandFormattable(out);
 	}
 }
