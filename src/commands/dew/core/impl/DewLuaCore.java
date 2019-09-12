@@ -69,6 +69,7 @@ public class DewLuaCore implements IDewLuaCore
 						
 						break;
 						
+						// wrong name
 					case "dewmaptile ":
 						line += "\"" + current.get(item).toString() + "\"";
 						break;
@@ -96,27 +97,58 @@ public class DewLuaCore implements IDewLuaCore
 		return out;
 	}
 	
+
 	@SuppressWarnings({ "null", "unchecked" })
-	public static <T> T fromLua(T t, String lua)
+	public static <T> void fromLua(T obj, String lua)
 	{
 		if(globalLuaCore == null)
 		{
 			globalLuaCore = JsePlatform.standardGlobals();
 		}
 		
-		LuaValue val = globalLuaCore.load(lua).call();
-		String type = val.get("type").toString();
+		LuaValue luaResult = globalLuaCore.load(lua).call();
+		String type = luaResult.get("type").toString();
 		
 		try
 		{
-			Class<?> concreteClass = Class.forName(type);
-			return (T)concreteClass;
+			LuaValue data = luaResult.get("data");
+			Class<T> concreteClass = (Class<T>) Class.forName(type);
+			
+			for(Field field : concreteClass.getDeclaredFields())
+			{
+				String name = field.getName();
+				LuaValue value = data.get(name);
+				
+				if(!value.isnil())
+				{
+					String fieldType = field.getType().toString().toLowerCase();
+					switch(fieldType)
+					{
+						case "int": 
+							field.set(obj, value.toint());
+							break;
+						
+						case "class java.lang.string": 
+							field.set(obj, value.toString());
+							break;
+							
+							// Not the right name
+						case "dewmaptile":
+						default: 
+							System.err.print("Could not set field of type: " + fieldType + "\n");
+							break;
+					}
+					
+				}
+				else
+				{
+					System.err.println("Field was not in lua: " + name);
+				}
+			}
 		}
-		catch (ClassNotFoundException e)
+		catch (Exception e)
 		{
 			e.printStackTrace(System.err);
 		}
-		
-		return null;
 	}
 }
