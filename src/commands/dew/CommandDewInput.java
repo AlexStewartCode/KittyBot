@@ -1,5 +1,6 @@
 package commands.dew;
 
+import commands.dew.adapter.KittyAdapterDewPlayer;
 import core.SubCommand;
 import core.SubCommandFormattable;
 import dataStructures.KittyChannel;
@@ -11,15 +12,29 @@ import dataStructures.UserInput;
 
 public class CommandDewInput extends SubCommand
 {
-	public CommandDewInput(KittyRole roleLevel, KittyRating contentRating) {
+	String letter = "";
+	public CommandDewInput(String letter, KittyRole roleLevel, KittyRating contentRating)
+	{
 		super(roleLevel, contentRating);
-		// TODO Auto-generated constructor stub
+		this.letter = letter.toLowerCase();
 	}
 
 	@Override
-	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input) {
-		// TODO Auto-generated method stub
-		return null;
+	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input)
+	{
+		KittyAdapterDewPlayer player = CommandDewRealm.getOrCreate(user);
+		
+		int x = player.getRealmX();
+		int y = player.getRealmY();
+		
+		switch(letter)
+		{
+			case "w": player.setRealmPos(x, y - 1); break;
+			case "a": player.setRealmPos(x - 1, y); break;
+			case "s": player.setRealmPos(x, y + 1); break;
+			case "d": player.setRealmPos(x + 1, y); break;
+		}
+		
+		return new SubCommandFormattable(CommandDewRealm.drawWorld(player));
 	}
-
 }

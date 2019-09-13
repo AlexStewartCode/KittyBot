@@ -30,5 +30,9 @@ public class CommandDew extends Command  {
 		
 		framework.addCommand("luatest", new CommandDewLuaTest(KittyRole.Dev, KittyRating.Safe));
 		framework.addCommand("realm", new CommandDewRealm(KittyRole.Dev, KittyRating.Safe));
+		framework.addCommand("w", new CommandDewInput("w", KittyRole.Dev, KittyRating.Safe));
+		framework.addCommand("a", new CommandDewInput("a", KittyRole.Dev, KittyRating.Safe));
+		framework.addCommand("s", new CommandDewInput("s", KittyRole.Dev, KittyRating.Safe));
+		framework.addCommand("d", new CommandDewInput("d", KittyRole.Dev, KittyRating.Safe));
 	}
 }
