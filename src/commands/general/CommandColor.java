@@ -31,8 +31,28 @@ public class CommandColor extends Command
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
+		if(input.args == null || input.args.length() == 0)
+		{
+			res.send(LocStrings.stub("ColorNotSearchable"));
+			return;
+		}
+
+		String toFind = null;
+		String[] split = input.args.split(" ");
+		
+		if(split.length >= 1)
+			toFind = split[0];
+		
 		// First, try and parse out the color to make sure we can even get it.
-		ColorData colorData = theColorAPI.lookupHex(input.args.trim());
+		ColorData colorData = null;
+		if(toFind == null)
+		{
+			colorData = theColorAPI.lookupHex(input.args.trim());
+		}
+		else
+		{
+			colorData = theColorAPI.lookupHex(toFind.trim());
+		}
 		
 		// Verify the color was even found
 		if(colorData == null)
