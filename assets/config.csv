@@ -162,7 +162,7 @@
 "Localized Strings","GuildRoleNotAllowedSuccess","Removed %s from the allowed roles!"
 "Localized Strings","GuildRoleRemoveFailure","I wasn't able to remove %s from %s!"
 "Localized Strings","GuildRoleRemoveInfo","Removes a role from you! Just remember to spell it right!"
-"Localized Strings","GuildRoleRemoveNotAllowed","You're not allowed to add %s!"
+"Localized Strings","GuildRoleRemoveNotAllowed","You're not allowed to remove %s!"
 "Localized Strings","GuildRoleRemoveSuccess","Removed %s from %s!"
 "Localized Strings","HelpBuilderInfo","Emit help for all commands as formatted HTML"
 "Localized Strings","HelpDisplay","You can get help with a specific command by typing `!help command`! General Commands: `boop, roll, choose, help, info, vote, results, showpoll, wolfram, cplus, java, beans, role, bet, yeet`"

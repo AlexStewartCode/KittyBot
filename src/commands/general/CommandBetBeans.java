@@ -5,6 +5,8 @@ import java.util.Random;
 import core.Command;
 import core.LocStrings;
 import dataStructures.*;
+import utils.GlobalLog;
+import utils.LogFilter;
 
 public class CommandBetBeans extends Command
 {
@@ -17,12 +19,30 @@ public class CommandBetBeans extends Command
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		String call = "";
+		
+		int min = 50;
 		int bet = 0;
 		int win = 0; 
+		
+		try
+		{
+			String valAsString = LocStrings.stub("BetBeansMinThreshold");
+			int parsed = Integer.parseInt(valAsString);
+			
+			if(parsed < 0)
+				parsed = 0;
+			
+			min = parsed;
+		}
+		catch (Exception e)
+		{
+			GlobalLog.log(LogFilter.Command, "Betting took place, but a value was not specified in the config file so 50 was used as the minimum bet threshold. Consider specifying BetBeansMinThreshold.");
+		}
+		
 		try 
 		{
 			bet = Integer.parseInt(input.args);
-			if(bet < 50)
+			if(bet < min)
 			{
 				res.send(LocStrings.stub("BetBeansLowBet"));
 				return;
