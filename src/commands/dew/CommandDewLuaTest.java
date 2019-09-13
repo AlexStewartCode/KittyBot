@@ -1,5 +1,7 @@
 package commands.dew;
 
+import java.util.UUID;
+
 import commands.dew.core.data.*;
 import commands.dew.core.impl.DewLuaCore;
 import core.SubCommand;
@@ -36,8 +38,8 @@ public class CommandDewLuaTest extends SubCommand
 		try
 		{
 			out += "**Testing writing...\n**";
-			DewMap m = new DewMap();
-			m.mapHeight = 25;
+			DewRealm m = new DewRealm();
+			m.id = UUID.randomUUID().toString();
 			String out1 = DewLuaCore.toLua(m);
 			out += asCodeBlock(out1);
 			
@@ -46,13 +48,13 @@ public class CommandDewLuaTest extends SubCommand
 			
 			out += "**Testing Reading...**\n";
 			
-			DewMap map = new DewMap();
+			DewRealm map = new DewRealm();
 			DewLuaCore.fromLua(map, out1);
-			out += "Height from 1st write: " + map.mapHeight + "\n";
+			out += "ID from 1st write: " + asCodeLine(map.id) + "\n";
 			
 			DewMovementInfo move = new DewMovementInfo();
 			DewLuaCore.fromLua(move, out2);
-			out += move + "\n";
+			out += "Qualified type test: " + asCodeLine(move.toString()) + "\n";
 		}
 		catch (Exception e)
 		{

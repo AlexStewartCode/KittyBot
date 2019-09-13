@@ -16,4 +16,22 @@ public class KittyAdapterDewPlayer implements IDewPlayer
 		return null;
 	}
 
+	@Override
+	public String getCurrentRealm() {
+		// TODO Auto-generated method stub
+		return "0";
+	}
+
+	@Override
+	public int getRealmX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getRealmY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
