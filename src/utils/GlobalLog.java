@@ -1,6 +1,7 @@
 package utils;
 
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
@@ -28,18 +29,27 @@ public class GlobalLog
 		GlobalLog.log(LogFilter.Util, "Finished initializing logging system");
 	}
 	
-	private static void write(String status, LogFilter filter, String body)
+	private static void write(String status, LogFilter filter, String body, PrintStream stream)
 	{
 		String logLine = "[" + status + "] " + "[" + filter.name() + "] " + body; 
 		outputLog.write(logLine + "\n");
 		outputLog.flush();
-		System.out.println(logLine);
+		stream.println(logLine);
 	}
 	
-	public static void log(LogFilter filter, String msg) { write(log, filter, msg); } 
-	public static void warn(LogFilter filter, String msg) { write(warn, filter, msg); }
-	public static void error(LogFilter filter, String msg) { write(error, filter, msg); System.err.println(msg); System.err.flush(); }
-	public static void fatal(LogFilter filter, String msg) throws Exception { write(fatal, filter, msg); throw new Exception(msg); }
+	public static void log(LogFilter filter, String msg) { write(log, filter, msg, System.out); } 
+	public static void warn(LogFilter filter, String msg) { write(warn, filter, msg, System.out); }
+	public static void error(LogFilter filter, String msg) { write(error, filter, msg, System.err); System.err.println(msg); System.err.flush(); }
+	public static void error(LogFilter filter, Exception e)
+	{
+		write(error, filter, e.toString(), System.err); 
+		e.printStackTrace(outputLog);
+		e.printStackTrace(System.err);
+		outputLog.flush();
+		System.err.flush();
+	}
+	
+	public static void fatal(LogFilter filter, String msg) throws Exception { write(fatal, filter, msg, System.out); throw new Exception(msg); }
 	
 	public static void log(String msg) { log(LogFilter.Debug, msg); } 
 	public static void warn(String msg) { warn(LogFilter.Debug, msg); }

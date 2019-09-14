@@ -7,6 +7,8 @@ import java.util.Stack;
 import core.Command;
 import core.LocStrings;
 import dataStructures.*;
+import utils.GlobalLog;
+import utils.LogFilter;
 
 public class CommandRoll extends Command
 {
@@ -32,6 +34,7 @@ public class CommandRoll extends Command
 		}
 		catch(Exception e)
 		{
+			GlobalLog.error(LogFilter.Command, e);
 			res.send(LocStrings.stub("RollError"));
 		}
 	}
@@ -170,18 +173,18 @@ public class CommandRoll extends Command
 
 	private int[] roll(int first, int second) 
 	{
-		int roll = 0;
-		int dice = first;
-		int sides = second;
-		int [] rolls = new int [sides];
+		int numberOfDice = first;
+		int diceSideCount = second;
+		int [] rolls = new int[numberOfDice];
 		
-		if(dice < 1)
+		GlobalLog.log("number: " + numberOfDice + "   diceSides: " + diceSideCount);
+		
+		if(numberOfDice < 1)
 			return new int[0];
-		for(int i = 0; dice > i; i ++)
-		{
-			roll = (int)(Math.random() * sides) + 1;
-			rolls[i] = roll;
-		}
+		
+		for(int i = 0; i < numberOfDice; i++)
+			rolls[i] = (int)(Math.random() * diceSideCount + 1);
+		
 		return rolls;
 	}
 
