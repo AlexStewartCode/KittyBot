@@ -2,12 +2,14 @@ package dataStructures;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.concurrent.ExecutionException;
 
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.*;
+import net.dv8tion.jda.core.requests.restaction.MessageAction;
 import net.dv8tion.jda.core.EmbedBuilder;
 import utils.GlobalLog;
 import utils.LogFilter;
@@ -18,7 +20,7 @@ import utils.LogFilter;
 public class Response 
 {
 	// Last message
-	public static Message LastSendMessage = null; 
+	private static Message lastSentMessage = null; 
 	
 	// Variables
 	private GuildMessageReceivedEvent event;
@@ -79,7 +81,7 @@ public class Response
 			File thumbImage = new File(thumbName);
 			if(thumbImage.exists())
 			{
-				LastSendMessage = event.getChannel().sendFile(thumbImage, thumbName, message.build()).complete();
+				respond(event.getChannel().sendFile(thumbImage, thumbName, message.build()));
 			}
 		}
 		else
@@ -87,7 +89,7 @@ public class Response
 			if(embedInfo.thumbnailURL != null)
 				embed.setThumbnail(embedInfo.thumbnailURL);
 			
-			LastSendMessage = event.getChannel().sendMessage(embed.build()).complete();
+			respond(event.getChannel().sendMessage(embed.build()));
 		}
 	}
 	
@@ -97,11 +99,11 @@ public class Response
 		GlobalLog.log(LogFilter.Response, "Sending response: " + toRespondWith);
 		if(toRespondWith.length() > discordMessageMax)
 		{
-			LastSendMessage = event.getChannel().sendMessage(toRespondWith.substring(0, kittyMessageMax) + "\n\nI think that's enough!").complete();
+			respond(event.getChannel().sendMessage(toRespondWith.substring(0, kittyMessageMax) + "\n\nI think that's enough!"));
 		}
 		else
 		{
-			LastSendMessage = event.getChannel().sendMessage(toRespondWith).complete();
+			respond(event.getChannel().sendMessage(toRespondWith));
 		}
 	}
 	
@@ -112,11 +114,11 @@ public class Response
 		channel = kitty.getTextChannelById(Long.parseLong(channelID));
 		if(toRespondWith.length() > discordMessageMax)
 		{
-			LastSendMessage = channel.sendMessage(toRespondWith.substring(0, kittyMessageMax) + "\n\nI think that's enough!").complete();
+			respond(channel.sendMessage(toRespondWith.substring(0, kittyMessageMax) + "\n\nI think that's enough!"));
 		}
 		else
 		{
-			LastSendMessage = channel.sendMessage(toRespondWith).complete();
+			respond(channel.sendMessage(toRespondWith));
 		}
 	}
 	
@@ -126,11 +128,11 @@ public class Response
 		GlobalLog.log(LogFilter.Response, "Sending immediate response: " + toRespondWith);
 		if(toRespondWith.length() > discordMessageMax)
 		{
-			LastSendMessage = event.getChannel().sendMessage(toRespondWith.substring(0, kittyMessageMax) + "\n\nI think that's enough!").complete();
+			respondImmediate(event.getChannel().sendMessage(toRespondWith.substring(0, kittyMessageMax) + "\n\nI think that's enough!"));
 		}
 		else
 		{
-			LastSendMessage = event.getChannel().sendMessage(toRespondWith).complete();
+			respondImmediate(event.getChannel().sendMessage(toRespondWith));
 		}
 	}
 	
@@ -138,13 +140,59 @@ public class Response
 	public void sendFile(File toRespondWith, String extension)
 	{
 		GlobalLog.log(LogFilter.Response, "Sending file response");
-		LastSendMessage = event.getChannel().sendFile(toRespondWith, "return." + extension).complete();
+		respond(event.getChannel().sendFile(toRespondWith, "return." + extension));
 	}
 
 	// Queues an input stream response to the channel that issued the command.
 	public void sendFile(InputStream in, String extension) 
 	{
 		GlobalLog.log(LogFilter.Response, "Sending input stream response");
-		LastSendMessage = event.getChannel().sendFile(in, "return." + extension).complete();
+		respond(event.getChannel().sendFile(in, "return." + extension));
+	}
+	
+	////////////////////////
+	// Message Management //
+	////////////////////////
+	
+	// Blast that message out and don't do anything else on this thread until sent.
+	protected void respondImmediate(MessageAction toSend)
+	{
+		synchronized(lastSentMessage)
+		{
+			lastSentMessage = toSend.complete();
+		}
+	}
+	
+	// Async thread-safe assignment. Assignment may technically be out of order, so keep that in mind.
+	protected void respond(MessageAction toSend)
+	{
+		toSend.submit().whenComplete((msg, err) -> { 
+			synchronized(lastSentMessage)
+			{
+				lastSentMessage = msg;
+			}
+		});
+	}
+	
+	public static String GetLastMessage()
+	{
+		synchronized(lastSentMessage)
+		{
+			if(lastSentMessage == null)
+				return null;
+		
+			return lastSentMessage.getContentRaw();
+		}
+	}
+	
+	public static void EditLastMessage(String newContent)
+	{
+		synchronized(lastSentMessage)
+		{
+			if(lastSentMessage != null)
+			{
+				lastSentMessage.editMessage(newContent).queue();
+			}
+		}
 	}
 }

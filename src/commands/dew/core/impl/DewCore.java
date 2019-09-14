@@ -82,8 +82,7 @@ public class DewCore
 			
 			if(f != null)
 			{
-				Response.LastSendMessage.editMessage(f.resString).complete();
-				//f.Call(res);
+				Response.EditLastMessage(f.resString);
 				didRun = true;
 			}
 		}
