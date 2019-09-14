@@ -5,6 +5,7 @@ import java.io.InputStream;
 
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.MessageBuilder;
+import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.*;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -16,6 +17,9 @@ import utils.LogFilter;
 // commands aren't exposed to the GuildMessageReceivedEvent then we should be fine.
 public class Response 
 {
+	// Last message
+	public static Message LastSendMessage = null; 
+	
 	// Variables
 	private GuildMessageReceivedEvent event;
 	private final int discordMessageMax = 2000;
@@ -75,7 +79,7 @@ public class Response
 			File thumbImage = new File(thumbName);
 			if(thumbImage.exists())
 			{
-				event.getChannel().sendFile(thumbImage, thumbName, message.build()).queue();
+				LastSendMessage = event.getChannel().sendFile(thumbImage, thumbName, message.build()).complete();
 			}
 		}
 		else
@@ -83,7 +87,7 @@ public class Response
 			if(embedInfo.thumbnailURL != null)
 				embed.setThumbnail(embedInfo.thumbnailURL);
 			
-			event.getChannel().sendMessage(embed.build()).queue();
+			LastSendMessage = event.getChannel().sendMessage(embed.build()).complete();
 		}
 	}
 	
@@ -93,11 +97,11 @@ public class Response
 		GlobalLog.log(LogFilter.Response, "Sending response: " + toRespondWith);
 		if(toRespondWith.length() > discordMessageMax)
 		{
-			event.getChannel().sendMessage(toRespondWith.substring(0, kittyMessageMax) + "\n\nI think that's enough!").queue();
+			LastSendMessage = event.getChannel().sendMessage(toRespondWith.substring(0, kittyMessageMax) + "\n\nI think that's enough!").complete();
 		}
 		else
 		{
-			event.getChannel().sendMessage(toRespondWith).queue();
+			LastSendMessage = event.getChannel().sendMessage(toRespondWith).complete();
 		}
 	}
 	
@@ -108,11 +112,11 @@ public class Response
 		channel = kitty.getTextChannelById(Long.parseLong(channelID));
 		if(toRespondWith.length() > discordMessageMax)
 		{
-			channel.sendMessage(toRespondWith.substring(0, kittyMessageMax) + "\n\nI think that's enough!").queue();
+			LastSendMessage = channel.sendMessage(toRespondWith.substring(0, kittyMessageMax) + "\n\nI think that's enough!").complete();
 		}
 		else
 		{
-			channel.sendMessage(toRespondWith).queue();
+			LastSendMessage = channel.sendMessage(toRespondWith).complete();
 		}
 	}
 	
@@ -122,11 +126,11 @@ public class Response
 		GlobalLog.log(LogFilter.Response, "Sending immediate response: " + toRespondWith);
 		if(toRespondWith.length() > discordMessageMax)
 		{
-			event.getChannel().sendMessage(toRespondWith.substring(0, kittyMessageMax) + "\n\nI think that's enough!");
+			LastSendMessage = event.getChannel().sendMessage(toRespondWith.substring(0, kittyMessageMax) + "\n\nI think that's enough!").complete();
 		}
 		else
 		{
-			event.getChannel().sendMessage(toRespondWith).complete();
+			LastSendMessage = event.getChannel().sendMessage(toRespondWith).complete();
 		}
 	}
 	
@@ -134,13 +138,13 @@ public class Response
 	public void sendFile(File toRespondWith, String extension)
 	{
 		GlobalLog.log(LogFilter.Response, "Sending file response");
-		event.getChannel().sendFile(toRespondWith, "return." + extension).queue();
+		LastSendMessage = event.getChannel().sendFile(toRespondWith, "return." + extension).complete();
 	}
 
 	// Queues an input stream response to the channel that issued the command.
 	public void sendFile(InputStream in, String extension) 
 	{
 		GlobalLog.log(LogFilter.Response, "Sending input stream response");
-		event.getChannel().sendFile(in, "return." + extension).queue();
+		LastSendMessage = event.getChannel().sendFile(in, "return." + extension).complete();
 	}
 }

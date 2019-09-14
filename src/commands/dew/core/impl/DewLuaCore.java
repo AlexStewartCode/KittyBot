@@ -1,7 +1,6 @@
 package commands.dew.core.impl;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaValue;

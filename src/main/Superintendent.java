@@ -2,6 +2,7 @@ package main;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import commands.dew.core.impl.DewCore;
 import core.Config;
 import core.DatabaseManager;
 import core.RPManager;

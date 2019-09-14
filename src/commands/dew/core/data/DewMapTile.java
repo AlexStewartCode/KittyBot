@@ -1,7 +1,5 @@
 package commands.dew.core.data;
 
-import commands.dew.core.api.IDewLuaSerializable;
-
 public enum DewMapTile 
 {
 	// Assign multiples of 2 for flag purposes

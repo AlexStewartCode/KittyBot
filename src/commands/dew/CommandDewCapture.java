@@ -11,21 +11,18 @@ import dataStructures.KittyRole;
 import dataStructures.KittyUser;
 import dataStructures.UserInput;
 
-public class CommandDewRealm  extends SubCommand
+public class CommandDewCapture extends SubCommand
 {
-	public CommandDewRealm(KittyRole roleLevel, KittyRating contentRating)
+	public CommandDewCapture(KittyRole roleLevel, KittyRating contentRating)
 	{
 		super(roleLevel, contentRating);
 	}
-	
+
 	@Override
 	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input)
 	{
 		KittyAdapterDewPlayer player = DewCore.getOrCreate(user);
-		
-		String out = DewCore.drawWorld(player);
-		
-		return new SubCommandFormattable(out);
+		DewCore.playersCaptured.add(player);
+		return null;//new SubCommandFormattable("captured input for " + user.name);
 	}
-
 }

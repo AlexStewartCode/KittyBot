@@ -1,6 +1,7 @@
 package commands.dew;
 
 import commands.dew.adapter.KittyAdapterDewPlayer;
+import commands.dew.core.impl.DewCore;
 import core.SubCommand;
 import core.SubCommandFormattable;
 import dataStructures.KittyChannel;
@@ -22,7 +23,7 @@ public class CommandDewInput extends SubCommand
 	@Override
 	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input)
 	{
-		KittyAdapterDewPlayer player = CommandDewRealm.getOrCreate(user);
+		KittyAdapterDewPlayer player = DewCore.getOrCreate(user);
 		
 		int x = player.getRealmX();
 		int y = player.getRealmY();
@@ -35,6 +36,6 @@ public class CommandDewInput extends SubCommand
 			case "d": player.setRealmPos(x + 1, y); break;
 		}
 		
-		return new SubCommandFormattable(CommandDewRealm.drawWorld(player));
+		return new SubCommandFormattable(DewCore.drawWorld(player));
 	}
 }

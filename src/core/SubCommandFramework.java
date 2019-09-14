@@ -7,6 +7,7 @@ import dataStructures.KittyGuild;
 import dataStructures.KittyUser;
 import dataStructures.UserInput;
 import utils.GlobalLog;
+import utils.LogFilter;
 
 public class SubCommandFramework 
 {
@@ -41,10 +42,14 @@ public class SubCommandFramework
 		}
 		catch(Exception e)
 		{
+			GlobalLog.error(LogFilter.Command, e);
+			
 			String help = Stats.instance.getHelpText(input.key);
+			
 			if(help != null)
 				return new SubCommandFormattable(help);
-			return new SubCommandFormattable("Something has gone very wrong.");
+			
+			return new SubCommandFormattable("Whoops! Internal subcommand error!");
 		}
 	}
 }

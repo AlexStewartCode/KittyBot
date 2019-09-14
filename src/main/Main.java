@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.security.auth.login.LoginException;
 
+import commands.dew.core.impl.DewCore;
 import core.CharacterManager;
 import core.CommandEnabler;
 import core.CommandManager;
@@ -89,6 +90,10 @@ public class Main extends ListenerAdapter
 		if(!Superintendent.perCommandUpkeepPre(pluginManager))
 			return;
 		
+		// TODO: Condense outer if somehow...
+		if(!DewCore.ProcessIfCaptured(guild, channel, user, input, response))
+		{
+		
 		// Attempt to spin up a command. If the command doesn't exist.
 		// Run plugins right before invoking the commands but after all other setup.
 		if(commandManager.invokeOnNewThread(guild, channel, user, input, response) == false)
@@ -109,6 +114,8 @@ public class Main extends ListenerAdapter
 					}
 				}
 			}
+		}
+		
 		}
 		
 		// Run any upkeep in post we need to

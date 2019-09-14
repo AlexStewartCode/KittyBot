@@ -4,6 +4,7 @@ import java.util.List;
 
 import core.ObjectBuilderFactory;
 import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class UserInput 
@@ -14,6 +15,7 @@ public class UserInput
 	public KittyUser [] mentions;
 	private boolean isValid;
 	public String message;
+	private Message internalJDAMessage;
 	
 	// NOTE(wisp): Designed to parse a string as it's constructed.
 	// If a user enters the command "!ping some stuff here :D"
@@ -25,6 +27,7 @@ public class UserInput
 	// The CommandIndicator and spaces between the key and args are dropped.
 	public UserInput(GuildMessageReceivedEvent event, KittyGuild guildContext)
 	{
+		this.internalJDAMessage = event.getMessage();
 		String toParse = event.getMessage().getContentRaw();
 		message = toParse; 
 		
@@ -61,6 +64,18 @@ public class UserInput
 		}
 	}
 	
+	// Copy Constructor
+	public UserInput(UserInput other)
+	{
+		this.key = other.key;
+		this.args = other.args;
+		this.mentions = other.mentions;
+		this.isValid = other.isValid;
+		this.message = other.message;
+		this.internalJDAMessage = other.internalJDAMessage;
+	}
+			
+	
 	// Used for injecting direct commands from plugins
 	public UserInput(String input, KittyGuild contextGuild)
 	{
@@ -73,6 +88,12 @@ public class UserInput
 	public boolean isValid()
 	{
 		return isValid;
+	}
+	
+	// This deletes the input that was originally sent
+	public void deleteOriginInput()
+	{
+		internalJDAMessage.delete().queue();
 	}
 	
 	// Finds first whitespace in the string
