@@ -3,6 +3,7 @@ package dataStructures;
 import java.io.File;
 import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Consumer;
 
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.MessageBuilder;
@@ -20,7 +21,7 @@ import utils.LogFilter;
 public class Response 
 {
 	// Last message
-	private static Message lastSentMessage = null; 
+	private static Message lastSentMessage = new MessageBuilder().append(" ").build(); 
 	
 	// Variables
 	private GuildMessageReceivedEvent event;
@@ -155,6 +156,7 @@ public class Response
 	////////////////////////
 	
 	// Blast that message out and don't do anything else on this thread until sent.
+	// BLOCKING
 	protected void respondImmediate(MessageAction toSend)
 	{
 		synchronized(lastSentMessage)
@@ -163,7 +165,8 @@ public class Response
 		}
 	}
 	
-	// Async thread-safe assignment. Assignment may technically be out of order, so keep that in mind.
+	// thread-safe assignment. Assignment may technically be out of order, so keep that in mind.
+	// ASYNC
 	protected void respond(MessageAction toSend)
 	{
 		toSend.submit().whenComplete((msg, err) -> { 
@@ -174,6 +177,7 @@ public class Response
 		});
 	}
 	
+	// BLOCKING
 	public static String GetLastMessage()
 	{
 		synchronized(lastSentMessage)
@@ -185,6 +189,19 @@ public class Response
 		}
 	}
 	
+	// ASYNC
+	public static void GetLastMessage(Consumer<String> consumer)
+	{
+		synchronized(lastSentMessage)
+		{
+			if(lastSentMessage == null)
+				return;
+			
+			consumer.accept(lastSentMessage.getContentRaw());
+		}
+	}
+	
+	// BLOCKING
 	public static void EditLastMessage(String newContent)
 	{
 		synchronized(lastSentMessage)

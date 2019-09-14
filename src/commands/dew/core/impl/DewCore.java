@@ -19,6 +19,7 @@ import utils.LogFilter;
 public class DewCore 
 {
 	// TODO: Make realm and players both per-realm
+	public static String responseHeader = "[Dewdrop Forest]";
 	public static DewRealm realm;
 	public static List<KittyAdapterDewPlayer> players;
 	public static List<KittyAdapterDewPlayer> playersCaptured;
@@ -82,7 +83,10 @@ public class DewCore
 			
 			if(f != null)
 			{
-				Response.EditLastMessage(f.resString);
+				Response.GetLastMessage((String last) -> {
+					if(last.contains(responseHeader))
+							Response.EditLastMessage(f.resString);
+				});
 				didRun = true;
 			}
 		}
@@ -145,6 +149,7 @@ public class DewCore
 		
 		// Draw world
 		String out = "";
+		out += responseHeader + "\n";
 		out += "**Realm ID - ** `" + realm.id + "`\n";
 		
 		for(int y = 0; y < worldBuffer.length; ++y)
