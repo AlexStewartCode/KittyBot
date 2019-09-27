@@ -14,7 +14,6 @@ import dataStructures.UserInput;
 
 public class CommandDew extends Command
 {	
-	@SuppressWarnings("unused")
 	public static DewCore core;
 	SubCommandFramework framework = new SubCommandFramework();
 
