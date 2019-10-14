@@ -22,6 +22,7 @@ import commands.general.CommandDBStats;
 import commands.general.CommandDoWork;
 import commands.general.CommandEightBall;
 import commands.general.CommandFetch;
+import commands.general.CommandGetSauce;
 import commands.general.CommandGiveBeans;
 import commands.general.CommandHelp;
 import commands.general.CommandHelpBuilder;
@@ -154,6 +155,7 @@ public class CommandManager
 		this.register(LocCommands.stub("raffle"), new CommandRaffleMain(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("poll"), new CommandPollMain(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("music"), new CommandMusicMain(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("getsauce"), new CommandGetSauce(KittyRole.General, KittyRating.Safe));
 	}
 	
 	// Allows the command manager to keep track of a command. Takes a pair (the un-localized and localzied commands)
