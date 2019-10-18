@@ -114,6 +114,9 @@ public class Main extends ListenerAdapter
 		}
 	}
 	
+	public final AudioPlayerManager playerManager;
+	public final AudioPlayer player;
+	
 	// Initialization and setup
 	public static void main(String[] args) throws InterruptedException, LoginException, Exception
 	{
@@ -121,13 +124,11 @@ public class Main extends ListenerAdapter
 		bot.addEventListener(new Main());
 	}
 	
-	public final AudioPlayerManager playerManager;
-	public final AudioPlayer player;
-	
 	public Main()
 	{
 		this.playerManager = new DefaultAudioPlayerManager();
 		this.player = playerManager.createPlayer();
+		
 		AudioSourceManagers.registerRemoteSources(playerManager);
 		AudioSourceManagers.registerLocalSource(playerManager);
 	}
@@ -140,10 +141,9 @@ public class Main extends ListenerAdapter
 			final TextChannel channel = event.getChannel();
 			final Guild guild = channel.getGuild();
 			
-			System.out.println("Attempting to play");
 			guild.getAudioManager().setSendingHandler(new AudioPlayerSendHandler(player));
 			
-			playerManager.loadItemOrdered(new Object(), "https://www.youtube.com/watch?v=qL-JCVA22Lo", new SmallAudio(channel, guild, player));
+			playerManager.loadItemOrdered(player, "https://www.youtube.com/watch?v=qL-JCVA22Lo", new SmallAudio(channel, guild, player));
 		}
 		
 		super.onGuildMessageReceived(event);
