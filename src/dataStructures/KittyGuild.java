@@ -2,10 +2,15 @@ package dataStructures;
 
 import java.util.ArrayList;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
+
 import core.DatabaseManager;
 import core.DatabaseTrackedObject;
 import utils.AdminControl;
-import utils.AudioUtils;
+import utils.audio.AudioUtils;
+import utils.audio.GuildMusicManager;
 
 // Context for a given guild for kittybot. Primarily designed to hold guild-specific settings.
 public class KittyGuild extends DatabaseTrackedObject
@@ -23,6 +28,8 @@ public class KittyGuild extends DatabaseTrackedObject
 	public ArrayList <KittyPoll> choices = new ArrayList<KittyPoll>();
 	public AdminControl control;
 	public AudioUtils audio;
+	public GuildMusicManager musicManager;
+	public AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
 	public ArrayList <KittyUser> raffleUsersUnchosen = new ArrayList<KittyUser>();
 	public ArrayList <KittyUser> raffleUsersChosen = new ArrayList<KittyUser>();
 	
@@ -45,10 +52,13 @@ public class KittyGuild extends DatabaseTrackedObject
 	public KittyGuild(String uniqueID, AdminControl adminControl, ArrayList <String> emoji, AudioUtils audio)
 	{
 		super(uniqueID);
+		AudioSourceManagers.registerRemoteSources(playerManager);
+		AudioSourceManagers.registerLocalSource(playerManager);
 		this.uniqueID = uniqueID;
 		roleList = new KittyTrackedVector(roleListName, uniqueID);
 		beans = new KittyTrackedLong(beansName, uniqueID);
 		registerTrackedObjects();
+		musicManager = new GuildMusicManager(playerManager);
 		
 		control = adminControl;
 		this.contentRating = KittyRating.Safe; 

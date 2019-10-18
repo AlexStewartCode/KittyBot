@@ -4,6 +4,10 @@ import java.util.List;
 
 import javax.security.auth.login.LoginException;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
+
 import core.CharacterManager;
 import core.CommandEnabler;
 import core.CommandManager;
@@ -20,7 +24,6 @@ import dataStructures.Response;
 import dataStructures.UserInput;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import utils.AudioController;
 import utils.GlobalLog;
 
 // http://www.slf4j.org/ - this JDA logging tool has been disabled by specifying NOP implementation.
@@ -37,7 +40,6 @@ public class Main extends ListenerAdapter
 	private static RPManager rpManager;
 	private static PluginManager pluginManager;
 	private static CharacterManager charManager; 
-	private static AudioController audioControl;
 	
 	
 	// Initialization and setup
@@ -49,7 +51,6 @@ public class Main extends ListenerAdapter
 		commandManager = ObjectBuilderFactory.constructCommandManager(CommandEnabler.instance); // TODO: Untangle this singleton
 		stats = ObjectBuilderFactory.constructStats(commandManager);
 		charManager = new CharacterManager();
-		audioControl = new AudioController();
 		rpManager = ObjectBuilderFactory.constructRPManager();
 		pluginManager = ObjectBuilderFactory.constructPluginManager();
 		

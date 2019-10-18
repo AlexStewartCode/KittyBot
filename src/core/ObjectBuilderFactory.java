@@ -20,10 +20,10 @@ import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import offline.Ref;
 import utils.AdminControl;
-import utils.AudioUtils;
 //import utils.AudioUtils;
 import utils.GlobalLog;
 import utils.LogFilter;
+import utils.audio.AudioUtils;
 
 // NOTE(wisp): Isolated factory to assist with storage and caching if needed.
 // This also minimizes the number of places JDA interacts with our codebase.
@@ -366,7 +366,8 @@ public class ObjectBuilderFactory
 	{
 		lazyInit();
 		
-		kitty = new JDABuilder(AccountType.BOT).setToken(Ref.TestToken).buildBlocking();
+		kitty = new JDABuilder(AccountType.BOT)
+				.setToken(Ref.TestToken).buildBlocking();
 		kitty.getPresence().setGame(Game.playing("with digital yarn"));
 		kitty.addEventListener(new Main());
 		
