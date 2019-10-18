@@ -12,8 +12,9 @@ import dataStructures.KittyGuild;
 
 public class AudioController 
 {
-	private final AudioPlayerManager playerManager;
 	public String response;
+	private final AudioPlayerManager playerManager;
+	
 	
 	public AudioController()
 	{
@@ -24,48 +25,51 @@ public class AudioController
 	
 	public void loadAndPlay(final String trackUrl, KittyGuild guild) 
 	{
-	    GuildMusicManager musicManager = guild.musicManager;
-	    response = "HERE";
+		synchronized(response)
+		{
+			GuildMusicManager musicManager = guild.musicManager;
 
-	    playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() 
-	    {
-	      @Override
-	      public void trackLoaded(AudioTrack track) 
-	      {
-	        response = "Adding to queue " + track.getInfo().title;
-	        System.out.println("QUEUED");
-	        play(musicManager, track);
-	      }
+		    playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() 
+		    {
+		      @Override
+		      public void trackLoaded(AudioTrack track) 
+		      {
+		        response = "Adding to queue " + track.getInfo().title;
+		        System.out.println("QUEUED");
+		        play(musicManager, track);
+		      }
 
-	      @Override
-	      public void playlistLoaded(AudioPlaylist playlist) 
-	      {
-	    	AudioTrack firstTrack = playlist.getSelectedTrack();
+		      @Override
+		      public void playlistLoaded(AudioPlaylist playlist) 
+		      {
+		    	AudioTrack firstTrack = playlist.getSelectedTrack();
 
-	    	if (firstTrack == null) 
-	    	{
-	    		  firstTrack = playlist.getTracks().get(0);
-	    	}
+		    	if (firstTrack == null) 
+		    	{
+		    		  firstTrack = playlist.getTracks().get(0);
+		    	}
 
-	    	response = "Adding to queue " + firstTrack.getInfo().title + " (first track of playlist " + playlist.getName() + ")";
+		    	response = "Adding to queue " + firstTrack.getInfo().title + " (first track of playlist " + playlist.getName() + ")";
 
-	    	play(musicManager, firstTrack);
-	      }
+		    	play(musicManager, firstTrack);
+		      }
 
-	      @Override
-	      public void noMatches() 
-	      {
-	    	  System.out.println("NOT QUEUED");
-	    	  response = "Nothing found by " + trackUrl;
-	      }
+		      @Override
+		      public void noMatches() 
+		      {
+		    	  System.out.println("NOT QUEUED");
+		    	  response = "Nothing found by " + trackUrl;
+		      }
 
-	      @Override
-	      public void loadFailed(FriendlyException exception) 
-	      {
-	    	  System.out.println("EXCEPTION");
-	    	  System.out.println(exception.getCause());
-	      }
-	    });
+		      @Override
+		      public void loadFailed(FriendlyException exception) 
+		      {
+		    	  System.out.println("EXCEPTION");
+		    	  System.out.println(exception.getCause());
+		      }
+		    });
+		}
+	    
 	  }
 
 	  private void play(GuildMusicManager musicManager, AudioTrack track) 
