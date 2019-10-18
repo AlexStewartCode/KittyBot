@@ -25,8 +25,8 @@ public class SubCommandAddTrack extends SubCommand
 		//Get track from Youtube 
 		String video = YT.getYT(input.args);
 		ac.loadAndPlay(video, guild);
+		System.out.println("Internal: " + ac.response);
 		
-		System.out.println(ac.response);
 		return new SubCommandFormattable(video);
 	}
 }

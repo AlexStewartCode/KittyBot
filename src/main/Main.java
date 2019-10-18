@@ -24,13 +24,14 @@ import dataStructures.Response;
 import dataStructures.UserInput;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import trash.MainFAKE;
 import utils.GlobalLog;
 
 // http://www.slf4j.org/ - this JDA logging tool has been disabled by specifying NOP implementation.
 // This is the application entry point, and bot startup location!
 
 @SuppressWarnings("unused")
-public class Main extends ListenerAdapter
+public class Main// extends ListenerAdapter
 {
 	// Variables and bot specific objects
 	private static KittyCore kittyCore;
@@ -45,6 +46,9 @@ public class Main extends ListenerAdapter
 	// Initialization and setup
 	public static void main(String[] args) throws InterruptedException, LoginException, Exception
 	{
+		MainFAKE.mainFAKE(args);
+	}
+		/*
 		// Factory startup. The ordering is intentional.
 		GlobalLog.initialize();
 		databaseManager = ObjectBuilderFactory.constructDatabaseManager();
@@ -115,4 +119,5 @@ public class Main extends ListenerAdapter
 		if(!Superintendent.perCommandUpkeepPost(kittyCore, databaseManager))
 			return;
 	}
+	*/
 }
