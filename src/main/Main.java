@@ -52,15 +52,10 @@ public class Main extends ListenerAdapter
 	public class GuildMusicManager
 	{
 		public final AudioPlayer player;
-
-		public GuildMusicManager(AudioPlayerManager manager)
+		
+		public GuildMusicManager(AudioPlayerManager manager, Guild guild)
 		{
 			player = manager.createPlayer();
-		}
-		
-		public AudioPlayerSendHandler getSendHandler()
-		{
-			return new AudioPlayerSendHandler(player);
 		}
 	}
 	
@@ -96,12 +91,12 @@ public class Main extends ListenerAdapter
 	{
 		private TextChannel channel;
 		private Guild guild;
-		private GuildMusicManager manager;
+		private AudioPlayer player;
 		
-		private SmallAudio(TextChannel channel, Guild guild, GuildMusicManager manager)
+		private SmallAudio(TextChannel channel, Guild guild, AudioPlayer player)
 		{
 			this.channel = channel;
-			this.manager = manager;
+			this.player = player;
 			this.guild = guild;
 		}
 		
@@ -113,7 +108,7 @@ public class Main extends ListenerAdapter
 		public void trackLoaded(AudioTrack track)
 		{
 			connectToFirstVoiceChannel(guild.getAudioManager());
-			manager.player.startTrack(track, false);
+			player.startTrack(track, false);
 		}
 		
 		private void connectToFirstVoiceChannel(AudioManager audioManager)
@@ -147,30 +142,14 @@ public class Main extends ListenerAdapter
 	}
 	
 	public final AudioPlayerManager playerManager;
-	private final Map<Long, GuildMusicManager> musicManagers;
+	public final AudioPlayer player;
 	
 	public Main()
 	{
-		this.musicManagers = new HashMap<>();
-		
 		this.playerManager = new DefaultAudioPlayerManager();
+		this.player = playerManager.createPlayer();
 		AudioSourceManagers.registerRemoteSources(playerManager);
 		AudioSourceManagers.registerLocalSource(playerManager);
-	}
-	
-	private synchronized GuildMusicManager getGuildAudioPlayer(Guild guild)
-	{
-		long guildId = Long.parseLong(guild.getId());
-		GuildMusicManager musicManager = musicManagers.get(guildId);
-		
-		if (musicManager == null) {
-			musicManager = new GuildMusicManager(playerManager);
-			musicManagers.put(guildId, musicManager);
-		}
-		
-		guild.getAudioManager().setSendingHandler(musicManager.getSendHandler());
-		
-		return musicManager;
 	}
 	
 	@Override
@@ -181,8 +160,10 @@ public class Main extends ListenerAdapter
 			final TextChannel channel = event.getChannel();
 			final Guild guild = channel.getGuild();
 			
-			GuildMusicManager musicManager = getGuildAudioPlayer(guild);
-			playerManager.loadItemOrdered(musicManager, "https://www.youtube.com/watch?v=qL-JCVA22Lo", new SmallAudio(channel, guild, musicManager));
+			System.out.println("Attempting to play");
+			GuildMusicManager noDispose = new GuildMusicManager(playerManager, guild);
+			guild.getAudioManager().setSendingHandler(new AudioPlayerSendHandler(player));
+			playerManager.loadItemOrdered(noDispose, "https://www.youtube.com/watch?v=qL-JCVA22Lo", new SmallAudio(channel, guild, player));
 		}
 		
 		super.onGuildMessageReceived(event);
