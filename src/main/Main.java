@@ -7,12 +7,14 @@ import java.util.Map;
 import javax.security.auth.login.LoginException;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 
 import core.CharacterManager;
 import core.CommandEnabler;
@@ -31,6 +33,7 @@ import dataStructures.UserInput;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.audio.AudioSendHandler;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.VoiceChannel;
@@ -47,23 +50,68 @@ import utils.GlobalLog;
 @SuppressWarnings("unused")
 public class Main extends ListenerAdapter
 {
+	public class AudioPlayerSendHandler implements AudioSendHandler 
+	{
+		private final AudioPlayer audioPlayer;
+		private AudioFrame lastFrame;
+		
+		public AudioPlayerSendHandler(AudioPlayer audioPlayer) 
+		{
+			this.audioPlayer = audioPlayer;
+		}
+		
+		@Override
+		public boolean canProvide() 
+		{
+			lastFrame = audioPlayer.provide();
+			return lastFrame != null;
+		}
+		
+		@Override public byte[] provide20MsAudio()
+		{
+			return lastFrame.getData();
+		}
+		
+		@Override public boolean isOpus()
+		{
+			return true;
+		}
+	}
+	
 	public class SmallAudio implements AudioLoadResultHandler
 	{
 		private TextChannel channel;
+		private Guild guild;
 		private GuildMusicManager manager;
 		
-		private SmallAudio(TextChannel channel, GuildMusicManager manager) {
+		private SmallAudio(TextChannel channel, Guild guild, GuildMusicManager manager)
+		{
 			this.channel = channel;
 			this.manager = manager;
+			this.guild = guild;
 		}
 		
 		@Override public void loadFailed(FriendlyException arg0) { }
 		@Override public void noMatches() { }
 		@Override public void playlistLoaded(AudioPlaylist arg0) { }
-
+		
 		@Override
-		public void trackLoaded(AudioTrack track) {
-			play(channel.getGuild(), manager, track);
+		public void trackLoaded(AudioTrack track)
+		{
+			connectToFirstVoiceChannel(guild.getAudioManager());
+			manager.scheduler.queue(track);
+		}
+		
+		private void connectToFirstVoiceChannel(AudioManager audioManager)
+		{
+			if (!audioManager.isConnected() && !audioManager.isAttemptingToConnect())
+			{
+				for (VoiceChannel voiceChannel : audioManager.getGuild().getVoiceChannels())
+				{
+					audioManager.openAudioConnection(voiceChannel);
+					break;
+				}
+			}
 		}
 	}
 	
@@ -80,72 +128,53 @@ public class Main extends ListenerAdapter
 	// Initialization and setup
 	public static void main(String[] args) throws InterruptedException, LoginException, Exception
 	{
-	    JDA bot = new JDABuilder(AccountType.BOT).setToken(Ref.TestToken).buildBlocking();
-	    bot.addEventListener(new Main());
-	    
-	    
+		JDA bot = new JDABuilder(AccountType.BOT).setToken(Ref.TestToken).buildBlocking();
+		bot.addEventListener(new Main());
 	}
 	
-	  public final AudioPlayerManager playerManager;
-	  private final Map<Long, GuildMusicManager> musicManagers;
-	  
-	  public Main() {
-	    this.musicManagers = new HashMap<>();
-	    
-	    this.playerManager = new DefaultAudioPlayerManager();
-	    AudioSourceManagers.registerRemoteSources(playerManager);
-	    AudioSourceManagers.registerLocalSource(playerManager);
-	  }
-	  
-	  private synchronized GuildMusicManager getGuildAudioPlayer(Guild guild) {
-	    long guildId = Long.parseLong(guild.getId());
-	    GuildMusicManager musicManager = musicManagers.get(guildId);
-	    
-	    if (musicManager == null) {
-	      musicManager = new GuildMusicManager(playerManager);
-	      musicManagers.put(guildId, musicManager);
-	    }
-	    
-	    guild.getAudioManager().setSendingHandler(musicManager.getSendHandler());
-	    
-	    return musicManager;
-	  }
-		  
-	  @Override
-	  public void onGuildMessageReceived(GuildMessageReceivedEvent event)
-	  {
-	    if (event.getMessage().getContentRaw().contains("!play"))
-	    {
-	      final TextChannel channel = event.getChannel();
-	      final Guild guild = channel.getGuild();
-	      
-	      channel.sendMessage("Doing something...");
-	      
-	      GuildMusicManager musicManager = getGuildAudioPlayer(guild);
-	      connectToFirstVoiceChannel(guild.getAudioManager());
-	      playerManager.loadItemOrdered(musicManager, "https://www.youtube.com/watch?v=qL-JCVA22Lo", new SmallAudio(channel, musicManager));
-	    }
-	    
-	    super.onGuildMessageReceived(event);
-	  }
-	  
-	  private void play(Guild guild, GuildMusicManager musicManager, AudioTrack track) {
-	    connectToFirstVoiceChannel(guild.getAudioManager());
-	    
-	    musicManager.scheduler.queue(track);
-	  }
-	  
-	  private static void connectToFirstVoiceChannel(AudioManager audioManager) {
-	    if (!audioManager.isConnected() && !audioManager.isAttemptingToConnect()) {
-	      for (VoiceChannel voiceChannel : audioManager.getGuild().getVoiceChannels()) {
-	        audioManager.openAudioConnection(voiceChannel);
-	        break;
-	      }
-	    }
-	  }
+	public final AudioPlayerManager playerManager;
+	private final Map<Long, GuildMusicManager> musicManagers;
+	
+	public Main()
+	{
+		this.musicManagers = new HashMap<>();
+		
+		this.playerManager = new DefaultAudioPlayerManager();
+		AudioSourceManagers.registerRemoteSources(playerManager);
+		AudioSourceManagers.registerLocalSource(playerManager);
+	}
+	
+	private synchronized GuildMusicManager getGuildAudioPlayer(Guild guild)
+	{
+		long guildId = Long.parseLong(guild.getId());
+		GuildMusicManager musicManager = musicManagers.get(guildId);
+		
+		if (musicManager == null) {
+			musicManager = new GuildMusicManager(playerManager);
+			musicManagers.put(guildId, musicManager);
+		}
+		
+		guild.getAudioManager().setSendingHandler(musicManager.getSendHandler());
+		
+		return musicManager;
+	}
+	
+	@Override
+	public void onGuildMessageReceived(GuildMessageReceivedEvent event)
+	{
+		if(event.getMessage().getContentRaw().contains("!hasan"))
+		{
+			final TextChannel channel = event.getChannel();
+			final Guild guild = channel.getGuild();
+			
+			GuildMusicManager musicManager = getGuildAudioPlayer(guild);
+			playerManager.loadItemOrdered(musicManager, "https://www.youtube.com/watch?v=qL-JCVA22Lo", new SmallAudio(channel, guild, musicManager));
+		}
+		
+		super.onGuildMessageReceived(event);
+	}
 }
-		  
-		  
+	
 		/* ----------------------------------------------------------------------------------------------------------------------------------------------------------
 		 * 
 		 * 
