@@ -2,7 +2,6 @@ package dataStructures;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
 import net.dv8tion.jda.core.JDA;

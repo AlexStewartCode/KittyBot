@@ -97,7 +97,7 @@ public class DewLuaCore implements IDewLuaCore
 	}
 	
 
-	@SuppressWarnings({ "null", "unchecked" })
+	@SuppressWarnings({ "unchecked" })
 	public static <T> void fromLua(T obj, String lua)
 	{
 		if(globalLuaCore == null)
