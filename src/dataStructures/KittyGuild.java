@@ -58,7 +58,7 @@ public class KittyGuild extends DatabaseTrackedObject
 		roleList = new KittyTrackedVector(roleListName, uniqueID);
 		beans = new KittyTrackedLong(beansName, uniqueID);
 		registerTrackedObjects();
-		musicManager = new GuildMusicManager(playerManager);
+		musicManager = new GuildMusicManager(playerManager, this);
 		
 		control = adminControl;
 		this.contentRating = KittyRating.Safe; 
