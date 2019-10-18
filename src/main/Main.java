@@ -41,7 +41,6 @@ import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import net.dv8tion.jda.core.managers.AudioManager;
 import offline.Ref;
-import trash.TrackScheduler;
 import utils.GlobalLog;
 
 // http://www.slf4j.org/ - this JDA logging tool has been disabled by specifying NOP implementation.
@@ -53,13 +52,10 @@ public class Main extends ListenerAdapter
 	public class GuildMusicManager
 	{
 		public final AudioPlayer player;
-		public final TrackScheduler scheduler;
 
 		public GuildMusicManager(AudioPlayerManager manager)
 		{
 			player = manager.createPlayer();
-			scheduler = new TrackScheduler(player);
-			player.addListener(scheduler);
 		}
 		
 		public AudioPlayerSendHandler getSendHandler()
@@ -117,7 +113,7 @@ public class Main extends ListenerAdapter
 		public void trackLoaded(AudioTrack track)
 		{
 			connectToFirstVoiceChannel(guild.getAudioManager());
-			manager.scheduler.queue(track);
+			manager.player.startTrack(track, false);
 		}
 		
 		private void connectToFirstVoiceChannel(AudioManager audioManager)
