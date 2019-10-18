@@ -49,16 +49,6 @@ import utils.GlobalLog;
 @SuppressWarnings("unused")
 public class Main extends ListenerAdapter
 {
-	public class GuildMusicManager
-	{
-		public final AudioPlayer player;
-		
-		public GuildMusicManager(AudioPlayerManager manager, Guild guild)
-		{
-			player = manager.createPlayer();
-		}
-	}
-	
 	public class AudioPlayerSendHandler implements AudioSendHandler 
 	{
 		private final AudioPlayer audioPlayer;
@@ -124,16 +114,6 @@ public class Main extends ListenerAdapter
 		}
 	}
 	
-	// Variables and bot specific objects
-	private static KittyCore kittyCore;
-	private static DatabaseManager databaseManager; 
-	private static CommandManager commandManager;
-	private static Stats stats;
-	private static RPManager rpManager;
-	private static PluginManager pluginManager;
-	private static CharacterManager charManager; 
-	
-	
 	// Initialization and setup
 	public static void main(String[] args) throws InterruptedException, LoginException, Exception
 	{
@@ -161,18 +141,31 @@ public class Main extends ListenerAdapter
 			final Guild guild = channel.getGuild();
 			
 			System.out.println("Attempting to play");
-			GuildMusicManager noDispose = new GuildMusicManager(playerManager, guild);
 			guild.getAudioManager().setSendingHandler(new AudioPlayerSendHandler(player));
-			playerManager.loadItemOrdered(noDispose, "https://www.youtube.com/watch?v=qL-JCVA22Lo", new SmallAudio(channel, guild, player));
+			
+			playerManager.loadItemOrdered(new Object(), "https://www.youtube.com/watch?v=qL-JCVA22Lo", new SmallAudio(channel, guild, player));
 		}
 		
 		super.onGuildMessageReceived(event);
 	}
 }
 	
-		/* ----------------------------------------------------------------------------------------------------------------------------------------------------------
-		 * 
-		 * 
+/* ----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+	// Variables and bot specific objects
+	private static KittyCore kittyCore;
+	private static DatabaseManager databaseManager; 
+	private static CommandManager commandManager;
+	private static Stats stats;
+	private static RPManager rpManager;
+	private static PluginManager pluginManager;
+	private static CharacterManager charManager; 
+	
+	
+	// Initialization and setup
+	public static void main(String[] args) throws InterruptedException, LoginException, Exception
+	{
 		// Factory startup. The ordering is intentional.
 		GlobalLog.initialize();
 		databaseManager = ObjectBuilderFactory.constructDatabaseManager();
