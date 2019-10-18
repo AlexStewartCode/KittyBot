@@ -1,12 +1,18 @@
 package main;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.security.auth.login.LoginException;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
+import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
+import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 import core.CharacterManager;
 import core.CommandEnabler;
@@ -22,16 +28,24 @@ import dataStructures.KittyGuild;
 import dataStructures.KittyUser;
 import dataStructures.Response;
 import dataStructures.UserInput;
+import net.dv8tion.jda.core.AccountType;
+import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import trash.MainFAKE;
+import net.dv8tion.jda.core.managers.AudioManager;
+import offline.Ref;
+import trash.GuildMusicManager;
 import utils.GlobalLog;
 
 // http://www.slf4j.org/ - this JDA logging tool has been disabled by specifying NOP implementation.
 // This is the application entry point, and bot startup location!
 
 @SuppressWarnings("unused")
-public class Main// extends ListenerAdapter
+public class Main extends ListenerAdapter
 {
 	// Variables and bot specific objects
 	private static KittyCore kittyCore;
@@ -46,9 +60,114 @@ public class Main// extends ListenerAdapter
 	// Initialization and setup
 	public static void main(String[] args) throws InterruptedException, LoginException, Exception
 	{
-		MainFAKE.mainFAKE(args);
+	    JDA bot = new JDABuilder(AccountType.BOT).setToken(Ref.TestToken).buildBlocking();
+	    bot.addEventListener(new Main());
+	    
+	    
 	}
-		/*
+	
+		  private final AudioPlayerManager playerManager;
+		  private final Map<Long, GuildMusicManager> musicManagers;
+		  
+		  public Main() {
+		    this.musicManagers = new HashMap<>();
+		    
+		    this.playerManager = new DefaultAudioPlayerManager();
+		    AudioSourceManagers.registerRemoteSources(playerManager);
+		    AudioSourceManagers.registerLocalSource(playerManager);
+		  }
+		  
+		  private synchronized GuildMusicManager getGuildAudioPlayer(Guild guild) {
+		    long guildId = Long.parseLong(guild.getId());
+		    GuildMusicManager musicManager = musicManagers.get(guildId);
+		    
+		    if (musicManager == null) {
+		      musicManager = new GuildMusicManager(playerManager);
+		      musicManagers.put(guildId, musicManager);
+		    }
+		    
+		    guild.getAudioManager().setSendingHandler(musicManager.getSendHandler());
+		    
+		    return musicManager;
+		  }
+		  
+		  @Override
+		  public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+		    String[] command = event.getMessage().getContentRaw().split(" ", 2);
+		    
+		    if ("!play".equals(command[0]) && command.length == 2) {
+		      loadAndPlay(event.getChannel(), command[1]);
+		    } else if ("!skip".equals(command[0])) {
+		      skipTrack(event.getChannel());
+		    }
+		    
+		    super.onGuildMessageReceived(event);
+		  }
+		  
+		  private void loadAndPlay(final TextChannel channel, final String trackUrl) {
+		    GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
+		    
+		    playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
+		      @Override
+		      public void trackLoaded(AudioTrack track) {
+		        channel.sendMessage("Adding to queue " + track.getInfo().title).queue();
+
+		        play(channel.getGuild(), musicManager, track);
+		      }
+
+		      @Override
+		      public void playlistLoaded(AudioPlaylist playlist) {
+		        AudioTrack firstTrack = playlist.getSelectedTrack();
+
+		        if (firstTrack == null) {
+		          firstTrack = playlist.getTracks().get(0);
+		        }
+
+		        channel.sendMessage("Adding to queue " + firstTrack.getInfo().title + " (first track of playlist " + playlist.getName() + ")").queue();
+
+		        play(channel.getGuild(), musicManager, firstTrack);
+		      }
+
+		      @Override
+		      public void noMatches() {
+		        channel.sendMessage("Nothing found by " + trackUrl).queue();
+		      }
+
+		      @Override
+		      public void loadFailed(FriendlyException exception) {
+		    	  System.out.println(exception.getCause());
+		        channel.sendMessage("Could not play: " + exception.getMessage()).queue();
+		      }
+		    });
+		  }
+
+		  private void play(Guild guild, GuildMusicManager musicManager, AudioTrack track) {
+		    connectToFirstVoiceChannel(guild.getAudioManager());
+
+		    musicManager.scheduler.queue(track);
+		  }
+
+		  private void skipTrack(TextChannel channel) {
+		    GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
+		    musicManager.scheduler.nextTrack();
+
+		    channel.sendMessage("Skipped to next track.").queue();
+		  }
+
+		  private static void connectToFirstVoiceChannel(AudioManager audioManager) {
+		    if (!audioManager.isConnected() && !audioManager.isAttemptingToConnect()) {
+		      for (VoiceChannel voiceChannel : audioManager.getGuild().getVoiceChannels()) {
+		        audioManager.openAudioConnection(voiceChannel);
+		        break;
+		      }
+		    }
+		  }
+}
+		  
+		  
+		/* ----------------------------------------------------------------------------------------------------------------------------------------------------------
+		 * 
+		 * 
 		// Factory startup. The ordering is intentional.
 		GlobalLog.initialize();
 		databaseManager = ObjectBuilderFactory.constructDatabaseManager();
@@ -119,5 +238,5 @@ public class Main// extends ListenerAdapter
 		if(!Superintendent.perCommandUpkeepPost(kittyCore, databaseManager))
 			return;
 	}
-	*/
 }
+		 */
