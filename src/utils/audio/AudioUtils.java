@@ -105,17 +105,14 @@ public class AudioUtils
 			{
 				playlist.add(track);
 			}
-			//if(player.getPlayingTrack() == null)
+			do 
 			{
-				do 
+				if(player.getPlayingTrack() == null)
 				{
-					if(player.getPlayingTrack() == null)
-					{
-						player.startTrack(playlist.poll(), false);
-					}
+					player.startTrack(playlist.poll(), false);
 				}
-				while(!playlist.isEmpty());
 			}
+			while(!playlist.isEmpty());
 		}
 	}
 	
