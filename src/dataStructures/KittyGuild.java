@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import core.DatabaseManager;
 import core.DatabaseTrackedObject;
 import utils.AdminControl;
-import utils.AudioUtils;
+import utils.audio.AudioUtils;
 
 // Context for a given guild for kittybot. Primarily designed to hold guild-specific settings.
 public class KittyGuild extends DatabaseTrackedObject
@@ -22,7 +22,7 @@ public class KittyGuild extends DatabaseTrackedObject
 	public ArrayList<String> emoji = new ArrayList<String>();
 	public ArrayList <KittyPoll> choices = new ArrayList<KittyPoll>();
 	public AdminControl control;
-	public AudioUtils audio; 
+	public AudioUtils audio;
 	public ArrayList <KittyUser> raffleUsersUnchosen = new ArrayList<KittyUser>();
 	public ArrayList <KittyUser> raffleUsersChosen = new ArrayList<KittyUser>();
 	
@@ -42,8 +42,9 @@ public class KittyGuild extends DatabaseTrackedObject
 	}
 	
 	// Default content for a guild
-	public KittyGuild(String uniqueID, AdminControl adminControl, ArrayList <String> emoji)
+	public KittyGuild(String uniqueID, AdminControl adminControl, ArrayList <String> emoji, AudioUtils audio)
 	{
+		
 		super(uniqueID);
 		this.uniqueID = uniqueID;
 		roleList = new KittyTrackedVector(roleListName, uniqueID);
@@ -54,11 +55,12 @@ public class KittyGuild extends DatabaseTrackedObject
 		this.contentRating = KittyRating.Safe; 
 		this.polling = false;
 		this.emoji = emoji;
+		this.audio = audio;
 		setCommandIndicator("!");
 	}
 	
 	// Explicit constructor
-	public KittyGuild(String commandIndicator, KittyRating contentRating, KittyUser guildOwner, String uniqueID)
+	public KittyGuild(String commandIndicator, KittyRating contentRating, KittyUser guildOwner, String uniqueID, AudioUtils audio)
 	{
 		super(uniqueID);
 		this.uniqueID = uniqueID;
@@ -70,6 +72,7 @@ public class KittyGuild extends DatabaseTrackedObject
 		this.contentRating = contentRating;
 		this.polling = false;
 		this.guildOwner = guildOwner;
+		this.audio = audio;
 	}
 	
 	public String startPoll(String poll)
