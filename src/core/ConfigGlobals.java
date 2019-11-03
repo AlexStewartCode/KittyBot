@@ -15,7 +15,7 @@ public class ConfigGlobals implements IConfigSection
 	
 	
 	// A pile of variables being manually tracked/serialized to the config file
-	private static final String startupStyleKey = "mode";
+	private static final String startupStyleKey = "mode (dev or release)";
 	private KittyStartupMode startupStyleValue = KittyStartupMode.Dev;
 	
 	// Constructor
