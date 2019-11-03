@@ -106,6 +106,7 @@ public class CommandManager
 		this.register(LocCommands.stub("raffle"), new CommandRaffleMain(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("poll"), new CommandPollMain(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("music"), new CommandMusicMain(KittyRole.General, KittyRating.Safe));
+		this.register(LocCommands.stub("defaultdance"), new CommandDefaultDance(KittyRole.General, KittyRating.Safe));
 		this.register(LocCommands.stub("getsauce"), new CommandGetSauce(KittyRole.General, KittyRating.Safe));
 	}
 	

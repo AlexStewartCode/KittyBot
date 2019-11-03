@@ -1,7 +1,5 @@
 package utils.audio;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
@@ -22,7 +20,8 @@ public class AudioUtils
 	public AudioManager am;
 	public final AudioPlayer player;
 	public final AudioPlayerManager playerManager;
-	private Queue <AudioTrack> playlist = new LinkedList<>();
+	private boolean isPlaying = false; 
+	private ArrayList <AudioTrack> playlist = new ArrayList<AudioTrack>();
 	
 	
 	public AudioUtils(Guild guild, AudioPlayerManager playerManager)
@@ -105,14 +104,11 @@ public class AudioUtils
 			{
 				playlist.add(track);
 			}
-			do 
+			if(!isPlaying)
 			{
-				if(player.getPlayingTrack() == null)
-				{
-					player.startTrack(playlist.poll(), false);
-				}
+				isPlaying = true;
+				startPlay(player);
 			}
-			while(!playlist.isEmpty());
 		}
 	}
 	
@@ -125,9 +121,33 @@ public class AudioUtils
 		return null;
 	}
 	
+	private void startPlay(AudioPlayer player)
+	{
+		do 
+		{
+			if(player.getPlayingTrack() == null)
+			{
+				player.startTrack(playlist.get(0), false);
+				if(!playlist.isEmpty())
+					playlist.remove(0);
+			}
+		}
+		while(!playlist.isEmpty());
+		isPlaying = false;
+	}
+	
 	public String skipVideo(AudioPlayer player)
 	{
-		return null;
+		player.stopTrack();
+		try 
+		{
+			playlist.remove(0);
+		}
+		catch(Exception e)
+		{
+			return "Stopped";
+		}
+		return "Skipped";
 	}
 	
 	public String stopPlayer(AudioPlayer player)
@@ -137,8 +157,8 @@ public class AudioUtils
 		return "Stopped";
 	}
 	
-	public String getPlaylist(AudioPlayer player)
+	public ArrayList<AudioTrack> getPlaylist()
 	{
-		return player.getPlayingTrack().getInfo().title;
+		return playlist;
 	}
 }
