@@ -2,15 +2,15 @@ package dataStructures;
 
 public enum KittyStartupMode 
 {
-	Development("dev"), Release("release");
+	Dev(1), Release(2);
 	
-	private final String value;
-	private KittyStartupMode(String value) 
+	private final int value;
+	private KittyStartupMode(int value) 
 	{
 		this.value = value;
 	}
 	
-	public String getValue() 
+	public int getValue() 
 	{
 		return value;
 	}

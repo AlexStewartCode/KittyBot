@@ -16,7 +16,7 @@ public class ConfigGlobals implements IConfigSection
 	
 	// A pile of variables being manually tracked/serialized to the config file
 	private static final String startupStyleKey = "mode";
-	private KittyStartupMode startupStyleValue = KittyStartupMode.Development;
+	private KittyStartupMode startupStyleValue = KittyStartupMode.Dev;
 	
 	// Constructor
 	public ConfigGlobals()
@@ -49,9 +49,9 @@ public class ConfigGlobals implements IConfigSection
 			// Parse startup style
 			if(key.equalsIgnoreCase(startupStyleKey))
 			{
-				startupStyleValue = KittyStartupMode.Development;
+				startupStyleValue = KittyStartupMode.Dev;
 				
-				if(value.equalsIgnoreCase(KittyStartupMode.Release.getValue()))
+				if(value.equalsIgnoreCase(KittyStartupMode.Release.name()))
 					startupStyleValue = KittyStartupMode.Release;
 			}
 		}
@@ -61,7 +61,7 @@ public class ConfigGlobals implements IConfigSection
 	public List<ConfigItem> produce()
 	{
 		List<ConfigItem> items = new ArrayList<ConfigItem>();
-		items.add(new ConfigItem(getSectionTitle(), startupStyleKey, startupStyleValue.getValue()));
+		items.add(new ConfigItem(getSectionTitle(), startupStyleKey, startupStyleValue.name().toLowerCase()));
 		
 		return items;
 	}
