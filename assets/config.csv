@@ -1,5 +1,5 @@
 "Type","Key","Value"
-"Globals","mode","dev"
+"Globals","mode (dev or release)","dev"
 "Localized Commands","beans",""
 "Localized Commands","benchmark, bench",""
 "Localized Commands","bet",""
