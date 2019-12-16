@@ -6,9 +6,9 @@ import utils.StringUtils;
 // perform any parsing past naming columns, and just holds the raw data.
 public class ConfigItem
 {
-	public String type;
-	public String key;
-	public String value;
+	public String type;  // The section this specific key/value pair belongs to. This almost certainly will appear in multiple places. 
+	public String key;   // A unique key for a given lookup value for the specified section. Keys, within sections, are unique.
+	public String value; // The value assocaited with the key.
 	public static final int items = 3;
 	public static final String[] header = {"Type","Key","Value"};
 	

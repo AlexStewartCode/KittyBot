@@ -11,7 +11,7 @@ import dataStructures.Pair;
 public class LocCommands extends BaseLocFile implements IConfigSection
 {
 	// Defined const variables
-	public static final String HeaderName = "Localized Commands";
+	public static final String header = "Localized Commands";
 	public static final String function = "LocCommands.stub";
 	
 	// Instance
@@ -20,7 +20,7 @@ public class LocCommands extends BaseLocFile implements IConfigSection
 	// Constructor
 	public LocCommands() 
 	{
-		super(HeaderName, function);
+		super(header, function);
 		
 		GlobalLog.log(LogFilter.Core, "Initializing " + this.getClass().getSimpleName());
 		

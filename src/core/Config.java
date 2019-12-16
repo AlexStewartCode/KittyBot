@@ -28,6 +28,7 @@ public class Config
 				sections = new Vector<IConfigSection>();
 				
 				// Add all sections
+				sections.add(new ConfigGlobals());
 				sections.add(new LocCommands());
 				sections.add(new LocStrings());
 				sections.add(new CommandEnabler());
