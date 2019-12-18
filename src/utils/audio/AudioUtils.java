@@ -104,9 +104,9 @@ public class AudioUtils
 			{
 				playlist.add(track);
 			}
-			if(!isPlaying)
+			
+			if(player.getPlayingTrack() == null)
 			{
-				isPlaying = true;
 				startPlay(player);
 			}
 		}
@@ -118,21 +118,31 @@ public class AudioUtils
 		guild.getAudioManager().setSendingHandler(new AudioPlayerSendHandler(player));
 		playerManager.loadItemOrdered(player, videoURL, new SmallAudio(player));
 		
+		
 		return null;
 	}
 	
 	private void startPlay(AudioPlayer player)
 	{
+		isPlaying = false;
 		do 
 		{
 			if(player.getPlayingTrack() == null)
 			{
-				player.startTrack(playlist.get(0), false);
-				if(!playlist.isEmpty())
-					playlist.remove(0);
+				if(playlist.isEmpty())
+				{
+					isPlaying = false;
+				}
+				else
+				{
+					player.startTrack(playlist.get(0), false);
+					
+					if(!playlist.isEmpty())
+						playlist.remove(0);
+				}
 			}
 		}
-		while(!playlist.isEmpty());
+		while(isPlaying);
 		isPlaying = false;
 	}
 	
