@@ -124,18 +124,21 @@ public class AudioUtils
 	
 	private void startPlay(AudioPlayer player)
 	{
-		isPlaying = false;
+		
 		do 
 		{
 			if(player.getPlayingTrack() == null)
 			{
+				System.out.println("HERE");
 				if(playlist.isEmpty())
 				{
 					isPlaying = false;
 				}
 				else
 				{
+					System.out.println("NEXT SONG");
 					player.startTrack(playlist.get(0), false);
+					isPlaying = true;
 					
 					if(!playlist.isEmpty())
 						playlist.remove(0);
@@ -152,6 +155,7 @@ public class AudioUtils
 		try 
 		{
 			playlist.remove(0);
+			player.getPlayingTrack();
 		}
 		catch(Exception e)
 		{
