@@ -20,7 +20,7 @@ public class AudioUtils
 	public AudioManager am;
 	public final AudioPlayer player;
 	public final AudioPlayerManager playerManager;
-	private boolean isPlaying = false; 
+//	private boolean isPlaying = false; 
 	private ArrayList <AudioTrack> playlist = new ArrayList<AudioTrack>();
 	
 	
@@ -86,11 +86,11 @@ public class AudioUtils
 	
 	public class SmallAudio implements AudioLoadResultHandler
 	{
-		private AudioPlayer player;
+//		private AudioPlayer player;
 		
 		private SmallAudio(AudioPlayer player)
 		{
-			this.player = player;
+//			this.player = player;
 		}
 		
 		@Override public void loadFailed(FriendlyException arg0) { }
@@ -104,11 +104,6 @@ public class AudioUtils
 			{
 				playlist.add(track);
 			}
-			
-			if(player.getPlayingTrack() == null)
-			{
-				startPlay(player);
-			}
 		}
 	}
 	
@@ -117,36 +112,28 @@ public class AudioUtils
 	{
 		guild.getAudioManager().setSendingHandler(new AudioPlayerSendHandler(player));
 		playerManager.loadItemOrdered(player, videoURL, new SmallAudio(player));
-		
-		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {}
+		if(player.getPlayingTrack() == null)
+		{
+			System.out.println("HERE");
+			startPlay(player);
+		}
 		return null;
 	}
 	
 	private void startPlay(AudioPlayer player)
 	{
-		
 		do 
 		{
-			if(player.getPlayingTrack() == null)
+			if(!playlist.isEmpty())
 			{
-				System.out.println("HERE");
-				if(playlist.isEmpty())
-				{
-					isPlaying = false;
-				}
-				else
-				{
-					System.out.println("NEXT SONG");
-					player.startTrack(playlist.get(0), false);
-					isPlaying = true;
-					
-					if(!playlist.isEmpty())
-						playlist.remove(0);
-				}
+				player.startTrack(playlist.get(0), false);
+				playlist.remove(0);
 			}
 		}
-		while(isPlaying);
-		isPlaying = false;
+		while(!playlist.isEmpty());
 	}
 	
 	public String skipVideo(AudioPlayer player)
