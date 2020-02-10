@@ -20,7 +20,6 @@ public class AudioUtils
 	public AudioManager am;
 	public final AudioPlayer player;
 	public final AudioPlayerManager playerManager;
-//	private boolean isPlaying = false; 
 	private ArrayList <AudioTrack> playlist = new ArrayList<AudioTrack>();
 	
 	
@@ -85,12 +84,9 @@ public class AudioUtils
 	}
 	
 	public class SmallAudio implements AudioLoadResultHandler
-	{
-//		private AudioPlayer player;
-		
+	{	
 		private SmallAudio(AudioPlayer player)
 		{
-//			this.player = player;
 		}
 		
 		@Override public void loadFailed(FriendlyException arg0) { }
@@ -117,37 +113,15 @@ public class AudioUtils
 		} catch (InterruptedException e) {}
 		if(player.getPlayingTrack() == null)
 		{
-			System.out.println("HERE");
-			startPlay(player);
+			MusicController control = new MusicController(player, playlist);
+			control.start();
 		}
 		return null;
-	}
-	
-	private void startPlay(AudioPlayer player)
-	{
-		do 
-		{
-			if(!playlist.isEmpty())
-			{
-				player.startTrack(playlist.get(0), false);
-				playlist.remove(0);
-			}
-		}
-		while(!playlist.isEmpty());
 	}
 	
 	public String skipVideo(AudioPlayer player)
 	{
 		player.stopTrack();
-		try 
-		{
-			playlist.remove(0);
-			player.getPlayingTrack();
-		}
-		catch(Exception e)
-		{
-			return "Stopped";
-		}
 		return "Skipped";
 	}
 	
@@ -161,5 +135,41 @@ public class AudioUtils
 	public ArrayList<AudioTrack> getPlaylist()
 	{
 		return playlist;
+	}
+}
+
+class MusicController extends Thread
+{
+	AudioPlayer player;
+	private ArrayList <AudioTrack> playlist;
+	
+	public MusicController(AudioPlayer player, ArrayList <AudioTrack> playlist)
+	{
+		this.player = player;
+		this.playlist = playlist; 
+	}
+	
+	@Override
+	public void run()
+	{
+		AudioTrack nowPlaying = null;
+		do 
+		{
+			if(!playlist.isEmpty() || nowPlaying != null)
+			{
+				if(player.getPlayingTrack() == null)
+				{
+					if(playlist.isEmpty())
+						nowPlaying = null;
+					else
+					{
+						nowPlaying = playlist.get(0);
+						playlist.remove(0);
+					}
+					player.startTrack(nowPlaying, false);
+				}
+			}
+		}
+		while(!playlist.isEmpty() || player.getPlayingTrack() != null);
 	}
 }
