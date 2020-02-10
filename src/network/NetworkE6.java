@@ -6,8 +6,8 @@ import offline.Ref;
 import utils.*;
 
 /**
- * This is the e621 request class, designed for form and parse requests that
- * use the e621 API, and is entirely static. 
+ * This is the e6 request class, designed for form and parse requests that
+ * use the e6 API, and is entirely static. 
  * 
  * If you ever find this class randomly not working,
  * it may be a good idea to make sure the user agent string is set in 
@@ -17,7 +17,7 @@ import utils.*;
  * @author Wisp
  * Edited by Rin
  */
-public class NetworkE621 
+public class NetworkE6 
 {   
 	  ///////////////////////////////////////
 	 // Internal JSON class and variables //
@@ -26,7 +26,7 @@ public class NetworkE621
 	private static final String API_ROOT = "https://e621.net/post/index.json?";
 	private static int maxSearchResults_ = 10;
 	private static String[] blacklist = Ref.e621Blacklist;
-	private class E621ResponseObject
+	private class E6ResponseObject
 	{
 		// public varaibles matching the case and the type we want for JSON.
 		// There are many more fields, but if we don't provide some it just
@@ -43,7 +43,7 @@ public class NetworkE621
 	 // Static methods //
 	////////////////////
 	// Requests a specific image, then returns a few.
-	public GenericImage getE621(String input)
+	public GenericImage getE6(String input)
 	{
 
 		GenericImage image = new GenericImage("","","");
@@ -63,7 +63,7 @@ public class NetworkE621
 		if(res != null)
 		{
 			// Use class evaluation on an array of the response imageObject to be able to hold multiple.
-			E621ResponseObject[] imageObj = jsonParser_.fromJson(res, E621ResponseObject[].class);
+			E6ResponseObject[] imageObj = jsonParser_.fromJson(res, E6ResponseObject[].class);
 			
 			// For now, we really just wanna display images and their source. 
 			// Append them all separately to a response string w/ some flavor text.
