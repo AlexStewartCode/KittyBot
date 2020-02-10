@@ -17,7 +17,6 @@ public class SubCommandStop extends SubCommand
 	@Override
 	public SubCommandFormattable OnRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input) 
 	{
-		
 		return new SubCommandFormattable(guild.audio.stopPlayer(guild.audio.player));
 	}
 	

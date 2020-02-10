@@ -49,15 +49,25 @@ public class CommandLeaderboard extends Command
 				if(userID.length() < 1)
 					continue;
 				
-				// Look up in the database the user beans
-				String dbUserData = DatabaseManager.instance.globalGetRemoteValue(guildID + userID);
+				String dbUserData = null;
+				Long parsedBeans = null;
 				
-				// Leverage the fact that the user is automatically read and parsed when constructed.
-				Long parsedBeans = KittyUser.parseBeans(KittyUser.prepareFromString(dbUserData));
-				
-				// If we were only using cached users, we would use this. However, we're not.
-				// KittyUser cachedUser = ObjectBuilderFactory.getCachedUser(guildID, userID);
-				users.add(new Pair<Long, String>(parsedBeans, userID));
+				try
+				{
+					// Look up in the database the user beans
+					dbUserData = DatabaseManager.instance.globalGetRemoteValue(guildID + userID);
+					
+					// Leverage the fact that the user is automatically read and parsed when constructed.
+					parsedBeans = KittyUser.parseBeans(KittyUser.prepareFromString(dbUserData));
+					
+					// If we were only using cached users, we would use this. However, we're not.
+					// KittyUser cachedUser = ObjectBuilderFactory.getCachedUser(guildID, userID);
+					users.add(new Pair<Long, String>(parsedBeans, userID));
+				}
+				catch (Exception e)
+				{
+					GlobalLog.error(LogFilter.Command, "Issue parsing for leaderboard,\ndbUserData:" + dbUserData + "\nparsedBeans:" + parsedBeans);
+				}
 			}
 		}
 		
