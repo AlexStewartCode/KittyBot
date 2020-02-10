@@ -20,7 +20,6 @@ public class AudioUtils
 	public AudioManager am;
 	public final AudioPlayer player;
 	public final AudioPlayerManager playerManager;
-	private boolean isPlaying = false; 
 	private ArrayList <AudioTrack> playlist = new ArrayList<AudioTrack>();
 	
 	
@@ -85,12 +84,9 @@ public class AudioUtils
 	}
 	
 	public class SmallAudio implements AudioLoadResultHandler
-	{
-		private AudioPlayer player;
-		
+	{	
 		private SmallAudio(AudioPlayer player)
 		{
-			this.player = player;
 		}
 		
 		@Override public void loadFailed(FriendlyException arg0) { }
@@ -104,11 +100,6 @@ public class AudioUtils
 			{
 				playlist.add(track);
 			}
-			
-			if(player.getPlayingTrack() == null)
-			{
-				startPlay(player);
-			}
 		}
 	}
 	
@@ -117,50 +108,20 @@ public class AudioUtils
 	{
 		guild.getAudioManager().setSendingHandler(new AudioPlayerSendHandler(player));
 		playerManager.loadItemOrdered(player, videoURL, new SmallAudio(player));
-		
-		
-		return null;
-	}
-	
-	private void startPlay(AudioPlayer player)
-	{
-		
-		do 
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {}
+		if(player.getPlayingTrack() == null)
 		{
-			if(player.getPlayingTrack() == null)
-			{
-				System.out.println("HERE");
-				if(playlist.isEmpty())
-				{
-					isPlaying = false;
-				}
-				else
-				{
-					System.out.println("NEXT SONG");
-					player.startTrack(playlist.get(0), false);
-					isPlaying = true;
-					
-					if(!playlist.isEmpty())
-						playlist.remove(0);
-				}
-			}
+			MusicController control = new MusicController(player, playlist);
+			control.start();
 		}
-		while(isPlaying);
-		isPlaying = false;
+		return null;
 	}
 	
 	public String skipVideo(AudioPlayer player)
 	{
 		player.stopTrack();
-		try 
-		{
-			playlist.remove(0);
-			player.getPlayingTrack();
-		}
-		catch(Exception e)
-		{
-			return "Stopped";
-		}
 		return "Skipped";
 	}
 	
@@ -174,5 +135,41 @@ public class AudioUtils
 	public ArrayList<AudioTrack> getPlaylist()
 	{
 		return playlist;
+	}
+}
+
+class MusicController extends Thread
+{
+	AudioPlayer player;
+	private ArrayList <AudioTrack> playlist;
+	
+	public MusicController(AudioPlayer player, ArrayList <AudioTrack> playlist)
+	{
+		this.player = player;
+		this.playlist = playlist; 
+	}
+	
+	@Override
+	public void run()
+	{
+		AudioTrack nowPlaying = null;
+		do 
+		{
+			if(!playlist.isEmpty() || nowPlaying != null)
+			{
+				if(player.getPlayingTrack() == null)
+				{
+					if(playlist.isEmpty())
+						nowPlaying = null;
+					else
+					{
+						nowPlaying = playlist.get(0);
+						playlist.remove(0);
+					}
+					player.startTrack(nowPlaying, false);
+				}
+			}
+		}
+		while(!playlist.isEmpty() || player.getPlayingTrack() != null);
 	}
 }
