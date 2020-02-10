@@ -1,13 +1,14 @@
 package network;
 
 import com.google.gson.Gson;
+
 import dataStructures.GenericImage;
 import offline.Ref;
-import utils.*;
+import utils.HTTPUtils;
 
 /**
- * This is the e6 request class, designed for form and parse requests that
- * use the e6 API, and is entirely static. 
+ * This is the e621 request class, designed for form and parse requests that
+ * use the e621 API, and is entirely static. 
  * 
  * If you ever find this class randomly not working,
  * it may be a good idea to make sure the user agent string is set in 
@@ -17,7 +18,7 @@ import utils.*;
  * @author Wisp
  * Edited by Rin
  */
-public class NetworkE6 
+public class NetworkE6
 {   
 	  ///////////////////////////////////////
 	 // Internal JSON class and variables //
@@ -26,6 +27,7 @@ public class NetworkE6
 	private static final String API_ROOT = "https://e621.net/post/index.json?";
 	private static int maxSearchResults_ = 10;
 	private static String[] blacklist = Ref.e621Blacklist;
+	
 	private class E6ResponseObject
 	{
 		// public varaibles matching the case and the type we want for JSON.
@@ -35,6 +37,8 @@ public class NetworkE6
 		public String id;
 		public String tags;
 		public String [] artist;
+		public String [] sources;
+		public String score; 
 	}
 
 	
@@ -45,7 +49,6 @@ public class NetworkE6
 	// Requests a specific image, then returns a few.
 	public GenericImage getE6(String input)
 	{
-
 		GenericImage image = new GenericImage("","","");
 		boolean blacklisted;
 		// Clean up request and replace problematic characters for the query string.
@@ -58,6 +61,7 @@ public class NetworkE6
 		// If order:score is provided, that will be honored over order:random.
 		String res = HTTPUtils.sendPOSTRequest(API_ROOT
 			, "tags=order:random%20" + input + "&limit=" + maxSearchResults_);
+		
 		
 		
 		if(res != null)
@@ -80,13 +84,14 @@ public class NetworkE6
 					{
 						if(imageObj[i].tags.contains(blacklist[j]))
 						{
+							System.out.println("BLACKLISTED " + blacklist[j]);
 							blacklisted = true;
 						}
 					}
 					
 					if(blacklisted)
 					{
-						continue;
+						return null;
 					}
 					// We will always have a file URL. That's a given.
 					image.editImageURL(imageObj[i].file_url);
@@ -95,6 +100,59 @@ public class NetworkE6
 						image.editArtist(imageObj[i].artist[0]);
 					else
 						image.editArtist("Artist Not Found!");
+					
+					image.editAuthorImage("https://e621.net/favicon.ico");
+					
+					String sources = "";
+					
+					if(imageObj[i].sources != null)
+					{
+						for(int k = 0; k < imageObj[i].sources.length; k ++)
+						{
+							if(!imageObj[i].sources[k].endsWith(imageObj[i].file_url.substring(imageObj[i].file_url.lastIndexOf('.'))))
+							{
+								String source = imageObj[i].sources[k];
+								if(source.contains("//www."))
+								{
+									source = source.substring(source.indexOf(".") + 1);
+									source = source.substring(0, source.indexOf('.'));
+								}
+								else 
+								{
+									source = source.substring(source.indexOf("/") + 2);
+									source = source.substring(0, source.indexOf('.'));
+								}
+								sources += " [" + source + "](" + imageObj[i].sources[k] + ") "; 
+							}
+						}
+						image.editDescriptionText("Score: " + imageObj[i].score + "\n**Source:**" + sources);
+					}
+					else
+					{
+						image.editDescriptionText("Score: " + imageObj[i].score);
+					}
+					
+					
+					
+					if(imageObj[i].tags.split(" ").length > 15)
+					{
+						String [] splitTags = imageObj[i].tags.split(" ");
+						String descTags = "";
+						for(int o = 0; o < 15; o++)
+						{
+							descTags += splitTags[o] + ", ";
+						}
+						image.editFooterText("[Tags] " + descTags + " etc.");
+					}
+					else
+					{
+						image.editFooterText("[Tags] " + imageObj[i].tags.replace(" ", ", "));
+					}
+					
+					if(image.output().authorText != null)
+					{
+						return image; 
+					}
 				}
 			}
 			
