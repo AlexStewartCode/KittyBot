@@ -27,7 +27,6 @@ public class CommandMusicMain extends Command
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
 		SubCommandFormattable scf = framework.run(guild, channel, user, input);
-		System.out.println("SCF: " + scf.resString);
 		scf.Call(res);
 	}
 }

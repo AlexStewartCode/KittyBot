@@ -1,6 +1,5 @@
 package utils.audio;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
@@ -21,7 +20,7 @@ public class AudioUtils
 	public AudioManager am;
 	public final AudioPlayer player;
 	public final AudioPlayerManager playerManager;
-	private Queue <AudioTrack> playlist = new LinkedList<>();
+	private ArrayList <AudioTrack> playlist = new ArrayList<AudioTrack>();
 	
 	
 	public AudioUtils(Guild guild, AudioPlayerManager playerManager)
@@ -85,12 +84,9 @@ public class AudioUtils
 	}
 	
 	public class SmallAudio implements AudioLoadResultHandler
-	{
-		private AudioPlayer player;
-		
+	{	
 		private SmallAudio(AudioPlayer player)
 		{
-			this.player = player;
 		}
 		
 		@Override public void loadFailed(FriendlyException arg0) { }
@@ -104,14 +100,6 @@ public class AudioUtils
 			{
 				playlist.add(track);
 			}
-			do 
-			{
-				if(player.getPlayingTrack() == null)
-				{
-					player.startTrack(playlist.poll(), false);
-				}
-			}
-			while(!playlist.isEmpty());
 		}
 	}
 	
@@ -120,13 +108,21 @@ public class AudioUtils
 	{
 		guild.getAudioManager().setSendingHandler(new AudioPlayerSendHandler(player));
 		playerManager.loadItemOrdered(player, videoURL, new SmallAudio(player));
-		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {}
+		if(player.getPlayingTrack() == null)
+		{
+			MusicController control = new MusicController(player, playlist);
+			control.start();
+		}
 		return null;
 	}
 	
 	public String skipVideo(AudioPlayer player)
 	{
-		return null;
+		player.stopTrack();
+		return "Skipped";
 	}
 	
 	public String stopPlayer(AudioPlayer player)
@@ -136,13 +132,44 @@ public class AudioUtils
 		return "Stopped";
 	}
 	
-	public String getPlaylist(AudioPlayer player)
+	public ArrayList<AudioTrack> getPlaylist()
 	{
-		String response ="";
-		for(AudioTrack track:playlist)
+		return playlist;
+	}
+}
+
+class MusicController extends Thread
+{
+	AudioPlayer player;
+	private ArrayList <AudioTrack> playlist;
+	
+	public MusicController(AudioPlayer player, ArrayList <AudioTrack> playlist)
+	{
+		this.player = player;
+		this.playlist = playlist; 
+	}
+	
+	@Override
+	public void run()
+	{
+		AudioTrack nowPlaying = null;
+		do 
 		{
-			response += track.getInfo().title;
+			if(!playlist.isEmpty() || nowPlaying != null)
+			{
+				if(player.getPlayingTrack() == null)
+				{
+					if(playlist.isEmpty())
+						nowPlaying = null;
+					else
+					{
+						nowPlaying = playlist.get(0);
+						playlist.remove(0);
+					}
+					player.startTrack(nowPlaying, false);
+				}
+			}
 		}
-		return response;
+		while(!playlist.isEmpty() || player.getPlayingTrack() != null);
 	}
 }
