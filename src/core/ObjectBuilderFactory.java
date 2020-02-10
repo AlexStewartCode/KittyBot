@@ -20,6 +20,7 @@ import dataStructures.KittyCore;
 import dataStructures.KittyGuild;
 import dataStructures.KittyRating;
 import dataStructures.KittyRole;
+import dataStructures.KittyStartupMode;
 import dataStructures.KittyUser;
 import main.Main;
 import net.dv8tion.jda.core.AccountType;
@@ -383,9 +384,15 @@ public class ObjectBuilderFactory
 	{
 		lazyInit();
 		
+		// Determine token based on config. Default to test token.
+		String tokenToUse = Ref.TestToken;
+		if(ConfigGlobals.getStartupMode() == KittyStartupMode.Release)
+			tokenToUse = Ref.Token;
+		
+		// Construct bot based on token
 		kitty = new JDABuilder(AccountType.BOT)
-				.setToken(Ref.TestToken).buildBlocking();
-		kitty.getPresence().setGame(Game.playing("with digital yarn"));
+				.setToken(tokenToUse).buildBlocking();
+		kitty.getPresence().setGame(Game.playing("with a laser pointer"));
 		kitty.addEventListener(new Main());
 		
 		return new KittyCore(kitty);
