@@ -20,7 +20,7 @@ public class CommandBetBeans extends Command
 	{
 		String call = "";
 		
-		int min = 50;
+		int min = 20;
 		int bet = 0;
 		int win = 0; 
 		
