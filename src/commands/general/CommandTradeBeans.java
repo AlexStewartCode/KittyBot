@@ -27,13 +27,22 @@ public class CommandTradeBeans extends Command
 		}
 		
 		int beans = 0;
-		try {
+
+		try
+		{
 			beans = Integer.parseInt(input.args.split(" ")[0]);
 		}
 		catch (NumberFormatException e)
 		{
-			res.send(LocStrings.stub("TradeBeansIntParseError"));
-			return;
+			try
+			{
+				beans = Integer.parseInt(input.args.split(" ")[1]);
+			}
+			catch(Exception eInner)
+			{
+				res.send(LocStrings.stub("TradeBeansIntParseError"));
+				return;
+			}
 		}
 		
 		if(user.getBeans() < beans)

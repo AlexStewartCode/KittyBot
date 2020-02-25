@@ -75,7 +75,21 @@ public class NetworkTheColorAPI
 	{
 		try
 		{
-			hex = hex.replace("#", "");
+			hex = hex.replace("#", "").trim();
+			String hexUpper = hex.toUpperCase();
+			
+			// Verify the number is hex.
+			for(int i = 0; i < hexUpper.length(); ++i)
+			{
+				char current = hexUpper.charAt(i);
+				Boolean isValidNum = current >= '0' && current <= '9';
+				Boolean isValidChar = current >= 'A' && current <= 'F';
+				
+				// If it's not a valid character or a valid number, return null/
+				if(!isValidNum && !isValidChar)
+					return null;
+			}
+			
 			String response = HTTPUtils.sendGETRequest("https://www.thecolorapi.com/id?hex=" + hex);
 			
 			ColorData data = jsonParser.fromJson(response, ColorData.class);
