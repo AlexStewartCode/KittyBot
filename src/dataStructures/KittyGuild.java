@@ -130,7 +130,7 @@ public class KittyGuild extends DatabaseTrackedObject
 	{
 		if(!raffleUsersChosen.contains(user) && !raffleUsersUnchosen.contains(user) && user.getBeans() > raffleCost && raffling)
 		{
-			user.changeBeans(raffleCost);
+			user.changeBeans(-raffleCost);
 			raffleUsersUnchosen.add(user);
 			return true;
 		}
