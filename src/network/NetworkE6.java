@@ -77,15 +77,20 @@ public class NetworkE6
 			}
 			else
 			{
+				
 				for(int i = 0; i < imageObj.length; ++i)
 				{
+					String [] TagsList = imageObj[i].tags.split(" ");
 					blacklisted = false;
 					for(int j = 0; j < blacklist.length; j++)
 					{
-						if(imageObj[i].tags.contains(blacklist[j]))
+						for(int k = 0; k < TagsList.length; k ++)
 						{
-							System.out.println("BLACKLISTED " + blacklist[j]);
-							blacklisted = true;
+							if(TagsList[k].equals(blacklist[j]))
+							{
+								System.out.println("BLACKLISTED " + blacklist[j]);
+								blacklisted = true;
+							}
 						}
 					}
 					

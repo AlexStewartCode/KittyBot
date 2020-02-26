@@ -191,6 +191,7 @@
 "Localized Strings","MusicInfo",""
 "Localized Strings","MusicVolChanged","Volume set to %s!"
 "Localized Strings","MusicVolCurrent","Volume is at %s!"
+"Localized Strings","MusicVolOOB",""
 "Localized Strings","PerishInfo","Adds a red, 'a n g e r y' overlay to your icon or the icon of a friend you mentioned"
 "Localized Strings","PingInfo","Will respond with Pong!"
 "Localized Strings","PingResponse","Pong!"
