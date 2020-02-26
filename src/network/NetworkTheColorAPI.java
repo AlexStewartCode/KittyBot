@@ -73,9 +73,22 @@ public class NetworkTheColorAPI
 	
 	public ColorData lookupHex(String hex)
 	{
+		if(hex == null)
+			return null;
+		
+		hex = hex.replace("#", "").trim();
+		int len = hex.length();
+		
+		if(len == 0)
+			return null;
+		
+		// Verify we're either a full or half length color. Intermediate colors not supported.
+		// Alpha is also not supported.
+		if(len != 6 && len != 3)
+			return null;
+		
 		try
 		{
-			hex = hex.replace("#", "").trim();
 			String hexUpper = hex.toUpperCase();
 			
 			// Verify the number is hex.
