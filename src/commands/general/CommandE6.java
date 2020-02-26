@@ -24,13 +24,8 @@ public class CommandE6 extends Command
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		if(guild.contentRating == KittyRating.Filtered || !guild.channels.get(Long.getLong(channel.uniqueID)).mature)
+		if(guild.contentRating == KittyRating.Filtered)
 		{
-			if(!guild.channels.get(Long.getLong(channel.uniqueID)).mature)
-			{
-				res.send("This channel is SFW only! Have some (probably) wholesome content ^^~");
-			}
-			
 			image = searcher.getE6(input.args + " rating:safe");
 			try
 			{
@@ -43,7 +38,7 @@ public class CommandE6 extends Command
 			}
 			try 
 			{
-				if(response.authorText == null)
+				if(response.bodyImageURL == null)
 				{
 					Exception e = new Exception();
 					throw e; 
