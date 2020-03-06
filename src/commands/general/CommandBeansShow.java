@@ -105,8 +105,10 @@ public class CommandBeansShow extends Command
 			beanGraphics.drawImage(thouBean, x, y, null);
 		}
 		
-		Font font = null;
+		
 		try {
+			@SuppressWarnings("unused")
+			Font font = null;
 			font = Font.createFont(Font.TRUETYPE_FONT, new File(Constants.AssetDirectory +"fonts/B612Mono-Regular.ttf"));
 		} catch (Exception e)
 		{
