@@ -18,6 +18,7 @@ public class CommandMusicMain extends Command
 		framework.addCommand("skip", new SubCommandSkip(KittyRole.General, KittyRating.Safe));
 		framework.addCommand("stop", new SubCommandStop(KittyRole.General, KittyRating.Safe));
 		framework.addCommand("playlist", new SubCommandPlaylist(KittyRole.General, KittyRating.Safe));
+		framework.addCommand("volume", new SubCommandVolume(KittyRole.General, KittyRating.Safe));
 	}
 	
 	@Override

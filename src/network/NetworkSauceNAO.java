@@ -10,7 +10,7 @@ import utils.HTTPUtils;
 public class NetworkSauceNAO 
 {
 	private static final Gson jsonParser_ = new Gson();
-	private static final String API_ROOT = "https://saucenao.com/search.php?db=999&output_type=2&numres=10&api_key=" + Ref.SauceNAOKey +"&url=";
+	private static final String API_ROOT = "https://saucenao.com/search.php?dbmask=268435456&output_type=2&numres=10&api_key=" + Ref.SauceNAOKey +"&url=";
 	NetworkE6 e6Sauce = new NetworkE6();
 	private class SauceNAOResponseObject
 	{
@@ -40,6 +40,7 @@ public class NetworkSauceNAO
 		if(sauceUrl.startsWith("https://e621.net/post/show/"))
 		{
 			System.out.println("id:" + sauceUrl.substring(26));
+		    System.out.println("HERE");
 			return e6Sauce.getE6("id:" + sauceUrl.substring(27)).toString();
 		}
 		return sauce.results.get(0).data.ext_urls[0];

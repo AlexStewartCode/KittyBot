@@ -1,5 +1,6 @@
 package commands.music;
 
+import core.LocStrings;
 import core.SubCommand;
 import core.SubCommandFormattable;
 import dataStructures.KittyChannel;
@@ -27,6 +28,6 @@ public class SubCommandAddTrack extends SubCommand
 			video =  YT.getYT(video);
 		}
 		guild.audio.playVideo(video);
-		return new SubCommandFormattable(video);
+		return new SubCommandFormattable(String.format(LocStrings.stub("MusicAddTrack"), video));
 	}
 }

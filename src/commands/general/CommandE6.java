@@ -9,6 +9,7 @@ public class CommandE6 extends Command
 {
 	NetworkE6 searcher = new NetworkE6();
 	KittyEmbed response;
+	GenericImage image; 
 	
 	public CommandE6(KittyRole level, KittyRating rating) { super(level, rating); }
 	
@@ -23,15 +24,25 @@ public class CommandE6 extends Command
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		if(guild.contentRating == KittyRating.Filtered || !guild.channels.get(Long.getLong(channel.uniqueID)).mature)
+		if(guild.contentRating == KittyRating.Filtered)
 		{
-			if(!guild.channels.get(Long.getLong(channel.uniqueID)).mature)
+			image = searcher.getE6(input.args + " rating:safe");
+			try
 			{
-				res.send("This channel is SFW only! Have some (probably) wholesome content ^^~");
+				response = image.output();
 			}
-			response = searcher.getE6(input.args + " rating:safe").output();
+			catch(Exception e)
+			{				
+				res.send(LocStrings.stub("E6Blacklisted"));
+				return;
+			}
 			try 
 			{
+				if(response.bodyImageURL == null)
+				{
+					Exception e = new Exception();
+					throw e; 
+				}
 				res.send(response);
 			}
 			catch(Exception e)
