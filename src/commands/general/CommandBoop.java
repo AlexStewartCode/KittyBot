@@ -68,22 +68,23 @@ public class CommandBoop extends Command
 	{
 		if(input.mentions == null)
 		{
+			// No one is booped, just the bot!
 			boopTracker.applyBoop();
 			res.send(String.format(LocStrings.stub("BoopStandard"), user.name, boopTracker.howMany()));
 		}
 		else
 		{
+			// When someone boops one other person
 			if(input.mentions.length == 1)
 			{
-				boopTracker.applyBoop();
 				res.send(String.format(LocStrings.stub("BoopPerson"), user.name, input.mentions[0].name));
 				return;
 			}
 			
+			// A number of people have been booped
 			String booped = ""; 
 			for(int i = 0; i < input.mentions.length; i++)
 			{
-				boopTracker.applyBoop();
 				if(i < input.mentions.length-1)
 					booped += input.mentions[i].name + ", ";
 				else
