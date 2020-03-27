@@ -48,7 +48,7 @@ public class NetworkColiru
 		// If we got a valid response...
 		if(!result.isEmpty())
 		{
-			result = "Here's what happened when I went to compiled that! \n```" + result + "```";
+			result = "Here's what happened when I went to compile that! \n```" + result + "```";
 		}
 		
 		return result;
