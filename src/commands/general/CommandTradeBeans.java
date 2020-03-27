@@ -25,6 +25,11 @@ public class CommandTradeBeans extends Command
 			res.send(LocStrings.stub("TradeBeansNoTargetError"));
 			return;
 		}
+		if(input.mentions.length > 1)
+		{
+			res.send(LocStrings.stub("TradeBeansMultipleUsersTagged"));
+			return;
+		}
 		
 		int beans = 0;
 
