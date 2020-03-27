@@ -92,14 +92,12 @@ public class NetworkE6
 		// tag by default. User-provided tags, therefore, will override it. 
 		// If order:score is provided, that will be honored over order:random.
 		String res = HTTPUtils.sendGETRequest(API_ROOT + "tags=order:random%20" + input + "&limit=" + maxSearchResults_);
-		
+		System.out.println("LOOK HERE: " + res);
 		if(res != null)
 		{
 			
 			// Use class evaluation on an array of the response imageObject to be able to hold multiple.
-			System.out.println("Still");
 			E6ResponseObject imageObj = jsonParser_.fromJson(res, E6ResponseObject.class);
-			System.out.println("Broken");
 			// For now, we really just wanna display images and their source. 
 			// Append them all separately to a response string w/ some flavor text.
 			if(imageObj.posts.length < 1)
@@ -110,6 +108,7 @@ public class NetworkE6
 			{
 				for(int i = 0; i < imageObj.posts.length; ++i)
 				{
+					System.out.println(imageObj.posts.length);
 					String [] TagsList = imageObj.posts[i].tags.general;
 					blacklisted = false;
 					for(int j = 0; j < blacklist.length; j++)
@@ -133,9 +132,9 @@ public class NetworkE6
 					image.editPostURL("https://e621.net/posts/" + imageObj.posts[i].id);
 					if(imageObj.posts[i].tags.artist.length > 0)
 						{
-							String artists = "";
-							for(int j = 0; j < imageObj.posts[i].tags.artist.length; j++)
-								artists += imageObj.posts[i].tags.artist[j];
+							String artists = imageObj.posts[i].tags.artist[0];
+							for(int j = 1; j < imageObj.posts[i].tags.artist.length; j++)
+								artists += ", " + imageObj.posts[i].tags.artist[j];
 							image.editArtist(artists);
 						}
 					else
@@ -190,6 +189,8 @@ public class NetworkE6
 					
 					if(image.output().authorText != null)
 					{
+						System.out.println(image);
+						System.out.println(image.toString());
 						return image; 
 					}
 				}

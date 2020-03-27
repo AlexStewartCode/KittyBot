@@ -23,7 +23,7 @@ public class CommandGetSauce extends Command
 	@Override
 	public void onRun(KittyGuild guild, KittyChannel channel, KittyUser user, UserInput input, Response res)
 	{
-		res.send(sauce.getSauce(input.args));
+		res.send(sauce.getSauce(input.args).output());
 		
 	}
 }
