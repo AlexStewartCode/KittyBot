@@ -22,7 +22,9 @@ public class CommandRoll extends Command
 		{
 			KittyEmbed embed = new KittyEmbed();
 			embed.title = user.name +"'s roll!";
+			System.out.println("HERE");
 			embed.descriptionText = rollDice(input.args);
+			System.out.println("THERE");
 			Random numGen = new Random(user.name.hashCode());
 			float hue = numGen.nextFloat();
 			float sat = .7f;
@@ -41,10 +43,11 @@ public class CommandRoll extends Command
 		Stack<Integer> values = new Stack<Integer>();
 		Stack<Character> operators = new Stack<Character>();
 		String steps = ""; 
+		
 		for(int i = 0; i < thing.length(); i ++)
 		{
 			char current = thing.charAt(i);
-			
+			System.out.println("ROLLING");
 			switch(current)
 			{
 				case '+':
@@ -122,8 +125,11 @@ public class CommandRoll extends Command
 		{
 			steps += "\n" + calculate(values, operators);
 		}
-		
-		return "Roll```" + thing + "```" + "Steps```" + steps + "```" + "Final value ```" + values.pop() +"```";
+		if(steps != "")
+		{
+			return "Roll```" + thing + "```" + "Steps```" + steps + "```" + "Final value ```" + values.pop() +"```";
+		}
+		return "That's not a roll that's just " + values.pop() +"!";
 	}
 	
 	
@@ -173,7 +179,7 @@ public class CommandRoll extends Command
 		int roll = 0;
 		int dice = first;
 		int sides = second;
-		int [] rolls = new int [sides];
+		int [] rolls = new int [dice];
 		
 		if(dice < 1)
 			return new int[0];
