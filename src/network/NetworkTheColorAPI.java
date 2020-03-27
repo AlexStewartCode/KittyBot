@@ -73,9 +73,36 @@ public class NetworkTheColorAPI
 	
 	public ColorData lookupHex(String hex)
 	{
+		if(hex == null)
+			return null;
+		
+		hex = hex.replace("#", "").trim();
+		int len = hex.length();
+		
+		if(len == 0)
+			return null;
+		
+		// Verify we're either a full or half length color. Intermediate colors not supported.
+		// Alpha is also not supported.
+		if(len != 6 && len != 3)
+			return null;
+		
 		try
 		{
-			hex = hex.replace("#", "");
+			String hexUpper = hex.toUpperCase();
+			
+			// Verify the number is hex.
+			for(int i = 0; i < hexUpper.length(); ++i)
+			{
+				char current = hexUpper.charAt(i);
+				Boolean isValidNum = current >= '0' && current <= '9';
+				Boolean isValidChar = current >= 'A' && current <= 'F';
+				
+				// If it's not a valid character or a valid number, return null/
+				if(!isValidNum && !isValidChar)
+					return null;
+			}
+			
 			String response = HTTPUtils.sendGETRequest("https://www.thecolorapi.com/id?hex=" + hex);
 			
 			ColorData data = jsonParser.fromJson(response, ColorData.class);

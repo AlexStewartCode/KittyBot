@@ -119,6 +119,16 @@ public class AudioUtils
 		return null;
 	}
 	
+	public int getVolume(AudioPlayer player)
+	{
+		return player.getVolume();
+	}
+	
+	public void changeVolume(AudioPlayer player, int newVol)
+	{
+		player.setVolume(newVol);
+	}
+	
 	public String skipVideo(AudioPlayer player)
 	{
 		player.stopTrack();
@@ -152,6 +162,9 @@ class MusicController extends Thread
 	@Override
 	public void run()
 	{
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {}
 		AudioTrack nowPlaying = null;
 		do 
 		{
