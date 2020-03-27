@@ -387,7 +387,10 @@ public class ObjectBuilderFactory
 		// Determine token based on config. Default to test token.
 		String tokenToUse = Ref.TestToken;
 		if(ConfigGlobals.getStartupMode() == KittyStartupMode.Release)
+			tokenToUse = Ref.Token;
+		if(ConfigGlobals.getStartupMode() == KittyStartupMode.PoguRelease)
 			tokenToUse = Ref.PoguToken;
+			
 		
 		// Construct bot based on token
 		kitty = new JDABuilder(AccountType.BOT)
