@@ -1,7 +1,9 @@
 package commands.general;
 
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -64,8 +66,6 @@ public class CommandBeansShow extends Command
 		
 		long calcBean = beans;
 		
-		System.out.println("BEANS: " + beans);
-		
 		long thousands = beans / 1000;
 		calcBean = beans % 1000;
 		long hundreds = (calcBean / 100);
@@ -76,6 +76,8 @@ public class CommandBeansShow extends Command
 		
 		BufferedImage beanImage = new BufferedImage(baseWidth, baseHeight, BufferedImage.TYPE_INT_ARGB);
 		Graphics beanGraphics = beanImage.getGraphics();
+		Rectangle rect = new Rectangle(0, 0, baseWidth, baseHeight);
+		beanGraphics.drawImage(imageBase,0,0,null);
 		
 		for(int i = 0; i < ones; i++)
 		{
@@ -115,9 +117,22 @@ public class CommandBeansShow extends Command
 		}
 		Font beanFont = new Font("font", Font.BOLD, 45);
 		beanGraphics.setFont(beanFont);
-		beanGraphics.drawString("YOU GOT " + beans + " BEANS", 0, baseHeight / 2);
 		
+		drawCenteredString(beanGraphics, "YOU HAVE", rect, beanFont, .25);
+		drawCenteredString(beanGraphics, "" + beans, rect, beanFont, .5);
+		drawCenteredString(beanGraphics, "BEANS!", rect, beanFont, .75);
+
 		ImageIO.write(beanImage, "PNG", new File("beanImage.png"));
 		return new File("beanImage.png");
+	}
+	
+	private void drawCenteredString(Graphics beanGraphics, String text, Rectangle rect, Font font, double segment)
+	{
+		FontMetrics metrics = beanGraphics.getFontMetrics(font);
+		
+		int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
+		int y = (int)(rect.y + ((rect.height - metrics.getHeight()) * segment) + metrics.getAscent());
+		
+		beanGraphics.drawString(text, x, y);
 	}
 }

@@ -79,7 +79,7 @@ public class NetworkE6
 	 // Static methods //
 	////////////////////
 	// Requests a specific image, then returns a few.
-	public GenericImage getE6(String input)
+	public GenericImage getE6(String input, String sauceNaoDependant)
 	{
 		GenericImage image = new GenericImage("","","");
 		boolean blacklisted;
@@ -92,7 +92,6 @@ public class NetworkE6
 		// tag by default. User-provided tags, therefore, will override it. 
 		// If order:score is provided, that will be honored over order:random.
 		String res = HTTPUtils.sendGETRequest(API_ROOT + "tags=order:random%20" + input + "&limit=" + maxSearchResults_);
-		System.out.println("LOOK HERE: " + res);
 		if(res != null)
 		{
 			
@@ -108,7 +107,6 @@ public class NetworkE6
 			{
 				for(int i = 0; i < imageObj.posts.length; ++i)
 				{
-					System.out.println(imageObj.posts.length);
 					String [] TagsList = imageObj.posts[i].tags.general;
 					blacklisted = false;
 					for(int j = 0; j < blacklist.length; j++)
@@ -159,12 +157,27 @@ public class NetworkE6
 								else 
 								{
 									source = source.substring(source.indexOf("/") + 2);
-									source = source.substring(0, source.indexOf('.'));
+									source = "[" + source.substring(0, source.indexOf('.')) + "]";
+									if(source.equals("[pbs]"))
+									{
+										source = "[twitter-cdn]";
+									}
 								}
 								sources += " [" + source + "](" + imageObj.posts[i].sources[k] + ") "; 
 							}
 						}
-						image.editDescriptionText("Score: " + imageObj.posts[i].score.total + "\n**Source:**" + sources);
+						if(sources.equals(""))
+						{
+							sources = " Source not listed";
+						}
+						if(sauceNaoDependant.equals(""))
+						{
+							image.editDescriptionText("Score: " + imageObj.posts[i].score.total + "\n**Source:**" + sources);
+						}
+						else
+						{
+							image.editDescriptionText(sauceNaoDependant + "\nScore: " + imageObj.posts[i].score.total + "\n**Source:**" + sources);
+						}
 					}
 					else
 					{
@@ -183,14 +196,17 @@ public class NetworkE6
 					}
 					else
 					{
-						descTags = imageObj.posts[i].tags.general.toString();
+						for(int o = 0; o < imageObj.posts[i].tags.general.length - 1; o++)
+						{
+							descTags += imageObj.posts[i].tags.general[o] + ", ";
+						}
+						descTags += imageObj.posts[i].tags.general[imageObj.posts[i].tags.general.length-1] + "";
+						
 						image.editFooterText("[Tags] " + descTags);
 					}
 					
 					if(image.output().authorText != null)
 					{
-						System.out.println(image);
-						System.out.println(image.toString());
 						return image; 
 					}
 				}

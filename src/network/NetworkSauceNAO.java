@@ -21,6 +21,12 @@ public class NetworkSauceNAO
 	private class SauceNAOResult
 	{
 		SauceNAOData data;
+		SauceNAOHeader header; 
+	}
+	
+	private class SauceNAOHeader
+	{
+		double similarity;
 	}
 	
 	private class SauceNAOData
@@ -30,21 +36,21 @@ public class NetworkSauceNAO
 	
 	public GenericImage getSauce(String input)
 	{
+		double similarity; 
 		input = input.trim();
 		input = input.replace("+", "%2B");
 		input = input.replace(" ", "%20");
 		
 		String res = HTTPUtils.sendGETRequest(API_ROOT + input);
-		
 		SauceNAOResponseObject sauce = jsonParser_.fromJson(res, SauceNAOResponseObject.class);
 		String sauceUrl = sauce.results.get(0).data.ext_urls[0];
+		similarity = sauce.results.get(0).header.similarity;
 		if(sauceUrl.startsWith("https://e621.net/post/show/"))
 		{
-			return e6Sauce.getE6("id:" + sauceUrl.substring(27));
+			return e6Sauce.getE6("id:" + sauceUrl.substring(27), "Confidence: " + similarity + "%");
 		}
 		GenericImage unknown = new GenericImage("", "","");
 		return unknown;
-//		return sauce.results.get(0).data.ext_urls[0];
 	}
 	
 }
