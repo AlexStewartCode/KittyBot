@@ -143,4 +143,11 @@ public class Response
 		GlobalLog.log(LogFilter.Response, "Sending input stream response");
 		event.getChannel().sendFile(in, "return." + extension).queue();
 	}
+	
+	//Sends Kittybot as an object
+	//WARNING: THIS WILL EDIT THE ENTIRE BOT, DO NOT USE LIGHTLY 
+	public JDA getKitty()
+	{
+		return kitty;
+	}
 }

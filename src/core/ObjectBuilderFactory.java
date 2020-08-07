@@ -167,7 +167,8 @@ public class ObjectBuilderFactory
 			else
 			{
 				// Construct a new guild with defaults				
-				guild = new KittyGuild(uid, new AdminControl(event.getGuild()), emotesString, new AudioUtils(event.getGuild(), playerManager), channels);
+				guild = new KittyGuild(uid, new AdminControl(event.getGuild()), emotesString, 
+						new AudioUtils(event.getGuild(), playerManager), channels);
 				DatabaseManager.instance.globalRegister(guild);
 				guildCache.put(uid, guild);
 			}
@@ -175,6 +176,8 @@ public class ObjectBuilderFactory
 
 		return guild;
 	}
+	
+	
 	
 	// Explicitly locks: guildCache
 	public static KittyRole extractRole(GuildMessageReceivedEvent event)
