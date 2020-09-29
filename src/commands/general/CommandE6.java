@@ -26,7 +26,7 @@ public class CommandE6 extends Command
 	{
 		if(guild.contentRating == KittyRating.Filtered)
 		{
-			image = searcher.getE6(input.args + " rating:safe");
+			image = searcher.getE6(input.args + " rating:safe", "");
 			try
 			{
 				response = image.output();
@@ -58,7 +58,7 @@ public class CommandE6 extends Command
 			{
 				try 
 				{
-					response = searcher.getE6(input.args).output();
+					response = searcher.getE6(input.args, "").output();
 					res.send(response);
 				}
 				catch(Exception e)

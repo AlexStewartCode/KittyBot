@@ -44,7 +44,8 @@ public class KittyGuild extends DatabaseTrackedObject
 	}
 	
 	// Default content for a guild
-	public KittyGuild(String uniqueID, AdminControl adminControl, ArrayList <String> emoji, AudioUtils audio, HashMap<Long, KittyChannel> channels)
+	public KittyGuild(String uniqueID, AdminControl adminControl, ArrayList <String> emoji, 
+			AudioUtils audio, HashMap<Long, KittyChannel> channels)
 	{
 		
 		super(uniqueID);
@@ -63,7 +64,8 @@ public class KittyGuild extends DatabaseTrackedObject
 	}
 	
 	// Explicit constructor
-	public KittyGuild(String commandIndicator, KittyRating contentRating, KittyUser guildOwner, String uniqueID, AudioUtils audio, HashMap<Long, KittyChannel> channels)
+	public KittyGuild(String commandIndicator, KittyRating contentRating, KittyUser guildOwner, 
+			String uniqueID, AudioUtils audio, HashMap<Long, KittyChannel> channels)
 	{
 		super(uniqueID);
 		this.uniqueID = uniqueID;

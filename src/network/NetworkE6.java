@@ -79,7 +79,7 @@ public class NetworkE6
 	 // Static methods //
 	////////////////////
 	// Requests a specific image, then returns a few.
-	public GenericImage getE6(String input)
+	public GenericImage getE6(String input, String sauceNaoDependant)
 	{
 		GenericImage image = new GenericImage("","","");
 		boolean blacklisted;
@@ -92,14 +92,11 @@ public class NetworkE6
 		// tag by default. User-provided tags, therefore, will override it. 
 		// If order:score is provided, that will be honored over order:random.
 		String res = HTTPUtils.sendGETRequest(API_ROOT + "tags=order:random%20" + input + "&limit=" + maxSearchResults_);
-		
 		if(res != null)
 		{
 			
 			// Use class evaluation on an array of the response imageObject to be able to hold multiple.
-			System.out.println("Still");
 			E6ResponseObject imageObj = jsonParser_.fromJson(res, E6ResponseObject.class);
-			System.out.println("Broken");
 			// For now, we really just wanna display images and their source. 
 			// Append them all separately to a response string w/ some flavor text.
 			if(imageObj.posts.length < 1)
@@ -133,9 +130,9 @@ public class NetworkE6
 					image.editPostURL("https://e621.net/posts/" + imageObj.posts[i].id);
 					if(imageObj.posts[i].tags.artist.length > 0)
 						{
-							String artists = "";
-							for(int j = 0; j < imageObj.posts[i].tags.artist.length; j++)
-								artists += imageObj.posts[i].tags.artist[j];
+							String artists = imageObj.posts[i].tags.artist[0];
+							for(int j = 1; j < imageObj.posts[i].tags.artist.length; j++)
+								artists += ", " + imageObj.posts[i].tags.artist[j];
 							image.editArtist(artists);
 						}
 					else
@@ -160,12 +157,27 @@ public class NetworkE6
 								else 
 								{
 									source = source.substring(source.indexOf("/") + 2);
-									source = source.substring(0, source.indexOf('.'));
+									source = "[" + source.substring(0, source.indexOf('.')) + "]";
+									if(source.equals("[pbs]"))
+									{
+										source = "[twitter-cdn]";
+									}
 								}
 								sources += " [" + source + "](" + imageObj.posts[i].sources[k] + ") "; 
 							}
 						}
-						image.editDescriptionText("Score: " + imageObj.posts[i].score.total + "\n**Source:**" + sources);
+						if(sources.equals(""))
+						{
+							sources = " Source not listed";
+						}
+						if(sauceNaoDependant.equals(""))
+						{
+							image.editDescriptionText("Score: " + imageObj.posts[i].score.total + "\n**Source:**" + sources);
+						}
+						else
+						{
+							image.editDescriptionText(sauceNaoDependant + "\nScore: " + imageObj.posts[i].score.total + "\n**Source:**" + sources);
+						}
 					}
 					else
 					{
@@ -184,7 +196,12 @@ public class NetworkE6
 					}
 					else
 					{
-						descTags = imageObj.posts[i].tags.general.toString();
+						for(int o = 0; o < imageObj.posts[i].tags.general.length - 1; o++)
+						{
+							descTags += imageObj.posts[i].tags.general[o] + ", ";
+						}
+						descTags += imageObj.posts[i].tags.general[imageObj.posts[i].tags.general.length-1] + "";
+						
 						image.editFooterText("[Tags] " + descTags);
 					}
 					

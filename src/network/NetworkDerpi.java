@@ -7,7 +7,7 @@ import utils.*;
 
 public class NetworkDerpi
 {
-	private final String mainURL = "https://derpibooru.org/search.json?q=";
+	private final String mainURL = "https://derpibooru.org/api/v1/json/search/images?q=";
 	private static final Gson jsonParser_ = new Gson();
 	
 	private class DerpiResponseObject
@@ -24,10 +24,20 @@ public class NetworkDerpi
 
     public GenericImage getDerpi(String query) 
 	{
+    	String res;
     	GenericImage image = new GenericImage(" ", " ", " ");
     	query = query.trim();
 		query = query.replace(" ", ",");
-        String res = HTTPUtils.sendGETRequest(mainURL + query + "&random_image=1&key=" + Ref.derpiKey);
+        System.out.println(mainURL + query + "&sf=random&key=" + Ref.derpiKey);
+    	if(query.startsWith("ID:"))
+    	{
+    		res = HTTPUtils.sendGETRequest("https://derpibooru.org/api/v1/json/images/" + query.substring(3));
+    	}
+    	else
+    	{
+    		res =  HTTPUtils.sendGETRequest(mainURL + query + "&sf=random&key=" + Ref.derpiKey);
+    	}
+    	System.out.println(res);
         if(res != null)
         {
         	InitialRequest obj;
@@ -43,7 +53,6 @@ public class NetworkDerpi
             
             if(res != null)
             {
-            	
                 String res2 = HTTPUtils.sendGETRequest("https://derpibooru.org/" + obj.id + ".json");
                 image.editPostURL("https://derpibooru.org/" + obj.id);
                 DerpiResponseObject imageObj = jsonParser_.fromJson(res2, DerpiResponseObject.class);

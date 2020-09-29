@@ -27,10 +27,18 @@ public class CommandChoose extends Command
 		
 		String [] choices = input.args.split(",");
 		
-		if(choices.length == 1)
+		if(choices.length <= 1)
 		{
 			res.send(LocStrings.stub("ChooseOne"));
 			return;
+		}
+		
+		for(int i = 0; i < choices.length; i ++)
+		{
+			if (choices[i].equals(""))
+			{
+				choices[i] = "KittyBot is the best!"; 
+			}
 		}
 		
 		res.send(String.format(LocStrings.stub("ChooseChoice"), (choices[(int) (Math.random()*choices.length)]).toString()));

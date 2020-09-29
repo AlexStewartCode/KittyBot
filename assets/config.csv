@@ -247,6 +247,7 @@
 "Localized Strings","TeeyInfo","Teey yourself back into existance, or teey a friend with @!"
 "Localized Strings","TradeBeansInfo","Give your friends some of your beans! Just don't forget to @ them!"
 "Localized Strings","TradeBeansIntParseError","That's not a real number! D:"
+"Localized Strings","TradeBeansMultipleUsersTagged",""
 "Localized Strings","TradeBeansNoTargetError","Don't forget to tag who you want to give the beans to!"
 "Localized Strings","TradeBeansNotEnoughError","You can't give more beans than you have!"
 "Localized Strings","TradeBeansStealingBeans","Hey %s! Stealing is wrong! Let's see how you like it! *steals 10 beans*"

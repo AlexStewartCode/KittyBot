@@ -118,7 +118,8 @@ public class Main extends ListenerAdapter
 				{
 					if(pluginOutput.get(i).startsWith("!"))
 					{
-						commandManager.invokeOnNewThread(guild, channel, user, new UserInput(pluginOutput.get(i).substring(1), guild), response);
+						commandManager.invokeOnNewThread(guild, channel, user, 
+								new UserInput(pluginOutput.get(i).substring(1), guild), response);
 					}
 					else
 					{
