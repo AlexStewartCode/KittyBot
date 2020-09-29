@@ -33,7 +33,7 @@ public class CommandBeansShow extends Command
 	{
 		if(input.mentions == null)
 		{
-			res.send("" + user.getBeans());
+			//res.send("" + user.getBeans());
 			try {
 				res.sendFile(combineImages(user.getBeans()), "png");
 			} catch (IOException e) {

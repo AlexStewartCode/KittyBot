@@ -36,7 +36,8 @@ public class CommandBetBeans extends Command
 		}
 		catch (Exception e)
 		{
-			GlobalLog.log(LogFilter.Command, "Betting took place, but a value was not specified in the config file so 50 was used as the minimum bet threshold. Consider specifying BetBeansMinThreshold.");
+			GlobalLog.log(LogFilter.Command, "Betting took place, but a value was not specified in the config file "
+					+ "so 50 was used as the minimum bet threshold. Consider specifying BetBeansMinThreshold.");
 		}
 		
 		try 
