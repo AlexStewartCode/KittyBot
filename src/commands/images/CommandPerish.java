@@ -1,4 +1,4 @@
-package commands.general;
+package commands.images;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -9,15 +9,21 @@ import javax.imageio.ImageIO;
 
 import core.Command;
 import core.LocStrings;
-import dataStructures.*;
+import dataStructures.KittyChannel;
+import dataStructures.KittyGuild;
+import dataStructures.KittyRating;
+import dataStructures.KittyRole;
+import dataStructures.KittyUser;
+import dataStructures.Response;
+import dataStructures.UserInput;
 import utils.ImageUtils;
 
-public class CommandStark extends Command
+public class CommandPerish  extends Command
 {
-	public CommandStark(KittyRole level, KittyRating rating) { super(level, rating); }
+	public CommandPerish(KittyRole level, KittyRating rating) { super(level, rating); }
 	
 	@Override
-	public String getHelpText() { return LocStrings.stub("StarkInfo"); };
+	public String getHelpText() { return LocStrings.stub("PerishInfo"); };
 	
 	private static Long num = 0l;
 	
@@ -31,7 +37,7 @@ public class CommandStark extends Command
 		
 		synchronized(num)
 		{
-			name = "snapped_" + num + ".png";
+			name = "perish_" + num + ".png";
 			++num;
 		}
 		
@@ -53,7 +59,7 @@ public class CommandStark extends Command
 					return;
 			}
 			preProcessed = new File(filename);
-			applySnap(ImageIO.read(preProcessed), name);
+			applyTintEffect(ImageIO.read(preProcessed), name);
 		}
 		catch (IOException e) 
 		{
@@ -67,27 +73,33 @@ public class CommandStark extends Command
 		ImageUtils.blockingFileDelete(postProcessed);
 	}
 	
-	private static void applySnap(BufferedImage image, String name) throws IOException
+	private static void applyTintEffect(BufferedImage image, String name) throws IOException
 	{
-		BufferedImage snap = ImageUtils.copyImage(image);
 		// Iterate over each column left to right and touch up each pixel
-		for(int x = 0; x < snap.getWidth(); ++x)
+		for(int x = 0; x < image.getWidth(); ++x)
 		{
-			for(int y = 0; y < snap.getHeight(); ++y)
+			for(int y = 0; y < image.getHeight(); ++y)
 			{
-				Color c = new Color(snap.getRGB(x, y), true);
+				Color c = new Color(image.getRGB(x, y), true);
 				
-				int alpha = c.getAlpha();
-				if(x * Math.random() > 25)
-					alpha = (int)((1 - (x / ((float)snap.getWidth()))) * 255);
+				int red = c.getRed();
+				red += 100;
+				if(red > 255)
+					red = 255;
 				
+				int green = c.getGreen();
 				
-				Color snapped = new Color(c.getRed(),c.getGreen(), c.getBlue(), alpha);
-				snap.setRGB(x, y, snapped.getRGB());
+				int blue = c.getBlue();
+				blue += 20;
+				if(blue > 255)
+					blue = 255;
+				
+				Color tinted = new Color(red, green, blue, c.getAlpha());
+				image.setRGB(x, y, tinted.getRGB());
 			}
 		}
 		
 		File outputfile = new File(name);
-		ImageIO.write(snap, "png", outputfile);
+		ImageIO.write(image, "png", outputfile);
 	}
 }

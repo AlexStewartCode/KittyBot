@@ -1,4 +1,4 @@
-package commands.general;
+package commands.images;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
