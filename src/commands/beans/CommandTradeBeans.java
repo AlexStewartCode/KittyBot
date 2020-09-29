@@ -1,4 +1,4 @@
-package commands.general;
+package commands.beans;
 
 import core.Command;
 import core.LocStrings;

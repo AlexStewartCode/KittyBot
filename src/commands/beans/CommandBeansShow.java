@@ -1,4 +1,4 @@
-package commands.general;
+package commands.beans;
 
 import java.awt.Font;
 import java.awt.FontMetrics;

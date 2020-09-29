@@ -1,4 +1,4 @@
-package commands.general;
+package commands.network;
 
 import java.io.File;
 import java.io.IOException;
