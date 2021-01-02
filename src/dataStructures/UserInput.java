@@ -3,8 +3,8 @@ package dataStructures;
 import java.util.List;
 
 import core.ObjectBuilderFactory;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class UserInput 
 {
