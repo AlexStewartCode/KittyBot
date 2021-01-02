@@ -1,4 +1,5 @@
 package utils.audio;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
@@ -73,9 +74,12 @@ public class AudioUtils
 			return lastFrame != null;
 		}
 		
-		@Override public byte[] provide20MsAudio()
+		
+		@Override 
+		public ByteBuffer provide20MsAudio()
 		{
-			return lastFrame.getData();
+			ByteBuffer outputBuffer = ByteBuffer.wrap(lastFrame.getData());			
+			return outputBuffer;
 		}
 		
 		@Override public boolean isOpus()
