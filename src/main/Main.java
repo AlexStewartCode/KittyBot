@@ -8,7 +8,7 @@ import core.CharacterManager;
 import core.CommandEnabler;
 import core.CommandManager;
 import core.DatabaseManager;
-import core.ObjectBuilderFactory;
+import core.ObjectBuilder;
 import core.RPManager;
 import core.Stats;
 import core.lua.PluginManager;
@@ -43,15 +43,15 @@ public class Main extends ListenerAdapter
 	{
 		// Factory startup. The ordering is intentional.
 		GlobalLog.initialize();
-		databaseManager = ObjectBuilderFactory.constructDatabaseManager();
-		commandManager = ObjectBuilderFactory.constructCommandManager(CommandEnabler.instance); // TODO: Untangle this singleton
-		stats = ObjectBuilderFactory.constructStats(commandManager);
+		databaseManager = ObjectBuilder.constructDatabaseManager();
+		commandManager = ObjectBuilder.constructCommandManager(CommandEnabler.instance); // TODO: Untangle this singleton
+		stats = ObjectBuilder.constructStats(commandManager);
 		charManager = new CharacterManager();
-		rpManager = ObjectBuilderFactory.constructRPManager();
-		pluginManager = ObjectBuilderFactory.constructPluginManager();
+		rpManager = ObjectBuilder.constructRPManager();
+		pluginManager = ObjectBuilder.constructPluginManager();
 		
 		// Bot startup
-		kittyCore = ObjectBuilderFactory.constructKittyCore();
+		kittyCore = ObjectBuilder.constructKittyCore();
 	}
 
 	// When a message is sent in a server that kitty is in, this is what's called.
@@ -63,9 +63,9 @@ public class Main extends ListenerAdapter
 			return;
 		
 		// Factory objects
-		KittyUser user = ObjectBuilderFactory.extractUser(event);
-		KittyGuild guild = ObjectBuilderFactory.extractGuild(event);
-		KittyChannel channel = ObjectBuilderFactory.extractChannel(event);
+		KittyUser user = ObjectBuilder.extractUser(event);
+		KittyGuild guild = ObjectBuilder.extractGuild(event);
+		KittyChannel channel = ObjectBuilder.extractChannel(event);
 		
 		// Specialized uncached objects
 		Response response = new Response(event, kittyCore);

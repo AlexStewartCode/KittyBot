@@ -7,7 +7,7 @@ import core.Command;
 import core.Constants;
 import core.DatabaseManager;
 import core.LocStrings;
-import core.ObjectBuilderFactory;
+import core.ObjectBuilder;
 import dataStructures.KittyChannel;
 import dataStructures.KittyEmbed;
 import dataStructures.KittyGuild;
@@ -98,7 +98,7 @@ public class CommandLeaderboard extends Command
 		{
 			// Only now that we've sorted do we do the full construction and caching of users
 			Pair<Long, String> userPair = users.get(i);
-			KittyUser cachedUser = ObjectBuilderFactory.getKittyUser(guildID, userPair.Second);
+			KittyUser cachedUser = ObjectBuilder.getKittyUser(guildID, userPair.Second);
 			
 			if(cachedUser == null)
 				continue; 

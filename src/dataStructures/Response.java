@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.utils.AttachmentOption;
 import utils.GlobalLog;
 import utils.LogFilter;
 
@@ -72,10 +73,14 @@ public class Response
 			embed.setThumbnail(thumbPath);
 			message.setEmbed(embed.build());
 			
+			GlobalLog.log("We're trying to send a response that has a locally defined thumbnail file...");
+			
 			File thumbImage = new File(thumbName);
 			if(thumbImage.exists())
 			{
-				event.getChannel().sendFile(thumbImage, thumbName, message.build()).queue();
+				// Used to eb as follows:
+				//event.getChannel().sendFile(thumbImage, thumbName, message.build()).queue();
+				event.getChannel().sendMessage(message.build()).queue();
 			}
 		}
 		else

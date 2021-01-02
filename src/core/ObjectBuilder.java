@@ -43,7 +43,7 @@ import utils.audio.AudioUtils;
 // This also minimizes the number of places JDA interacts with our codebase.
 // As it stands, if the object name begins with Kitty, it's constructed here.
 // TODO: Make all methods ID based instead of event based 
-public class ObjectBuilderFactory 
+public class ObjectBuilder 
 {
 	// Key: guild string id, Value: guild information
 	private static HashMap<String, KittyGuild> guildCache;
@@ -167,7 +167,7 @@ public class ObjectBuilderFactory
 			else
 			{
 				// Construct a new guild with defaults				
-				guild = new KittyGuild(uid, new AdminControl(event.getGuild()), emotesString, 
+				guild = new KittyGuild(uid, new AdminControl(event.getGuild()), emotesString,
 						new AudioUtils(event.getGuild(), playerManager), channels);
 				DatabaseManager.instance.globalRegister(guild);
 				guildCache.put(uid, guild);

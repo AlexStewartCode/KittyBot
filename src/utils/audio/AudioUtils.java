@@ -74,11 +74,10 @@ public class AudioUtils
 			return lastFrame != null;
 		}
 		
-		
 		@Override 
 		public ByteBuffer provide20MsAudio()
 		{
-			ByteBuffer outputBuffer = ByteBuffer.wrap(lastFrame.getData());			
+			ByteBuffer outputBuffer = ByteBuffer.wrap(lastFrame.getData());
 			return outputBuffer;
 		}
 		

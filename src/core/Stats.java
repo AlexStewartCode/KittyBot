@@ -107,12 +107,12 @@ public class Stats
 	
 	public int getGuildCount()
 	{
-		return ObjectBuilderFactory.getGuildCount();
+		return ObjectBuilder.getGuildCount();
 	}
 	
 	public int getUserCount()
 	{
-		return ObjectBuilderFactory.getUserCount();
+		return ObjectBuilder.getUserCount();
 	}
 	
 	public ArrayList<Command> getAllCommands()

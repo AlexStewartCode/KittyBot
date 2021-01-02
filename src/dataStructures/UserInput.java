@@ -2,7 +2,7 @@ package dataStructures;
 
 import java.util.List;
 
-import core.ObjectBuilderFactory;
+import core.ObjectBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
@@ -93,7 +93,7 @@ public class UserInput
 		KittyUser [] KittyMentions = new KittyUser[JDAMentions.size()];
 		for(int i = 0; i < KittyMentions.length; i ++)
 		{
-			KittyMentions [i] = ObjectBuilderFactory.getKittyUser(event.getGuild().getId(), JDAMentions.get(i).getUser().getId());
+			KittyMentions [i] = ObjectBuilder.getKittyUser(event.getGuild().getId(), JDAMentions.get(i).getUser().getId());
 		}
 		return KittyMentions;
 	}
