@@ -36,11 +36,13 @@ public class GlobalLog
 		System.out.println(logLine);
 	}
 	
+	public static void log(LogFilter filter, Object obj) { write(log, filter, obj.toString()); } 
 	public static void log(LogFilter filter, String msg) { write(log, filter, msg); } 
 	public static void warn(LogFilter filter, String msg) { write(warn, filter, msg); }
 	public static void error(LogFilter filter, String msg) { write(error, filter, msg); System.err.println(msg); System.err.flush(); }
 	public static void fatal(LogFilter filter, String msg) throws Exception { write(fatal, filter, msg); throw new Exception(msg); }
 	
+	public static void log(Object obj) { log(LogFilter.Debug, obj); } 
 	public static void log(String msg) { log(LogFilter.Debug, msg); } 
 	public static void warn(String msg) { warn(LogFilter.Debug, msg); }
 	public static void error(String msg) { error(LogFilter.Debug, msg); }

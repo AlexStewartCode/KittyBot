@@ -188,8 +188,8 @@ public class ObjectBuilder
 		// the guild if not, they're assumed to be
 		// allowed to use the bot at a general level.
 		KittyRole role = KittyRole.General;
-		
-		if(event.getAuthor().getId() == event.getGuild().getOwner().getUser().getId())
+
+		if(event.getAuthor().getId() == event.getGuild().getOwnerId())
 		{
 			role = KittyRole.Admin;
 		}
