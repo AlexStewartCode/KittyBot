@@ -26,6 +26,7 @@ import main.Main;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -393,11 +394,12 @@ public class ObjectBuilderFactory
 		if(ConfigGlobals.getStartupMode() == KittyStartupMode.PoguRelease)
 			tokenToUse = Ref.PoguToken;
 			
+		// Construct bot based on token using the JDA Builder
+		JDABuilder builder = JDABuilder.createDefault(tokenToUse);
+		kitty = builder.build();
 		
-		// Construct bot based on token
-		kitty = new JDABuilder(AccountType.BOT)
-				.setToken(tokenToUse).buildBlocking();
-		kitty.getPresence().setGame(Game.playing("with a laser pointer"));
+		// Set activity, and add primariy event listener.
+		kitty.getPresence().setActivity(Activity.playing("with a laser pointer"));
 		kitty.addEventListener(new Main());
 		
 		return new KittyCore(kitty);
