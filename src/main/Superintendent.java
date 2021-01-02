@@ -14,7 +14,7 @@ import dataStructures.KittyRole;
 import dataStructures.KittyUser;
 import dataStructures.Response;
 import dataStructures.UserInput;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import offline.Ref;
 
 // Manages the fiddly bits and upkeep of the bot - while not 
