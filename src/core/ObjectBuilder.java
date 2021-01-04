@@ -39,7 +39,7 @@ import utils.GlobalLog;
 import utils.LogFilter;
 import utils.audio.AudioUtils;
 
-// NOTE(wisp): Isolated factory to assist with storage and caching if needed.
+// NOTE: Isolated factory to assist with storage and caching if needed.
 // This also minimizes the number of places JDA interacts with our codebase.
 // As it stands, if the object name begins with Kitty, it's constructed here.
 // TODO: Make all methods ID based instead of event based 
@@ -82,15 +82,20 @@ public class ObjectBuilder
 	
 	// Lazy initialization multithreaded mutex stuff to prevent explosions.
 	// TODO: Investigate using 'synchronized' instead potentially
-	private static boolean hasInitialized;
+	private static Boolean hasInitialized = false;
 	private static Semaphore initMutex = new Semaphore(1);
 	private static JDA kitty;
 	
 	// This is it, this is how the lazy init starts!
 	private static void lazyInit()
 	{
-		if(hasInitialized)
-			return;
+		synchronized(hasInitialized)
+		{
+			if(hasInitialized)
+			{
+				return;
+			}
+		}
 		
 		try
 		{
@@ -109,20 +114,31 @@ public class ObjectBuilder
 				AudioSourceManagers.registerLocalSource(playerManager);
 				
 				// Start by reading from things that are external. Because
-				// we require these things to be resolved before the rest of the application,
-				// we place them here.
+				// we require these things to be resolved before the rest of 
+				// the application, we place them here.
 				config = new Config();
 			}
 			finally
 			{
 				initMutex.release();
-				hasInitialized = true;
+				synchronized(hasInitialized)
+				{
+					hasInitialized = true;
+				}
 			}
 		}
 		catch(InterruptedException ie)
 		{
 			GlobalLog.error(LogFilter.Core, "Issue during object builder lazy initialization."
 				+ " The factory was not initialized, and kitty will not be able to continue functionally.");
+		}
+	}
+	
+	public static boolean getHasInitialized()
+	{
+		synchronized(hasInitialized)
+		{
+			return hasInitialized;
 		}
 	}
 	
@@ -389,20 +405,30 @@ public class ObjectBuilder
 		
 		// Determine token based on config. Default to test token.
 		String tokenToUse = Ref.TestToken;
-		if(ConfigGlobals.getStartupMode() == KittyStartupMode.Release)
-			tokenToUse = Ref.Token;
-		if(ConfigGlobals.getStartupMode() == KittyStartupMode.PoguRelease)
-			tokenToUse = Ref.PoguToken;
-			
+		switch(ConfigGlobals.getStartupMode())
+		{
+			case Release: tokenToUse = Ref.Token; break;
+			case PoguRelease: tokenToUse = Ref.PoguToken; break;
+			default: tokenToUse = Ref.TestToken; break;
+		}
+
 		// Construct bot based on token using the JDA Builder
 		JDABuilder builder = JDABuilder.createDefault(tokenToUse);
 		kitty = builder.build();
 		
 		// Set activity, and add primariy event listener.
-		kitty.getPresence().setActivity(Activity.playing("with a laser pointer"));
+		updateActivity();
 		kitty.addEventListener(new Main());
 		
 		return new KittyCore(kitty);
+	}
+	
+	// Updates the bots current activity based on the globals value.
+	public static void updateActivity()
+	{
+		String activity = ConfigGlobals.getActivity();
+		GlobalLog.log(LogFilter.Core, "Updating activity to " + activity);
+		kitty.getPresence().setActivity(Activity.playing(activity));
 	}
 	
 	// Default construction of the command manager. In order to remotely resolve command enabling

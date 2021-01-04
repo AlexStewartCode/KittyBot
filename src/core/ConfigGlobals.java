@@ -18,13 +18,20 @@ public class ConfigGlobals implements IConfigSection
 	private static final String startupStyleKey = "mode (dev or release)";
 	private KittyStartupMode startupStyleValue = KittyStartupMode.Dev;
 	
-	// Constructor
+	private static final String activityKey = "activity";
+	private String activityValue = "with a laser pointer";  // Appears as "Playing with a laser pointer"
+	
+	// Singleton Constructor - explode if there's a problem.
 	public ConfigGlobals()
 	{
 		if(instance == null)
+		{
 			instance = this;
+		}
 		else
+		{
 			GlobalLog.error("Attempted to initialize a second config globals! Probably don't do this!");
+		}
 	}
 	
 	@Override
@@ -36,6 +43,11 @@ public class ConfigGlobals implements IConfigSection
 	public static KittyStartupMode getStartupMode()
 	{
 		return instance.startupStyleValue;
+	}
+	
+	public static String getActivity()
+	{
+		return instance.activityValue;
 	}
 	
 	@Override
@@ -52,8 +64,29 @@ public class ConfigGlobals implements IConfigSection
 				startupStyleValue = KittyStartupMode.Dev;
 				
 				if(value.equalsIgnoreCase(KittyStartupMode.Release.name()))
+				{
 					startupStyleValue = KittyStartupMode.Release;
+				}
+				
+				if(value.equalsIgnoreCase(KittyStartupMode.PoguRelease.name()))
+				{
+					startupStyleValue = KittyStartupMode.PoguRelease;
+				}
+				
+				continue;
 			}
+			
+			// Parse text for 'playing' 
+			if(key.equalsIgnoreCase(activityKey))
+			{
+				activityValue = value;
+			}
+		}
+		
+		// If we change any globals, update anything we need to.
+		if(ObjectBuilder.getHasInitialized())
+		{
+			ObjectBuilder.updateActivity();
 		}
 	}
 
@@ -62,6 +95,7 @@ public class ConfigGlobals implements IConfigSection
 	{
 		List<ConfigItem> items = new ArrayList<ConfigItem>();
 		items.add(new ConfigItem(getSectionTitle(), startupStyleKey, startupStyleValue.name().toLowerCase()));
+		items.add(new ConfigItem(getSectionTitle(), activityKey, activityValue));
 		
 		return items;
 	}
