@@ -118,9 +118,9 @@ public class CommandBeansShow extends Command
 		Font beanFont = new Font("font", Font.BOLD, 45);
 		beanGraphics.setFont(beanFont);
 		
-		drawCenteredString(beanGraphics, "YOU HAVE", rect, beanFont, .25);
+		drawCenteredString(beanGraphics, LocStrings.stub("BeansImageTopText"), rect, beanFont, .25);
 		drawCenteredString(beanGraphics, "" + beans, rect, beanFont, .5);
-		drawCenteredString(beanGraphics, "BEANS!", rect, beanFont, .75);
+		drawCenteredString(beanGraphics, LocStrings.stub("BeansImageBottomText"), rect, beanFont, .75);
 
 		ImageIO.write(beanImage, "PNG", new File("beanImage.png"));
 		return new File("beanImage.png");
